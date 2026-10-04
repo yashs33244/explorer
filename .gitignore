@@ -3,3 +3,6 @@ node_modules/
 *.log
 .explorer/
 examples/postgres/page.html
+
+# side-by-side checks embed third-party reference images; keep them local
+diagram-types/**/compare.jpg
