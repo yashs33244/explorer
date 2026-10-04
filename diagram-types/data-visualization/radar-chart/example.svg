@@ -1,0 +1,80 @@
+<svg class="hd" viewBox="0 0 800 572" role="img" aria-label="Radar chart scoring PostgreSQL and Cassandra from 1 to 5 on six axes for an event store: PostgreSQL wins consistency, ecosystem, cost and ops simplicity, Cassandra wins write scale, PostgreSQL also reads faster" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="24" y="34">EVENT STORE, DATABASE SHORTLIST</text>
+<text class="d-h" x="24" y="56">PostgreSQL vs Cassandra on six axes</text>
+<circle class="d-band g0" cx="262" cy="322" r="200"/>
+<circle class="d-fillpaper" cx="262" cy="322" r="120"/>
+<circle class="d-grid" cx="262" cy="322" r="40"/>
+<circle class="d-grid" cx="262" cy="322" r="80"/>
+<circle class="d-grid" cx="262" cy="322" r="160"/>
+<path class="d-edge dash" d="M262,322 L262.0,122.0"/>
+<path class="d-edge dash" d="M262,322 L435.2,222.0"/>
+<path class="d-edge dash" d="M262,322 L435.2,422.0"/>
+<path class="d-edge dash" d="M262,322 L262.0,522.0"/>
+<path class="d-edge dash" d="M262,322 L88.8,422.0"/>
+<path class="d-edge dash" d="M262,322 L88.8,222.0"/>
+<polygon class="d-soft g3" points="262.0,202.0 435.2,222.0 365.9,382.0 262.0,402.0 192.7,362.0 158.1,262.0"/>
+<polygon class="d-soft g4" points="262.0,162.0 331.3,282.0 400.6,402.0 262.0,482.0 88.8,422.0 88.8,222.0"/>
+<circle class="d-fill g3" cx="262.0" cy="202.0" r="5"/>
+<circle class="d-fill g3" cx="435.2" cy="222.0" r="5"/>
+<circle class="d-fill g3" cx="365.9" cy="382.0" r="5"/>
+<circle class="d-fill g3" cx="262.0" cy="402.0" r="5"/>
+<circle class="d-fill g3" cx="192.7" cy="362.0" r="5"/>
+<circle class="d-fill g3" cx="158.1" cy="262.0" r="5"/>
+<circle class="d-fill g4" cx="262.0" cy="162.0" r="5"/>
+<circle class="d-fill g4" cx="331.3" cy="282.0" r="5"/>
+<circle class="d-fill g4" cx="400.6" cy="402.0" r="5"/>
+<circle class="d-fill g4" cx="262.0" cy="482.0" r="5"/>
+<circle class="d-fill g4" cx="88.8" cy="422.0" r="5"/>
+<circle class="d-fill g4" cx="88.8" cy="222.0" r="5"/>
+<text class="d-lab" x="253" y="301" text-anchor="end">1</text>
+<text class="d-lab" x="253" y="261" text-anchor="end">2</text>
+<text class="d-lab" x="253" y="221" text-anchor="end">3</text>
+<text class="d-lab" x="253" y="181" text-anchor="end">4</text>
+<text class="d-lab" x="253" y="141" text-anchor="end">5</text>
+<text class="d-t" x="262.0" y="108.0" text-anchor="middle">Read latency</text>
+<text class="d-t" x="447.2" y="220.0" text-anchor="start">Write scale</text>
+<text class="d-t" x="447.2" y="432.0" text-anchor="start">Cost at 10 TB</text>
+<text class="d-t" x="262.0" y="548.0" text-anchor="middle">Ops simplicity</text>
+<text class="d-t" x="76.8" y="432.0" text-anchor="end">Consistency</text>
+<text class="d-t" x="76.8" y="220.0" text-anchor="end">Ecosystem</text>
+<rect class="d-box g4" x="560" y="92" width="216" height="62" rx="12"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="574" y="110" width="26" height="26"/>
+<text class="d-t" x="612" y="119">PostgreSQL 16</text>
+<text class="d-s" x="612" y="137">total 24 of 30</text>
+<rect class="d-box g3" x="560" y="166" width="216" height="62" rx="12"/>
+<image class="d-logo" data-logo="cassandra.apache.org" data-name="Cassandra" x="574" y="184" width="26" height="26"/>
+<text class="d-t" x="612" y="193">Cassandra 5</text>
+<text class="d-s" x="612" y="211">total 18 of 30</text>
+<text class="d-k" x="560" y="262">SCORE, 5 IS BEST</text>
+<text class="d-k" x="720" y="262" text-anchor="middle">PG</text>
+<text class="d-k" x="760" y="262" text-anchor="middle">CASS</text>
+<path class="d-grid" d="M560,271 H776"/>
+<text class="d-s" x="560" y="288">Read latency</text>
+<text class="d-t" x="720" y="288" text-anchor="middle">4</text>
+<text class="d-t" x="760" y="288" text-anchor="middle">3</text>
+<path class="d-grid" d="M560,295 H776"/>
+<text class="d-s" x="560" y="312">Write scale</text>
+<text class="d-t" x="720" y="312" text-anchor="middle">2</text>
+<text class="d-t" x="760" y="312" text-anchor="middle">5</text>
+<path class="d-grid" d="M560,319 H776"/>
+<text class="d-s" x="560" y="336">Cost at 10 TB</text>
+<text class="d-t" x="720" y="336" text-anchor="middle">4</text>
+<text class="d-t" x="760" y="336" text-anchor="middle">3</text>
+<path class="d-grid" d="M560,343 H776"/>
+<text class="d-s" x="560" y="360">Ops simplicity</text>
+<text class="d-t" x="720" y="360" text-anchor="middle">4</text>
+<text class="d-t" x="760" y="360" text-anchor="middle">2</text>
+<path class="d-grid" d="M560,367 H776"/>
+<text class="d-s" x="560" y="384">Consistency</text>
+<text class="d-t" x="720" y="384" text-anchor="middle">5</text>
+<text class="d-t" x="760" y="384" text-anchor="middle">2</text>
+<path class="d-grid" d="M560,391 H776"/>
+<text class="d-s" x="560" y="408">Ecosystem</text>
+<text class="d-t" x="720" y="408" text-anchor="middle">5</text>
+<text class="d-t" x="760" y="408" text-anchor="middle">3</text>
+<rect class="d-note g2" x="560" y="432" width="216" height="104" rx="6"/>
+<text class="d-tn" x="574" y="456">Peak is 4k writes/s,</text>
+<text class="d-tn" x="574" y="476">inside one Postgres</text>
+<text class="d-tn" x="574" y="496">primary: pick it, revisit</text>
+<text class="d-tn" x="574" y="516">at 40k writes/s</text>
+</svg>

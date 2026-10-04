@@ -1,0 +1,74 @@
+<svg class="hd" viewBox="0 0 800 430" role="img" aria-label="Change control process for production Postgres migration CHG-4821 across five stages: request, assess, CAB approve, implement and verify, with a reject loop back to the RFC and a rollback loop from verify" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="change-control-process-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+  <text class="d-k" x="40" y="30">CHG-4821: prod Postgres migration</text>
+  <text class="d-s" x="760" y="30" text-anchor="end">normal change, risk high</text>
+  <rect class="d-band g3" x="40" y="50" width="144" height="300"/>
+  <circle class="d-badge" cx="62" cy="80" r="11"/><text class="d-bt" x="62" y="84">1</text>
+  <text class="d-h" x="80" y="86">Request</text>
+  <image class="d-logo" data-logo="atlassian.com" data-name="Jira" x="52" y="102" width="22" height="22"/>
+  <text class="d-s" x="82" y="118">owner: author</text>
+  <text class="d-m" x="52" y="146">CHG-4821</text>
+  <rect class="d-band g0" x="184" y="50" width="144" height="300"/>
+  <circle class="d-badge" cx="206" cy="80" r="11"/><text class="d-bt" x="206" y="84">2</text>
+  <text class="d-h" x="224" y="86">Assess</text>
+  <image class="d-logo" data-logo="github.com" data-name="GitHub" x="196" y="102" width="22" height="22"/>
+  <text class="d-s" x="226" y="118">owner: DBA</text>
+  <text class="d-m" x="196" y="146">plan.sql</text>
+  <rect class="d-band g5" x="328" y="50" width="144" height="300"/>
+  <circle class="d-badge" cx="350" cy="80" r="11"/><text class="d-bt" x="350" y="84">3</text>
+  <text class="d-h" x="368" y="86">Approve</text>
+  <image class="d-logo" data-logo="servicenow.com" data-name="ServiceNow" x="340" y="102" width="22" height="22"/>
+  <text class="d-s" x="370" y="118">owner: CAB</text>
+  <text class="d-m" x="340" y="146">cab-0412.md</text>
+  <rect class="d-band g4" x="472" y="50" width="144" height="300"/>
+  <circle class="d-badge" cx="494" cy="80" r="11"/><text class="d-bt" x="494" y="84">4</text>
+  <text class="d-h" x="512" y="86">Implement</text>
+  <image class="d-logo" data-logo="flywaydb.org" data-name="Flyway" x="484" y="102" width="22" height="22"/>
+  <text class="d-s" x="514" y="118">owner: on-call</text>
+  <text class="d-m" x="484" y="146">V42__orders.sql</text>
+  <rect class="d-band g1" x="616" y="50" width="144" height="300"/>
+  <circle class="d-badge" cx="638" cy="80" r="11"/><text class="d-bt" x="638" y="84">5</text>
+  <text class="d-h" x="656" y="86">Verify</text>
+  <image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="628" y="102" width="22" height="22"/>
+  <text class="d-s" x="658" y="118">owner: SRE</text>
+  <text class="d-m" x="628" y="146">orders-slo</text>
+  <rect class="d-box g4" x="50" y="162" width="124" height="74" rx="10"/>
+  <text class="d-t" x="60" y="186">RFC raised</text>
+  <text class="d-s" x="60" y="206">add NOT NULL</text>
+  <text class="d-s" x="60" y="224">orders.tenant_id</text>
+  <rect class="d-box g4" x="194" y="162" width="124" height="74" rx="10"/>
+  <text class="d-t" x="204" y="186">Peer review</text>
+  <text class="d-s" x="204" y="206">PR #3307, plan</text>
+  <text class="d-s" x="204" y="224">lock risk: high</text>
+  <rect class="d-box g4" x="338" y="162" width="124" height="74" rx="10"/>
+  <text class="d-t" x="348" y="186">CAB meeting</text>
+  <text class="d-s" x="348" y="206">Thu weekly</text>
+  <text class="d-s" x="348" y="224">4 voters, DBA</text>
+  <rect class="d-box g4" x="338" y="256" width="124" height="74" rx="10"/>
+  <text class="d-t" x="348" y="280">Decision</text>
+  <text class="d-s" x="348" y="300">approved 3 of 4</text>
+  <text class="d-s" x="348" y="318">Sat 02:00 UTC</text>
+  <rect class="d-box g4" x="482" y="256" width="124" height="74" rx="10"/>
+  <text class="d-t" x="492" y="280">Rollout</text>
+  <text class="d-s" x="492" y="300">expand, backfill</text>
+  <text class="d-s" x="492" y="318">then contract</text>
+  <rect class="d-box g4" x="626" y="256" width="124" height="74" rx="10"/>
+  <text class="d-t" x="636" y="280">Verify, close</text>
+  <text class="d-s" x="636" y="300">p99 under 40 ms</text>
+  <text class="d-s" x="636" y="318">CHG closed</text>
+  <rect class="d-note" x="482" y="166" width="124" height="60" rx="3"/>
+  <text class="d-tn" x="492" y="190">Pre-check:</text>
+  <text class="d-tn" x="492" y="210">snapshot, dry run</text>
+  <rect class="d-note" x="626" y="166" width="124" height="60" rx="3"/>
+  <text class="d-tn" x="636" y="190">Watch 30 min,</text>
+  <text class="d-tn" x="636" y="210">then close</text>
+  <path class="d-edge" d="M174,199 H194" marker-end="url(#change-control-process-d1-ah)"/>
+  <path class="d-edge" d="M318,199 H338" marker-end="url(#change-control-process-d1-ah)"/>
+  <path class="d-edge" d="M400,236 V256" marker-end="url(#change-control-process-d1-ah)"/>
+  <path class="d-edge" d="M462,293 H482" marker-end="url(#change-control-process-d1-ah)"/>
+  <path class="d-edge" d="M606,293 H626" marker-end="url(#change-control-process-d1-ah)"/>
+  <path class="d-edge dash" d="M400,330 V390 H112 V236" marker-end="url(#change-control-process-d1-ah)"/>
+  <text class="d-lab" x="256" y="412" text-anchor="middle">rejected: revise plan</text>
+  <path class="d-edge dash" d="M688,330 V390 H544 V330" marker-end="url(#change-control-process-d1-ah)"/>
+  <text class="d-lab" x="616" y="412" text-anchor="middle">SLO breach: roll back</text>
+</svg>

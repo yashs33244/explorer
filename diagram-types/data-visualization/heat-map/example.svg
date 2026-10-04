@@ -1,0 +1,186 @@
+<svg class="hd" viewBox="0 0 800 590" role="img" aria-label="Heat map of 224 production deploys of the payments API in Q3 by weekday and two-hour UTC slot: deploys cluster Tuesday to Thursday 10:00 to 16:00, Friday afternoon is empty because of a change freeze, and the weekend has two hotfixes" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="24" y="34">PAYMENTS API, Q3 PRODUCTION DEPLOYS</text>
+<text class="d-h" x="24" y="56">When we ship: deploys by weekday and hour (UTC)</text>
+<text class="d-s" x="716" y="46" text-anchor="end">source: Argo CD sync history</text>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="726" y="28" width="26" height="26"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="756" y="28" width="26" height="26"/>
+<text class="d-s" x="111" y="98" text-anchor="middle">00</text>
+<text class="d-s" x="161" y="98" text-anchor="middle">02</text>
+<text class="d-s" x="211" y="98" text-anchor="middle">04</text>
+<text class="d-s" x="261" y="98" text-anchor="middle">06</text>
+<text class="d-s" x="311" y="98" text-anchor="middle">08</text>
+<text class="d-s" x="361" y="98" text-anchor="middle">10</text>
+<text class="d-s" x="411" y="98" text-anchor="middle">12</text>
+<text class="d-s" x="461" y="98" text-anchor="middle">14</text>
+<text class="d-s" x="511" y="98" text-anchor="middle">16</text>
+<text class="d-s" x="561" y="98" text-anchor="middle">18</text>
+<text class="d-s" x="611" y="98" text-anchor="middle">20</text>
+<text class="d-s" x="661" y="98" text-anchor="middle">22</text>
+<text class="d-k" x="700" y="98">TOTAL</text>
+<text class="d-t" x="72" y="135" text-anchor="end">Mon</text>
+<rect class="d-fill g1" x="86" y="108" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="108" width="50" height="44"/>
+<rect class="d-fill g1" x="186" y="108" width="50" height="44"/>
+<rect class="d-fill g1" x="236" y="108" width="50" height="44"/>
+<text class="d-t" x="261" y="135" text-anchor="middle">1</text>
+<rect class="d-fill g2 o2" x="286" y="108" width="50" height="44"/>
+<text class="d-t" x="311" y="135" text-anchor="middle">4</text>
+<rect class="d-fill g5" x="336" y="108" width="50" height="44"/>
+<text class="d-t" x="361" y="135" text-anchor="middle">9</text>
+<rect class="d-fill g2" x="386" y="108" width="50" height="44"/>
+<text class="d-t" x="411" y="135" text-anchor="middle">7</text>
+<rect class="d-fill g2" x="436" y="108" width="50" height="44"/>
+<text class="d-t" x="461" y="135" text-anchor="middle">8</text>
+<rect class="d-fill g2" x="486" y="108" width="50" height="44"/>
+<text class="d-t" x="511" y="135" text-anchor="middle">5</text>
+<rect class="d-fill g2 o2" x="536" y="108" width="50" height="44"/>
+<text class="d-t" x="561" y="135" text-anchor="middle">2</text>
+<rect class="d-fill g1" x="586" y="108" width="50" height="44"/>
+<rect class="d-fill g1" x="636" y="108" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="122" width="35" height="16"/>
+<text class="d-s" x="741" y="134">36</text>
+<text class="d-t" x="72" y="179" text-anchor="end">Tue</text>
+<rect class="d-fill g1" x="86" y="152" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="152" width="50" height="44"/>
+<rect class="d-fill g1" x="186" y="152" width="50" height="44"/>
+<rect class="d-fill g2 o2" x="236" y="152" width="50" height="44"/>
+<text class="d-t" x="261" y="179" text-anchor="middle">2</text>
+<rect class="d-fill g2" x="286" y="152" width="50" height="44"/>
+<text class="d-t" x="311" y="179" text-anchor="middle">6</text>
+<rect class="d-fill g5" x="336" y="152" width="50" height="44"/>
+<text class="d-t" x="361" y="179" text-anchor="middle">12</text>
+<rect class="d-fill g5" x="386" y="152" width="50" height="44"/>
+<text class="d-t" x="411" y="179" text-anchor="middle">10</text>
+<rect class="d-fill g3" x="436" y="152" width="50" height="44"/>
+<text class="d-t" x="461" y="179" text-anchor="middle">14</text>
+<rect class="d-fill g2" x="486" y="152" width="50" height="44"/>
+<text class="d-t" x="511" y="179" text-anchor="middle">8</text>
+<rect class="d-fill g2 o2" x="536" y="152" width="50" height="44"/>
+<text class="d-t" x="561" y="179" text-anchor="middle">3</text>
+<rect class="d-fill g1" x="586" y="152" width="50" height="44"/>
+<text class="d-t" x="611" y="179" text-anchor="middle">1</text>
+<rect class="d-fill g1" x="636" y="152" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="166" width="54" height="16"/>
+<text class="d-s" x="760" y="178">56</text>
+<text class="d-t" x="72" y="223" text-anchor="end">Wed</text>
+<rect class="d-fill g1" x="86" y="196" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="196" width="50" height="44"/>
+<rect class="d-fill g1" x="186" y="196" width="50" height="44"/>
+<text class="d-t" x="211" y="223" text-anchor="middle">1</text>
+<rect class="d-fill g2 o2" x="236" y="196" width="50" height="44"/>
+<text class="d-t" x="261" y="223" text-anchor="middle">2</text>
+<rect class="d-fill g2" x="286" y="196" width="50" height="44"/>
+<text class="d-t" x="311" y="223" text-anchor="middle">7</text>
+<rect class="d-fill g3" x="336" y="196" width="50" height="44"/>
+<text class="d-t" x="361" y="223" text-anchor="middle">13</text>
+<rect class="d-fill g5" x="386" y="196" width="50" height="44"/>
+<text class="d-t" x="411" y="223" text-anchor="middle">11</text>
+<rect class="d-fill g3" x="436" y="196" width="50" height="44"/>
+<text class="d-t" x="461" y="223" text-anchor="middle">15</text>
+<rect class="d-fill g5" x="486" y="196" width="50" height="44"/>
+<text class="d-t" x="511" y="223" text-anchor="middle">9</text>
+<rect class="d-fill g2 o2" x="536" y="196" width="50" height="44"/>
+<text class="d-t" x="561" y="223" text-anchor="middle">3</text>
+<rect class="d-fill g1" x="586" y="196" width="50" height="44"/>
+<text class="d-t" x="611" y="223" text-anchor="middle">1</text>
+<rect class="d-fill g1" x="636" y="196" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="210" width="60" height="16"/>
+<text class="d-s" x="766" y="222">62</text>
+<text class="d-t" x="72" y="267" text-anchor="end">Thu</text>
+<rect class="d-fill g1" x="86" y="240" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="240" width="50" height="44"/>
+<rect class="d-fill g1" x="186" y="240" width="50" height="44"/>
+<rect class="d-fill g2 o2" x="236" y="240" width="50" height="44"/>
+<text class="d-t" x="261" y="267" text-anchor="middle">2</text>
+<rect class="d-fill g2" x="286" y="240" width="50" height="44"/>
+<text class="d-t" x="311" y="267" text-anchor="middle">6</text>
+<rect class="d-fill g5" x="336" y="240" width="50" height="44"/>
+<text class="d-t" x="361" y="267" text-anchor="middle">11</text>
+<rect class="d-fill g5" x="386" y="240" width="50" height="44"/>
+<text class="d-t" x="411" y="267" text-anchor="middle">9</text>
+<rect class="d-fill g3" x="436" y="240" width="50" height="44"/>
+<text class="d-t" x="461" y="267" text-anchor="middle">13</text>
+<rect class="d-fill g2" x="486" y="240" width="50" height="44"/>
+<text class="d-t" x="511" y="267" text-anchor="middle">7</text>
+<rect class="d-fill g2 o2" x="536" y="240" width="50" height="44"/>
+<text class="d-t" x="561" y="267" text-anchor="middle">2</text>
+<rect class="d-fill g1" x="586" y="240" width="50" height="44"/>
+<rect class="d-fill g1" x="636" y="240" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="254" width="48" height="16"/>
+<text class="d-s" x="754" y="266">50</text>
+<text class="d-t" x="72" y="311" text-anchor="end">Fri</text>
+<rect class="d-fill g1" x="86" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="186" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="236" y="284" width="50" height="44"/>
+<text class="d-t" x="261" y="311" text-anchor="middle">1</text>
+<rect class="d-fill g2" x="286" y="284" width="50" height="44"/>
+<text class="d-t" x="311" y="311" text-anchor="middle">5</text>
+<rect class="d-fill g2" x="336" y="284" width="50" height="44"/>
+<text class="d-t" x="361" y="311" text-anchor="middle">8</text>
+<rect class="d-fill g2 o2" x="386" y="284" width="50" height="44"/>
+<text class="d-t" x="411" y="311" text-anchor="middle">4</text>
+<rect class="d-fill g1" x="436" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="486" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="536" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="586" y="284" width="50" height="44"/>
+<rect class="d-fill g1" x="636" y="284" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="298" width="17" height="16"/>
+<text class="d-s" x="723" y="310">18</text>
+<text class="d-t" x="72" y="355" text-anchor="end">Sat</text>
+<rect class="d-fill g1" x="86" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="186" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="236" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="286" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="336" y="328" width="50" height="44"/>
+<text class="d-t" x="361" y="355" text-anchor="middle">1</text>
+<rect class="d-fill g1" x="386" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="436" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="486" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="536" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="586" y="328" width="50" height="44"/>
+<rect class="d-fill g1" x="636" y="328" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="342" width="3" height="16"/>
+<text class="d-s" x="709" y="354">1</text>
+<text class="d-t" x="72" y="399" text-anchor="end">Sun</text>
+<rect class="d-fill g1" x="86" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="136" y="372" width="50" height="44"/>
+<text class="d-t" x="161" y="399" text-anchor="middle">1</text>
+<rect class="d-fill g1" x="186" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="236" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="286" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="336" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="386" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="436" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="486" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="536" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="586" y="372" width="50" height="44"/>
+<rect class="d-fill g1" x="636" y="372" width="50" height="44"/>
+<rect class="d-fill g0" x="700" y="386" width="3" height="16"/>
+<text class="d-s" x="709" y="398">1</text>
+<rect class="d-edge dash acc" x="440" y="289" width="242" height="34" rx="4"/>
+<text class="d-lab" x="561" y="311" text-anchor="middle">change freeze</text>
+<rect class="d-edge acc" x="333" y="149" width="156" height="138" rx="4"/>
+<text class="d-s" x="386" y="438" text-anchor="middle">two-hour slot start, UTC</text>
+<text class="d-k" x="86" y="479">DEPLOYS</text>
+<rect class="d-fill g1" x="156" y="466" width="22" height="18"/>
+<text class="d-s" x="186" y="479">0 to 1</text>
+<rect class="d-fill g2 o2" x="245.2" y="466" width="22" height="18"/>
+<text class="d-s" x="275.2" y="479">2 to 4</text>
+<rect class="d-fill g2" x="334.4" y="466" width="22" height="18"/>
+<text class="d-s" x="364.4" y="479">5 to 8</text>
+<rect class="d-fill g5" x="423.59999999999997" y="466" width="22" height="18"/>
+<text class="d-s" x="453.59999999999997" y="479">9 to 12</text>
+<rect class="d-fill g3" x="519.0" y="466" width="22" height="18"/>
+<text class="d-s" x="549.0" y="479">13 or more</text>
+<rect class="d-note g2" x="24" y="504" width="240" height="62" rx="6"/>
+<text class="d-tn" x="38" y="529">Tue to Thu 10:00 to 16:00</text>
+<text class="d-tn" x="38" y="549">holds 108 of 224 deploys</text>
+<rect class="d-note g3" x="280" y="504" width="240" height="62" rx="6"/>
+<text class="d-tn" x="294" y="529">Fri after 14:00 is empty:</text>
+<text class="d-tn" x="294" y="549">freeze rule since INC-412</text>
+<rect class="d-note g4" x="536" y="504" width="240" height="62" rx="6"/>
+<text class="d-tn" x="550" y="529">Weekend: 2 hotfixes,</text>
+<text class="d-tn" x="550" y="549">both paged on-call</text>
+</svg>

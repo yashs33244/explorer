@@ -1,0 +1,59 @@
+<svg class="hd" viewBox="0 0 800 870" role="img" aria-label="Flowchart of login request handling: rate limit check, password verification, MFA challenge, failure counting and session issue" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="flowchart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">AUTH SERVICE</text>
+<text class="d-s" x="24" y="52">one login request</text>
+<rect class="d-box g1" x="205.0" y="50" width="190" height="40" rx="20"/>
+<text class="d-t" x="300" y="75" text-anchor="middle">POST /api/login</text>
+<path class="d-edge" d="M300,90 V116" marker-end="url(#flowchart-d1-ah)"/>
+<rect class="d-box g0" x="185.0" y="118" width="230" height="56" rx="10"/>
+<text class="d-t" x="300" y="142" text-anchor="middle">Check rate bucket</text>
+<text class="d-m" x="300" y="160" text-anchor="middle">GET fails:{ip}:{user}</text>
+<image class="d-logo" data-logo="redis.io" data-name="Redis" x="428" y="133" width="26" height="26"/>
+<path class="d-edge" d="M300,174 V194" marker-end="url(#flowchart-d1-ah)"/>
+<polygon class="d-box g2" points="300,196 386,236 300,276 214,236"/>
+<text class="d-t" x="300" y="241" text-anchor="middle">Over 5 in 15 min?</text>
+<path class="d-edge" d="M386,236 H513" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="400" y="228" text-anchor="start">yes</text>
+<rect class="d-box g3" x="515.0" y="216" width="170" height="40" rx="20"/>
+<text class="d-t" x="600" y="241" text-anchor="middle">429 Retry-After</text>
+<path class="d-edge" d="M300,276 V300" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="310" y="292" text-anchor="start">no</text>
+<rect class="d-box g0" x="185.0" y="302" width="230" height="56" rx="10"/>
+<text class="d-t" x="300" y="326" text-anchor="middle">Verify password</text>
+<text class="d-m" x="300" y="344" text-anchor="middle">argon2id, constant time</text>
+<path class="d-edge" d="M300,358 V378" marker-end="url(#flowchart-d1-ah)"/>
+<polygon class="d-box g2" points="300,380 386,420 300,460 214,420"/>
+<text class="d-t" x="300" y="425" text-anchor="middle">Password valid?</text>
+<path class="d-edge" d="M386,420 H508" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="400" y="412" text-anchor="start">no</text>
+<rect class="d-box g3" x="510.0" y="392" width="180" height="56" rx="10"/>
+<text class="d-t" x="600" y="416" text-anchor="middle">Record failure</text>
+<text class="d-m" x="600" y="434" text-anchor="middle">INCR + EXPIRE 900</text>
+<path class="d-edge" d="M600,392 V352" marker-end="url(#flowchart-d1-ah)"/>
+<rect class="d-box g3" x="515.0" y="310" width="170" height="40" rx="20"/>
+<text class="d-t" x="600" y="335" text-anchor="middle">401 Unauthorized</text>
+<path class="d-edge" d="M300,460 V486" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="310" y="478" text-anchor="start">yes</text>
+<polygon class="d-box g2" points="300,488 386,528 300,568 214,528"/>
+<text class="d-t" x="300" y="533" text-anchor="middle">MFA enrolled?</text>
+<path class="d-edge" d="M300,568 V592" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="310" y="584" text-anchor="start">yes</text>
+<rect class="d-box g0" x="185.0" y="594" width="230" height="56" rx="10"/>
+<text class="d-t" x="300" y="618" text-anchor="middle">Send TOTP challenge</text>
+<text class="d-s" x="300" y="636" text-anchor="middle">6 digits, 30 s window</text>
+<path class="d-edge" d="M300,650 V670" marker-end="url(#flowchart-d1-ah)"/>
+<polygon class="d-box g2" points="300,672 386,712 300,752 214,712"/>
+<text class="d-t" x="300" y="717" text-anchor="middle">Code valid?</text>
+<path class="d-edge" d="M386,712 H600 V450" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="400" y="704" text-anchor="start">no</text>
+<path class="d-edge" d="M214,528 H72 V812 H183" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="200" y="520" text-anchor="end">no</text>
+<path class="d-edge" d="M300,752 V782" marker-end="url(#flowchart-d1-ah)"/>
+<text class="d-lab" x="310" y="772" text-anchor="start">yes</text>
+<rect class="d-box g1" x="185.0" y="784" width="230" height="56" rx="10"/>
+<text class="d-t" x="300" y="808" text-anchor="middle">Reset counter, issue session</text>
+<text class="d-m" x="300" y="826" text-anchor="middle">Set-Cookie: sid; HttpOnly</text>
+<path class="d-edge" d="M415,812 H523" marker-end="url(#flowchart-d1-ah)"/>
+<rect class="d-box g1" x="525.0" y="792" width="150" height="40" rx="20"/>
+<text class="d-t" x="600" y="817" text-anchor="middle">200 OK</text>
+</svg>

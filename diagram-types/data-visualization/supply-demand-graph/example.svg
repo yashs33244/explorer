@@ -1,0 +1,61 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Supply and demand graph for the checkout API: client demand falls as p99 latency rises, cluster supply rises with latency; with 6 pods the market settles at 2.5k requests per second and 200 ms, after the autoscaler adds 4 pods supply shifts right and it settles at 3.0k requests per second and 160 ms" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="supply-demand-graph-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">CHECKOUT API, BLACK FRIDAY LOAD TEST</text>
+<text class="d-h" x="24" y="58">Capacity vs demand: where p99 settles</text>
+<rect class="d-box g2" x="24" y="76" width="752" height="504" rx="12"/>
+<rect class="d-fillpaper" x="48" y="100" width="440" height="456" rx="4"/>
+<text class="d-s" x="80" y="126">p99 ms</text>
+<path class="d-grid" d="M285,315 H120 M285,315 V490 M320,350 H120 M320,350 V490"/>
+<path class="d-edge acc thick" d="M130,160 L440,470"/>
+<path class="d-edge thick" d="M130,470 L440,160"/>
+<path class="d-edge thick dash" d="M200,470 L450,220"/>
+<path class="d-edge acc" d="M176,432 H230" marker-end="url(#supply-demand-graph-d1-ah)"/>
+<text class="d-lab" x="248" y="452">scale out</text>
+<path class="d-axis" d="M120,136 V490 H460"/>
+<circle class="d-fillink" cx="110" cy="140" r="3"/>
+<circle class="d-fillink" cx="110" cy="227.5" r="3"/>
+<circle class="d-fillink" cx="110" cy="315" r="3"/>
+<circle class="d-fillink" cx="110" cy="402.5" r="3"/>
+<text class="d-s" x="102" y="144" text-anchor="end">400</text>
+<text class="d-s" x="102" y="232" text-anchor="end">300</text>
+<text class="d-s" x="102" y="319" text-anchor="end">200</text>
+<text class="d-s" x="102" y="354" text-anchor="end">160</text>
+<text class="d-s" x="102" y="407" text-anchor="end">100</text>
+<circle class="d-fillink" cx="186" cy="500" r="3"/>
+<circle class="d-fillink" cx="252" cy="500" r="3"/>
+<circle class="d-fillink" cx="318" cy="500" r="3"/>
+<circle class="d-fillink" cx="384" cy="500" r="3"/>
+<circle class="d-fillink" cx="450" cy="500" r="3"/>
+<text class="d-s" x="120" y="518" text-anchor="middle">0</text>
+<text class="d-s" x="186" y="518" text-anchor="middle">1k</text>
+<text class="d-s" x="252" y="518" text-anchor="middle">2k</text>
+<text class="d-s" x="318" y="518" text-anchor="middle">3k</text>
+<text class="d-s" x="384" y="518" text-anchor="middle">4k</text>
+<text class="d-s" x="450" y="518" text-anchor="middle">5k</text>
+<text class="d-s" x="290" y="542" text-anchor="middle">requests per second</text>
+<text class="d-lab" x="146" y="152">Demand: client RPS</text>
+<text class="d-lab" x="436" y="152" text-anchor="end">Supply, 6 pods</text>
+<text class="d-lab" x="390" y="292">Supply, 10 pods</text>
+<circle class="d-badge" cx="285" cy="315" r="11"/><text class="d-bt" x="285" y="319">1</text>
+<circle class="d-badge" cx="320" cy="350" r="11"/><text class="d-bt" x="320" y="354">2</text>
+<rect class="d-box" x="508" y="100" width="244" height="94" rx="12"/>
+<circle class="d-badge" cx="532" cy="124" r="11"/><text class="d-bt" x="532" y="128">1</text>
+<text class="d-t" x="552" y="129">Before: 6 pods</text>
+<text class="d-s" x="524" y="156">Settles at 2.5k rps,</text>
+<text class="d-s" x="524" y="174">p99 200 ms, over 180 ms SLO</text>
+<rect class="d-box" x="508" y="210" width="244" height="94" rx="12"/>
+<circle class="d-badge" cx="532" cy="234" r="11"/><text class="d-bt" x="532" y="238">2</text>
+<text class="d-t" x="552" y="239">After: 10 pods</text>
+<text class="d-s" x="524" y="266">Settles at 3.0k rps,</text>
+<text class="d-s" x="524" y="284">p99 160 ms, under 180 ms SLO</text>
+<rect class="d-box g4" x="508" y="320" width="244" height="94" rx="12"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="522" y="334" width="26" height="26"/>
+<text class="d-t" x="558" y="352">HorizontalPodAutoscaler</text>
+<text class="d-m" x="524" y="380">cpu averageUtilization: 65</text>
+<text class="d-m" x="524" y="398">minReplicas 6, max 14</text>
+<rect class="d-note g1" x="508" y="430" width="244" height="104" rx="6"/>
+<text class="d-tn" x="522" y="454">Scaling moves supply, not</text>
+<text class="d-tn" x="522" y="474">demand. Retries push demand</text>
+<text class="d-tn" x="522" y="494">right too, so cap them with</text>
+<text class="d-tn" x="522" y="514">a retry budget</text>
+</svg>

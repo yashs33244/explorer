@@ -1,0 +1,98 @@
+<svg class="hd" viewBox="0 0 800 630" role="img" aria-label="Sequence diagram of an OAuth authorization code login with PKCE between the browser, a Next.js web app, Auth0, the profile API and Postgres, with lifelines, activation bars and numbered messages" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="sequence-diagram-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+
+  <!-- participants -->
+  <rect class="d-box g0" x="50" y="24" width="120" height="48" rx="10"/>
+  <g transform="translate(60,38) scale(0.5)"><rect class="d-fillpaper" x="3" y="5" width="34" height="23" rx="3"/><path class="d-line" d="M14,35 H26 M20,28 V35"/><path class="d-lineacc" d="M9,14 H21 M9,20 H28"/></g>
+  <text class="d-t" x="86" y="45">Browser</text>
+  <text class="d-s" x="86" y="62">user agent</text>
+
+  <rect class="d-box g1" x="195" y="24" width="120" height="48" rx="10"/>
+  <image class="d-logo" data-logo="nextjs.org" data-name="Next.js" x="205" y="38" width="20" height="20"/>
+  <text class="d-t" x="231" y="45">Web app</text>
+  <text class="d-s" x="231" y="62">Next.js BFF</text>
+
+  <rect class="d-box g2" x="340" y="24" width="120" height="48" rx="10"/>
+  <image class="d-logo" data-logo="auth0.com" data-name="Auth0" x="350" y="38" width="20" height="20"/>
+  <text class="d-t" x="376" y="45">Auth0</text>
+  <text class="d-s" x="376" y="62">OIDC IdP</text>
+
+  <rect class="d-box g3" x="485" y="24" width="120" height="48" rx="10"/>
+  <image class="d-logo" data-logo="nodejs.org" data-name="Node.js" x="495" y="38" width="20" height="20"/>
+  <text class="d-t" x="521" y="45">API</text>
+  <text class="d-s" x="521" y="62">profile-svc</text>
+
+  <rect class="d-box g4" x="630" y="24" width="120" height="48" rx="10"/>
+  <image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="640" y="38" width="20" height="20"/>
+  <text class="d-t" x="666" y="45">Postgres</text>
+  <text class="d-s" x="666" y="62">users table</text>
+
+  <!-- lifelines -->
+  <path class="d-edge dash" d="M110,72 V584"/>
+  <path class="d-edge dash" d="M255,72 V584"/>
+  <path class="d-edge dash" d="M400,72 V584"/>
+  <path class="d-edge dash" d="M545,72 V584"/>
+  <path class="d-edge dash" d="M690,72 V584"/>
+
+  <!-- activation bars -->
+  <rect class="d-fillpaper" x="104" y="100" width="12" height="462"/>
+  <rect class="d-fillpaper" x="249" y="104" width="12" height="52"/>
+  <rect class="d-fillpaper" x="249" y="248" width="12" height="310"/>
+  <rect class="d-fillpaper" x="394" y="176" width="12" height="52"/>
+  <rect class="d-fillpaper" x="394" y="284" width="12" height="52"/>
+  <rect class="d-fillpaper" x="539" y="356" width="12" height="164"/>
+  <rect class="d-fillpaper" x="684" y="432" width="12" height="52"/>
+
+  <!-- messages: solid = request, dashed = response -->
+  <path class="d-edge" d="M116,112 H247" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="182" y="105" text-anchor="middle">GET /login</text>
+  <path class="d-edge dash" d="M249,148 H118" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="182" y="141" text-anchor="middle">302 /authorize</text>
+  <path class="d-edge acc" d="M116,184 H392" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="327" y="177" text-anchor="middle">GET /authorize + PKCE</text>
+  <path class="d-edge dash" d="M394,220 H118" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="327" y="213" text-anchor="middle">302 /callback?code</text>
+  <path class="d-edge" d="M116,256 H247" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="182" y="249" text-anchor="middle">GET /callback</text>
+  <path class="d-edge acc" d="M261,292 H392" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="327" y="285" text-anchor="middle">POST /token</text>
+  <path class="d-edge dash" d="M394,328 H263" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="327" y="321" text-anchor="middle">access + ID token</text>
+  <path class="d-edge" d="M261,364 H537" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="472" y="357" text-anchor="middle">GET /me, Bearer JWT</text>
+  <path class="d-edge" d="M551,394 H592 V414 H553" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="600" y="408">verify JWT sig</text>
+  <path class="d-edge" d="M551,444 H682" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="617" y="437" text-anchor="middle">SELECT user</text>
+  <path class="d-edge dash" d="M684,480 H553" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="617" y="473" text-anchor="middle">1 row</text>
+  <path class="d-edge dash" d="M539,516 H263" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="472" y="509" text-anchor="middle">200 profile JSON</text>
+  <path class="d-edge dash" d="M249,552 H118" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-lab" x="182" y="545" text-anchor="middle">Set-Cookie: sid</text>
+
+  <!-- step numbers -->
+  <g><circle class="d-badge" cx="30" cy="112" r="11"/><text class="d-bt" x="30" y="116">1</text></g>
+  <g><circle class="d-badge" cx="30" cy="148" r="11"/><text class="d-bt" x="30" y="152">2</text></g>
+  <g><circle class="d-badge" cx="30" cy="184" r="11"/><text class="d-bt" x="30" y="188">3</text></g>
+  <g><circle class="d-badge" cx="30" cy="220" r="11"/><text class="d-bt" x="30" y="224">4</text></g>
+  <g><circle class="d-badge" cx="30" cy="256" r="11"/><text class="d-bt" x="30" y="260">5</text></g>
+  <g><circle class="d-badge" cx="30" cy="292" r="11"/><text class="d-bt" x="30" y="296">6</text></g>
+  <g><circle class="d-badge" cx="30" cy="328" r="11"/><text class="d-bt" x="30" y="332">7</text></g>
+  <g><circle class="d-badge" cx="30" cy="364" r="11"/><text class="d-bt" x="30" y="368">8</text></g>
+  <g><circle class="d-badge" cx="30" cy="404" r="11"/><text class="d-bt" x="30" y="408">9</text></g>
+  <g><circle class="d-badge" cx="30" cy="444" r="11"/><text class="d-bt" x="30" y="448">10</text></g>
+  <g><circle class="d-badge" cx="30" cy="480" r="11"/><text class="d-bt" x="30" y="484">11</text></g>
+  <g><circle class="d-badge" cx="30" cy="516" r="11"/><text class="d-bt" x="30" y="520">12</text></g>
+  <g><circle class="d-badge" cx="30" cy="552" r="11"/><text class="d-bt" x="30" y="556">13</text></g>
+
+  <!-- legend -->
+  <path class="d-edge" d="M110,610 H150" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-s" x="158" y="614">request</text>
+  <path class="d-edge dash" d="M230,610 H270" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-s" x="278" y="614">response</text>
+  <rect class="d-fillpaper" x="356" y="600" width="12" height="20"/>
+  <text class="d-s" x="376" y="614">activation: busy handling a call</text>
+  <path class="d-edge acc" d="M590,610 H630" marker-end="url(#sequence-diagram-d1-ah)"/>
+  <text class="d-s" x="638" y="614">call to Auth0</text>
+</svg>

@@ -1,0 +1,89 @@
+<svg class="hd" viewBox="0 0 800 452" role="img" aria-label="Internal hackathon finals bracket: eight teams play quarterfinals and semifinals on two sides, Flake Hunt and Canary Cat meet in the final, and Canary Cat wins with an auto rollback tool" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="30">Platform eng hackathon 2026</text>
+<text class="d-h" x="20" y="52">Finals bracket, demo day</text>
+<text class="d-s" x="780" y="52" text-anchor="end">judges score impact, demo, code, out of 10</text>
+<text class="d-k" x="68" y="104" text-anchor="middle">Quarters</text>
+<text class="d-k" x="194" y="104" text-anchor="middle">Semis</text>
+<text class="d-k" x="320" y="104" text-anchor="middle">Final</text>
+<text class="d-k" x="480" y="104" text-anchor="middle">Final</text>
+<text class="d-k" x="606" y="104" text-anchor="middle">Semis</text>
+<text class="d-k" x="732" y="104" text-anchor="middle">Quarters</text>
+<path class="d-edge" d="M124,143 H131 V199 H124 M131,171 H138"/>
+<path class="d-edge" d="M124,289 H131 V345 H124 M131,317 H138"/>
+<path class="d-edge" d="M250,171 H257 V317 H250 M257,244 H264"/>
+<path class="d-edge" d="M676,143 H669 V199 H676 M669,171 H662"/>
+<path class="d-edge" d="M676,289 H669 V345 H676 M669,317 H662"/>
+<path class="d-edge" d="M550,171 H543 V317 H550 M543,244 H536"/>
+<path class="d-edge" d="M376,244 H378 M422,244 H424"/>
+<rect class="d-box g3" x="12" y="120" width="112" height="46" rx="10"/>
+<text class="d-t" x="22" y="140">Pager Pals</text>
+<text class="d-s" x="22" y="157">on-call bot</text>
+<text class="d-s" x="114" y="157" text-anchor="end">7.8</text>
+<rect class="d-box g3" x="12" y="176" width="112" height="46" rx="10"/>
+<text class="d-t" x="22" y="196">Flake Hunt</text>
+<text class="d-s" x="22" y="213">test triage</text>
+<text class="d-t" x="114" y="213" text-anchor="end">8.4</text>
+<rect class="d-box g3" x="12" y="266" width="112" height="46" rx="10"/>
+<text class="d-t" x="22" y="286">Cold Start</text>
+<text class="d-s" x="22" y="303">warm pools</text>
+<text class="d-s" x="114" y="303" text-anchor="end">7.1</text>
+<rect class="d-box g3" x="12" y="322" width="112" height="46" rx="10"/>
+<text class="d-t" x="22" y="342">Schema Spy</text>
+<text class="d-s" x="22" y="359">drift alerts</text>
+<text class="d-t" x="114" y="359" text-anchor="end">8.9</text>
+<rect class="d-box g4" x="676" y="120" width="112" height="46" rx="10"/>
+<text class="d-t" x="686" y="140">Cost Ghost</text>
+<text class="d-s" x="686" y="157">idle GPUs</text>
+<text class="d-t" x="778" y="157" text-anchor="end">9.1</text>
+<rect class="d-box g4" x="676" y="176" width="112" height="46" rx="10"/>
+<text class="d-t" x="686" y="196">Diffy</text>
+<text class="d-s" x="686" y="213">PR digests</text>
+<text class="d-s" x="778" y="213" text-anchor="end">8.0</text>
+<rect class="d-box g4" x="676" y="266" width="112" height="46" rx="10"/>
+<text class="d-t" x="686" y="286">Trace Lens</text>
+<text class="d-s" x="686" y="303">OTel viewer</text>
+<text class="d-s" x="778" y="303" text-anchor="end">8.3</text>
+<rect class="d-box g4" x="676" y="322" width="112" height="46" rx="10"/>
+<text class="d-t" x="686" y="342">Canary Cat</text>
+<text class="d-s" x="686" y="359">rollbacks</text>
+<text class="d-t" x="778" y="359" text-anchor="end">8.7</text>
+<rect class="d-box g3" x="138" y="148" width="112" height="46" rx="10"/>
+<text class="d-t" x="148" y="168">Flake Hunt</text>
+<text class="d-s" x="148" y="185">test triage</text>
+<text class="d-t" x="240" y="185" text-anchor="end">8.6</text>
+<rect class="d-box g3" x="138" y="294" width="112" height="46" rx="10"/>
+<text class="d-t" x="148" y="314">Schema Spy</text>
+<text class="d-s" x="148" y="331">drift alerts</text>
+<text class="d-s" x="240" y="331" text-anchor="end">8.2</text>
+<rect class="d-box g4" x="550" y="148" width="112" height="46" rx="10"/>
+<text class="d-t" x="560" y="168">Cost Ghost</text>
+<text class="d-s" x="560" y="185">idle GPUs</text>
+<text class="d-s" x="652" y="185" text-anchor="end">8.8</text>
+<rect class="d-box g4" x="550" y="294" width="112" height="46" rx="10"/>
+<text class="d-t" x="560" y="314">Canary Cat</text>
+<text class="d-s" x="560" y="331">rollbacks</text>
+<text class="d-t" x="652" y="331" text-anchor="end">9.0</text>
+<rect class="d-box g3" x="264" y="221" width="112" height="46" rx="10"/>
+<text class="d-t" x="274" y="241">Flake Hunt</text>
+<text class="d-s" x="274" y="258">test triage</text>
+<text class="d-s" x="366" y="258" text-anchor="end">8.9</text>
+<rect class="d-box g4" x="424" y="221" width="112" height="46" rx="10"/>
+<text class="d-t" x="434" y="241">Canary Cat</text>
+<text class="d-s" x="434" y="258">rollbacks</text>
+<text class="d-t" x="526" y="258" text-anchor="end">9.3</text>
+<circle class="d-box g2" cx="400" cy="244" r="22"/>
+<path class="d-fillacc" d="M400.0,234.0 L402.7,241.3 L410.5,241.6 L404.4,246.4 L406.5,253.9 L400.0,249.6 L393.5,253.9 L395.6,246.4 L389.5,241.6 L397.3,241.3 Z"/>
+<text class="d-k" x="400" y="308" text-anchor="middle">Champion</text>
+<text class="d-h" x="400" y="330" text-anchor="middle">Canary Cat</text>
+<text class="d-s" x="400" y="348" text-anchor="middle">auto rollback on SLO burn</text>
+<text class="d-m" x="400" y="366" text-anchor="middle">ships to prod in Q1</text>
+<rect class="d-tag" x="12" y="402" width="180" height="28" rx="14"/>
+<rect class="d-fill g3" x="26" y="410" width="12" height="12" rx="3"/>
+<text class="d-s" x="46" y="420">left: reliability tools</text>
+<rect class="d-tag" x="204" y="402" width="196" height="28" rx="14"/>
+<rect class="d-fill g4" x="218" y="410" width="12" height="12" rx="3"/>
+<text class="d-s" x="238" y="420">right: cost and delivery</text>
+<rect class="d-tag" x="552" y="402" width="236" height="28" rx="14"/>
+<text class="d-t" x="568" y="421">9.3</text>
+<text class="d-s" x="598" y="420">bold score advances, 5 judges</text>
+</svg>

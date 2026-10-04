@@ -1,0 +1,49 @@
+<svg class="hd" viewBox="0 0 800 580" role="img" aria-label="Pie chart of September AWS spend for the platform account, 182 thousand dollars: EC2 compute 41 percent, RDS Postgres 22 percent, S3 storage 14 percent, data transfer 12 percent, other services 11 percent" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="34">PLATFORM ACCOUNT, SEPTEMBER BILL</text>
+<text class="d-h" x="40" y="58">Share of cloud spend by service</text>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="734" y="30" width="26" height="26"/>
+<path class="d-fill g4" d="M250,320 L250.0,130.0 A190,190 0 0 1 351.8,480.4 Z"/>
+<path class="d-fill g1" d="M250,320 L351.8,480.4 A190,190 0 0 1 111.5,450.1 Z"/>
+<path class="d-fill g2" d="M250,320 L111.5,450.1 A190,190 0 0 1 61.5,296.2 Z"/>
+<path class="d-fill g3" d="M250,320 L61.5,296.2 A190,190 0 0 1 128.9,173.6 Z"/>
+<path class="d-fill g0" d="M250,320 L128.9,173.6 A190,190 0 0 1 250.0,130.0 Z"/>
+<text class="d-tw" x="367" y="290" text-anchor="middle">41%</text>
+<text class="d-tw" x="235" y="445" text-anchor="middle">22%</text>
+<text class="d-tw" x="134" y="362" text-anchor="middle">14%</text>
+<text class="d-tw" x="143" y="265" text-anchor="middle">12%</text>
+<text class="d-tw" x="209" y="210" text-anchor="middle">11%</text>
+<text class="d-k" x="500" y="114">SERVICE</text>
+<text class="d-k" x="752" y="114" text-anchor="end">MONTHLY</text>
+<rect class="d-fill g4" x="500" y="137" width="16" height="16"/>
+<text class="d-t" x="528" y="150">EC2 compute</text>
+<text class="d-s" x="528" y="168">eks-nodes, batch ASGs</text>
+<text class="d-t" x="752" y="150" text-anchor="end">$74.6k</text>
+<text class="d-s" x="752" y="168" text-anchor="end">41%</text>
+<rect class="d-fill g1" x="500" y="191" width="16" height="16"/>
+<text class="d-t" x="528" y="204">RDS Postgres</text>
+<text class="d-s" x="528" y="222">orders, ledger clusters</text>
+<text class="d-t" x="752" y="204" text-anchor="end">$40.0k</text>
+<text class="d-s" x="752" y="222" text-anchor="end">22%</text>
+<rect class="d-fill g2" x="500" y="245" width="16" height="16"/>
+<text class="d-t" x="528" y="258">S3 storage</text>
+<text class="d-s" x="528" y="276">logs, backups, lake</text>
+<text class="d-t" x="752" y="258" text-anchor="end">$25.5k</text>
+<text class="d-s" x="752" y="276" text-anchor="end">14%</text>
+<rect class="d-fill g3" x="500" y="299" width="16" height="16"/>
+<text class="d-t" x="528" y="312">Data transfer</text>
+<text class="d-s" x="528" y="330">cross-AZ, egress</text>
+<text class="d-t" x="752" y="312" text-anchor="end">$21.8k</text>
+<text class="d-s" x="752" y="330" text-anchor="end">12%</text>
+<rect class="d-fill g0" x="500" y="353" width="16" height="16"/>
+<text class="d-t" x="528" y="366">Other</text>
+<text class="d-s" x="528" y="384">EKS, NAT, CloudWatch</text>
+<text class="d-t" x="752" y="366" text-anchor="end">$20.0k</text>
+<text class="d-s" x="752" y="384" text-anchor="end">11%</text>
+<path class="d-grid" d="M500,412 H752"/>
+<text class="d-t" x="528" y="436">Total</text>
+<text class="d-t" x="752" y="436" text-anchor="end">$181.9k</text>
+<rect class="d-note g2" x="500" y="460" width="252" height="78" rx="6"/>
+<text class="d-tn" x="514" y="484">Data transfer tripled since</text>
+<text class="d-tn" x="514" y="504">Kafka replicas went cross-AZ;</text>
+<text class="d-tn" x="514" y="524">pin consumers to their AZ</text>
+</svg>

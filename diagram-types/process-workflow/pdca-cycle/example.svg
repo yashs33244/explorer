@@ -1,0 +1,56 @@
+<svg class="hd" viewBox="0 0 800 500" role="img" aria-label="PDCA cycle for reducing flaky CI tests: plan names the shared DB fixture cause, do pilots per-test schemas, check measures flaky rate falling from 4.1 to 1.3 percent, act makes the fix the default" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="pdca-cycle-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+  <text class="d-k" x="20" y="30">Flaky CI tests: PDCA cycle 3</text>
+  <text class="d-s" x="780" y="30" text-anchor="end">monorepo, 14k tests</text>
+  <path class="d-fill g4" d="M400,270 L280,270 A120,120 0 0 1 400,150 Z"/>
+  <path class="d-fill g3" d="M400,270 L400,150 A120,120 0 0 1 520,270 Z"/>
+  <path class="d-fill g5" d="M400,270 L520,270 A120,120 0 0 1 400,390 Z"/>
+  <path class="d-fill g1" d="M400,270 L400,390 A120,120 0 0 1 280,270 Z"/>
+  <text class="d-h" x="345" y="218" text-anchor="middle">Plan</text>
+  <text class="d-tw" x="345" y="236" text-anchor="middle">why flaky?</text>
+  <text class="d-h" x="455" y="218" text-anchor="middle">Do</text>
+  <text class="d-tw" x="455" y="236" text-anchor="middle">pilot fix</text>
+  <text class="d-h" x="455" y="330" text-anchor="middle">Check</text>
+  <text class="d-tw" x="455" y="348" text-anchor="middle">measure</text>
+  <text class="d-h" x="345" y="330" text-anchor="middle">Act</text>
+  <text class="d-tw" x="345" y="348" text-anchor="middle">standardise</text>
+  <circle class="d-fillpaper" cx="400" cy="270" r="34"/>
+  <text class="d-t" x="400" y="268" text-anchor="middle">Cycle 3</text>
+  <text class="d-s" x="400" y="285" text-anchor="middle">sprint 41</text>
+  <path class="d-edge thick" d="M345.3,134.6 A146,146 0 0 1 454.7,134.6" marker-end="url(#pdca-cycle-d1-ah)"/>
+  <path class="d-edge thick" d="M535.4,215.3 A146,146 0 0 1 535.4,324.7" marker-end="url(#pdca-cycle-d1-ah)"/>
+  <path class="d-edge thick" d="M454.7,405.4 A146,146 0 0 1 345.3,405.4" marker-end="url(#pdca-cycle-d1-ah)"/>
+  <path class="d-edge thick" d="M264.6,324.7 A146,146 0 0 1 264.6,215.3" marker-end="url(#pdca-cycle-d1-ah)"/>
+  <path class="d-edge dash" d="M315,185 L240,150"/>
+  <rect class="d-box g4" x="20" y="60" width="220" height="146" rx="12"/>
+  <image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="32" y="72" width="22" height="22"/>
+  <text class="d-t" x="62" y="88">Plan: name the cause</text>
+  <text class="d-s" x="34" y="116">Flaky rate: 4.1% of runs</text>
+  <text class="d-s" x="34" y="137">Top 37 tests: 80% of fails</text>
+  <text class="d-s" x="34" y="158">Cause: shared DB fixtures</text>
+  <text class="d-m" x="34" y="188">goal: flaky &lt; 1% by S43</text>
+  <path class="d-edge dash" d="M485,185 L560,150"/>
+  <rect class="d-box g3" x="560" y="60" width="220" height="146" rx="12"/>
+  <image class="d-logo" data-logo="github.com" data-name="GitHub" x="572" y="72" width="22" height="22"/>
+  <text class="d-t" x="602" y="88">Do: small experiment</text>
+  <text class="d-s" x="574" y="116">Quarantine 37 tests by tag</text>
+  <text class="d-s" x="574" y="137">Per-test Postgres schema</text>
+  <text class="d-s" x="574" y="158">Pilot on payments-svc only</text>
+  <text class="d-m" x="574" y="188">@pytest.mark.quarantine</text>
+  <path class="d-edge dash" d="M485,355 L560,400"/>
+  <rect class="d-box g5" x="560" y="330" width="220" height="146" rx="12"/>
+  <image class="d-logo" data-logo="buildkite.com" data-name="Buildkite" x="572" y="342" width="22" height="22"/>
+  <text class="d-t" x="602" y="358">Check: measure it</text>
+  <text class="d-s" x="574" y="386">Flaky rate: 4.1% to 1.3%</text>
+  <text class="d-s" x="574" y="407">CI p50 down 3 min</text>
+  <text class="d-s" x="574" y="428">2 new flakes: timezone</text>
+  <text class="d-m" x="574" y="458">rerun_pass / runs, 14d</text>
+  <path class="d-edge dash" d="M315,355 L240,400"/>
+  <rect class="d-box g1" x="20" y="330" width="220" height="146" rx="12"/>
+  <image class="d-logo" data-logo="pytest.org" data-name="pytest" x="32" y="342" width="22" height="22"/>
+  <text class="d-t" x="62" y="358">Act: standardise</text>
+  <text class="d-s" x="34" y="386">Per-test schema by default</text>
+  <text class="d-s" x="34" y="407">Flake gate on every PR</text>
+  <text class="d-s" x="34" y="428">Next cycle: timezone tests</text>
+  <text class="d-m" x="34" y="458">conftest.py fixture v2</text>
+</svg>
