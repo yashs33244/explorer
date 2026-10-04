@@ -89,6 +89,9 @@ function table(columns, rows, opts) {
 const li = (arr) => '<ul>' + arr.map((x) => `<li>${esc(x)}</li>`).join('') + '</ul>';
 const codeify = (s) => esc(s).replace(/((?:[A-Za-z0-9_.\-]+\/)+[A-Za-z0-9_.\-]+|[A-Za-z0-9_]+\.(?:c|h|y|l|js|ts|tsx|py|go|rs|java|md|json|sql|sgml|yml|yaml|toml|sh))/g, '<code>$1</code>');
 const ROLE = { architecture: 'How the parts connect', lifecycle: 'Follow it step by step', structure: 'Anatomy' };
+const { inject: injectLogos } = require('./logos.js');
+// optional: diagram-types/catalog.json gives each meta "type" slug a readable name for the chip on the figure
+const CATALOG = (() => { const f = path.join(HERE, '..', '..', '..', 'diagram-types', 'catalog.json'); try { return Object.fromEntries(readJson(f).map((t) => [t.slug, t.name])); } catch (e) { return {}; } })();
 
 let autoDiagram = null;
 function fallbackFigure(key, spec) {
@@ -104,9 +107,11 @@ function figures(key) {
     return '<div class="figs">' + meta.map((d) => {
       const f = path.join(dir, d.file);
       if (!fs.existsSync(f)) return '';
-      const svg = fs.readFileSync(f, 'utf8').replace(/<\?xml[^>]*\?>/, '').trim();
+      const svg = injectLogos(fs.readFileSync(f, 'utf8').replace(/<\?xml[^>]*\?>/, '').trim());
+      const slug = d.type ? d.type.split('/').pop() : ''; // accept "layered-architecture" or "software/layered-architecture"
+      const chip = slug ? `<span class="ftype">${esc(CATALOG[slug] || slug.replace(/-/g, ' '))}</span>` : '';
       const badges = d.badges && d.badges.length ? `<ol class="badges">${d.badges.map((b) => `<li value="${b.n}">${esc(b.meaning)}</li>`).join('')}</ol>` : '';
-      return `<figure class="fig"><h4>${esc(ROLE[d.role] || d.role)}: ${esc(d.title)}</h4><div class="figscroll">${svg}</div>${badges}<figcaption>${esc(d.caption)}</figcaption></figure>`;
+      return `<figure class="fig">${chip}<h4>${esc(ROLE[d.role] || d.role)}: ${esc(d.title)}</h4><button class="fzoom" type="button" aria-label="Open full size: ${esc(d.title)}">Full size</button><div class="figscroll">${svg}</div>${badges}<figcaption>${esc(d.caption)}</figcaption></figure>`;
     }).join('') + '</div>';
   }
   const t = topics[key];
@@ -161,24 +166,30 @@ const hero = `<section class="hero"><p class="kicker">${esc(cfg.kicker || '')}</
 const css = fs.readFileSync(path.join(ASSETS, 'style.css'), 'utf8');
 const js = fs.readFileSync(path.join(ASSETS, 'app.js'), 'utf8');
 const brand = `<div class="brand"><svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><path d="M20 4 L34 12 V28 L20 36 L6 28 V12 Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M6 12 L20 20 L34 12 M20 20 V36" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><div><b>${esc(cfg.title)}</b><small>${esc(cfg.brandSub || '')}</small></div></div>`;
-const side = `<aside class="side" id="side">${brand}<nav aria-label="Sections">${nav}</nav><div class="prog"><div class="bar"><i id="bar"></i></div><small><b id="done">0</b> of ${total} interview questions ticked</small></div><button class="btn" id="toggleAll" type="button">Open all answers</button><button class="btn ghost" id="theme" type="button">Switch theme</button></aside>`;
+const side = `<aside class="side" id="side">${brand}<nav aria-label="Sections">${nav}</nav><div class="prog"><div class="bar"><i id="bar"></i></div><small><b id="done">0</b> of ${total} interview questions ticked</small></div><button class="btn" id="toggleAll" type="button">Open all answers</button><div class="dsw" role="group" aria-label="Diagram style"><button type="button" data-ds="hand" aria-pressed="false">Hand-drawn</button><button type="button" data-ds="clean" aria-pressed="false">Clean</button></div><button class="btn ghost" id="theme" type="button">Switch theme</button></aside>`;
+const DSTYLE = cfg.diagramStyle === 'clean' ? 'clean' : 'hand';
+const filters = fs.readFileSync(path.join(ASSETS, 'filters.svg'), 'utf8').trim();
 
 const html = `<title>${esc(cfg.title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>${css}</style>
-<div class="shell">
+${filters}
+<div class="shell" id="shell" data-dstyle="${DSTYLE}">
 ${side}
 <main class="main" id="top">
 ${hero}
 ${ORDER.map((k, i) => section(k, i)).join('\n')}
 ${extras.map(extraSection).join('\n')}
 <footer class="foot"><p>${esc(cfg.footer || '')}</p></footer>
-</main></div>
+</main>
+<dialog class="zoomdlg" id="zoomdlg" aria-label="Diagram, full size"><button class="btn ghost" type="button" id="zoomclose">Close</button><div class="zoombody" id="zoombody"></div></dialog>
+</div>
 <script>window.EXPLORER_KEY=${JSON.stringify(cfg.storageKey || 'explorer-known')};</script>
 <script>${js}</script>`;
 
 fs.writeFileSync(args.out, clean(html));
 const svgs = (html.match(/<svg /g) || []).length;
 const problems = [/="NaN"/, /NaN(%|ch|px)/, /="undefined"/, />undefined</].filter((re) => re.test(html)).map(String);
+if (html.length > 4 * 1024 * 1024) console.warn(`warning: ${args.out} is ${Math.round(html.length / 1048576)} MB; logo-heavy diagrams inline every logo, so trim logo slots or split the guide`);
 console.log(`wrote ${args.out}: ${Math.round(html.length / 1024)} KB, ${ORDER.length} topics, ${svgs} svgs, ${total} questions${problems.length ? ', PROBLEMS: ' + problems.join(',') : ''}`);

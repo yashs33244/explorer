@@ -53,6 +53,35 @@
     root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
   });
 
+  // diagram style: hand-drawn or clean, remembered per viewer
+  var shell = document.getElementById('shell');
+  var DS_KEY = KEY + '-dstyle';
+  function setStyle(v) {
+    shell.setAttribute('data-dstyle', v);
+    document.querySelectorAll('[data-ds]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ds') === v)); });
+  }
+  var savedDs = null; try { savedDs = localStorage.getItem(DS_KEY); } catch (e) {}
+  setStyle(savedDs === 'hand' || savedDs === 'clean' ? savedDs : shell.getAttribute('data-dstyle') || 'hand');
+  document.querySelectorAll('[data-ds]').forEach(function (b) {
+    b.addEventListener('click', function () { var v = b.getAttribute('data-ds'); setStyle(v); try { localStorage.setItem(DS_KEY, v); } catch (e) {} });
+  });
+
+  // full-size view of one diagram
+  var dlg = document.getElementById('zoomdlg'), body = document.getElementById('zoombody');
+  document.querySelectorAll('.fzoom').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var svg = b.parentNode.querySelector('svg'); if (!svg || !dlg.showModal) return;
+      // the dialog sits in #shell, so it follows the page style; a figure with its own data-dstyle passes it on
+      var own = b.parentNode.getAttribute('data-dstyle');
+      if (own) dlg.setAttribute('data-dstyle', own); else dlg.removeAttribute('data-dstyle');
+      var h = b.parentNode.querySelector('h4');
+      dlg.setAttribute('aria-label', (h ? h.textContent : 'Diagram') + ', full size');
+      body.innerHTML = ''; body.appendChild(svg.cloneNode(true)); dlg.showModal();
+    });
+  });
+  document.getElementById('zoomclose').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+
   var links = {};
   document.querySelectorAll('[data-nav]').forEach(function (a) { links[a.getAttribute('data-nav')] = a; });
   var targets = Object.keys(links).map(function (k) { return document.getElementById(k); }).filter(Boolean);
