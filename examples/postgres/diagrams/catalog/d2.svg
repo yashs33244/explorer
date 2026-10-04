@@ -1,0 +1,62 @@
+<svg class="hd" viewBox="0 0 800 470" role="img" aria-label="Steps from backend start through a catalog lookup, a function call, an error, and a cache invalidation" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="catalog-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="15" y="25" width="770" height="235" rx="30"/>
+<text class="d-s" x="30" y="46">Look up and call</text>
+<rect class="d-blob" x="15" y="290" width="770" height="150" rx="30"/>
+<text class="d-s" x="30" y="311">Run, fail, clean up</text>
+
+<rect class="d-box g0" x="30" y="65" width="150" height="70" rx="14"/>
+<text class="d-t" x="105" y="94" text-anchor="middle">Caches start</text>
+<text class="d-m" x="105" y="116" text-anchor="middle">InitCatalogCache</text>
+<rect class="d-box g1" x="230" y="65" width="150" height="70" rx="14"/>
+<text class="d-t" x="305" y="94" text-anchor="middle">Look up a row</text>
+<text class="d-m" x="305" y="116" text-anchor="middle">SearchSysCache1</text>
+<rect class="d-box g2" x="430" y="65" width="150" height="70" rx="14"/>
+<text class="d-t" x="505" y="94" text-anchor="middle">Find function</text>
+<text class="d-m" x="505" y="116" text-anchor="middle">fmgr_info</text>
+<rect class="d-box g3" x="630" y="65" width="150" height="70" rx="14"/>
+<text class="d-t" x="705" y="94" text-anchor="middle">Call function</text>
+<text class="d-m" x="705" y="116" text-anchor="middle">FunctionCall1Coll</text>
+
+<g transform="translate(250,185)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="300" y="210">pg_proc on disk</text>
+
+<rect class="d-box g4" x="630" y="330" width="150" height="70" rx="14"/>
+<text class="d-t" x="705" y="359" text-anchor="middle">Allocate memory</text>
+<text class="d-m" x="705" y="381" text-anchor="middle">palloc</text>
+<rect class="d-box g5" x="430" y="330" width="150" height="70" rx="14"/>
+<text class="d-t" x="505" y="359" text-anchor="middle">Error jumps out</text>
+<text class="d-m" x="505" y="381" text-anchor="middle">ereport(ERROR)</text>
+<rect class="d-box g2" x="230" y="330" width="150" height="70" rx="14"/>
+<text class="d-t" x="305" y="359" text-anchor="middle">Context freed</text>
+<text class="d-m" x="305" y="381" text-anchor="middle">MemoryContextReset</text>
+<rect class="d-box g1" x="30" y="330" width="150" height="70" rx="14"/>
+<text class="d-t" x="105" y="359" text-anchor="middle">Stale rows drop</text>
+<text class="d-m" x="105" y="381" text-anchor="middle">inval.c</text>
+
+<path class="d-edge acc" d="M180,100 H230" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="205" y="92" text-anchor="middle">then</text>
+<path class="d-edge acc" d="M380,100 H430" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="405" y="92" text-anchor="middle">gives</text>
+<path class="d-edge acc" d="M580,100 H630" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="605" y="92" text-anchor="middle">fills</text>
+<path class="d-edge dash" d="M305,135 V185" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="345" y="163" text-anchor="middle">on miss</text>
+<path class="d-edge acc" d="M705,135 V330" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="705" y="240" text-anchor="middle">runs</text>
+<path class="d-edge acc" d="M630,365 H580" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="605" y="357" text-anchor="middle">fails</text>
+<path class="d-edge acc" d="M430,365 H380" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="405" y="357" text-anchor="middle">aborts</text>
+<path class="d-edge" d="M230,365 H180" marker-end="url(#catalog-d2-ah)"/>
+<text class="d-lab" x="205" y="357" text-anchor="middle">later</text>
+
+<g><circle class="d-badge" cx="30" cy="65" r="11"/><text class="d-bt" x="30" y="69">1</text></g>
+<g><circle class="d-badge" cx="230" cy="65" r="11"/><text class="d-bt" x="230" y="69">2</text></g>
+<g><circle class="d-badge" cx="430" cy="65" r="11"/><text class="d-bt" x="430" y="69">3</text></g>
+<g><circle class="d-badge" cx="630" cy="65" r="11"/><text class="d-bt" x="630" y="69">4</text></g>
+<g><circle class="d-badge" cx="630" cy="330" r="11"/><text class="d-bt" x="630" y="334">5</text></g>
+<g><circle class="d-badge" cx="430" cy="330" r="11"/><text class="d-bt" x="430" y="334">6</text></g>
+<g><circle class="d-badge" cx="230" cy="330" r="11"/><text class="d-bt" x="230" y="334">7</text></g>
+<g><circle class="d-badge" cx="30" cy="330" r="11"/><text class="d-bt" x="30" y="334">8</text></g>
+</svg>

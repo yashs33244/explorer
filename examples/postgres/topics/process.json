@@ -1,0 +1,326 @@
+{
+ "key": "process",
+ "title": "Process model and a connection lifecycle",
+ "one_liner": "One parent process (postmaster) listens and forks a new backend process per client, plus helper processes that do background chores.",
+ "analogy": "A restaurant host seats each guest with their own waiter, while kitchen staff work quietly in the back. If the host panics, everyone resets.",
+ "big_picture": [
+  "The postmaster is the parent. It listens on a socket, forks children, and restarts them if they die.",
+  "Each client connection gets its own backend process, forked from the postmaster. No threads per connection.",
+  "Helper processes do chores: checkpointer, bgwriter, walwriter and the startup process (recovery). Autovacuum workers and walsenders are other process types, started on demand.",
+  "All processes share one block of shared memory. The postmaster avoids locks and shared data structures, so a broken child cannot hang it.",
+  "A backend first reads a startup packet, then authenticates, then loops in PostgresMain reading messages.",
+  "Clients talk the frontend/backend protocol: one-letter message types like Q (simple query) or P/B/E (extended)."
+ ],
+ "flow": [
+  {
+   "step": "Postmaster boots",
+   "detail": "Reads config, sets up shared memory, opens listen sockets, starts the startup process and helpers.",
+   "where": "src/backend/postmaster/postmaster.c: PostmasterMain"
+  },
+  {
+   "step": "Wait for connections",
+   "detail": "The main loop waits on listen sockets and signals. When a client connects, it accepts the socket.",
+   "where": "src/backend/postmaster/postmaster.c: ServerLoop"
+  },
+  {
+   "step": "Fork a backend",
+   "detail": "The postmaster takes a child slot, then forks a child of the right type. The child inherits shared memory.",
+   "where": "src/backend/postmaster/pmchild.c: assign_backend_pmchild; postmaster.c: BackendStartup; launch_backend.c: postmaster_child_launch"
+  },
+  {
+   "step": "Read startup packet, pick auth rule",
+   "detail": "The child learns protocol version, user and database. It then matches pg_hba.conf to choose the auth method.",
+   "where": "src/backend/tcop/backend_startup.c: BackendInitialize, ProcessStartupPacket; src/backend/libpq/hba.c: hba_getauthmethod"
+  },
+  {
+   "step": "Set up and authenticate",
+   "detail": "The child gets a PGPROC slot (InitProcess). InitPostgres then runs ClientAuthentication, which runs the method chosen in the previous step.",
+   "where": "src/backend/utils/init/postinit.c: InitPostgres, PerformAuthentication; src/backend/libpq/auth.c: ClientAuthentication"
+  },
+  {
+   "step": "Enter the main loop",
+   "detail": "BackendMain calls PostgresMain. It sends ReadyForQuery, then reads one command at a time with ReadCommand.",
+   "where": "src/backend/tcop/backend_startup.c: BackendMain; src/backend/tcop/postgres.c: PostgresMain"
+  },
+  {
+   "step": "Run the query",
+   "detail": "Simple protocol: exec_simple_query parses, plans and runs. Extended: Parse, Bind, Execute are separate messages.",
+   "where": "src/backend/tcop/postgres.c: exec_simple_query, exec_parse_message, exec_bind_message, exec_execute_message"
+  },
+  {
+   "step": "Exit and reap",
+   "detail": "On Terminate or EOF the backend exits. Postmaster sees SIGCHLD and cleans up the slot, or resets everything after a crash.",
+   "where": "src/backend/postmaster/postmaster.c: process_pm_child_exit, HandleFatalError"
+  }
+ ],
+ "diagram": {
+  "claim": "A client connects to the postmaster, which forks a backend that authenticates and loops on queries, while helper processes share memory.",
+  "nodes": [
+   {
+    "id": "client",
+    "label": "Client (libpq)",
+    "group": "Outside"
+   },
+   {
+    "id": "pm",
+    "label": "Postmaster",
+    "group": "Parent"
+   },
+   {
+    "id": "be",
+    "label": "Backend process",
+    "group": "Per connection"
+   },
+   {
+    "id": "auth",
+    "label": "auth.c + hba.c",
+    "group": "Per connection"
+   },
+   {
+    "id": "pgm",
+    "label": "PostgresMain loop",
+    "group": "Per connection"
+   },
+   {
+    "id": "exec",
+    "label": "Parse/plan/execute",
+    "group": "Per connection"
+   },
+   {
+    "id": "shm",
+    "label": "Shared memory",
+    "group": "Shared"
+   },
+   {
+    "id": "ckpt",
+    "label": "Checkpointer/bgwriter",
+    "group": "Helpers"
+   },
+   {
+    "id": "wal",
+    "label": "WAL writer",
+    "group": "Helpers"
+   },
+   {
+    "id": "av",
+    "label": "Autovacuum",
+    "group": "Helpers"
+   }
+  ],
+  "edges": [
+   {
+    "from": "client",
+    "to": "pm",
+    "label": "connects"
+   },
+   {
+    "from": "pm",
+    "to": "be",
+    "label": "forks"
+   },
+   {
+    "from": "client",
+    "to": "be",
+    "label": "sends startup"
+   },
+   {
+    "from": "be",
+    "to": "auth",
+    "label": "checks"
+   },
+   {
+    "from": "auth",
+    "to": "pgm",
+    "label": "admits"
+   },
+   {
+    "from": "client",
+    "to": "pgm",
+    "label": "sends Q/P/B/E"
+   },
+   {
+    "from": "pgm",
+    "to": "exec",
+    "label": "runs"
+   },
+   {
+    "from": "exec",
+    "to": "shm",
+    "label": "reads/writes"
+   },
+   {
+    "from": "ckpt",
+    "to": "shm",
+    "label": "flushes"
+   },
+   {
+    "from": "wal",
+    "to": "shm",
+    "label": "flushes WAL"
+   },
+   {
+    "from": "pm",
+    "to": "ckpt",
+    "label": "forks"
+   },
+   {
+    "from": "pm",
+    "to": "av",
+    "label": "forks"
+   },
+   {
+    "from": "pm",
+    "to": "wal",
+    "label": "forks"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/postmaster/postmaster.c",
+   "what": "PostmasterMain, ServerLoop, BackendStartup, child exit and crash handling."
+  },
+  {
+   "path": "src/backend/postmaster/launch_backend.c",
+   "what": "postmaster_child_launch forks the right child type via fork_process."
+  },
+  {
+   "path": "src/backend/postmaster/pmchild.c",
+   "what": "Child slot bookkeeping for the postmaster."
+  },
+  {
+   "path": "src/backend/tcop/backend_startup.c",
+   "what": "BackendMain, BackendInitialize, ProcessStartupPacket for new connections."
+  },
+  {
+   "path": "src/backend/tcop/postgres.c",
+   "what": "PostgresMain loop, exec_simple_query, extended protocol handlers."
+  },
+  {
+   "path": "src/backend/utils/init/postinit.c",
+   "what": "InitPostgres and PerformAuthentication set up a backend."
+  },
+  {
+   "path": "src/backend/libpq/auth.c",
+   "what": "ClientAuthentication picks and runs the auth method."
+  },
+  {
+   "path": "src/backend/libpq/hba.c",
+   "what": "Parses and matches pg_hba.conf rules."
+  },
+  {
+   "path": "src/include/libpq/protocol.h",
+   "what": "PqMsg_* one-letter protocol message type codes."
+  }
+ ],
+ "interview": [
+  {
+   "q": "Does PostgreSQL use threads or processes per connection?",
+   "answer": [
+    "Processes. The postmaster forks one backend per client.",
+    "Processes isolate crashes and memory, but cost more than threads."
+   ],
+   "trap": "Many assume threads like MySQL. Postgres uses fork, not a thread pool."
+  },
+  {
+   "q": "What does the postmaster do, and what does it avoid doing?",
+   "answer": [
+    "It listens, forks children, and restarts them after exit.",
+    "It stays away from shared memory contents so it cannot be corrupted by a buggy child.",
+    "Look at ServerLoop in postmaster.c."
+   ]
+  },
+  {
+   "q": "Name the auxiliary processes and what each does.",
+   "answer": [
+    "Auxiliary processes: checkpointer writes dirty pages at checkpoints, bgwriter trickles dirty pages out early, walwriter flushes WAL, startup replays WAL in recovery.",
+    "Autovacuum launcher asks the postmaster to start worker processes that vacuum tables.",
+    "A walsender is a normal backend running in replication mode. It streams WAL to a replica."
+   ],
+   "trap": "Calling walsender or autovacuum \"auxiliary\". Only startup, bgwriter, checkpointer, walwriter and a few more are."
+  },
+  {
+   "q": "How does a client connect, step by step?",
+   "answer": [
+    "A client connects. The postmaster accepts, then BackendStartup forks a child.",
+    "The child reads the startup packet in ProcessStartupPacket.",
+    "It matches pg_hba.conf (hba_getauthmethod), gets a PGPROC slot, then InitPostgres runs ClientAuthentication.",
+    "PostgresMain then sends ReadyForQuery."
+   ],
+   "trap": "Authentication happens in the child backend, not in the postmaster."
+  },
+  {
+   "q": "How is auth method chosen?",
+   "answer": [
+    "hba.c matches connection type, database, user and address against pg_hba.conf.",
+    "This happens in BackendInitialize, right after the startup packet is read.",
+    "The first matching line names the method, such as scram-sha-256 or trust.",
+    "auth.c later runs that method, for example via auth-scram.c."
+   ]
+  },
+  {
+   "q": "What does PostgresMain do in its loop?",
+   "answer": [
+    "It sets up signals and calls InitPostgres.",
+    "Then it repeats: send ReadyForQuery, ReadCommand, switch on the message type.",
+    "Q goes to exec_simple_query. P, B, E go to the extended handlers. X exits."
+   ]
+  },
+  {
+   "q": "Simple vs extended query protocol?",
+   "answer": [
+    "Simple: one Q message with SQL text. Server parses, plans and runs it all.",
+    "Extended: Parse, Bind, Execute, Sync as separate messages.",
+    "This allows prepared statements, parameters and binary formats."
+   ],
+   "trap": "Extended is not just faster. Its main value is safe parameters and reuse."
+  },
+  {
+   "q": "What happens when one backend crashes?",
+   "answer": [
+    "Postmaster sees the exit in process_pm_child_exit and calls HandleFatalError.",
+    "It signals all other children to quit, because shared memory may be corrupt.",
+    "Then it re-initializes and restarts, if restart_after_crash is on."
+   ],
+   "trap": "People think only the crashed connection dies. Every connection is dropped."
+  }
+ ],
+ "contributor_tips": [
+  "Start by reading the header comment of postmaster.c, then follow BackendStartup into BackendMain.",
+  "Use a debugger: attach to a backend pid and break at PostgresMain or exec_simple_query.",
+  "Be careful: code run before fork or in the postmaster must not take locks or touch shared state.",
+  "Good first patches: docs, comments, tests under src/test, small protocol or error message fixes."
+ ],
+ "glossary": [
+  {
+   "term": "Postmaster",
+   "meaning": "The parent process that listens for connections and forks children."
+  },
+  {
+   "term": "Backend",
+   "meaning": "The per-connection process that runs a client's queries."
+  },
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log, a record of changes written before data pages."
+  },
+  {
+   "term": "Startup packet",
+   "meaning": "First message from client with user, database and protocol version."
+  },
+  {
+   "term": "Portal",
+   "meaning": "A running query's state, created by Bind and run by Execute."
+  },
+  {
+   "term": "pg_hba.conf",
+   "meaning": "Config file listing who may connect and how they authenticate."
+  }
+ ],
+ "more": [
+  "What happens at max_connections? The postmaster refuses with \"too many clients\".",
+  "Name the shutdown modes: smart, fast and immediate (SIGTERM, SIGINT, SIGQUIT).",
+  "How does query cancel work? A separate connection sends a cancel key to the postmaster.",
+  "Process per connection is costly. The usual answer is a pooler such as pgbouncer."
+ ]
+}

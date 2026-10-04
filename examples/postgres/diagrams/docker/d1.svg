@@ -1,0 +1,68 @@
+<svg class="hd" viewBox="0 0 800 560" role="img" aria-label="A docker run goes from a root entrypoint, through gosu, to a postmaster that asks the kernel for shared memory, semaphores and sockets" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="docker-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="12" y="20" width="208" height="340" rx="36"/>
+<text class="d-s" x="30" y="44">Container runtime and image</text>
+<rect class="d-blob" x="250" y="110" width="220" height="300" rx="36"/>
+<text class="d-s" x="268" y="134">PostgreSQL processes</text>
+<rect class="d-blob2" x="250" y="432" width="220" height="112" rx="36"/>
+<text class="d-s" x="268" y="454">On disk</text>
+<rect class="d-blob" x="552" y="20" width="238" height="480" rx="36"/>
+<text class="d-s" x="570" y="44">Linux kernel gives</text>
+
+<rect class="d-box g0" x="24" y="60" width="184" height="50" rx="14"/>
+<g transform="translate(30,70) scale(.75)"><rect class="d-fillpaper" x="4" y="4" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="16" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="28" width="32" height="9" rx="3"/><circle class="d-fillacc" cx="10" cy="9" r="1.8"/><circle class="d-fillacc" cx="10" cy="21" r="1.8"/></g>
+<text class="d-t" x="66" y="90">Container runtime</text>
+<rect class="d-box g1" x="24" y="170" width="184" height="50" rx="14"/>
+<g transform="translate(30,180) scale(.75)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28"/></g>
+<text class="d-m" x="62" y="200">docker-entrypoint.sh</text>
+<rect class="d-box g1" x="24" y="280" width="184" height="50" rx="14"/>
+<g transform="translate(30,290) scale(.75)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="66" y="310">gosu postgres</text>
+
+<rect class="d-box g2" x="270" y="150" width="180" height="50" rx="14"/>
+<g transform="translate(276,160) scale(.75)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="312" y="180">postmaster</text>
+<rect class="d-box g2" x="270" y="340" width="180" height="50" rx="14"/>
+<g transform="translate(276,350) scale(.75)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="312" y="370">initdb</text>
+
+<rect class="d-box g3" x="270" y="474" width="180" height="56" rx="14"/>
+<g transform="translate(276,484) scale(.9)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="318" y="498">VOLUME</text>
+<text class="d-s" x="318" y="516">PGDATA files</text>
+
+<rect class="d-box g4" x="566" y="60" width="210" height="46" rx="14"/>
+<text class="d-t" x="582" y="88">mmap shared memory</text>
+<rect class="d-box g4" x="566" y="150" width="210" height="46" rx="14"/>
+<text class="d-t" x="582" y="178">/dev/shm (DSM)</text>
+<rect class="d-box g4" x="566" y="240" width="210" height="46" rx="14"/>
+<text class="d-t" x="582" y="268">POSIX semaphores</text>
+<rect class="d-box g4" x="566" y="330" width="210" height="46" rx="14"/>
+<text class="d-t" x="582" y="358">unix socket / TCP</text>
+<rect class="d-box g4" x="566" y="420" width="210" height="46" rx="14"/>
+<text class="d-t" x="582" y="448">OS page cache</text>
+
+<path class="d-edge" d="M116,110 V170" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="124" y="145">starts as root</text>
+<path class="d-edge" d="M116,220 V280" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="124" y="255">drops root</text>
+<path class="d-edge" d="M208,295 C236,295 240,175 270,175" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="241" y="232" text-anchor="middle">execs</text>
+<path class="d-edge" d="M208,315 C236,315 240,365 270,365" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="241" y="350" text-anchor="middle">runs</text>
+<path class="d-edge acc" d="M208,85 C330,85 360,95 360,150" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="290" y="78" text-anchor="middle">sends SIGINT</text>
+<path class="d-edge" d="M360,390 V474" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="368" y="436">writes cluster</text>
+
+<path class="d-edge" d="M450,168 C500,168 520,83 566,83" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="548" y="76" text-anchor="end">maps</text>
+<path class="d-edge" d="M450,175 C500,175 520,173 566,173" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="548" y="166" text-anchor="end">shm_open</text>
+<path class="d-edge" d="M450,182 C500,182 520,263 566,263" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="548" y="256" text-anchor="end">sets up</text>
+<path class="d-edge" d="M450,190 C500,190 520,353 566,353" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="548" y="346" text-anchor="end">listens on</text>
+<path class="d-edge" d="M450,198 C510,198 510,443 566,443" marker-end="url(#docker-d1-ah)"/>
+<text class="d-lab" x="548" y="436" text-anchor="end">reads via</text>
+</svg>

@@ -1,0 +1,482 @@
+{
+ "key": "memory",
+ "title": "Memory map of a running server",
+ "one_liner": "PostgreSQL memory is two worlds: one shared block that every process sees (buffers, WAL, locks, SLRU caches) and many private heaps, one per backend, organised as a tree of MemoryContexts.",
+ "analogy": "Think of a restaurant. The shared memory is the big kitchen everyone uses: one shared pantry (shared_buffers), the order ticket rail (WAL buffers) and the sign-up sheets (locks, ProcArray). Each waiter (backend) also has a private tray (work_mem, catalog caches). A tray is cleaned in layers: the plate is wiped after each dish (per-tuple context), the table after each order (ExecutorState), and the whole tray only when the waiter leaves. The building also has a landlord, the OS, who keeps a second pantry (page cache) and can evict a waiter (OOM killer) if the building runs out of room.",
+ "big_picture": [
+  "At startup the postmaster adds up every subsystem's shared memory request, then asks the OS for ONE block and every child inherits it by fork. The size is fixed for the life of the server. That is why shared_buffers and max_connections need a restart.",
+  "In 20devel each subsystem registers its needs through a callback struct (for example BufferManagerShmemCallbacks) listed in src/include/storage/subsystemlist.h. CreateSharedMemoryAndSemaphores() in ipci.c sums the requests (CalculateShmemSize, plus 100000 bytes of slack), creates the segment and initialises every area. Older releases (16, 17, 18) call each subsystem's ShmemSize() and ShmemInit() functions by hand from ipci.c instead.",
+  "The shared block holds: shared_buffers (8 kB pages), buffer descriptors, WAL buffers, the lock tables, ProcArray and PGPROC, the SLRU caches for commit status (Xact), subtrans, multixact offset and member, commit timestamps and NOTIFY, and the shared stats area.",
+  "Each backend also has private heap memory. It is managed as a tree of MemoryContexts under TopMemoryContext. Freeing a context frees everything inside it in one step, so PostgreSQL rarely calls pfree on each object. This is the main reason it leaks so little.",
+  "work_mem is NOT a per-connection cap. It is the budget for each sort or hash node (hash nodes get work_mem times hash_mem_multiplier). A query with several such nodes, and parallel workers, can use many multiples of it. maintenance_work_mem is for VACUUM and CREATE INDEX. temp_buffers is per session, for temporary tables.",
+  "Parallel query uses dynamic shared memory (DSM) segments created on demand (dynamic_shared_memory_type, default posix on Linux and macOS). The leader and workers share the plan, tuple queues and parallel hash tables through them.",
+  "PostgreSQL does not use direct IO by default, so the OS page cache sits under shared_buffers and the same page can be cached twice (double buffering). effective_cache_size allocates nothing. It only tells the planner how likely an index page is to be cached.",
+  "Total budget is roughly: shared memory (SHOW shared_memory_size) + max_connections times per-backend overhead + (work_mem times hash/sort nodes times parallel workers times concurrent queries) + maintenance_work_mem times autovacuum workers + the OS page cache you want to keep. Leave headroom.",
+  "In a container, the cgroup limit counts shared memory and page cache. If the kernel OOM-killer kills one backend with SIGKILL, the postmaster must assume shared memory may be corrupt, so it kills every other backend and restarts them (crash recovery). The postmaster itself survives."
+ ],
+ "flow": [
+  {
+   "step": "Register",
+   "detail": "Before shared memory exists, RegisterBuiltinShmemCallbacks() walks the list in subsystemlist.h and each subsystem declares its areas with ShmemRequestStruct() / ShmemRequestHash(). Extensions do the same via shmem_request_hook / RequestAddinShmemSpace().",
+   "where": "src/backend/storage/ipc/ipci.c, src/include/storage/subsystemlist.h, src/include/storage/shmem.h"
+  },
+  {
+   "step": "Size it",
+   "detail": "CalculateShmemSize() starts at 100000 bytes, adds ShmemGetRequestedSize() and add-in requests, and rounds up to 8192. InitializeShmemGUCs() runs this early to publish the read-only GUCs shared_memory_size (in MB) and shared_memory_size_in_huge_pages.",
+   "where": "src/backend/storage/ipc/ipci.c"
+  },
+  {
+   "step": "Create the segment",
+   "detail": "PGSharedMemoryCreate() asks the OS for the block (shared_memory_type: mmap by default on Unix, sysv, or windows). huge_pages=try (default) uses huge pages if the OS has them.",
+   "where": "src/backend/port/sysv_shmem.c, ipci.c CreateSharedMemoryAndSemaphores()"
+  },
+  {
+   "step": "Carve it up",
+   "detail": "InitShmemAllocator() starts a bump allocator over the block, then ShmemInitRequested() creates each named area. The names are recorded in a shared index, which is what pg_shmem_allocations shows.",
+   "where": "src/backend/storage/ipc/shmem.c (ShmemAlloc, ShmemInitStruct, pg_get_shmem_allocations), shmem_hash.c"
+  },
+  {
+   "step": "Start DSM",
+   "detail": "dsm_postmaster_startup() sets up the control segment for dynamic shared memory. Parallel query later calls dsm_create() on demand, and the segments are freed when the query ends.",
+   "where": "src/backend/storage/ipc/dsm.c, dsm_impl.c, src/backend/executor/execParallel.c"
+  },
+  {
+   "step": "Fork a backend",
+   "detail": "The postmaster forks a child per connection. The child inherits the shared mapping for free. It then calls MemoryContextInit() path: TopMemoryContext and ErrorContext first, then CacheMemoryContext when the catalog caches start, MessageContext in the main loop.",
+   "where": "src/backend/utils/mmgr/mcxt.c (MemoryContextInit), src/backend/utils/cache/catcache.c, src/backend/tcop/postgres.c"
+  },
+  {
+   "step": "Run a query",
+   "detail": "Per transaction: TopTransactionContext. Per portal: PortalContext. Per executor run: ExecutorState, with a short-lived ExprContext per node whose per-tuple memory is reset for every row. Sorts and hashes size themselves against work_mem and spill to temp files when they exceed it.",
+   "where": "src/backend/access/transam/xact.c, src/backend/utils/mmgr/portalmem.c, src/backend/executor/execUtils.c"
+  },
+  {
+   "step": "A child dies badly",
+   "detail": "If a child exits with a crash status (signal 9 from the OOM killer, for example) the postmaster calls HandleChildCrash(), logs 'terminating any other active server processes', stops all children, then reinitialises and runs crash recovery.",
+   "where": "src/backend/postmaster/postmaster.c (HandleChildCrash, HandleFatalError)"
+  }
+ ],
+ "diagram": {
+  "claim": "One postmaster creates a shared block used by all processes, while each backend builds its own tree of private memory contexts. The OS sits underneath both.",
+  "nodes": [
+   {
+    "id": "pm",
+    "label": "Postmaster",
+    "group": "process"
+   },
+   {
+    "id": "shm",
+    "label": "Main shared memory segment",
+    "group": "shared"
+   },
+   {
+    "id": "sb",
+    "label": "shared_buffers + descriptors",
+    "group": "shared"
+   },
+   {
+    "id": "wal",
+    "label": "WAL buffers (XLOG Ctl)",
+    "group": "shared"
+   },
+   {
+    "id": "slru",
+    "label": "SLRU caches (Xact, Subtrans, MultiXact, CommitTs, Notify)",
+    "group": "shared"
+   },
+   {
+    "id": "lock",
+    "label": "Lock tables + ProcArray",
+    "group": "shared"
+   },
+   {
+    "id": "dsm",
+    "label": "DSM segments (parallel query)",
+    "group": "shared"
+   },
+   {
+    "id": "be",
+    "label": "Backend process",
+    "group": "process"
+   },
+   {
+    "id": "top",
+    "label": "TopMemoryContext tree",
+    "group": "private"
+   },
+   {
+    "id": "exec",
+    "label": "ExecutorState + work_mem nodes",
+    "group": "private"
+   },
+   {
+    "id": "os",
+    "label": "OS page cache + OOM killer",
+    "group": "os"
+   }
+  ],
+  "edges": [
+   {
+    "from": "pm",
+    "to": "shm",
+    "label": "creates"
+   },
+   {
+    "from": "shm",
+    "to": "sb",
+    "label": "contains"
+   },
+   {
+    "from": "shm",
+    "to": "wal",
+    "label": "contains"
+   },
+   {
+    "from": "shm",
+    "to": "slru",
+    "label": "contains"
+   },
+   {
+    "from": "shm",
+    "to": "lock",
+    "label": "contains"
+   },
+   {
+    "from": "pm",
+    "to": "be",
+    "label": "forks"
+   },
+   {
+    "from": "be",
+    "to": "shm",
+    "label": "inherits mapping of"
+   },
+   {
+    "from": "be",
+    "to": "top",
+    "label": "allocates from"
+   },
+   {
+    "from": "top",
+    "to": "exec",
+    "label": "parents"
+   },
+   {
+    "from": "exec",
+    "to": "dsm",
+    "label": "shares plan state via"
+   },
+   {
+    "from": "sb",
+    "to": "os",
+    "label": "reads and writes through"
+   },
+   {
+    "from": "os",
+    "to": "be",
+    "label": "SIGKILLs on OOM"
+   },
+   {
+    "from": "pm",
+    "to": "be",
+    "label": "restarts all after crash"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/storage/ipc/ipci.c",
+   "what": "CalculateShmemSize, CreateSharedMemoryAndSemaphores, InitializeShmemGUCs, RegisterBuiltinShmemCallbacks. The top-level shared memory setup."
+  },
+  {
+   "path": "src/backend/storage/ipc/shmem.c",
+   "what": "The shared memory allocator: ShmemAlloc, ShmemInitStruct, and the SQL function behind pg_shmem_allocations."
+  },
+  {
+   "path": "src/backend/storage/ipc/shmem_hash.c",
+   "what": "Shared hash tables (lock tables, buffer lookup table). Split out of shmem.c in 20devel."
+  },
+  {
+   "path": "src/include/storage/subsystemlist.h",
+   "what": "List of every built-in subsystem that registers shared memory (20devel)."
+  },
+  {
+   "path": "src/backend/storage/ipc/dsm.c",
+   "what": "Dynamic shared memory segments used by parallel query."
+  },
+  {
+   "path": "src/backend/storage/ipc/dsm_impl.c",
+   "what": "The OS-specific DSM code (posix, sysv, windows, mmap). The constants live in src/include/storage/dsm_impl.h."
+  },
+  {
+   "path": "src/backend/utils/mmgr/mcxt.c",
+   "what": "MemoryContext core: TopMemoryContext, ErrorContext, MemoryContextInit, reset and delete."
+  },
+  {
+   "path": "src/backend/utils/mmgr/aset.c",
+   "what": "AllocSet, the default general-purpose context type."
+  },
+  {
+   "path": "src/backend/utils/mmgr/README",
+   "what": "The best written explanation of why memory contexts exist. Read this first."
+  },
+  {
+   "path": "src/backend/utils/mmgr/portalmem.c",
+   "what": "TopPortalContext and per-portal PortalContext."
+  },
+  {
+   "path": "src/backend/utils/misc/guc_parameters.dat",
+   "what": "Where the memory GUCs are defined in 20devel (shared_buffers, work_mem, huge_pages, ...). guc_tables.c now keeps only the enum option tables and the C variables."
+  },
+  {
+   "path": "src/backend/postmaster/postmaster.c",
+   "what": "HandleChildCrash and the restart-everything behaviour."
+  },
+  {
+   "path": "src/backend/postmaster/fork_process.c",
+   "what": "Honours PG_OOM_ADJUST_FILE and PG_OOM_ADJUST_VALUE so backends can reset their OOM score."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is shared_buffers and why can it not be changed with a reload?",
+   "answer": [
+    "It is the number of 8 kB buffer pages in the shared memory block, default 16384 (128 MB).",
+    "The block is created once at startup and its size is fixed, so the GUC context is PGC_POSTMASTER and needs a restart."
+   ],
+   "trap": "Setting it to all of RAM. The OS page cache also caches the same files, and work_mem and connections need room too."
+  },
+  {
+   "q": "What is the difference between shared memory and a backend's private memory?",
+   "answer": [
+    "Shared memory is one block made by the postmaster and mapped into every process: buffers, WAL buffers, locks, ProcArray, SLRU caches.",
+    "Private memory is malloc'd by one backend (via MemoryContexts): catalog caches, query working memory, sort and hash space.",
+    "Other backends cannot see private memory."
+   ]
+  },
+  {
+   "q": "Does work_mem limit memory per connection?",
+   "answer": [
+    "No. It is per sort or hash node, per process running that node.",
+    "Hash nodes can use work_mem times hash_mem_multiplier (default 2.0 here).",
+    "Parallel workers each get their own budget, so one query can use many times work_mem."
+   ],
+   "trap": "Computing max_connections times work_mem as the worst case. The real worst case is higher."
+  },
+  {
+   "q": "What is a MemoryContext and why does PostgreSQL use them?",
+   "answer": [
+    "A named arena of allocations with a parent. Deleting or resetting it frees everything in it at once.",
+    "It removes most manual pfree calls and prevents leaks, especially on error: aborting a transaction just deletes TopTransactionContext.",
+    "Types: AllocSet (default), Generation, Slab and Bump."
+   ],
+   "trap": "Thinking pfree is mandatory. Short-lived contexts get reset, so most code never frees."
+  },
+  {
+   "q": "Name the main contexts a SELECT touches, from the top.",
+   "answer": [
+    "TopMemoryContext, the root. Under it: CacheMemoryContext (catalog and relation caches), MessageContext (the received query and its parse and plan), TopTransactionContext, TopPortalContext.",
+    "Under TopPortalContext is PortalContext, and under that ExecutorState, which holds the running plan state.",
+    "Each ExprContext has a per-tuple memory that is reset for every row.",
+    "ErrorContext is reserved so error handling can still allocate when memory is exhausted."
+   ]
+  },
+  {
+   "q": "How can you see where one backend's memory goes?",
+   "answer": [
+    "SELECT * FROM pg_backend_memory_contexts shows this session's contexts (name, parent, level, total_bytes, free_bytes, used_bytes).",
+    "pg_log_backend_memory_contexts(pid) makes another backend write its tree to the server log.",
+    "The view needs superuser or pg_read_all_stats."
+   ],
+   "trap": "The view only shows the CURRENT backend, so run it in the session you are debugging."
+  },
+  {
+   "q": "Does effective_cache_size allocate memory?",
+   "answer": [
+    "No. It is only a number the planner uses to guess whether an index page is probably in cache.",
+    "Higher values make index scans look cheaper. Set it near shared_buffers plus the memory the OS can use for page cache."
+   ],
+   "trap": "Raising it to fix OOM or to give Postgres more memory. It does nothing for either."
+  },
+  {
+   "q": "What is double buffering and how do huge pages help?",
+   "answer": [
+    "A page can sit in shared_buffers and also in the OS page cache, so it uses RAM twice. PostgreSQL uses buffered IO by default.",
+    "Huge pages (huge_pages=try|on|off, Linux) make the page tables for a large shared block much smaller and cut per-process overhead. They do not remove double buffering.",
+    "SHOW shared_memory_size_in_huge_pages tells you how many to reserve."
+   ],
+   "trap": "Assuming huge_pages=try silently works. Check SHOW huge_pages_status (added in 17) to see if it really did. On macOS it is not used."
+  },
+  {
+   "q": "How do you estimate the total memory the server needs?",
+   "answer": [
+    "Start from SHOW shared_memory_size (shared block, includes shared_buffers, WAL buffers, lock tables, SLRU).",
+    "Add max_connections times a few MB of backend base memory and catalog cache.",
+    "Add a realistic count of concurrent sort and hash nodes times work_mem (times hash_mem_multiplier for hashes, times workers).",
+    "Add autovacuum_max_workers times (autovacuum_work_mem or maintenance_work_mem), and temp_buffers per session using temp tables.",
+    "Leave room for the OS page cache and for the container overhead."
+   ],
+   "trap": "Forgetting that max_locks_per_transaction and max_connections also grow the shared block."
+  },
+  {
+   "q": "A container has a memory limit and the OOM killer kills a postgres backend. What happens?",
+   "answer": [
+    "The postmaster sees a child die from signal 9 and cannot know whether it was holding a lock or half-writing shared memory.",
+    "It logs 'terminating any other active server processes', kills all other backends, then reinitialises shared memory and does crash recovery. Every client connection drops.",
+    "The postmaster is not killed, so the server comes back by itself in about a second on a small database.",
+    "Mitigations: lower work_mem and max_connections, use a pooler, set vm.overcommit_memory=2 or the PG_OOM_ADJUST_FILE / PG_OOM_ADJUST_VALUE environment variables so the postmaster is protected while children are not."
+   ],
+   "trap": "Believing only the one query fails. A single OOM kill restarts everything."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/utils/mmgr/README before touching any allocation code. It is short and explains the rules about CurrentMemoryContext.",
+  "Always know which context you are allocating in. A palloc inside a per-tuple context that you try to keep across rows is a classic bug. Use MemoryContextSwitchTo() carefully and switch back.",
+  "To add a new shared memory area in 20devel, register it with a ShmemCallbacks struct and add it to src/include/storage/subsystemlist.h. In 16, 17 and 18 you instead add to CalculateShmemSize() and the init list in ipci.c. Check which branch you are patching.",
+  "Use add_size() and mul_size() when summing shared sizes, so overflow errors out instead of wrapping.",
+  "Build with --enable-cassert to get MEMORY_CONTEXT_CHECKING. It catches writes past the end of a chunk, which Valgrind alone often misses.",
+  "Use pg_log_backend_memory_contexts() and pg_backend_memory_contexts to prove a leak and name the context. Put that evidence in your patch email.",
+  "Memory GUCs are defined in src/backend/utils/misc/guc_parameters.dat on 20devel. Older branches define them in guc_tables.c. Remember to also edit postgresql.conf.sample and doc/src/sgml/config.sgml."
+ ],
+ "glossary": [
+  {
+   "term": "shared memory",
+   "meaning": "One memory block created by the postmaster and mapped by every server process."
+  },
+  {
+   "term": "shared_buffers",
+   "meaning": "The PostgreSQL page cache inside shared memory, in 8 kB pages."
+  },
+  {
+   "term": "backend",
+   "meaning": "The server process that handles one client connection."
+  },
+  {
+   "term": "MemoryContext",
+   "meaning": "A named group of allocations with a parent. Freed together."
+  },
+  {
+   "term": "work_mem",
+   "meaning": "The memory budget for one sort or hash node before it spills to disk."
+  },
+  {
+   "term": "maintenance_work_mem",
+   "meaning": "Memory budget for VACUUM, CREATE INDEX and similar jobs."
+  },
+  {
+   "term": "temp_buffers",
+   "meaning": "Per-session buffer space for temporary tables."
+  },
+  {
+   "term": "SLRU",
+   "meaning": "Simple least-recently-used cache for small status files (commit status, subtransactions, multixacts, commit timestamps, notifications)."
+  },
+  {
+   "term": "DSM",
+   "meaning": "Dynamic shared memory: extra shared segments created while the server runs, mostly for parallel query."
+  },
+  {
+   "term": "huge pages",
+   "meaning": "Large OS memory pages (2 MB or more on Linux) that cut page table overhead."
+  },
+  {
+   "term": "double buffering",
+   "meaning": "The same disk page cached once in shared_buffers and once in the OS page cache."
+  },
+  {
+   "term": "OOM killer",
+   "meaning": "The kernel or container runtime feature that kills a process when memory runs out."
+  },
+  {
+   "term": "PGC_POSTMASTER",
+   "meaning": "A GUC that can only change at server start."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "SHOW shared_memory_size; SHOW shared_memory_type; SHOW dynamic_shared_memory_type; SHOW huge_pages;",
+   "shows": "Total shared block (143MB with shared_buffers=128MB in my run), mmap on macOS, posix for DSM, huge_pages=try."
+  },
+  {
+   "cmd": "SELECT name, size, allocated_size FROM pg_shmem_allocations ORDER BY allocated_size DESC LIMIT 12;",
+   "shows": "Who owns the shared block. Buffer Blocks (134221824 bytes) dominates, then XLOG Ctl (WAL buffers), CommitTs, Xact, Subtrans. A row with a NULL name is free space."
+  },
+  {
+   "cmd": "CREATE EXTENSION pg_buffercache; SELECT count(*) buffers, count(*) FILTER (WHERE relfilenode IS NOT NULL) used, count(*) FILTER (WHERE isdirty) dirty FROM pg_buffercache;",
+   "shows": "Each of the 16384 buffers, how many hold a page and how many are dirty."
+  },
+  {
+   "cmd": "SELECT name, parent, level, pg_size_pretty(total_bytes) FROM pg_backend_memory_contexts ORDER BY level, total_bytes DESC LIMIT 15;",
+   "shows": "Your session's context tree. TopMemoryContext at level 0, CacheMemoryContext and MessageContext at level 1."
+  },
+  {
+   "cmd": "SET work_mem='64kB'; EXPLAIN (ANALYZE, COSTS OFF) SELECT g FROM generate_series(1,100000) g ORDER BY random();",
+   "shows": "Sort Method: external merge Disk: 2624kB. Set work_mem='64MB' and it becomes quicksort Memory: 6979kB."
+  },
+  {
+   "cmd": "SELECT pg_log_backend_memory_contexts(pg_backend_pid());",
+   "shows": "Returns t and writes the full context tree for your backend into the server log."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "src/backend/utils/mmgr/",
+   "what": "Memory context code: mcxt.c, aset.c, generation.c, slab.c, bump.c, alignedalloc.c, dsa.c, freepage.c, memdebug.c, portalmem.c, README"
+  },
+  {
+   "path": "src/backend/storage/ipc/",
+   "what": "Shared memory machinery: ipci.c, shmem.c, shmem_hash.c, dsm.c, dsm_impl.c, dsm_registry.c, shm_mq.c, shm_toc.c, procarray.c, sinval.c"
+  },
+  {
+   "path": "src/backend/utils/misc/guc_tables.c",
+   "what": "GUC enum tables and C variables (huge_pages_options, huge_pages_status_options, ...)"
+  },
+  {
+   "path": "src/backend/utils/misc/guc_parameters.dat",
+   "what": "20devel GUC definitions with boot values, e.g. shared_buffers boot_val 16384, hash_mem_multiplier 2.0"
+  },
+  {
+   "path": "src/include/storage/subsystemlist.h",
+   "what": "20devel list of built-in shared memory subsystems"
+  },
+  {
+   "path": "src/include/storage/dsm_impl.h",
+   "what": "DSM implementation constants (DSM_IMPL_POSIX, SYSV, WINDOWS, MMAP)"
+  },
+  {
+   "path": "src/include/utils/memutils.h",
+   "what": "ALLOCSET_DEFAULT_SIZES (0, 8 kB, 8 MB) and ALLOCSET_SMALL_SIZES"
+  },
+  {
+   "path": "<datadir>/pg_dynshmem",
+   "what": "Folder for DSM files when a file-backed DSM type is used. Empty in my run (posix DSM keeps no file here)."
+  },
+  {
+   "path": "<datadir>/pg_xact, pg_subtrans, pg_multixact, pg_commit_ts, pg_notify",
+   "what": "On-disk files behind the SLRU caches in shared memory. All present in my initdb."
+  }
+ ],
+ "verified_by_running": [
+  "initdb with postgresql@16 (16.6) in the scratch dir; the unix socket path was too long (103 byte limit), so the server ran on 127.0.0.1:54304 with unix_socket_directories empty and shared_buffers=128MB.",
+  "SHOW shared_memory_size returned 143MB, shared_memory_type mmap, dynamic_shared_memory_type posix, huge_pages try.",
+  "SHOW huge_pages_status failed with 'unrecognized configuration parameter' on 16.6. It was added in 17, and the 20devel source has it (guc_parameters.dat) and asserts it is never 'unknown' in ipci.c.",
+  "pg_shmem_allocations: Buffer Blocks 134221824 bytes, an anonymous 4715008, XLOG Ctl 4208200 (WAL buffers, 4MB wal_buffers), CommitTs 533920, Xact 529152, Subtrans 267008, MultiXactMember 133568, Notify 66816, MultiXactOffset 66816. Sum was 143 MB.",
+  "Defaults seen: work_mem 4MB, maintenance_work_mem 64MB, temp_buffers 8MB, effective_cache_size 4GB, wal_buffers 4MB, hash_mem_multiplier 2, max_connections 100.",
+  "pg_buffercache: 16384 buffers, 239 used and 45 dirty on a fresh server. After creating a 200000-row table, table t held 1728 buffers.",
+  "pg_backend_memory_contexts: 117 contexts, 1290 kB total. Seen at level 1 under TopMemoryContext: CacheMemoryContext (512 kB), MessageContext, TopTransactionContext, TopPortalContext, ErrorContext. PortalContext was at level 2 and ExecutorState at level 3.",
+  "work_mem='64kB' gave 'Sort Method: external merge Disk: 2624kB'; work_mem='64MB' gave 'quicksort Memory: 6979kB' for the same 100000 rows.",
+  "Parallel plan with max_parallel_workers_per_gather=2 produced a Gather node. pg_dynshmem was empty afterwards.",
+  "pg_log_backend_memory_contexts(pg_backend_pid()) returned t and the log gained 111 'level:' lines.",
+  "kill -9 on one backend running pg_sleep: log showed 'server process (PID 61192) was terminated by signal 9', 'terminating any other active server processes', 'all server processes terminated; reinitializing', then 'ready to accept connections' 0.15 s later. pg_postmaster_start_time() did not change, so the postmaster survived.",
+  "macOS host: hw.memsize 17179869184, hw.pagesize 16384 (so the OS page here is 16 kB, not 4 kB).",
+  "Scratch server was stopped with pg_ctl -m fast and the whole tmp-memory directory deleted; ls confirmed it is gone and pgrep showed no process on port 54304.",
+  "Source checks on 20devel (commit bfa1a69edd7): subsystemlist.h exists, ipci.c has RegisterBuiltinShmemCallbacks and CalculateShmemSize with 100000 base, shmem_hash.c exists, SimpleLruAutotuneBuffers() in slru.c sizes the SLRU caches from NBuffers, fork_process.c reads PG_OOM_ADJUST_FILE, HandleChildCrash exists in postmaster.c, ALLOCSET_DEFAULT_MAXSIZE is 8 MB."
+ ],
+ "more": [
+  "Docker gives /dev/shm only 64MB by default. Parallel queries use it for dynamic shared memory and can fail with \"No space left on device\". Use --shm-size.",
+  "A container memory limit is a cgroup limit. Touched shared_buffers and page cache both count. Postgres does not read the limit to size anything.",
+  "Process RSS looks large because shared pages count in every backend. Use pg_backend_memory_contexts or PSS instead.",
+  "huge_pages=on fails at startup if too few are reserved, while try falls back silently.",
+  "effective_cache_size is the total cache one query may assume (shared_buffers plus OS cache), usually 50 to 75 percent of RAM."
+ ]
+}

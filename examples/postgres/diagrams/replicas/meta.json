@@ -1,0 +1,106 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Primary and standby processes",
+  "caption": "WAL written on the primary flows through the walsender and walreceiver to the startup process, which replays it so read-only queries on the standby can see the data.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "A backend writes the commit's WAL record to pg_wal on the primary"
+   },
+   {
+    "n": 2,
+    "meaning": "The walsender reads the new WAL from pg_wal"
+   },
+   {
+    "n": 3,
+    "meaning": "The walsender streams WAL over TCP to the standby walreceiver"
+   },
+   {
+    "n": 4,
+    "meaning": "The walreceiver writes and fsyncs the WAL into the standby's own pg_wal"
+   },
+   {
+    "n": 5,
+    "meaning": "The startup process reads that WAL"
+   },
+   {
+    "n": 6,
+    "meaning": "The startup process replays (redoes) it into data files and KnownAssignedXids"
+   },
+   {
+    "n": 7,
+    "meaning": "A read-only query takes its snapshot from the replayed state"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One commit reaches the replica",
+  "caption": "Follow one COMMIT down the page: it is flushed, shipped, saved, replayed, becomes visible to a standby reader, and the standby reports its positions back.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "COMMIT flushes its WAL record on the primary"
+   },
+   {
+    "n": 2,
+    "meaning": "The walsender wakes and reads the new WAL (XLogSendPhysical)"
+   },
+   {
+    "n": 3,
+    "meaning": "The walreceiver gets the WAL, writes it and fsyncs it (XLogWalRcvFlush)"
+   },
+   {
+    "n": 4,
+    "meaning": "The startup process is woken and redoes the record (heap_redo)"
+   },
+   {
+    "n": 5,
+    "meaning": "A read-only SELECT on the standby now sees the row"
+   },
+   {
+    "n": 6,
+    "meaning": "The walreceiver sends a reply with write, flush and apply LSNs (XLogWalRcvSendReply)"
+   },
+   {
+    "n": 7,
+    "meaning": "The walsender gets the reply, which shows up in pg_stat_replication"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Standby files and wire messages",
+  "caption": "A standby is just a data directory with a few marker files plus WAL segments, and it talks to the primary with two small binary messages, 'w' going down and 'r' coming back.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "standby.signal: empty file that keeps the server in recovery"
+   },
+   {
+    "n": 2,
+    "meaning": "backup_label: from the base backup, says where replay starts"
+   },
+   {
+    "n": 3,
+    "meaning": "postgresql.auto.conf: holds primary_conninfo, the primary's address"
+   },
+   {
+    "n": 4,
+    "meaning": "pg_wal: WAL segments and timeline history written by the walreceiver and at promotion"
+   },
+   {
+    "n": 5,
+    "meaning": "'w' message: dataStart, walEnd, sendTime, then the WAL bytes"
+   },
+   {
+    "n": 6,
+    "meaning": "'r' message: writePtr, flushPtr, applyPtr, sendTime, replyRequested"
+   }
+  ]
+ }
+]

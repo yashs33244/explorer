@@ -1,0 +1,63 @@
+<svg class="hd" viewBox="0 0 800 490" role="img" aria-label="A tree of memory contexts under TopMemoryContext, and the fields of one MemoryContextData node" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="catalog-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="20" y="30" width="385" height="440" rx="30"/>
+<text class="d-s" x="212" y="52" text-anchor="middle">Contexts form a tree</text>
+<rect class="d-box g0" x="40" y="130" width="150" height="44" rx="14"/>
+<text class="d-t" x="115" y="157" text-anchor="middle">TopMemoryContext</text>
+<rect class="d-box g1" x="225" y="70" width="170" height="46" rx="14"/>
+<text class="d-t" x="310" y="90" text-anchor="middle">CacheMemoryContext</text>
+<text class="d-s" x="310" y="107" text-anchor="middle">catalog cache rows</text>
+<rect class="d-box g2" x="225" y="130" width="170" height="46" rx="14"/>
+<text class="d-t" x="310" y="150" text-anchor="middle">MessageContext</text>
+<text class="d-s" x="310" y="167" text-anchor="middle">one client message</text>
+<rect class="d-box g3" x="225" y="190" width="170" height="46" rx="14"/>
+<text class="d-t" x="310" y="210" text-anchor="middle">TopTransactionContext</text>
+<text class="d-s" x="310" y="227" text-anchor="middle">lives for transaction</text>
+<rect class="d-box g5" x="225" y="250" width="170" height="46" rx="14"/>
+<text class="d-t" x="310" y="270" text-anchor="middle">ErrorContext</text>
+<text class="d-s" x="310" y="287" text-anchor="middle">spare room for errors</text>
+<path class="d-edge" d="M190,152 C208,152 208,93 225,93" marker-end="url(#catalog-d3-ah)"/>
+<path class="d-edge" d="M190,152 H225" marker-end="url(#catalog-d3-ah)"/>
+<path class="d-edge" d="M190,152 C208,152 208,213 225,213" marker-end="url(#catalog-d3-ah)"/>
+<path class="d-edge" d="M190,152 C208,152 208,273 225,273" marker-end="url(#catalog-d3-ah)"/>
+
+<rect class="d-box" x="40" y="340" width="100" height="44" rx="14"/>
+<text class="d-t" x="90" y="367" text-anchor="middle">palloc(size)</text>
+<rect class="d-box g4" x="225" y="340" width="170" height="44" rx="14"/>
+<text class="d-t" x="310" y="367" text-anchor="middle">CurrentMemoryContext</text>
+<path class="d-edge acc" d="M140,362 H225" marker-end="url(#catalog-d3-ah)"/>
+<text class="d-lab" x="182" y="354" text-anchor="middle">uses</text>
+<rect class="d-box" x="40" y="410" width="170" height="44" rx="14"/>
+<text class="d-t" x="125" y="437" text-anchor="middle">MemoryContextReset</text>
+<rect class="d-box g4" x="255" y="410" width="140" height="44" rx="14"/>
+<text class="d-t" x="325" y="437" text-anchor="middle">every chunk</text>
+<path class="d-edge acc" d="M210,432 H255" marker-end="url(#catalog-d3-ah)"/>
+<text class="d-lab" x="232" y="424" text-anchor="middle">frees</text>
+
+<rect class="d-blob" x="425" y="30" width="365" height="440" rx="30"/>
+<text class="d-s" x="607" y="52" text-anchor="middle">Each node is a MemoryContextData</text>
+<rect class="d-box g0" x="440" y="70" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="88">type</text><text class="d-s" x="600" y="88">NodeTag, which kind</text>
+<rect class="d-box g0" x="440" y="102" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="120">isReset</text><text class="d-s" x="600" y="120">no allocs since reset</text>
+<rect class="d-box g0" x="440" y="134" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="152">allowInCritSection</text><text class="d-s" x="600" y="152">palloc ok in crit section</text>
+<rect class="d-box g0" x="440" y="166" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="184">mem_allocated</text><text class="d-s" x="600" y="184">bytes held so far</text>
+<rect class="d-box g3" x="440" y="198" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="216">methods</text><text class="d-s" x="600" y="216">alloc, free, reset functions</text>
+<rect class="d-box g4" x="440" y="230" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="248">parent</text><text class="d-s" x="600" y="248">link up, NULL at top</text>
+<rect class="d-box g4" x="440" y="262" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="280">firstchild</text><text class="d-s" x="600" y="280">link down to children</text>
+<rect class="d-box g4" x="440" y="294" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="312">prevchild</text><text class="d-s" x="600" y="312">sibling list</text>
+<rect class="d-box g4" x="440" y="326" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="344">nextchild</text><text class="d-s" x="600" y="344">sibling list</text>
+<rect class="d-box g5" x="440" y="358" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="376">name</text><text class="d-s" x="600" y="376">e.g. CacheMemoryContext</text>
+<rect class="d-box g5" x="440" y="390" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="408">ident</text><text class="d-s" x="600" y="408">optional extra label</text>
+<rect class="d-box g1" x="440" y="422" width="335" height="28" rx="8"/>
+<text class="d-m" x="452" y="440">reset_cbs</text><text class="d-s" x="600" y="440">run on reset or delete</text>
+</svg>

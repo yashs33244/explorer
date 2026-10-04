@@ -1,0 +1,503 @@
+{
+ "key": "walfiles",
+ "title": "WAL in depth: files, records and lifecycle",
+ "one_liner": "WAL is an append-only log of every change, stored as 16MB segment files in pg_wal, written before data pages, archived for backups, and replayed after a crash or restore.",
+ "analogy": "WAL is a ship's logbook. Before the crew moves any cargo (data pages), the captain writes the plan in the logbook. If the ship loses power, the crew reads the logbook from the last checkpoint mark and redoes the moves. Old logbook pages are shipped to a warehouse (the archive) so you can rebuild the ship's state at any past hour.",
+ "big_picture": [
+  "Every change to a data page first becomes a WAL record. The record is flushed to disk before the commit is acknowledged. Data pages can be written later, lazily.",
+  "WAL lives in the pg_wal directory as segment files. Each is 16MB by default (set with initdb --wal-segsize). The LSN (log sequence number) is a byte position in the infinite WAL stream.",
+  "A segment name is 24 hex digits: 8 for the timeline, 8 for the high half of the LSN (log id), 8 for the segment number inside that log id. Example: 000000010000000000000001 is timeline 1, log 0, segment 1.",
+  "A record is an XLogRecord header (length, xid, prev pointer, info bits, resource manager id, CRC), then block references (which relation and block it touches, optionally a full-page image), then data. The resource manager (rmgr) such as Heap, Btree or Transaction knows how to replay it.",
+  "After a CHECKPOINT, the first change to a page writes a full-page image (FPI) so torn pages can be repaired. wal_compression shrinks those images (in my run, FPI bytes fell from 36360 to 13589 with lz4).",
+  "The checkpoint record stores a REDO location. Crash recovery starts replaying at REDO, not at the checkpoint record. pg_controldata shows both.",
+  "With archive_mode on, a finished segment gets an empty archive_status/<seg>.ready file. The archiver runs archive_command, then renames it to .done. Only .done segments may be recycled or removed.",
+  "PITR means: restore a base backup, set restore_command and a recovery target, create recovery.signal, start. When recovery ends the server picks a new timeline and writes a NNNNNNNN.history file so histories never mix.",
+  "Old segments are renamed and reused (recycled) up to about min_wal_size, otherwise deleted. max_wal_size triggers checkpoints. wal_keep_size, archiving, replication slots and the backup in progress keep old segments alive.",
+  "Differences in 20devel vs 16 (the binaries I ran): XLOG_PAGE_MAGIC is 0xD122 in 20devel vs 0xD113 in 16, so WAL is not binary compatible. 20devel has src/bin/pg_waldump/archive_waldump.c to read WAL from tar archives. A WAL summarizer (summarize_wal, for incremental backup) exists since 17 and the .partial rename waits for it. The GUC table is now guc_parameters.dat."
+ ],
+ "flow": [
+  {
+   "step": "Start the record",
+   "detail": "Code that changes a page calls XLogBeginInsert(), then XLogRegisterBuffer() for each page and XLogRegisterData() for payload, inside a critical section.",
+   "where": "src/backend/access/transam/xloginsert.c"
+  },
+  {
+   "step": "Assemble the record",
+   "detail": "XLogInsert(rmid, info) calls XLogRecordAssemble(). It builds the header, block headers and decides whether to attach a full-page image (first touch after a checkpoint, or XLogCheckBufferNeedsBackup).",
+   "where": "src/backend/access/transam/xloginsert.c"
+  },
+  {
+   "step": "Reserve space and copy",
+   "detail": "XLogInsertRecord() takes a WAL insertion lock, ReserveXLogInsertLocation() advances the insert pointer, and CopyXLogRecordToWAL() copies bytes into wal_buffers pages (AdvanceXLInsertBuffer finds or evicts a buffer page).",
+   "where": "src/backend/access/transam/xlog.c"
+  },
+  {
+   "step": "Flush at commit",
+   "detail": "On COMMIT, XLogFlush(lsn) makes WAL durable up to that LSN. Backends queue on WALWriteLock (LWLockAcquireOrWait): the winner writes and fsyncs for everyone waiting. That is group commit. commit_delay can add a pause. synchronous_commit=off skips the wait and lets the walwriter flush.",
+   "where": "src/backend/access/transam/xlog.c (XLogFlush, XLogWrite)"
+  },
+  {
+   "step": "Background flush",
+   "detail": "The walwriter process wakes every wal_writer_delay (200ms) and calls XLogBackgroundFlush(), so wal_buffers (4MB here) rarely fill.",
+   "where": "src/backend/postmaster/walwriter.c, xlog.c"
+  },
+  {
+   "step": "Segment fills",
+   "detail": "XLogWrite() finishes a segment (or pg_switch_wal does). XLogArchiveNotifySeg() creates archive_status/<seg>.ready when archive_mode is on.",
+   "where": "src/backend/access/transam/xlogarchive.c"
+  },
+  {
+   "step": "Archive",
+   "detail": "The archiver (pgarch) runs archive_command (shell_archive.c). On success the .ready is renamed to .done. On failure it retries and pg_stat_archiver.failed_count goes up; WAL piles up in pg_wal.",
+   "where": "src/backend/postmaster/pgarch.c, src/backend/archive/shell_archive.c"
+  },
+  {
+   "step": "Checkpoint",
+   "detail": "CreateCheckPoint() picks the REDO pointer, flushes dirty buffers, writes a CHECKPOINT record, then updates pg_control. Checkpoints start by time or when max_wal_size is near (CalculateCheckpointSegments, XLogCheckpointNeeded).",
+   "where": "src/backend/access/transam/xlog.c"
+  },
+  {
+   "step": "Recycle or remove",
+   "detail": "After the checkpoint, KeepLogSeg() computes the oldest segment to keep (wal_keep_size, slots). RemoveOldXlogFiles() renames old segments to future numbers (recycle) if under min_wal_size, otherwise unlinks them. Segments not yet archived are kept.",
+   "where": "src/backend/access/transam/xlog.c"
+  },
+  {
+   "step": "Recovery",
+   "detail": "StartupXLOG() reads pg_control, sees an unclean state or recovery.signal, and replays from REDO using XLogReadRecord() (validates CRC) and each rmgr's redo function. Missing segments are fetched with RestoreArchivedFile() running restore_command.",
+   "where": "xlog.c, xlogrecovery.c, xlogreader.c, xlogarchive.c"
+  },
+  {
+   "step": "End of recovery",
+   "detail": "Recovery picks a new timeline, writes NNNNNNNN.history, and writes an end-of-recovery checkpoint. If the last old-timeline segment was not archived yet, it is renamed with a .partial suffix.",
+   "where": "src/backend/access/transam/xlog.c (StartupXLOG)"
+  }
+ ],
+ "diagram": {
+  "claim": "A change becomes a WAL record in memory, is flushed to a segment file by the backend or walwriter, is archived by the archiver, bounded by checkpoints, and replayed by the startup process.",
+  "nodes": [
+   {
+    "id": "backend",
+    "label": "Backend (XLogInsert)",
+    "group": "memory"
+   },
+   {
+    "id": "wbuf",
+    "label": "wal_buffers",
+    "group": "memory"
+   },
+   {
+    "id": "walw",
+    "label": "walwriter",
+    "group": "process"
+   },
+   {
+    "id": "seg",
+    "label": "pg_wal segment 16MB",
+    "group": "disk"
+   },
+   {
+    "id": "ready",
+    "label": "archive_status .ready/.done",
+    "group": "disk"
+   },
+   {
+    "id": "arch",
+    "label": "archiver (archive_command)",
+    "group": "process"
+   },
+   {
+    "id": "archdir",
+    "label": "Archive directory",
+    "group": "disk"
+   },
+   {
+    "id": "ckpt",
+    "label": "Checkpointer",
+    "group": "process"
+   },
+   {
+    "id": "ctl",
+    "label": "pg_control (REDO)",
+    "group": "disk"
+   },
+   {
+    "id": "start",
+    "label": "Startup process (redo)",
+    "group": "process"
+   },
+   {
+    "id": "hist",
+    "label": "NNNNNNNN.history",
+    "group": "disk"
+   }
+  ],
+  "edges": [
+   {
+    "from": "backend",
+    "to": "wbuf",
+    "label": "copies record into"
+   },
+   {
+    "from": "backend",
+    "to": "seg",
+    "label": "flushes at commit"
+   },
+   {
+    "from": "walw",
+    "to": "seg",
+    "label": "flushes in background"
+   },
+   {
+    "from": "wbuf",
+    "to": "seg",
+    "label": "is written to"
+   },
+   {
+    "from": "seg",
+    "to": "ready",
+    "label": "creates .ready when full"
+   },
+   {
+    "from": "arch",
+    "to": "ready",
+    "label": "scans and renames to .done"
+   },
+   {
+    "from": "arch",
+    "to": "archdir",
+    "label": "copies segment to"
+   },
+   {
+    "from": "ckpt",
+    "to": "ctl",
+    "label": "records REDO in"
+   },
+   {
+    "from": "ckpt",
+    "to": "seg",
+    "label": "recycles or removes old"
+   },
+   {
+    "from": "start",
+    "to": "ctl",
+    "label": "reads REDO from"
+   },
+   {
+    "from": "start",
+    "to": "archdir",
+    "label": "fetches via restore_command"
+   },
+   {
+    "from": "start",
+    "to": "hist",
+    "label": "writes on new timeline"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/access/transam/xlog.c",
+   "what": "The core: XLogInsertRecord, XLogWrite, XLogFlush, checkpoints (CreateCheckPoint), segment recycling (RemoveOldXlogFiles, KeepLogSeg), StartupXLOG."
+  },
+  {
+   "path": "src/backend/access/transam/xloginsert.c",
+   "what": "API for building records: XLogBeginInsert, XLogRegisterBuffer, XLogRegisterData, XLogInsert, XLogRecordAssemble (full-page images, compression)."
+  },
+  {
+   "path": "src/backend/access/transam/xlogreader.c",
+   "what": "Reads and validates records from segments: XLogReadRecord, ValidXLogRecordHeader, ValidXLogRecord, DecodeXLogRecord, RestoreBlockImage. Shared by recovery and pg_waldump."
+  },
+  {
+   "path": "src/backend/access/transam/xlogarchive.c",
+   "what": "Archive helpers: RestoreArchivedFile (restore_command), XLogArchiveNotify, XLogArchiveCheckDone, XLogArchiveForceDone, KeepFileRestoredFromArchive."
+  },
+  {
+   "path": "src/backend/access/transam/xlogrecovery.c",
+   "what": "Recovery logic: recovery.signal, recovery targets, reading the next record during redo."
+  },
+  {
+   "path": "src/include/access/xlogrecord.h",
+   "what": "On-disk record layout: XLogRecord, block headers, BKPBLOCK_* flags, XLR_BLOCK_ID_* markers."
+  },
+  {
+   "path": "src/include/access/xlog_internal.h",
+   "what": "Page headers, XLOG_PAGE_MAGIC, XLP_* flags, XLogFileName and segment math macros, XLogSegmentOffset."
+  },
+  {
+   "path": "src/backend/postmaster/walwriter.c",
+   "what": "Background process that calls XLogBackgroundFlush every wal_writer_delay."
+  },
+  {
+   "path": "src/backend/postmaster/pgarch.c",
+   "what": "Archiver process that finds .ready files and calls the archive module."
+  },
+  {
+   "path": "src/backend/archive/shell_archive.c",
+   "what": "Default archive module that runs the archive_command shell string."
+  },
+  {
+   "path": "src/bin/pg_waldump/pg_waldump.c",
+   "what": "The WAL decoder tool. rmgrdesc.c plus each rmgr's *desc.c (for example heapdesc.c) print the desc: text. archive_waldump.c (20devel) reads WAL from tar archives."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is WAL and why does Postgres write it before data pages?",
+   "answer": [
+    "WAL is a sequential log of all changes. A commit only needs the log flushed, which is one fast sequential write.",
+    "Data pages can be written lazily at checkpoints. After a crash, redo replays the log from the last checkpoint.",
+    "This gives durability without forcing every dirty page to disk at commit."
+   ],
+   "trap": "Saying commit writes the table pages to disk. It does not. Only the WAL up to the commit record must be flushed."
+  },
+  {
+   "q": "How do you read a WAL file name like 000000010000000000000001?",
+   "answer": [
+    "24 hex digits: timeline (8), log id (8), segment (8).",
+    "Log id is the high 32 bits of the LSN divided by segments per 4GB. With 16MB segments there are 256 segments per log id, so after ...FF comes log id +1, segment 00.",
+    "pg_walfile_name(lsn) gives the name and pg_walfile_name_offset(lsn) also gives the byte offset inside the file. I saw 0/15180A8 map to 000000010000000000000001 at offset 5341352.",
+    "The code is XLogFileName() in xlog_internal.h."
+   ],
+   "trap": "Thinking the 3rd group is a byte offset. It is a segment number. The byte offset is a separate value."
+  },
+  {
+   "q": "What does a WAL record contain? How do you see it?",
+   "answer": [
+    "Fixed XLogRecord header: xl_tot_len, xl_xid, xl_prev, xl_info, xl_rmid, xl_crc. Then block headers (id, fork, flags, length, relfilelocator, block number), then optional images and data.",
+    "pg_waldump prints: rmgr (Heap, Transaction, XLOG, Btree, Standby...), len (rec/tot), tx, lsn, prev, and a desc string with blkref #0: rel 1663/5/16384 blk 0 (tablespace/database/relfilenode).",
+    "Real example: Heap INSERT+INIT then Heap INSERT then Transaction COMMIT for the same tx 731."
+   ],
+   "trap": "Confusing rec length with tot length. tot includes full-page images; I saw 65/233 for an update carrying an FPI."
+  },
+  {
+   "q": "What is a full-page image and when is it written?",
+   "answer": [
+    "The first change to a page after a checkpoint (and when full_page_writes is on) logs the whole 8KB page, minus the unused hole. It protects against torn page writes.",
+    "In my run the update after CHECKPOINT showed blkref #0 ... FPW; hole: offset: 40, length: 8024 and record length 65 vs total 233. The update before the checkpoint had no FPI.",
+    "wal_compression (pglz, lz4, zstd) compresses these images: FPI size went 36360 to 13589 bytes in a test update of all rows with lz4."
+   ],
+   "trap": "Assuming WAL volume is steady. Right after every checkpoint it spikes because of FPIs, which is why very frequent checkpoints hurt."
+  },
+  {
+   "q": "Explain synchronous_commit, group commit, wal_buffers and walwriter.",
+   "answer": [
+    "synchronous_commit=on: commit waits for XLogFlush to the commit LSN. off: returns early, walwriter flushes within about 3x wal_writer_delay; a crash can lose the last transactions but never corrupts data.",
+    "Group commit: many backends wait on WALWriteLock; one becomes the writer and flushes everyone's WAL in one fsync. commit_delay (default 0) can make the writer wait longer to collect more commits.",
+    "wal_buffers (default -1 gives 4MB here) is the shared memory ring where records are built. The walwriter flushes it every 200ms so backends rarely have to write.",
+    "My pgbench run with 16 clients doing single-row inserts managed about 65k tps on a laptop, showing commits batching."
+   ],
+   "trap": "Saying synchronous_commit=off can corrupt the database. It can lose recent commits, not break consistency."
+  },
+  {
+   "q": "What are archive_status .ready and .done files?",
+   "answer": [
+    "Zero-byte marker files in pg_wal/archive_status. Name = WAL file name + .ready or .done.",
+    ".ready: segment complete, waiting for archive_command. .done: archived successfully (or restored from archive).",
+    "I set archive_command='false': segment 2 stayed 000000010000000000000002.ready, pg_stat_archiver showed failed_count 3. After fixing the command it became .done.",
+    "Checkpoint cleanup will not remove or recycle a segment that is .ready, so a broken archive_command fills the disk."
+   ],
+   "trap": "Deleting .ready files by hand to free space. That silently breaks your archive and PITR chain."
+  },
+  {
+   "q": "How does PITR work, step by step?",
+   "answer": [
+    "Take a base backup (pg_basebackup). It contains backup_label with START WAL LOCATION and CHECKPOINT LOCATION.",
+    "On restore, put restore_command (cp from the archive), recovery_target_time, and an empty recovery.signal file, then start.",
+    "Log from my run: starting point-in-time recovery to ...12:33:22; redo starts at 0/4000028; restored log file ...04 and ...05 from archive; recovery stopping before commit of transaction 748; selected new timeline ID: 2; archive recovery complete.",
+    "Result: row 5000 (before the target time) exists, row 6000 (after) is gone. recovery.signal is removed and the server is a normal primary."
+   ],
+   "trap": "Forgetting recovery_target_action. With the default pause, the server stays read-only until pg_wal_replay_resume or promote."
+  },
+  {
+   "q": "What are timelines and .history files? What is a .partial segment?",
+   "answer": [
+    "Each time recovery ends on a non-latest point, Postgres starts a new timeline so new WAL does not overwrite the old future. Timeline id is the first 8 hex digits of every segment name.",
+    "00000002.history is a small text file: 1  0/5002F38  before 2026-10-04 12:33:23.418605+05:30, meaning timeline 2 branched from timeline 1 at that LSN and why. It is archived too.",
+    "After the switch I saw both 000000010000000000000005 and 000000020000000000000005 in pg_wal.",
+    "In StartupXLOG, if the last segment of the old timeline was not already archived, it is renamed with .partial and archived under that name, so two servers cannot archive conflicting full segments. In my run segment 5 had been restored from the archive (.done), so no .partial appeared."
+   ],
+   "trap": "Expecting a .partial file after every promotion. It only appears if the old last segment is not already .ready or .done."
+  },
+  {
+   "q": "What is in pg_control about checkpoints, and where does crash recovery start?",
+   "answer": [
+    "pg_controldata shows Latest checkpoint location (where the CHECKPOINT record is) and Latest checkpoint's REDO location (where replay starts). I saw location 0/15364C8 and REDO 0/1536490; REDO is earlier because it is chosen before dirty buffers are flushed.",
+    "After kill -9, the state still said in production, and the log said: database system was not properly shut down; automatic recovery in progress; redo starts at 0/4000028; redo done at 0/6000070; then an end-of-recovery checkpoint.",
+    "A clean shutdown writes a shutdown checkpoint and sets state to shut down, so no replay is needed."
+   ],
+   "trap": "Thinking recovery starts at the checkpoint record. It starts at REDO, which can be well before it."
+  },
+  {
+   "q": "How do max_wal_size, min_wal_size and wal_keep_size decide whether an old segment is recycled or removed?",
+   "answer": [
+    "max_wal_size is a soft target: when WAL since the last checkpoint approaches it, a checkpoint is requested (CalculateCheckpointSegments). It does not cap pg_wal if archiving or slots lag.",
+    "After a checkpoint, RemoveOldXlogFiles walks segments older than the keep point. Under the recycle limit (derived from min_wal_size and recent usage) they are renamed to future segment numbers; beyond it they are deleted.",
+    "KeepLogSeg moves the cutoff back for wal_keep_size, replication slots and the oldest needed segment of a running backup. Unarchived (.ready) segments are never removed.",
+    "In my run, segments 1 and 2 vanished from pg_wal after a checkpoint once archived, while a new segment 6 appeared pre-created."
+   ],
+   "trap": "Believing max_wal_size is a hard limit. It is a checkpoint trigger only."
+  }
+ ],
+ "contributor_tips": [
+  "Start by running pg_waldump on a throwaway cluster after each tiny SQL command. Seeing the record turns the code into something concrete.",
+  "To add WAL logging in new code: XLogBeginInsert(), register buffers and data, XLogInsert() inside START_CRIT_SECTION, then PageSetLSN(). Every record type needs a matching redo function and a desc function (in src/backend/access/rmgrdesc/) so pg_waldump can print it.",
+  "Changing record layout means bumping XLOG_PAGE_MAGIC in xlog_internal.h (it is 0xD122 in this tree). Committers will ask for that.",
+  "Test recovery paths with the TAP tests in src/test/recovery/t/ (for example the archive and PITR tests) and src/bin/pg_waldump/t/.",
+  "Read xlogrecord.h top to bottom first. The big comment at the top draws the whole record layout.",
+  "Never touch another instance's WAL by hand. When experimenting, use a throwaway initdb data directory and a separate port."
+ ],
+ "glossary": [
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log: the append-only record of changes, flushed before data pages."
+  },
+  {
+   "term": "LSN",
+   "meaning": "Log sequence number: a byte position in the WAL stream, printed like 0/15180A8."
+  },
+  {
+   "term": "Segment",
+   "meaning": "One WAL file, 16MB by default, named timeline + log id + segment number."
+  },
+  {
+   "term": "Timeline",
+   "meaning": "A numbered branch of WAL history. A new one starts after recovery or promotion."
+  },
+  {
+   "term": "Resource manager (rmgr)",
+   "meaning": "A module such as Heap, Btree, Transaction or XLOG that owns record types and knows how to replay them."
+  },
+  {
+   "term": "Full-page image (FPI)",
+   "meaning": "A copy of a whole data page placed in WAL after a checkpoint to survive torn writes."
+  },
+  {
+   "term": "Checkpoint",
+   "meaning": "A moment when dirty pages are flushed and a REDO point is recorded, bounding crash recovery."
+  },
+  {
+   "term": "REDO location",
+   "meaning": "The LSN where recovery starts replaying. Stored in pg_control."
+  },
+  {
+   "term": "archive_command",
+   "meaning": "Shell command run for each finished segment, with %p (path) and %f (file name)."
+  },
+  {
+   "term": "restore_command",
+   "meaning": "Shell command recovery uses to fetch an archived segment."
+  },
+  {
+   "term": "recovery.signal",
+   "meaning": "Empty file in the data directory that tells the server to start in targeted archive recovery."
+  },
+  {
+   "term": "PITR",
+   "meaning": "Point-in-time recovery: base backup plus archived WAL replayed up to a chosen target."
+  },
+  {
+   "term": "Group commit",
+   "meaning": "Several transactions share one WAL flush."
+  },
+  {
+   "term": ".partial",
+   "meaning": "Suffix on the last segment of an old timeline that was renamed at promotion if it was not yet archived."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "initdb -D /tmp/w1 && pg_ctl -D /tmp/w1 -o '-p 54303 -k /tmp' -l /tmp/w1.log start && ls -l /tmp/w1/pg_wal",
+   "shows": "A fresh cluster with one 16777216 byte segment 000000010000000000000001 and an archive_status directory. Use a throwaway directory and port."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54303 postgres -c \"select pg_current_wal_lsn(), pg_walfile_name(pg_current_wal_lsn()), * from pg_walfile_name_offset(pg_current_wal_lsn())\"",
+   "shows": "The current LSN, which segment file holds it, and the byte offset in it."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54303 postgres -c \"create table t(id int,v text)\" -c checkpoint -c \"insert into t values (1,'a')\" ; pg_waldump -p /tmp/w1/pg_wal 000000010000000000000001 | tail -5",
+   "shows": "Real records: Heap INSERT+INIT with blkref #0, Transaction COMMIT, with rmgr, lsn and prev fields."
+  },
+  {
+   "cmd": "pg_waldump -p /tmp/w1/pg_wal --stats=record 000000010000000000000001 | head -20",
+   "shows": "A per-record-type table with counts, bytes and FPI size."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54303 postgres -c checkpoint -c \"update t set v='b'\" ; pg_waldump -b -p /tmp/w1/pg_wal 000000010000000000000001 | tail -3",
+   "shows": "After a checkpoint the first update carries an FPW full-page image with a hole offset and length."
+  },
+  {
+   "cmd": "pg_controldata /tmp/w1 | grep -E 'checkpoint location|REDO|TimeLine|cluster state'",
+   "shows": "The checkpoint and REDO LSNs, timeline, and cluster state that crash recovery reads. Stop and remove /tmp/w1 when done."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "data/pg_wal/",
+   "what": "Directory holding WAL segments."
+  },
+  {
+   "path": "data/pg_wal/000000010000000000000001",
+   "what": "A 16777216 byte WAL segment: timeline 1, log 0, segment 1."
+  },
+  {
+   "path": "data/pg_wal/archive_status/000000010000000000000002.ready",
+   "what": "Zero-byte flag: segment is full and waiting for archive_command."
+  },
+  {
+   "path": "data/pg_wal/archive_status/000000010000000000000001.done",
+   "what": "Zero-byte flag: segment was archived successfully."
+  },
+  {
+   "path": "data/pg_wal/000000010000000000000004.00000028.backup",
+   "what": "Backup history file left by a base backup that started at 0/4000028."
+  },
+  {
+   "path": "base/pg_wal/00000002.history",
+   "what": "Timeline history: timeline 2 branched from timeline 1 at 0/5002F38 before a given commit time."
+  },
+  {
+   "path": "base/pg_wal/000000020000000000000005",
+   "what": "First segment of timeline 2 after PITR and promotion."
+  },
+  {
+   "path": "base/backup_label",
+   "what": "Written by pg_basebackup: START WAL LOCATION, CHECKPOINT LOCATION, START TIMELINE."
+  },
+  {
+   "path": "data/global/pg_control",
+   "what": "Binary control file with the latest checkpoint, REDO location and cluster state (read it with pg_controldata)."
+  },
+  {
+   "path": "base/recovery.signal",
+   "what": "Empty file that starts archive recovery. The server removes it when recovery ends."
+  },
+  {
+   "path": "arch/000000010000000000000001",
+   "what": "Archive directory copy made by archive_command (cp %p dir/%f)."
+  }
+ ],
+ "verified_by_running": [
+  "Ran initdb, started on port 54303 using PostgreSQL 16.6 Homebrew binaries. The socket path in the scratchpad was too long (103 byte limit), so I used a temporary short symlink to the temp dir for the socket and removed it at the end.",
+  "SHOW gave wal_level=replica, synchronous_commit=on, wal_buffers=4MB, wal_segment_size=16MB, full_page_writes=on, wal_keep_size=0, wal_writer_delay=200ms, commit_delay=0.",
+  "pg_current_wal_lsn = 0/15180A8; pg_walfile_name = 000000010000000000000001; pg_walfile_name_offset = (000000010000000000000001, 5341352). pg_wal had a single 16777216 byte file.",
+  "pg_waldump showed Heap INSERT+INIT, Heap INSERT, Transaction COMMIT, Heap HOT_UPDATE, Standby RUNNING_XACTS and XLOG CHECKPOINT_ONLINE redo 0/1536490 with blkref #0: rel 1663/5/16384 blk 0.",
+  "After CHECKPOINT the next HOT_UPDATE was len 65/233 with blkref ... FPW and -b printed hole: offset: 40, length: 8024. --stats showed FPI size 168 bytes.",
+  "pg_controldata showed checkpoint location 0/15364C8, REDO 0/1536490, TimeLineID 1, state in production.",
+  "Archiving: pg_switch_wal then archive_status/...01.done appeared and pg_stat_archiver archived_count=1. With archive_command='false', ...02.ready stayed and failed_count rose to 3. After fixing the command both became .done.",
+  "Base backup showed backup_label START WAL LOCATION 0/4000028 and a 000000010000000000000004.00000028.backup file. Segments 1 and 2 were gone from pg_wal after a checkpoint (recycled or removed) while the archive kept them.",
+  "kill -9 on the postmaster, then restart logged: not properly shut down; automatic recovery in progress; redo starts at 0/4000028; redo done at 0/6000070; end-of-recovery checkpoint (3 recycled).",
+  "PITR with recovery.signal, restore_command and recovery_target_time promoted into timeline 2. Log said recovery stopping before commit of transaction 748. Row 5000 present, 6000 absent; 00000002.history contained: 1 0/5002F38 before 2026-10-04 12:33:23.418605+05:30. No .partial appeared because segment 5 was already .done.",
+  "wal_compression test updating every row after a checkpoint: off gave FPI 36360 bytes of 171741 total; lz4 gave FPI 13589 bytes of 146136 total.",
+  "pgbench 16 clients single-row insert for 3s: about 65841 tps. pg_stat_wal showed wal_records 397741 and wal_buffers_full 0.",
+  "Did not run: wal_keep_size effects, synchronous_commit=off timing, and a real .partial; these are described from xlog.c source (StartupXLOG partial rename around line 5985). I did not verify them by running.",
+  "Source check on the 20devel tree: XLOG_PAGE_MAGIC 0xD122 vs 0xD113 in 16.6 headers; archive_waldump.c exists in src/bin/pg_waldump; function names in xlog.c, xloginsert.c, xlogreader.c, xlogarchive.c were located with grep.",
+  "Cleanup: stopped the servers, removed the symlink and the temp directory tmp-walfiles, and confirmed no process matched port 54303. A single rm of base/pg_wal/* was blocked by a safety check and was not needed."
+ ],
+ "more": [
+  "wal_level (minimal, replica, logical) decides how much each record carries.",
+  "The first page of a segment has a long header with the system identifier. Records can span pages and segments.",
+  "Insert, write and flush are three different WAL positions: pg_current_wal_insert_lsn, pg_current_wal_lsn, pg_current_wal_flush_lsn.",
+  "pg_switch_wal forces a new segment. pg_walinspect gives pg_waldump as SQL.",
+  "pg_resetwal and pg_rewind are repair tools with sharp edges. Read their docs before use."
+ ]
+}

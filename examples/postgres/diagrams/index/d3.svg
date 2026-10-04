@@ -1,0 +1,26 @@
+<svg class="hd" viewBox="0 0 800 540" role="img" aria-label="Anatomy of an 8kB btree index page: page header, line pointers, free space, index tuples with TIDs, and the BTPageOpaqueData special space" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="index-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="20" y="15" width="370" height="480" rx="28"/><text class="d-t" x="205" y="40" text-anchor="middle">One 8kB btree page (BLCKSZ)</text>
+<rect class="d-box g0" x="45" y="55" width="320" height="52" rx="12"/><text class="d-t" x="205.0" y="77" text-anchor="middle">PageHeaderData</text><text class="d-s" x="205.0" y="95" text-anchor="middle">pd_lsn, pd_lower, pd_upper, pd_special</text>
+<rect class="d-box g2" x="45" y="117" width="320" height="52" rx="12"/><text class="d-t" x="205.0" y="139" text-anchor="middle">Line pointers (ItemIdData)</text><text class="d-s" x="205.0" y="157" text-anchor="middle">linp1 linp2 linp3 ... point at tuples</text>
+<rect class="d-blob2" x="45" y="179" width="320" height="66" rx="12"/><text class="d-t" x="205" y="205" text-anchor="middle">Free space</text><text class="d-s" x="205" y="225" text-anchor="middle">between pd_lower and pd_upper</text>
+<rect class="d-box g4" x="45" y="255" width="320" height="36" rx="10"/><text class="d-t" x="205" y="278" text-anchor="middle">IndexTuple 3  (key + TID)</text>
+<rect class="d-box g4" x="45" y="297" width="320" height="36" rx="10"/><text class="d-t" x="205" y="320" text-anchor="middle">IndexTuple 2  (key + TID)</text>
+<rect class="d-box g4" x="45" y="339" width="320" height="36" rx="10"/><text class="d-t" x="205" y="362" text-anchor="middle">IndexTuple 1  (key + TID)</text>
+<rect class="d-box g1" x="45" y="386" width="320" height="52" rx="12"/><text class="d-t" x="205.0" y="408" text-anchor="middle">Special space</text><text class="d-s" x="205.0" y="426" text-anchor="middle">BTPageOpaqueData at pd_special</text>
+<text class="d-s" x="205" y="465" text-anchor="middle">tuples fill from the page end upward</text>
+<rect class="d-box g1" x="430" y="25" width="350" height="190" rx="14"/><text class="d-t" x="605" y="50" text-anchor="middle">BTPageOpaqueData</text>
+<text class="d-m" x="448" y="80">btpo_prev</text><text class="d-s" x="545" y="80">left sibling page</text>
+<text class="d-m" x="448" y="107">btpo_next</text><text class="d-s" x="545" y="107">right sibling page</text>
+<text class="d-m" x="448" y="134">btpo_level</text><text class="d-s" x="545" y="134">0 means leaf</text>
+<text class="d-m" x="448" y="161">btpo_flags</text><text class="d-s" x="545" y="161">BTP_LEAF, BTP_ROOT ...</text>
+<text class="d-m" x="448" y="188">btpo_cycleid</text><text class="d-s" x="545" y="188">vacuum cycle of last split</text>
+<rect class="d-box g4" x="430" y="250" width="350" height="150" rx="14"/><text class="d-t" x="605" y="275" text-anchor="middle">IndexTupleData</text>
+<text class="d-m" x="448" y="306">t_tid</text><text class="d-s" x="545" y="306">heap row address (block, offset)</text>
+<text class="d-m" x="448" y="336">t_info</text><text class="d-s" x="545" y="336">tuple size + flag bits</text>
+<text class="d-m" x="448" y="366">key columns</text><text class="d-s" x="545" y="366">the indexed values</text>
+<rect class="d-box g3" x="470" y="450" width="310" height="52" rx="14"/><g transform="translate(476,456) scale(0.8)"><rect class="d-fillpaper" x="5" y="4" width="30" height="32" rx="3"/><path class="d-lineacc" d="M5,12 H35"/><rect class="d-fillacc" x="10" y="17" width="20" height="4" rx="1"/><rect class="d-fillacc" x="10" y="24" width="14" height="4" rx="1"/></g><text class="d-t" x="640" y="481" text-anchor="middle">Heap row at (block 7, offset 3)</text>
+<path class="d-edge acc" d="M366,412 C405,412 395,150 428,150" marker-end="url(#index-d3-ah)"/><text class="d-lab" x="410" y="285" text-anchor="middle">zoom</text>
+<path class="d-edge acc" d="M366,315 C395,315 400,325 428,325" marker-end="url(#index-d3-ah)"/><text class="d-lab" x="412" y="340" text-anchor="middle">zoom</text>
+<path class="d-edge acc" d="M605,402 V448" marker-end="url(#index-d3-ah)"/><text class="d-lab" x="615" y="430" text-anchor="start">points to</text>
+</svg>

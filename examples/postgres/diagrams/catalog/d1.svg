@@ -1,0 +1,66 @@
+<svg class="hd" viewBox="0 0 800 530" role="img" aria-label="Catalog tables on disk feed the syscache and relcache in memory, which supply fmgr, which loads extensions that use memory contexts and error handling" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="catalog-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="20" y="30" width="170" height="260" rx="30"/>
+<text class="d-s" x="105" y="52" text-anchor="middle">On disk</text>
+<g transform="translate(85,64)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<rect class="d-box g0" x="40" y="125" width="130" height="66" rx="14"/>
+<text class="d-t" x="105" y="152" text-anchor="middle">pg_catalog</text>
+<text class="d-s" x="105" y="172" text-anchor="middle">pg_class, pg_proc</text>
+
+<rect class="d-blob" x="215" y="30" width="235" height="260" rx="30"/>
+<text class="d-s" x="332" y="52" text-anchor="middle">In memory cache</text>
+<rect class="d-box g1" x="240" y="70" width="180" height="46" rx="14"/>
+<text class="d-t" x="330" y="98" text-anchor="middle">inval.c</text>
+<rect class="d-box g2" x="240" y="170" width="85" height="60" rx="14"/>
+<text class="d-t" x="282" y="196" text-anchor="middle">relcache</text>
+<text class="d-s" x="282" y="214" text-anchor="middle">tables</text>
+<rect class="d-box g2" x="335" y="170" width="85" height="60" rx="14"/>
+<text class="d-t" x="377" y="196" text-anchor="middle">syscache</text>
+<text class="d-s" x="377" y="214" text-anchor="middle">rows</text>
+
+<rect class="d-blob" x="470" y="30" width="310" height="310" rx="30"/>
+<text class="d-s" x="625" y="52" text-anchor="middle">Calls and extensions</text>
+<rect class="d-box g3" x="490" y="70" width="120" height="46" rx="14"/>
+<text class="d-t" x="550" y="98" text-anchor="middle">fmgr</text>
+<rect class="d-box g3" x="490" y="150" width="120" height="46" rx="14"/>
+<text class="d-t" x="550" y="178" text-anchor="middle">dfmgr loader</text>
+<rect class="d-box g4" x="490" y="230" width="120" height="46" rx="14"/>
+<text class="d-t" x="550" y="258" text-anchor="middle">Extension .so</text>
+<rect class="d-box g4" x="670" y="230" width="100" height="46" rx="14"/>
+<text class="d-t" x="720" y="250" text-anchor="middle">Hook</text>
+<text class="d-t" x="720" y="267" text-anchor="middle">pointers</text>
+
+<rect class="d-blob" x="20" y="370" width="760" height="140" rx="30"/>
+<text class="d-s" x="400" y="392" text-anchor="middle">Runtime helpers</text>
+<rect class="d-box g5" x="200" y="415" width="180" height="60" rx="14"/>
+<g transform="translate(206,425) scale(0.8)"><rect class="d-fillpaper" x="5" y="4" width="30" height="32" rx="3"/><path class="d-lineacc" d="M5,12 H35"/><rect class="d-fillacc" x="10" y="17" width="20" height="4" rx="1"/><rect class="d-fillacc" x="10" y="24" width="14" height="4" rx="1"/></g>
+<text class="d-t" x="248" y="441">MemoryContext</text>
+<text class="d-s" x="248" y="460">palloc lives here</text>
+<rect class="d-box g5" x="560" y="415" width="180" height="60" rx="14"/>
+<g transform="translate(566,425) scale(0.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="608" y="441">elog.c</text>
+<text class="d-s" x="608" y="460">ereport, longjmp</text>
+
+<path class="d-edge acc" d="M170,158 C205,158 205,200 240,200" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="208" y="172" text-anchor="middle">builds</text>
+<path class="d-edge acc" d="M105,191 V268 H377 V230" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="240" y="262" text-anchor="middle">fills</text>
+<path class="d-edge" d="M282,116 V170" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="282" y="148" text-anchor="middle">rebuilds</text>
+<path class="d-edge" d="M377,116 V170" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="377" y="148" text-anchor="middle">evicts</text>
+<path class="d-edge acc" d="M420,200 C455,200 460,93 490,93" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="458" y="150" text-anchor="middle">supplies</text>
+<path class="d-edge" d="M550,116 V150" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="550" y="138" text-anchor="middle">requests</text>
+<path class="d-edge" d="M550,196 V230" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="550" y="217" text-anchor="middle">loads</text>
+<path class="d-edge" d="M610,253 H670" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="640" y="246" text-anchor="middle">installs</text>
+<path class="d-edge dash" d="M520,276 C520,350 300,345 300,415" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="410" y="357" text-anchor="middle">allocates</text>
+<path class="d-edge dash" d="M590,276 C590,340 650,340 650,415" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="628" y="357" text-anchor="middle">raises</text>
+<path class="d-edge" d="M560,445 H380" marker-end="url(#catalog-d1-ah)"/>
+<text class="d-lab" x="470" y="437" text-anchor="middle">resets</text>
+</svg>

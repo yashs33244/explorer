@@ -1,0 +1,66 @@
+<svg class="hd" viewBox="0 0 800 520" role="img" aria-label="The Portal calls ExecutorRun, which pulls rows up a tree of plan nodes from the table scan, reading table pages from disk" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="executor-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="20" y="20" width="180" height="100" rx="30"/>
+<text class="d-s" x="35" y="40">Protocol</text>
+<rect class="d-blob" x="20" y="180" width="180" height="250" rx="30"/>
+<text class="d-s" x="35" y="200">Executor core</text>
+<rect class="d-blob" x="230" y="20" width="350" height="350" rx="30"/>
+<text class="d-s" x="245" y="40">Plan tree (in memory)</text>
+<rect class="d-blob" x="615" y="200" width="170" height="210" rx="30"/>
+<text class="d-s" x="630" y="220">Expressions</text>
+<rect class="d-blob" x="230" y="395" width="350" height="100" rx="30"/>
+<text class="d-s" x="245" y="415">Storage (on disk)</text>
+
+<rect class="d-box g1" x="35" y="60" width="150" height="44" rx="14"/>
+<text class="d-t" x="110" y="87" text-anchor="middle">Portal</text>
+<rect class="d-box g2" x="35" y="225" width="150" height="44" rx="14"/>
+<g transform="translate(40,229) scale(0.9)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="122" y="252" text-anchor="middle">ExecutorRun</text>
+<rect class="d-box g2" x="35" y="335" width="150" height="44" rx="14"/>
+<text class="d-t" x="110" y="362" text-anchor="middle">EState</text>
+
+<rect class="d-box g3" x="245" y="60" width="140" height="44" rx="14"/>
+<text class="d-t" x="315" y="87" text-anchor="middle">Top PlanState</text>
+<rect class="d-box g3" x="245" y="138" width="140" height="44" rx="14"/>
+<text class="d-t" x="315" y="165" text-anchor="middle">HashJoin node</text>
+<rect class="d-box g3" x="245" y="216" width="140" height="44" rx="14"/>
+<text class="d-t" x="315" y="243" text-anchor="middle">Hash child</text>
+<rect class="d-box g3" x="245" y="294" width="140" height="44" rx="14"/>
+<text class="d-t" x="315" y="321" text-anchor="middle">SeqScan node</text>
+<rect class="d-box g4" x="445" y="294" width="120" height="44" rx="14"/>
+<text class="d-t" x="505" y="321" text-anchor="middle">TupleTableSlot</text>
+
+<rect class="d-box g5" x="625" y="250" width="150" height="44" rx="14"/>
+<text class="d-t" x="700" y="277" text-anchor="middle">ExprState</text>
+<rect class="d-box g5" x="625" y="335" width="150" height="44" rx="14"/>
+<text class="d-t" x="700" y="362" text-anchor="middle">LLVM JIT</text>
+
+<rect class="d-box g0" x="250" y="428" width="200" height="44" rx="14"/>
+<g transform="translate(258,432) scale(0.9)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="305" y="455">Table pages</text>
+
+<path class="d-edge acc" d="M110,104 V225" marker-end="url(#executor-d1-ah)" transform="translate(55,0)"/>
+<text class="d-lab" x="177" y="166">calls</text>
+<circle class="d-badge" cx="165" cy="145" r="11"/><text class="d-bt" x="165" y="149">1</text>
+<path class="d-edge" d="M165,269 V335" marker-end="url(#executor-d1-ah)"/>
+<text class="d-lab" x="177" y="306">uses</text>
+<path class="d-edge acc" d="M185,247 C225,247 205,82 245,82" marker-end="url(#executor-d1-ah)"/>
+<circle class="d-badge" cx="215" cy="150" r="11"/><text class="d-bt" x="215" y="154">2</text>
+<text class="d-lab" x="215" y="190" text-anchor="middle">pulls</text>
+<path class="d-edge acc" d="M315,104 V138 M315,182 V216 M315,260 V294" marker-end="url(#executor-d1-ah)"/>
+<text class="d-lab" x="328" y="125">pulls</text>
+<text class="d-lab" x="328" y="203">pulls</text>
+<text class="d-lab" x="328" y="281">pulls</text>
+<path class="d-edge" d="M385,316 H445" marker-end="url(#executor-d1-ah)"/>
+<text class="d-lab" x="415" y="308" text-anchor="middle">fills</text>
+<path class="d-edge acc" d="M505,294 V238 H385" marker-end="url(#executor-d1-ah)"/>
+<circle class="d-badge" cx="505" cy="266" r="11"/><text class="d-bt" x="505" y="270">4</text>
+<text class="d-lab" x="445" y="230" text-anchor="middle">row up</text>
+<path class="d-edge" d="M365,338 V428" marker-end="url(#executor-d1-ah)"/>
+<circle class="d-badge" cx="365" cy="357" r="11"/><text class="d-bt" x="365" y="361">3</text>
+<text class="d-lab" x="380" y="388">reads</text>
+<path class="d-edge" d="M625,272 C595,272 595,316 565,316" marker-end="url(#executor-d1-ah)"/>
+<text class="d-lab" x="594" y="292" text-anchor="middle">reads</text>
+<path class="d-edge dash" d="M700,294 V335" marker-end="url(#executor-d1-ah)"/>
+<text class="d-lab" x="712" y="319">compiles</text>
+</svg>

@@ -1,0 +1,338 @@
+{
+ "key": "index",
+ "title": "Indexes and access methods",
+ "one_liner": "An index is a side structure that maps column values to heap row locations (TIDs), reached through a plug-in API so btree, GIN, GiST, SP-GiST, BRIN and hash all work the same way.",
+ "analogy": "A book index: you look up a word, get page numbers (TIDs), then flip to those pages (heap) to read the real text.",
+ "big_picture": [
+  "An index stores keys plus TIDs. A TID is a (block, offset) address of a row in the table.",
+  "Every index type is a plug-in. It fills one IndexAmRoutine struct of function pointers (amapi.h).",
+  "The planner asks each index's amcostestimate how expensive a scan is, then picks the cheapest plan.",
+  "At run time the executor calls amgettuple to get TIDs one by one, or amgetbitmap to get many at once.",
+  "The table AM turns a TID into a visible row. Heap checks the snapshot (MVCC), so the index never holds visibility.",
+  "Index entries can point at dead rows. VACUUM removes them via ambulkdelete."
+ ],
+ "flow": [
+  {
+   "step": "Planner finds candidate indexes",
+   "detail": "For each table, it lists its indexes, then builds an IndexPath for each one whose columns match the WHERE clause.",
+   "where": "src/backend/optimizer/util/plancat.c: get_relation_info; src/backend/optimizer/path/indxpath.c: create_index_paths, build_index_paths"
+  },
+  {
+   "step": "Cost each index path",
+   "detail": "cost_index calls the AM's amcostestimate (btcostestimate for btree). Cheapest path wins against seq scan and bitmap scan.",
+   "where": "src/backend/optimizer/path/costsize.c: cost_index; src/backend/utils/adt/selfuncs.c: btcostestimate, genericcostestimate"
+  },
+  {
+   "step": "Executor starts the scan",
+   "detail": "IndexNext usually opens the scan lazily on the first call, with index_beginscan. That reaches the AM ambeginscan and the table AM index_scan_begin.",
+   "where": "src/backend/executor/nodeIndexscan.c: IndexNext; src/backend/access/index/indexam.c: index_beginscan"
+  },
+  {
+   "step": "Ask the index for the next TID",
+   "detail": "tableam_index_getnext_tid calls amgettuple. The AM stores the TID in scan->xs_heaptid.",
+   "where": "src/include/access/tableam_indexscan.h: tableam_index_getnext_tid; src/backend/access/nbtree/nbtree.c: btgettuple"
+  },
+  {
+   "step": "btree finds the position",
+   "detail": "First call goes _bt_first, which uses _bt_search to descend from root to a leaf. Later calls use _bt_next to walk along the leaf.",
+   "where": "src/backend/access/nbtree/nbtsearch.c: _bt_first, _bt_search, _bt_binsrch, _bt_next; nbtreadpage.c: _bt_readpage"
+  },
+  {
+   "step": "Fetch the heap row",
+   "detail": "The heap table AM reads the heap page and walks the HOT chain to find a version visible to the snapshot.",
+   "where": "src/backend/access/heap/heapam_indexscan.c: heapam_index_heap_fetch, heap_hot_search_buffer"
+  },
+  {
+   "step": "Recheck and return",
+   "detail": "If xs_recheck is set (lossy index), the executor re-tests the quals. Then the row goes up the plan tree.",
+   "where": "src/backend/executor/nodeIndexscan.c: IndexNext"
+  },
+  {
+   "step": "Inserts keep the index in sync",
+   "detail": "On INSERT the executor calls index_insert, which calls aminsert. For btree that is _bt_doinsert, which may split a page and write WAL.",
+   "where": "src/backend/executor/execIndexing.c: ExecInsertIndexTuples; src/backend/access/index/indexam.c: index_insert; nbtree/nbtinsert.c: _bt_doinsert, _bt_split"
+  }
+ ],
+ "diagram": {
+  "claim": "A query goes from planner cost choice, through the generic index AM API into btree, then via the table AM to a visible heap row.",
+  "nodes": [
+   {
+    "id": "plan",
+    "label": "Planner paths",
+    "group": "Planning"
+   },
+   {
+    "id": "cost",
+    "label": "amcostestimate",
+    "group": "Planning"
+   },
+   {
+    "id": "exec",
+    "label": "IndexNext node",
+    "group": "Executor"
+   },
+   {
+    "id": "indexam",
+    "label": "indexam.c wrappers",
+    "group": "Generic API"
+   },
+   {
+    "id": "routine",
+    "label": "IndexAmRoutine",
+    "group": "Generic API"
+   },
+   {
+    "id": "bt",
+    "label": "nbtree search",
+    "group": "Index AM"
+   },
+   {
+    "id": "leaf",
+    "label": "Leaf page TIDs",
+    "group": "Index AM"
+   },
+   {
+    "id": "tam",
+    "label": "Table AM hooks",
+    "group": "Table AM"
+   },
+   {
+    "id": "heap",
+    "label": "Heap page + HOT",
+    "group": "Table AM"
+   },
+   {
+    "id": "wal",
+    "label": "WAL records",
+    "group": "Storage"
+   }
+  ],
+  "edges": [
+   {
+    "from": "plan",
+    "to": "cost",
+    "label": "asks"
+   },
+   {
+    "from": "cost",
+    "to": "plan",
+    "label": "returns cost"
+   },
+   {
+    "from": "plan",
+    "to": "exec",
+    "label": "chooses plan"
+   },
+   {
+    "from": "exec",
+    "to": "indexam",
+    "label": "begin / insert"
+   },
+   {
+    "from": "indexam",
+    "to": "routine",
+    "label": "dispatches"
+   },
+   {
+    "from": "exec",
+    "to": "tam",
+    "label": "getnext_slot"
+   },
+   {
+    "from": "tam",
+    "to": "routine",
+    "label": "amgettuple"
+   },
+   {
+    "from": "routine",
+    "to": "bt",
+    "label": "invokes"
+   },
+   {
+    "from": "bt",
+    "to": "leaf",
+    "label": "descends"
+   },
+   {
+    "from": "leaf",
+    "to": "tam",
+    "label": "TID back"
+   },
+   {
+    "from": "tam",
+    "to": "heap",
+    "label": "fetches row"
+   },
+   {
+    "from": "bt",
+    "to": "wal",
+    "label": "logs splits"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/include/access/amapi.h",
+   "what": "IndexAmRoutine struct and the am*_function callback typedefs"
+  },
+  {
+   "path": "src/backend/access/index/indexam.c",
+   "what": "Generic index_* wrappers: index_beginscan, index_insert and friends"
+  },
+  {
+   "path": "src/include/access/tableam.h",
+   "what": "TableAmRoutine, table_index_getnext_slot, index_scan_begin callbacks"
+  },
+  {
+   "path": "src/backend/access/heap/heapam_indexscan.c",
+   "what": "Heap's index-scan code: TID to visible heap tuple"
+  },
+  {
+   "path": "src/backend/access/nbtree/README",
+   "what": "Lehman-Yao design, locking, splits, deletion of btree"
+  },
+  {
+   "path": "src/backend/access/nbtree/nbtsearch.c",
+   "what": "_bt_search, _bt_first, _bt_next: descending and scanning btree"
+  },
+  {
+   "path": "src/backend/access/nbtree/nbtinsert.c",
+   "what": "_bt_doinsert, unique checks, page splits"
+  },
+  {
+   "path": "src/backend/optimizer/path/indxpath.c",
+   "what": "Decides which indexes can match a query: create_index_paths"
+  },
+  {
+   "path": "src/backend/executor/nodeIndexscan.c",
+   "what": "IndexNext, the executor node that runs an index scan"
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is an index, and what does it store?",
+   "answer": [
+    "A separate on-disk structure with key values plus TIDs.",
+    "A TID is the (block number, offset) of a heap row.",
+    "It speeds up lookups so we skip reading the whole table."
+   ],
+   "trap": "Indexes do not hold full rows or visibility info. Visibility lives in the heap."
+  },
+  {
+   "q": "How does Postgres support so many index types?",
+   "answer": [
+    "Each type has a handler function, like bthandler in nbtree.c, that returns an IndexAmRoutine.",
+    "The struct holds function pointers: ambuild, aminsert, amgettuple, amgetbitmap, amcostestimate and more.",
+    "Core code calls only those pointers via indexam.c, so it never needs to know the type.",
+    "Flags like amcanorder and amcanunique tell the planner what the AM can do."
+   ]
+  },
+  {
+   "q": "Why does CREATE INDEX call ambuild, and aminsert is different?",
+   "answer": [
+    "ambuild bulk-loads from a whole heap scan, e.g. btbuild sorts all keys first (nbtsort.c).",
+    "aminsert adds one entry per new row, e.g. btinsert.",
+    "Bulk build is much faster than inserting row by row."
+   ]
+  },
+  {
+   "q": "Walk me through an index scan, from plan to row.",
+   "answer": [
+    "IndexNext in nodeIndexscan.c opens the scan with index_beginscan.",
+    "It calls table_index_getnext_slot, which runs the table AM's callback.",
+    "That callback calls amgettuple to get a TID, then fetches the heap tuple.",
+    "If the tuple is visible and passes the recheck, it is returned.",
+    "Older branches (PG17 and earlier) use different names: index_getnext_slot and index_fetch_heap."
+   ],
+   "trap": "The index AM does not read the heap. The table AM does that part."
+  },
+  {
+   "q": "How does btree find a key?",
+   "answer": [
+    "_bt_search walks from the root down internal pages to a leaf, using _bt_binsrch on each page.",
+    "_bt_moveright steps right if a concurrent split moved the key.",
+    "_bt_first then positions inside the leaf, and _bt_readpage (in nbtreadpage.c) collects matches.",
+    "_bt_next follows right-links to continue the scan."
+   ],
+   "trap": "btree is not a classic B-tree. It is Lehman-Yao, with right-links and high keys so readers need no big locks."
+  },
+  {
+   "q": "What happens when a btree leaf page is full?",
+   "answer": [
+    "_bt_insertonpg first tries to make room (dedup via _bt_dedup_pass, or delete dead items).",
+    "If that fails, _bt_split makes a new right sibling and picks a split point (nbtsplitloc.c).",
+    "The parent gets a new downlink. All of it is WAL logged so crash recovery can redo it.",
+    "Splits are done in two steps, so readers can still reach keys by the right-link."
+   ]
+  },
+  {
+   "q": "When do GIN, GiST, SP-GiST, BRIN and hash beat btree?",
+   "answer": [
+    "GIN: many keys per row, like arrays, jsonb, full text. Key maps to a posting list of TIDs.",
+    "GiST: generic tree for overlap and nearest-neighbor, like geometry. Uses penalty and picksplit support functions.",
+    "SP-GiST: space-partitioning trees like quad-trees and tries, with inner and leaf tuples.",
+    "BRIN: tiny, stores summaries (min/max) per page range. Great for naturally ordered huge tables.",
+    "hash: only equality, buckets with overflow pages."
+   ],
+   "trap": "Hash indexes are not just a faster btree. They cannot do range queries or ordering."
+  },
+  {
+   "q": "Why can an index scan be skipped even when an index exists?",
+   "answer": [
+    "Planner costs it with amcostestimate, and seq scan may be cheaper if many rows match.",
+    "Bitmap scans use amgetbitmap to collect TIDs first, then read heap in page order.",
+    "Stale statistics, non-matching operator classes, or non-immutable expressions also block use."
+   ],
+   "trap": "Having an index never forces its use. The cost model decides."
+  },
+  {
+   "q": "How does this tie to the table AM API?",
+   "answer": [
+    "TableAmRoutine in tableam.h lets heap or another storage plug in.",
+    "It has index_scan_begin, index_scan_reset, index_scan_end, and fetch_tid.",
+    "The table AM sets scan->xs_getnext_slot, so each table type decides how a TID becomes a visible row.",
+    "Heap's version, heapam_index_heap_fetch, walks the HOT chain with heap_hot_search_buffer."
+   ]
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/access/nbtree/README first, then follow _bt_first and _bt_search in nbtsearch.c with a debugger.",
+  "Learn IndexAmRoutine by reading src/test/modules/dummy_index_am and contrib/bloom, which are small example AMs.",
+  "Use contrib/amcheck to verify btree changes. Index code must also write correct WAL and pass recovery tests.",
+  "Be careful with buffer locks and pins. Mistakes here cause rare deadlocks or corrupt indexes, not clean failures."
+ ],
+ "glossary": [
+  {
+   "term": "TID",
+   "meaning": "Tuple identifier: heap block number plus offset, the row's address."
+  },
+  {
+   "term": "Access method (AM)",
+   "meaning": "A plug-in implementing an index type, or table storage."
+  },
+  {
+   "term": "HOT chain",
+   "meaning": "Heap-only tuple versions linked on one page, so no new index entry is needed."
+  },
+  {
+   "term": "Posting list",
+   "meaning": "A list of TIDs that share one key, used by GIN and btree dedup."
+  },
+  {
+   "term": "Lossy / recheck",
+   "meaning": "Index may return false matches, so quals are re-tested on the real row."
+  },
+  {
+   "term": "Bitmap scan",
+   "meaning": "Collect TIDs into a bitmap, then read the heap in page order."
+  }
+ ],
+ "more": [
+  "Index-only scans skip the heap when the visibility map says the page is all-visible.",
+  "Bitmap scans have their own executor nodes (nodeBitmapIndexscan.c, nodeBitmapHeapscan.c).",
+  "Operator classes decide what a column can be indexed with.",
+  "Multicolumn indexes follow the leftmost-prefix rule. Partial, expression and INCLUDE indexes exist too.",
+  "HOT updates avoid new index entries when no indexed column changes.",
+  "Hands-on: contrib/amcheck, pageinspect, and doc/src/sgml/indexam.sgml."
+ ]
+}

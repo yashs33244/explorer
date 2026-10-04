@@ -1,0 +1,52 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Sequence of one connection: client connects, postmaster forks a backend, startup packet, authentication, a simple query, then exit." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="process-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="10" y="10" width="780" height="580" rx="30"/>
+<rect class="d-box g0" x="70" y="24" width="160" height="46" rx="12"/>
+<g transform="translate(74,26) scale(0.9)"><g class="icon"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g></g>
+<text class="d-t" x="160" y="53" text-anchor="middle">Client</text>
+<rect class="d-box g1" x="320" y="24" width="160" height="46" rx="12"/>
+<g transform="translate(326,28) scale(0.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="414" y="53" text-anchor="middle">Postmaster</text>
+<rect class="d-box g2" x="570" y="24" width="160" height="46" rx="12"/>
+<g transform="translate(576,28) scale(0.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="664" y="53" text-anchor="middle">Backend</text>
+<path class="d-edge dash" d="M150,74 V580"/>
+<path class="d-edge dash" d="M400,74 V580"/>
+<path class="d-edge dash" d="M650,74 V580"/>
+
+<path class="d-edge acc" d="M150,108 H398" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="290" y="100" text-anchor="middle">connects</text>
+<circle class="d-badge" cx="176" cy="108" r="11"/><text class="d-bt" x="176" y="112">1</text>
+
+<path class="d-edge acc" d="M400,162 H648" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="540" y="154" text-anchor="middle">forks a child</text>
+<circle class="d-badge" cx="426" cy="162" r="11"/><text class="d-bt" x="426" y="166">2</text>
+
+<path class="d-edge acc" d="M150,216 H648" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="540" y="208" text-anchor="middle">startup packet</text>
+<circle class="d-badge" cx="176" cy="216" r="11"/><text class="d-bt" x="176" y="220">3</text>
+
+<rect class="d-box g3" x="540" y="248" width="220" height="40" rx="10"/>
+<text class="d-t" x="650" y="273" text-anchor="middle">check hba, authenticate</text>
+<circle class="d-badge" cx="520" cy="268" r="11"/><text class="d-bt" x="520" y="272">4</text>
+
+<path class="d-edge" d="M650,326 H152" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="400" y="318" text-anchor="middle">auth ok, ReadyForQuery</text>
+<circle class="d-badge" cx="624" cy="326" r="11"/><text class="d-bt" x="624" y="330">5</text>
+
+<path class="d-edge acc" d="M150,380 H648" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="400" y="372" text-anchor="middle">Q: SELECT 1</text>
+<circle class="d-badge" cx="176" cy="380" r="11"/><text class="d-bt" x="176" y="384">6</text>
+
+<path class="d-edge" d="M650,434 H152" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="400" y="426" text-anchor="middle">rows, ReadyForQuery</text>
+<circle class="d-badge" cx="624" cy="434" r="11"/><text class="d-bt" x="624" y="438">7</text>
+
+<path class="d-edge acc" d="M150,488 H648" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="400" y="480" text-anchor="middle">X: Terminate</text>
+<circle class="d-badge" cx="176" cy="488" r="11"/><text class="d-bt" x="176" y="492">8</text>
+
+<path class="d-edge" d="M650,542 H402" marker-end="url(#process-d2-ah)"/>
+<text class="d-lab" x="526" y="534" text-anchor="middle">exits, SIGCHLD</text>
+<circle class="d-badge" cx="624" cy="542" r="11"/><text class="d-bt" x="624" y="546">9</text>
+</svg>

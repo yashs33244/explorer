@@ -1,0 +1,357 @@
+{
+ "key": "mvcc",
+ "title": "MVCC, transactions, snapshots and VACUUM",
+ "one_liner": "Postgres keeps many versions of each row, uses snapshots to decide which version you see, and VACUUM cleans up old versions.",
+ "analogy": "Like a shared Google Doc with version history: readers view a frozen version, writers add new versions, and a janitor deletes versions nobody needs.",
+ "big_picture": [
+  "Every row version (tuple) stores xmin (who created it) and xmax (who deleted or locked it).",
+  "UPDATE never edits in place. It writes a new tuple and marks the old one with xmax.",
+  "A snapshot is a list of which transactions counted as finished when you started looking.",
+  "Visibility check: xmin must be committed and finished before my snapshot, and xmax must not be. Then I see the tuple.",
+  "Commit status lives in pg_xact (clog), 2 bits per xid. Hint bits cache it on the tuple.",
+  "VACUUM removes dead tuples nobody can see, and freezes old xids to prevent wraparound."
+ ],
+ "flow": [
+  {
+   "step": "Transaction gets an xid",
+   "detail": "An xid is handed out only when you first write. Reads need no xid.",
+   "where": "src/backend/access/transam/varsup.c: GetNewTransactionId"
+  },
+  {
+   "step": "Transaction lifecycle runs",
+   "detail": "BEGIN, COMMIT and ABORT map onto a layered state machine.",
+   "where": "src/backend/access/transam/xact.c: StartTransaction, CommitTransaction"
+  },
+  {
+   "step": "A snapshot is taken",
+   "detail": "Scans the list of running backends and records xmin, xmax and the in-progress xip list.",
+   "where": "src/backend/storage/ipc/procarray.c: GetSnapshotData"
+  },
+  {
+   "step": "Snapshot is managed per isolation level",
+   "detail": "Read Committed takes a new one per statement. Repeatable Read and up keep one for the whole transaction.",
+   "where": "src/backend/utils/time/snapmgr.c: GetTransactionSnapshot"
+  },
+  {
+   "step": "Each tuple is checked",
+   "detail": "The scan asks if this tuple version is visible to my snapshot.",
+   "where": "src/backend/access/heap/heapam_visibility.c: HeapTupleSatisfiesMVCC"
+  },
+  {
+   "step": "Commit writes status",
+   "detail": "Commit writes a WAL record, then flips the xid status to committed in pg_xact.",
+   "where": "src/backend/access/transam/xact.c: RecordTransactionCommit"
+  },
+  {
+   "step": "Pruning cleans pages cheaply",
+   "detail": "On reads, heap_page_prune_opt calls heap_page_prune_and_freeze. HOT chains collapse. Only VACUUM turns LP_DEAD into LP_UNUSED, after index cleanup.",
+   "where": "src/backend/access/heap/pruneheap.c: heap_page_prune_opt, heap_page_prune_and_freeze"
+  },
+  {
+   "step": "VACUUM scans, vacuums indexes, then heap",
+   "detail": "Collect dead TIDs, clean indexes, mark heap line pointers unused, freeze old tuples.",
+   "where": "src/backend/access/heap/vacuumlazy.c: heap_vacuum_rel, lazy_scan_heap"
+  },
+  {
+   "step": "Autovacuum triggers it",
+   "detail": "A launcher starts workers that vacuum tables crossing thresholds or nearing wraparound.",
+   "where": "src/backend/postmaster/autovacuum.c: do_autovacuum"
+  }
+ ],
+ "diagram": {
+  "claim": "A write creates a tuple version, a snapshot decides visibility, and VACUUM reclaims dead versions.",
+  "nodes": [
+   {
+    "id": "xact",
+    "label": "xact.c transaction",
+    "group": "Transaction"
+   },
+   {
+    "id": "varsup",
+    "label": "varsup.c xid",
+    "group": "Transaction"
+   },
+   {
+    "id": "heap",
+    "label": "Heap page tuples",
+    "group": "Storage"
+   },
+   {
+    "id": "wal",
+    "label": "WAL record",
+    "group": "Storage"
+   },
+   {
+    "id": "clog",
+    "label": "pg_xact clog",
+    "group": "Storage"
+   },
+   {
+    "id": "proc",
+    "label": "procarray.c",
+    "group": "Snapshot"
+   },
+   {
+    "id": "snap",
+    "label": "snapmgr.c snapshot",
+    "group": "Snapshot"
+   },
+   {
+    "id": "vis",
+    "label": "HeapTupleSatisfiesMVCC",
+    "group": "Snapshot"
+   },
+   {
+    "id": "prune",
+    "label": "pruneheap.c",
+    "group": "Cleanup"
+   },
+   {
+    "id": "vac",
+    "label": "vacuumlazy.c",
+    "group": "Cleanup"
+   },
+   {
+    "id": "av",
+    "label": "autovacuum.c",
+    "group": "Cleanup"
+   },
+   {
+    "id": "heapam",
+    "label": "heapam.c",
+    "group": "Storage"
+   }
+  ],
+  "edges": [
+   {
+    "from": "xact",
+    "to": "varsup",
+    "label": "requests xid"
+   },
+   {
+    "from": "xact",
+    "to": "wal",
+    "label": "emits commit"
+   },
+   {
+    "from": "proc",
+    "to": "snap",
+    "label": "fills xmin xmax"
+   },
+   {
+    "from": "snap",
+    "to": "vis",
+    "label": "feeds"
+   },
+   {
+    "from": "vis",
+    "to": "clog",
+    "label": "looks up"
+   },
+   {
+    "from": "vis",
+    "to": "heap",
+    "label": "filters"
+   },
+   {
+    "from": "av",
+    "to": "vac",
+    "label": "launches"
+   },
+   {
+    "from": "vac",
+    "to": "prune",
+    "label": "calls"
+   },
+   {
+    "from": "prune",
+    "to": "heap",
+    "label": "removes dead"
+   },
+   {
+    "from": "xact",
+    "to": "heapam",
+    "label": "gives xid"
+   },
+   {
+    "from": "heapam",
+    "to": "heap",
+    "label": "writes tuple"
+   },
+   {
+    "from": "xact",
+    "to": "clog",
+    "label": "sets after flush"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/access/transam/README",
+   "what": "Design of the transaction system, snapshots and xid horizons"
+  },
+  {
+   "path": "src/backend/access/transam/xact.c",
+   "what": "Transaction start, commit, abort and savepoints"
+  },
+  {
+   "path": "src/backend/access/transam/clog.c",
+   "what": "pg_xact commit log, 2 bits per xid"
+  },
+  {
+   "path": "src/backend/access/transam/varsup.c",
+   "what": "xid allocation and wraparound limits"
+  },
+  {
+   "path": "src/backend/storage/ipc/procarray.c",
+   "what": "GetSnapshotData and ComputeXidHorizons over running backends"
+  },
+  {
+   "path": "src/backend/utils/time/snapmgr.c",
+   "what": "Snapshot lifecycle and XidInMVCCSnapshot"
+  },
+  {
+   "path": "src/backend/access/heap/heapam_visibility.c",
+   "what": "HeapTupleSatisfiesMVCC and VACUUM visibility checks"
+  },
+  {
+   "path": "src/backend/access/heap/README.HOT",
+   "what": "Heap-only tuples and pruning design"
+  },
+  {
+   "path": "src/backend/access/heap/vacuumlazy.c",
+   "what": "Lazy VACUUM: heap_vacuum_rel and lazy_scan_heap"
+  },
+  {
+   "path": "src/backend/postmaster/autovacuum.c",
+   "what": "Autovacuum launcher and workers"
+  }
+ ],
+ "interview": [
+  {
+   "q": "What are xmin and xmax on a tuple?",
+   "answer": [
+    "xmin is the xid that inserted this tuple version.",
+    "xmax is the xid that deleted or locked it, or 0 if none.",
+    "Flags like HEAP_XMIN_COMMITTED in htup_details.h cache their status."
+   ],
+   "trap": "xmax is not only for deletes. It is also used for row locks like SELECT FOR UPDATE."
+  },
+  {
+   "q": "What does an UPDATE do physically?",
+   "answer": [
+    "It inserts a new tuple version with new xmin.",
+    "It sets xmax on the old tuple to the updating xid.",
+    "Code is heap_update in heapam.c.",
+    "The old version stays until VACUUM or pruning removes it."
+   ],
+   "trap": "UPDATE does not overwrite the row in place."
+  },
+  {
+   "q": "What is a snapshot?",
+   "answer": [
+    "It is a struct (SnapshotData in snapshot.h) with xmin, xmax and a list xip of in-progress xids.",
+    "xid below xmin: finished. xid at or above xmax: invisible, started later.",
+    "xids in xip were running at snapshot time, so invisible."
+   ]
+  },
+  {
+   "q": "Where is commit status stored and how is it read?",
+   "answer": [
+    "pg_xact (clog.c) stores 2 bits per xid: in progress, committed, aborted, sub-committed.",
+    "TransactionIdDidCommit in transam.c reads it.",
+    "Visibility code sets hint bits on the tuple so the next reader skips the clog lookup."
+   ],
+   "trap": "Hint bits need no WAL for correctness, since pg_xact can recreate them. With checksums or wal_log_hints on, the first hint change after a checkpoint may log a full page."
+  },
+  {
+   "q": "How does HeapTupleSatisfiesMVCC decide visibility?",
+   "answer": [
+    "Did xmin commit before my snapshot was taken (not in xip, below xmax)? If not, invisible.",
+    "Is xmax invalid, aborted, or not yet visible to me? Then the tuple is visible.",
+    "If xmax committed and visible to my snapshot, the tuple is deleted for me.",
+    "Own-transaction changes use the command id so you see earlier commands only."
+   ]
+  },
+  {
+   "q": "How do isolation levels differ in snapshots?",
+   "answer": [
+    "Read Committed takes a fresh snapshot for each statement.",
+    "Repeatable Read keeps one snapshot for the whole transaction.",
+    "IsolationUsesXactSnapshot() in xact.h checks for level at or above Repeatable Read.",
+    "Serializable adds predicate locking on top."
+   ],
+   "trap": "Postgres Read Uncommitted behaves like Read Committed. There are no dirty reads."
+  },
+  {
+   "q": "What is a HOT update?",
+   "answer": [
+    "Heap-Only Tuple: update where no indexed column changes and the page has room.",
+    "The new tuple is flagged HEAP_ONLY_TUPLE and old HEAP_HOT_UPDATED.",
+    "No new index entries. Index points at the chain root.",
+    "Pruning can reclaim dead chain members without VACUUM.",
+    "See README.HOT and pruneheap.c."
+   ]
+  },
+  {
+   "q": "What does VACUUM do and why can it not remove everything?",
+   "answer": [
+    "It finds dead tuples, removes their index entries, then frees heap slots (lazy_vacuum_heap_rel).",
+    "Dead means no snapshot can still see it. VACUUM computes cutoffs in vacuum_get_cutoffs. Pruning uses GlobalVisState from procarray.c.",
+    "ComputeXidHorizons in procarray.c finds the oldest running xmin.",
+    "A long-running transaction holds the horizon back and causes bloat."
+   ],
+   "trap": "VACUUM does not shrink the file normally. It marks space reusable. VACUUM FULL rewrites the table."
+  },
+  {
+   "q": "What is xid wraparound and how is it prevented?",
+   "answer": [
+    "xids are 32-bit and compared in a circle, so only about 2 billion are in the past.",
+    "Very old tuples would suddenly look like they are in the future.",
+    "VACUUM freezes old tuples (heap_prepare_freeze_tuple) so they are visible to all.",
+    "SetTransactionIdLimit in varsup.c sets warning and stop limits.",
+    "Autovacuum is forced when age passes autovacuum_freeze_max_age."
+   ],
+   "trap": "Turning autovacuum off does not stop anti-wraparound vacuum. It still runs."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/access/transam/README and README.HOT first. They explain the design in plain English.",
+  "Run the isolation tester in src/test/isolation/specs to see concurrent snapshots behave. Add a spec for any visibility fix.",
+  "Be careful with visibility code. Small changes can cause silent data corruption, so reason about every xid state.",
+  "Start with vacuum.c and autovacuum.c for docs, logging or GUC tweaks before touching heapam_visibility.c."
+ ],
+ "glossary": [
+  {
+   "term": "xid",
+   "meaning": "32-bit transaction id given to a transaction that writes."
+  },
+  {
+   "term": "snapshot",
+   "meaning": "A record of which transactions count as finished at one moment."
+  },
+  {
+   "term": "hint bit",
+   "meaning": "A flag on a tuple caching commit or abort status."
+  },
+  {
+   "term": "pruning",
+   "meaning": "Cheap in-page cleanup of dead tuples and HOT chains."
+  },
+  {
+   "term": "freezing",
+   "meaning": "Marking old tuples visible to everyone so xid age stops mattering."
+  },
+  {
+   "term": "OldestXmin",
+   "meaning": "Horizon: tuples deleted before it are invisible to all and removable."
+  }
+ ],
+ "more": [
+  "Command ids (cmin/cmax) let you see earlier statements of your own transaction.",
+  "Subtransactions and savepoints; MultiXacts for shared row locks.",
+  "Serializable can fail with 40001. The client must retry.",
+  "What holds the cleanup horizon back: idle in transaction, replication slots, prepared transactions.",
+  "Hands-on: pageinspect heap_page_items, pg_visibility, VACUUM VERBOSE."
+ ]
+}

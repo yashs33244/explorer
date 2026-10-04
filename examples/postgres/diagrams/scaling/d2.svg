@@ -1,0 +1,22 @@
+<svg class="hd" viewBox="0 0 800 570" role="img" aria-label="A SELECT for region eu and id 5 flows from client to coordinator, is pruned, sent as Remote SQL to shard 1 only, and rows return" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="scaling-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<path class="d-edge dash" d="M80,92 L80,550"/>
+<rect class="d-box g0" x="20" y="30" width="120" height="48" rx="14"/><text class="d-t" x="80" y="59" text-anchor="middle">Client</text>
+<path class="d-edge dash" d="M240,92 L240,550"/>
+<rect class="d-box g2" x="180" y="30" width="120" height="48" rx="14"/><text class="d-t" x="240" y="59" text-anchor="middle">Coordinator</text>
+<path class="d-edge dash" d="M400,92 L400,550"/>
+<rect class="d-box g4" x="340" y="30" width="120" height="48" rx="14"/><text class="d-t" x="400" y="59" text-anchor="middle">postgres_fdw</text>
+<path class="d-edge dash" d="M560,92 L560,550"/>
+<rect class="d-box g5" x="500" y="30" width="120" height="48" rx="14"/><text class="d-t" x="560" y="59" text-anchor="middle">Shard 1</text>
+<path class="d-edge dash" d="M720,92 L720,550"/>
+<rect class="d-box g5" x="660" y="30" width="120" height="48" rx="14"/><text class="d-t" x="720" y="59" text-anchor="middle">Shard 2</text>
+<path class="d-edge" d="M80,135 L234,135" marker-end="url(#scaling-d2-ah)"/><text class="d-lab" x="170" y="126" text-anchor="middle">sends SELECT</text><g><circle class="d-badge" cx="100" cy="135" r="11"/><text class="d-bt" x="100" y="139">1</text></g>
+<rect class="d-box g3" x="170" y="168" width="140" height="52" rx="14"/><text class="d-t" x="240" y="192" text-anchor="middle">Prune to s1</text><text class="d-s" x="240" y="210" text-anchor="middle">partprune.c</text><g><circle class="d-badge" cx="170" cy="194" r="11"/><text class="d-bt" x="170" y="198">2</text></g>
+<path class="d-edge" d="M240,262 L394,262" marker-end="url(#scaling-d2-ah)"/><text class="d-lab" x="330" y="253" text-anchor="middle">wants rows</text><g><circle class="d-badge" cx="260" cy="262" r="11"/><text class="d-bt" x="260" y="266">3</text></g>
+<rect class="d-box g3" x="330" y="290" width="140" height="52" rx="14"/><text class="d-t" x="400" y="314" text-anchor="middle">Write SQL</text><text class="d-s" x="400" y="332" text-anchor="middle">deparse.c</text><g><circle class="d-badge" cx="330" cy="316" r="11"/><text class="d-bt" x="330" y="320">4</text></g>
+<path class="d-edge acc" d="M400,385 L554,385" marker-end="url(#scaling-d2-ah)"/><text class="d-lab" x="490" y="376" text-anchor="middle">Remote SQL</text><g><circle class="d-badge" cx="420" cy="385" r="11"/><text class="d-bt" x="420" y="389">5</text></g>
+<path class="d-edge dash" d="M560,430 L406,430" marker-end="url(#scaling-d2-ah)"/><text class="d-lab" x="470" y="421" text-anchor="middle">rows back</text><g><circle class="d-badge" cx="540" cy="430" r="11"/><text class="d-bt" x="540" y="434">6</text></g>
+<path class="d-edge dash" d="M400,475 L246,475" marker-end="url(#scaling-d2-ah)"/><text class="d-lab" x="310" y="466" text-anchor="middle">passes rows</text><g><circle class="d-badge" cx="380" cy="475" r="11"/><text class="d-bt" x="380" y="479">7</text></g>
+<path class="d-edge dash" d="M240,520 L86,520" marker-end="url(#scaling-d2-ah)"/><text class="d-lab" x="150" y="511" text-anchor="middle">returns result</text><g><circle class="d-badge" cx="220" cy="520" r="11"/><text class="d-bt" x="220" y="524">8</text></g>
+<rect class="d-blob2" x="650" y="290" width="140" height="52" rx="14"/><text class="d-t" x="720" y="314" text-anchor="middle">Not contacted</text><text class="d-s" x="720" y="332" text-anchor="middle">pruned away</text>
+</svg>

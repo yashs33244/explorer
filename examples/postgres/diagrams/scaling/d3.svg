@@ -1,0 +1,32 @@
+<svg class="hd" viewBox="0 0 800 520" role="img" aria-label="Partition tree of the orders table: PartitionKeyData, PartitionDescData and PartitionBoundInfoData in the relcache, pointing to two foreign table children" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="scaling-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="15" y="30" width="390" height="470" rx="36"/><text class="d-s" x="210" y="52" text-anchor="middle">Relcache entry of orders</text>
+<rect class="d-blob" x="430" y="30" width="355" height="470" rx="36"/><text class="d-s" x="607" y="52" text-anchor="middle">Catalog and children</text>
+<rect class="d-box g1" x="35" y="70" width="350" height="120" rx="14"/><text class="d-t" x="75" y="95">PartitionKeyData</text>
+<text class="d-m" x="75" y="118">strategy = LIST</text>
+<text class="d-m" x="75" y="137">partnatts = 1</text>
+<text class="d-m" x="75" y="156">partattrs[0] = region</text>
+<text class="d-s" x="75" y="178">partcache.c</text>
+<rect class="d-box g2" x="35" y="215" width="350" height="130" rx="14"/><text class="d-t" x="75" y="240">PartitionDescData</text>
+<text class="d-m" x="75" y="263">nparts = 2</text>
+<text class="d-m" x="75" y="282">oids[] = {orders_s1, orders_s2}</text>
+<text class="d-m" x="75" y="301">is_leaf[] = {true, true}</text>
+<text class="d-m" x="75" y="320">boundinfo = (see below)</text>
+<rect class="d-box g3" x="35" y="375" width="350" height="115" rx="14"/><text class="d-t" x="75" y="400">PartitionBoundInfoData</text>
+<text class="d-m" x="75" y="423">ndatums = 2, strategy = LIST</text>
+<text class="d-m" x="75" y="442">datums[] = {'eu'}, {'us'}</text>
+<text class="d-m" x="75" y="461">indexes[] = {0, 1}</text>
+<text class="d-s" x="75" y="478">partbounds.c</text>
+<rect class="d-box g5" x="455" y="80" width="305" height="100" rx="14"/><g transform="translate(463,110)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g><text class="d-t" x="510" y="116">orders_s1</text><text class="d-m" x="510" y="136">FOR VALUES IN ('eu')</text><text class="d-s" x="510" y="158">foreign table, SERVER s1</text>
+<rect class="d-box g5" x="455" y="215" width="305" height="100" rx="14"/><g transform="translate(463,245)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g><text class="d-t" x="510" y="251">orders_s2</text><text class="d-m" x="510" y="271">FOR VALUES IN ('us')</text><text class="d-s" x="510" y="293">foreign table, SERVER s2</text>
+<rect class="d-box g4" x="455" y="390" width="305" height="85" rx="14"/><text class="d-t" x="475" y="415">Pruning result</text><text class="d-m" x="475" y="437">get_matching_partitions()</text><text class="d-s" x="475" y="458">returns indexes into oids[]</text>
+<path class="d-edge" d="M210,345 L210,375" marker-end="url(#scaling-d3-ah)"/><text class="d-lab" x="222" y="364">points to</text>
+<path class="d-edge acc" d="M385,290 C420,290 420,130 455,130" marker-end="url(#scaling-d3-ah)"/><text class="d-lab" x="418" y="210" text-anchor="middle">oids[0]</text>
+<path class="d-edge acc" d="M385,300 C420,300 420,265 455,265" marker-end="url(#scaling-d3-ah)"/>
+<path class="d-edge" d="M385,432 L455,432" marker-end="url(#scaling-d3-ah)"/><text class="d-lab" x="420" y="424" text-anchor="middle">read by</text>
+<g><circle class="d-badge" cx="35" cy="70" r="11"/><text class="d-bt" x="35" y="74">1</text></g>
+<g><circle class="d-badge" cx="35" cy="215" r="11"/><text class="d-bt" x="35" y="219">2</text></g>
+<g><circle class="d-badge" cx="35" cy="375" r="11"/><text class="d-bt" x="35" y="379">3</text></g>
+<g><circle class="d-badge" cx="455" cy="80" r="11"/><text class="d-bt" x="455" y="84">4</text></g>
+<g><circle class="d-badge" cx="455" cy="390" r="11"/><text class="d-bt" x="455" y="394">5</text></g>
+</svg>

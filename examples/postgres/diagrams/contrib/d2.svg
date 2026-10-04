@@ -1,0 +1,64 @@
+<svg class="hd" viewBox="0 0 800 418" role="img" aria-label="Eight steps from building the tree to a committer pushing your patch" xmlns="http://www.w3.org/2000/svg"><defs><marker id="contrib-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="14" y="14" width="772" height="170" rx="36"/>
+<rect class="d-blob2" x="14" y="232" width="772" height="170" rx="36"/>
+<text class="d-s" x="34" y="34" text-anchor="start">On your laptop</text>
+<text class="d-s" x="766" y="252" text-anchor="end">Share with the project</text>
+<rect class="d-box g0" x="31" y="50" width="118" height="110" rx="14"/>
+<g transform="translate(77.0,58) scale(0.65)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="90.0" y="104" text-anchor="middle">Build</text>
+<text class="d-s" x="90.0" y="122" text-anchor="middle">meson or configure</text>
+<text class="d-m" x="90.0" y="142" text-anchor="middle">ninja -C build</text>
+<circle class="d-badge" cx="43" cy="62" r="11"/><text class="d-bt" x="43" y="66">1</text>
+<path class="d-edge acc" d="M151,105 H184" marker-end="url(#contrib-d2-ah)"/>
+<rect class="d-box g1" x="186" y="50" width="118" height="110" rx="14"/>
+<g transform="translate(232.0,58) scale(0.65)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="245.0" y="104" text-anchor="middle">Add a test</text>
+<text class="d-s" x="245.0" y="122" text-anchor="middle">sql/ + expected/</text>
+<text class="d-m" x="245.0" y="142" text-anchor="middle">parallel_schedule</text>
+<circle class="d-badge" cx="198" cy="62" r="11"/><text class="d-bt" x="198" y="66">2</text>
+<path class="d-edge acc" d="M306,105 H339" marker-end="url(#contrib-d2-ah)"/>
+<rect class="d-box g2" x="341" y="50" width="118" height="110" rx="14"/>
+<g transform="translate(387.0,58) scale(0.65)"><rect class="d-fillpaper" x="3" y="5" width="34" height="23" rx="3"/><path class="d-line" d="M14,35 H26 M20,28 V35"/><path class="d-lineacc" d="M9,14 H21 M9,20 H28"/></g>
+<text class="d-t" x="400.0" y="104" text-anchor="middle">Run tests</text>
+<text class="d-s" x="400.0" y="122" text-anchor="middle">or meson test</text>
+<text class="d-m" x="400.0" y="142" text-anchor="middle">make check-world</text>
+<circle class="d-badge" cx="353" cy="62" r="11"/><text class="d-bt" x="353" y="66">3</text>
+<path class="d-edge acc" d="M461,105 H494" marker-end="url(#contrib-d2-ah)"/>
+<rect class="d-box g3" x="496" y="50" width="118" height="110" rx="14"/>
+<g transform="translate(542.0,58) scale(0.65)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="555.0" y="104" text-anchor="middle">Format C</text>
+<text class="d-s" x="555.0" y="122" text-anchor="middle">uses typedefs.list</text>
+<text class="d-m" x="555.0" y="142" text-anchor="middle">pgindent</text>
+<circle class="d-badge" cx="508" cy="62" r="11"/><text class="d-bt" x="508" y="66">4</text>
+<path class="d-edge acc" d="M616,105 H649" marker-end="url(#contrib-d2-ah)"/>
+<rect class="d-box g4" x="651" y="50" width="118" height="110" rx="14"/>
+<g transform="translate(697.0,58) scale(0.65)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="710.0" y="104" text-anchor="middle">Edit docs</text>
+<text class="d-s" x="710.0" y="122" text-anchor="middle">doc/src/sgml</text>
+<text class="d-m" x="710.0" y="142" text-anchor="middle">make html</text>
+<circle class="d-badge" cx="663" cy="62" r="11"/><text class="d-bt" x="663" y="66">5</text>
+<rect class="d-box g5" x="50" y="268" width="190" height="110" rx="14"/>
+<g transform="translate(132.0,276) scale(0.65)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="145.0" y="322" text-anchor="middle">Make patch</text>
+<text class="d-s" x="145.0" y="340" text-anchor="middle">one file per commit</text>
+<text class="d-m" x="145.0" y="360" text-anchor="middle">git format-patch</text>
+<circle class="d-badge" cx="62" cy="280" r="11"/><text class="d-bt" x="62" y="284">6</text>
+<path class="d-edge acc" d="M242,323 H298" marker-end="url(#contrib-d2-ah)"/>
+<text class="d-lab" x="270" y="315" text-anchor="middle">emails</text>
+<rect class="d-box g0" x="300" y="268" width="190" height="110" rx="14"/>
+<g transform="translate(382.0,276) scale(0.65)"><rect class="d-fillpaper" x="6" y="4" width="28" height="32" rx="3"/><path class="d-line" d="M12,4 V36"/><path class="d-lineacc" d="M17,12 H29 M17,19 H29 M17,26 H25"/></g>
+<text class="d-t" x="395.0" y="322" text-anchor="middle">Email it</text>
+<text class="d-s" x="395.0" y="340" text-anchor="middle">to the mailing list</text>
+<text class="d-m" x="395.0" y="360" text-anchor="middle">pgsql-hackers</text>
+<circle class="d-badge" cx="312" cy="280" r="11"/><text class="d-bt" x="312" y="284">7</text>
+<path class="d-edge acc" d="M492,323 H548" marker-end="url(#contrib-d2-ah)"/>
+<text class="d-lab" x="520" y="315" text-anchor="middle">registers</text>
+<rect class="d-box g1" x="550" y="268" width="190" height="110" rx="14"/>
+<g transform="translate(632.0,276) scale(0.65)"><circle class="d-fillpaper" cx="20" cy="20" r="15"/><path class="d-lineacc" d="M20,10 V20 L27,24"/></g>
+<text class="d-t" x="645.0" y="322" text-anchor="middle">Commitfest</text>
+<text class="d-s" x="645.0" y="340" text-anchor="middle">review, then commit</text>
+<text class="d-m" x="645.0" y="360" text-anchor="middle">committer pushes</text>
+<circle class="d-badge" cx="562" cy="280" r="11"/><text class="d-bt" x="562" y="284">8</text>
+<path class="d-edge acc" d="M690,160 V204 H145 V266" marker-end="url(#contrib-d2-ah)"/>
+<text class="d-lab" x="420" y="200" text-anchor="middle">then share it</text>
+</svg>

@@ -1,0 +1,522 @@
+{
+ "key": "replicas",
+ "title": "Read replicas and streaming replication inside the box",
+ "one_liner": "A replica is a second Postgres that keeps replaying the primary's WAL, so it holds the same data and can answer read-only queries.",
+ "analogy": "The primary is a chef writing every cooking step in a notebook (the WAL). A walsender is a courier who reads the notebook aloud on the phone. The walreceiver on the other end writes it down. The startup process is a second chef who repeats each step in another kitchen. Customers can taste dishes in kitchen two (read-only queries) but cannot change the recipe there.",
+ "big_picture": [
+  "Postgres writes every change to the WAL (write-ahead log) before it touches data files. Streaming replication just ships that WAL to another server over a normal TCP connection.",
+  "On the primary, a walsender process serves the stream. On the standby, a walreceiver process receives it and writes it into the standby's own pg_wal. The startup process reads that WAL and redoes each record, exactly like crash recovery that never finishes.",
+  "A standby starts from a base backup (pg_basebackup). The file standby.signal tells the server to stay in recovery instead of becoming a primary. postgresql.auto.conf holds primary_conninfo, the address of the primary.",
+  "Because replay is physical (it copies bytes of pages), the standby is a byte-for-byte copy of the same major version. It cannot have different tables or write anything of its own.",
+  "hot_standby=on (the default, and on in my run) lets normal sessions connect during recovery. They get snapshots built from KnownAssignedXids, a shared-memory list of transactions the primary is running.",
+  "Replay can clash with queries. If WAL says 'remove old row versions' and a standby query still needs them, that is a recovery conflict. The startup process waits up to max_standby_streaming_delay (30s default), then cancels the query. hot_standby_feedback tells the primary to keep old rows so conflicts are rarer.",
+  "A physical replication slot makes the primary remember how much WAL a standby still needs, so it does not delete it. Synchronous replication makes a commit wait until a standby confirms the WAL (remote_write, on = flush, remote_apply).",
+  "Promotion (pg_ctl promote) ends recovery, picks a new timeline (a numbered branch of history), writes a NN.history file, and the server becomes a normal read-write primary.",
+  "Logical replication is a different feature. It decodes WAL into row changes (INSERT/UPDATE/DELETE per table), sends them with the pgoutput plugin, and a subscriber applies them as normal SQL-level changes. It can copy a subset of tables across versions, but it is not a byte copy."
+ ],
+ "flow": [
+  {
+   "step": "1. pg_basebackup connects in replication mode",
+   "detail": "pg_basebackup opens a replication connection. The primary starts a walsender, which runs BASE_BACKUP. With -R pg_basebackup writes standby.signal and a primary_conninfo line into postgresql.auto.conf. With -X stream it also streams WAL during the copy so the backup is consistent. The copy contains a backup_label file with START WAL LOCATION.",
+   "where": "src/bin/pg_basebackup/pg_basebackup.c, src/bin/pg_basebackup/receivelog.c, src/backend/replication/walsender.c"
+  },
+  {
+   "step": "2. Standby postmaster starts and sees standby.signal",
+   "detail": "On startup the server reads backup_label and standby.signal, so it enters archive/standby recovery. The startup process (StartupProcessMain) begins reading WAL from the checkpoint named in backup_label. Control file state shows 'in archive recovery'.",
+   "where": "src/backend/postmaster/startup.c, src/backend/access/transam/xlogrecovery.c (InitWalRecovery, PerformWalRecovery)"
+  },
+  {
+   "step": "3. Startup process replays local WAL, then asks for a walreceiver",
+   "detail": "ReadRecord tries WAL from pg_wal first. When it runs out and primary_conninfo is set, the startup process asks the postmaster to launch the walreceiver (via the shared WalRcv struct) and waits for new WAL to arrive.",
+   "where": "src/backend/access/transam/xlogrecovery.c (ReadRecord, WaitForWALToBecomeAvailable), src/backend/replication/walreceiverfuncs.c"
+  },
+  {
+   "step": "4. walreceiver connects and sends START_REPLICATION",
+   "detail": "WalReceiverMain loads libpqwalreceiver, connects with primary_conninfo, and issues START_REPLICATION from the last received LSN on the right timeline (optionally with a slot name). The primary spawns a walsender that runs StartReplication.",
+   "where": "src/backend/replication/walreceiver.c (WalReceiverMain), src/backend/replication/libpqwalreceiver/libpqwalreceiver.c, src/backend/replication/walsender.c (StartReplication)"
+  },
+  {
+   "step": "5. walsender streams WAL, walreceiver writes and flushes it",
+   "detail": "WalSndLoop calls XLogSendPhysical which sends 'w' messages (WAL data) and keepalives. The walreceiver loop handles each message in XLogWalRcvProcessMsg, writes bytes into pg_wal, calls XLogWalRcvFlush (fsync) and wakes the startup process. It sends reply messages with write, flush and apply positions, and hot standby feedback.",
+   "where": "src/backend/replication/walsender.c (WalSndLoop, XLogSendPhysical), src/backend/replication/walreceiver.c (XLogWalRcvProcessMsg, XLogWalRcvFlush, XLogWalRcvSendHSFeedback)"
+  },
+  {
+   "step": "6. Startup process redoes each record",
+   "detail": "ApplyWalRecord calls the resource manager's redo function (heap_redo, btree_redo, and so on), then updates replay position. For running-transactions records it feeds KnownAssignedXids so the standby knows which XIDs are in flight.",
+   "where": "src/backend/access/transam/xlogrecovery.c (ApplyWalRecord), src/backend/storage/ipc/procarray.c (ProcArrayApplyRecoveryInfo, RecordKnownAssignedTransactionIds)"
+  },
+  {
+   "step": "7. Consistent state reached, read-only sessions allowed",
+   "detail": "Once replay passes the minimum recovery point and a running-xacts snapshot is known, the postmaster allows connections ('database system is ready to accept read-only connections') if hot_standby is on. Queries get snapshots from the standby's procarray plus KnownAssignedXids.",
+   "where": "src/backend/access/transam/xlogrecovery.c (CheckRecoveryConsistency), src/backend/storage/ipc/procarray.c (GetSnapshotData)"
+  },
+  {
+   "step": "8. Conflicts, feedback, slots and sync commit run in the background",
+   "detail": "Redo of cleanup records may call ResolveRecoveryConflictWithSnapshot, which waits up to max_standby_streaming_delay then cancels queries. The primary's walsender reads feedback (ProcessStandbyHSFeedbackMessage) and updates the slot's xmin. On the primary, a committing backend with synchronous_standby_names set waits in SyncRepWaitForLSN until walsenders report the LSN.",
+   "where": "src/backend/storage/ipc/standby.c, src/backend/replication/walsender.c, src/backend/replication/slot.c, src/backend/replication/syncrep.c"
+  },
+  {
+   "step": "9. Promotion",
+   "detail": "pg_ctl promote signals the postmaster. The startup process sees the request (CheckForStandbyTrigger), the walreceiver is terminated, redo stops, a new timeline ID is chosen, a NN.history file is written, an end-of-recovery checkpoint runs, and the server starts accepting writes. standby.signal and backup_label are removed (backup_label is renamed backup_label.old).",
+   "where": "src/backend/access/transam/xlogrecovery.c (CheckForStandbyTrigger, PerformWalRecovery), src/backend/access/transam/xlog.c (StartupXLOG)"
+  }
+ ],
+ "diagram": {
+  "claim": "WAL flows from the primary's walsender to the standby's walreceiver and is replayed by the startup process, while feedback and sync acks flow back.",
+  "nodes": [
+   {
+    "id": "backend",
+    "label": "Primary backend (commit)",
+    "group": "primary"
+   },
+   {
+    "id": "wal",
+    "label": "Primary WAL (pg_wal)",
+    "group": "primary"
+   },
+   {
+    "id": "walsender",
+    "label": "walsender",
+    "group": "primary"
+   },
+   {
+    "id": "slot",
+    "label": "Replication slot",
+    "group": "primary"
+   },
+   {
+    "id": "syncrep",
+    "label": "SyncRep wait queue",
+    "group": "primary"
+   },
+   {
+    "id": "walreceiver",
+    "label": "walreceiver",
+    "group": "standby"
+   },
+   {
+    "id": "swal",
+    "label": "Standby WAL (pg_wal)",
+    "group": "standby"
+   },
+   {
+    "id": "startup",
+    "label": "startup process (redo)",
+    "group": "standby"
+   },
+   {
+    "id": "kax",
+    "label": "KnownAssignedXids + data files",
+    "group": "standby"
+   },
+   {
+    "id": "readq",
+    "label": "Read-only query backend",
+    "group": "standby"
+   }
+  ],
+  "edges": [
+   {
+    "from": "backend",
+    "to": "wal",
+    "label": "writes"
+   },
+   {
+    "from": "wal",
+    "to": "walsender",
+    "label": "is read by"
+   },
+   {
+    "from": "walsender",
+    "to": "walreceiver",
+    "label": "streams to"
+   },
+   {
+    "from": "walreceiver",
+    "to": "swal",
+    "label": "writes and fsyncs"
+   },
+   {
+    "from": "swal",
+    "to": "startup",
+    "label": "is read by"
+   },
+   {
+    "from": "startup",
+    "to": "kax",
+    "label": "replays into"
+   },
+   {
+    "from": "readq",
+    "to": "kax",
+    "label": "takes snapshot from"
+   },
+   {
+    "from": "walreceiver",
+    "to": "walsender",
+    "label": "replies with LSNs and xmin"
+   },
+   {
+    "from": "walsender",
+    "to": "slot",
+    "label": "advances and pins xmin"
+   },
+   {
+    "from": "walsender",
+    "to": "syncrep",
+    "label": "releases waiters"
+   },
+   {
+    "from": "backend",
+    "to": "syncrep",
+    "label": "waits in"
+   },
+   {
+    "from": "startup",
+    "to": "readq",
+    "label": "cancels on conflict"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/replication/walsender.c",
+   "what": "The walsender: serves BASE_BACKUP, START_REPLICATION, slot commands. Key functions StartReplication, WalSndLoop, XLogSendPhysical, ProcessStandbyHSFeedbackMessage."
+  },
+  {
+   "path": "src/backend/replication/walreceiver.c",
+   "what": "The walreceiver on the standby. WalReceiverMain, XLogWalRcvProcessMsg, XLogWalRcvFlush, XLogWalRcvSendHSFeedback."
+  },
+  {
+   "path": "src/backend/replication/walreceiverfuncs.c",
+   "what": "Shared-memory glue so the startup process can start, stop and query the walreceiver (for example WalRcvStreaming)."
+  },
+  {
+   "path": "src/backend/replication/libpqwalreceiver/libpqwalreceiver.c",
+   "what": "The libpq-based connection code the walreceiver loads dynamically."
+  },
+  {
+   "path": "src/backend/replication/syncrep.c",
+   "what": "Synchronous replication: SyncRepWaitForLSN makes commits wait, SyncRepGetSyncRecPtr picks the LSN to release up to."
+  },
+  {
+   "path": "src/backend/replication/slot.c",
+   "what": "Replication slots: create, persist, compute required xmin and LSN (ReplicationSlotCreate, ReplicationSlotsComputeRequiredXmin, ReplicationSlotsComputeRequiredLSN)."
+  },
+  {
+   "path": "src/backend/access/transam/xlogrecovery.c",
+   "what": "Recovery driver on the standby: PerformWalRecovery, ApplyWalRecord, ReadRecord, CheckForStandbyTrigger, recovery GUCs."
+  },
+  {
+   "path": "src/backend/storage/ipc/standby.c",
+   "what": "Hot standby support: recovery conflicts (ResolveRecoveryConflictWithSnapshot, WaitExceedsMaxStandbyDelay), standby locks, LogStandbySnapshot."
+  },
+  {
+   "path": "src/backend/storage/ipc/procarray.c",
+   "what": "Snapshots. Also KnownAssignedXids (ProcArrayApplyRecoveryInfo, RecordKnownAssignedTransactionIds, KnownAssignedXidsGetAndSetXmin)."
+  },
+  {
+   "path": "src/bin/pg_basebackup/pg_basebackup.c",
+   "what": "The tool that takes a base backup and, with -R, writes standby.signal and primary_conninfo."
+  },
+  {
+   "path": "src/backend/replication/logical/",
+   "what": "Logical replication: decode.c, reorderbuffer.c, snapbuild.c, logical.c, origin.c (replication origins), worker.c (apply worker), tablesync.c, launcher.c, slotsync.c."
+  },
+  {
+   "path": "src/backend/replication/pgoutput/pgoutput.c",
+   "what": "The built-in output plugin used by CREATE PUBLICATION / SUBSCRIPTION."
+  },
+  {
+   "path": "src/test/recovery/t/001_stream_rep.pl",
+   "what": "The standard TAP test for streaming replication; best place to learn how tests build primary and standby pairs."
+  },
+  {
+   "path": "doc/src/sgml/high-availability.sgml",
+   "what": "Official docs for standbys, hot standby, synchronous replication and failover."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is a read replica in Postgres terms?",
+   "answer": [
+    "A standby server that continuously replays WAL from a primary.",
+    "With hot_standby on, it accepts read-only queries.",
+    "It is a physical, byte-level copy of the whole cluster."
+   ]
+  },
+  {
+   "q": "What files make a data directory a standby, and how does pg_basebackup -R create them?",
+   "answer": [
+    "standby.signal is an empty file that keeps the server in recovery.",
+    "postgresql.auto.conf gets primary_conninfo (host, port, user of the primary).",
+    "backup_label comes from the base backup and says where WAL replay must start.",
+    "I saw all three appear in my run: standby.signal, backup_label, and postgresql.auto.conf with primary_conninfo = '... host=127.0.0.1 port=54305 ...'."
+   ],
+   "trap": "Setting primary_conninfo alone does not make a standby. Without standby.signal the server just does crash recovery and becomes a primary. (Old recovery.conf with standby_mode was removed in version 12.)"
+  },
+  {
+   "q": "Which processes are involved and what does each do?",
+   "answer": [
+    "walsender (primary) reads WAL and sends it.",
+    "walreceiver (standby) receives it and writes plus fsyncs it into pg_wal.",
+    "startup process (standby) reads WAL and redoes each record into data files.",
+    "ps showed 'walsender postgres 127.0.0.1(...) streaming 0/3017530', 'walreceiver streaming 0/3017530', and 'startup recovering 000000010000000000000003'."
+   ],
+   "trap": "The walreceiver does not apply changes. Only the startup process replays."
+  },
+  {
+   "q": "How do you tell write, flush and replay positions apart, and how do you measure lag?",
+   "answer": [
+    "sent_lsn, write_lsn, flush_lsn, replay_lsn in pg_stat_replication on the primary. write_lag, flush_lag, replay_lag give time-based lag.",
+    "On the standby, pg_last_wal_receive_lsn() is what was received, pg_last_wal_replay_lsn() is what was applied.",
+    "Replay can lag behind receive when the startup process is slow or waiting on a conflict."
+   ],
+   "trap": "A small byte gap does not mean small time lag on an idle primary, and pg_last_xact_replay_timestamp() grows on an idle primary even if replication is healthy."
+  },
+  {
+   "q": "How can a read-only query run on a standby when the standby has no running transactions of its own?",
+   "answer": [
+    "Snapshots on a standby use the same procarray code, but the list of in-flight primary transactions comes from KnownAssignedXids.",
+    "The startup process fills KnownAssignedXids from WAL: xl_running_xacts records (written by LogStandbySnapshot on the primary) and XIDs seen in records.",
+    "GetSnapshotData uses that list instead of per-backend PGPROC entries for the primary's XIDs; commits remove XIDs via ExpireTreeKnownAssignedTransactionIds."
+   ],
+   "trap": "If subtransaction overflow happens (more than 64 subxids per transaction) standby snapshots become 'suboverflowed' and can get slow."
+  },
+  {
+   "q": "What is a recovery conflict and which settings control it?",
+   "answer": [
+    "Replay wants to do something a standby query would break: remove rows the query can still see (snapshot), take an AccessExclusiveLock (lock), drop a database or tablespace, or touch a pinned buffer (bufferpin).",
+    "The startup process waits up to max_standby_streaming_delay (30s default; max_standby_archive_delay for archive WAL). After that it cancels the query with 'canceling statement due to conflict with recovery'.",
+    "Setting it to -1 waits forever, so replay lag can grow without bound. In 20devel the reasons are the RECOVERY_CONFLICT_* enum in src/include/storage/standby.h."
+   ],
+   "trap": "Big max_standby_streaming_delay trades query cancellations for replication lag. It is not free."
+  },
+  {
+   "q": "What does hot_standby_feedback do and what is its cost?",
+   "answer": [
+    "The walreceiver periodically sends the standby's oldest xmin to the primary (XLogWalRcvSendHSFeedback).",
+    "The primary's walsender stores it (ProcessStandbyHSFeedbackMessage) so VACUUM does not remove rows the standby still needs.",
+    "Fewer snapshot conflicts, but a long standby query can bloat the primary.",
+    "It was off in my run (show hot_standby_feedback = off)."
+   ],
+   "trap": "It does not remove all conflicts. Lock and bufferpin conflicts still happen, and it does nothing during a disconnect."
+  },
+  {
+   "q": "Why use a physical replication slot, and what is the danger?",
+   "answer": [
+    "A slot makes the primary keep WAL (and the standby's xmin) until the standby confirms it has the data, even if the standby is offline.",
+    "Without a slot, the primary may recycle WAL and the standby falls too far behind and must be re-cloned.",
+    "Danger: a dead standby's slot makes pg_wal grow until the disk is full. max_slot_wal_keep_size limits this by invalidating the slot."
+   ],
+   "trap": "Forgotten slots are the classic cause of 'pg_wal filled the disk'. My demo's pg_stat_wal_receiver showed slot_name empty because I did not use a slot."
+  },
+  {
+   "q": "Explain synchronous_commit levels with synchronous_standby_names.",
+   "answer": [
+    "Nothing happens unless synchronous_standby_names is set. The standby's application_name must match.",
+    "remote_write: standby has the WAL in its OS cache (SYNC_REP_WAIT_WRITE).",
+    "on: standby has flushed to disk (SYNC_REP_WAIT_FLUSH). This is the default level that waits for standbys.",
+    "remote_apply: standby has replayed it, so a read there sees the commit (SYNC_REP_WAIT_APPLY).",
+    "A committing backend sleeps in SyncRepWaitForLSN until walsenders release it. Without a sync standby, async replication shows sync_state = async, as in my run."
+   ],
+   "trap": "If the only sync standby goes down, commits hang until you change the setting or it returns. Sync replication reduces data loss, it does not guarantee availability."
+  },
+  {
+   "q": "What happens on promotion, and how does a failover go wrong?",
+   "answer": [
+    "pg_ctl promote makes the startup process stop redo, the walreceiver exits, a new timeline is chosen, a .history file is written, and an end-of-recovery checkpoint runs. In my run I got 00000002.history containing: 1  0/3017530  no recovery target specified.",
+    "The old primary is now on a diverged timeline. It cannot just follow the new primary unless you use pg_rewind or re-clone.",
+    "Cascading replicas (standby of a standby) follow the new timeline if they can fetch the .history file.",
+    "Split brain happens if the old primary keeps accepting writes after promotion."
+   ],
+   "trap": "Asynchronous replicas can lose the last few committed transactions on failover. Promotion is one-way, you cannot demote back."
+  },
+  {
+   "q": "How is logical replication different, and why is it not just a better streaming replication?",
+   "answer": [
+    "Logical decoding (decode.c, reorderbuffer.c) turns WAL into row-level changes in commit order, using a logical slot and a snapshot builder (snapbuild.c).",
+    "pgoutput is the built-in output plugin. A subscription's apply worker (ApplyWorkerMain in worker.c) runs the changes on the subscriber like normal writes.",
+    "Replication origins (origin.c) track how far each subscription has applied, so changes are not re-applied or looped.",
+    "You can replicate chosen tables, across major versions, and the subscriber can have extra tables and be writable.",
+    "It does not copy DDL or sequences by default, and large transactions can take a long time. A physical standby is whole-cluster and read-only."
+   ],
+   "trap": "A logical slot on a primary does not survive failover by itself. Slot synchronization (slotsync.c, failover = true) exists for this since version 17."
+  }
+ ],
+ "contributor_tips": [
+  "Start by reading src/test/recovery/t/001_stream_rep.pl and src/test/recovery/t/004_timeline_switch.pl. They show how PostgreSQL::Test::Cluster builds a primary and standby in a few lines.",
+  "Run just the recovery tests with 'meson test --suite recovery' (or 'make check -C src/test/recovery PROVE_TESTS=t/001_stream_rep.pl'). Replication bugs are almost always found with TAP tests, not regress tests.",
+  "Use log_min_messages=debug2 on a scratch standby and read the startup and walreceiver log lines. They map one-to-one to functions in xlogrecovery.c and walreceiver.c.",
+  "WAL redo code must be deterministic and must never read the catalogs. If your patch adds a WAL record type, it needs a redo function, a desc function for pg_waldump, and care for conflicts (a snapshotConflictHorizon in the record if it removes tuples).",
+  "Check which behaviours changed over time. On 20devel the RECOVERY_CONFLICT_* reasons live in src/include/storage/standby.h and src/backend/replication also contains a new 'pgrepack' directory that older branches (16/17/18) do not have. Always compare with git log on the branch you target.",
+  "My demo used PostgreSQL 16 from brew while the source tree is 20devel. Core behaviour (walsender, walreceiver, startup, history files) is the same, but verify details like GUC defaults against the tree before quoting them in a patch."
+ ],
+ "glossary": [
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log. A sequential log of every change, written before the data files change."
+  },
+  {
+   "term": "LSN",
+   "meaning": "Log Sequence Number. A byte position in the WAL, shown like 0/3017530."
+  },
+  {
+   "term": "walsender",
+   "meaning": "Primary-side process that streams WAL or runs logical decoding for one client."
+  },
+  {
+   "term": "walreceiver",
+   "meaning": "Standby-side process that receives WAL from the primary and writes it to disk."
+  },
+  {
+   "term": "startup process",
+   "meaning": "Standby process that reads WAL and replays (redoes) every record."
+  },
+  {
+   "term": "redo",
+   "meaning": "Re-applying a WAL record to a data page."
+  },
+  {
+   "term": "standby.signal",
+   "meaning": "An empty file that tells the server to start in standby mode."
+  },
+  {
+   "term": "backup_label",
+   "meaning": "File in a base backup naming the WAL position where replay must start."
+  },
+  {
+   "term": "primary_conninfo",
+   "meaning": "Connection string the standby uses to reach the primary."
+  },
+  {
+   "term": "hot standby",
+   "meaning": "A standby that allows read-only queries while replaying."
+  },
+  {
+   "term": "KnownAssignedXids",
+   "meaning": "Shared-memory list on a standby of transaction IDs that are still running on the primary."
+  },
+  {
+   "term": "recovery conflict",
+   "meaning": "Replay needs something a standby query is still using, so one of them must give way."
+  },
+  {
+   "term": "hot_standby_feedback",
+   "meaning": "Standby tells the primary its oldest needed row version so VACUUM keeps it."
+  },
+  {
+   "term": "replication slot",
+   "meaning": "A named marker on the primary that keeps WAL (and xmin) for a consumer."
+  },
+  {
+   "term": "timeline",
+   "meaning": "A numbered branch of WAL history. It increases at each promotion."
+  },
+  {
+   "term": "cascading replication",
+   "meaning": "A standby that itself feeds other standbys through its own walsenders."
+  },
+  {
+   "term": "logical decoding",
+   "meaning": "Turning WAL into a stream of row changes."
+  },
+  {
+   "term": "pgoutput",
+   "meaning": "Built-in output plugin that formats logical changes for subscriptions."
+  },
+  {
+   "term": "replication origin",
+   "meaning": "A record of how far a remote source has been applied, used to avoid duplicates and loops."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "initdb -D /tmp/p && echo \"port=5431\" >> /tmp/p/postgresql.conf && echo \"host replication all 127.0.0.1/32 trust\" >> /tmp/p/pg_hba.conf && pg_ctl -D /tmp/p -w start",
+   "shows": "A scratch primary on its own port that allows replication connections over TCP (I used this same recipe, with other paths and port 54305). Use TCP because long socket paths can exceed the 103 byte limit on macOS."
+  },
+  {
+   "cmd": "pg_basebackup -h 127.0.0.1 -p 5431 -U $USER -D /tmp/r -R -X stream && ls /tmp/r | grep -E 'standby|backup_label|auto' && cat /tmp/r/postgresql.auto.conf",
+   "shows": "Creates the standby and shows standby.signal, backup_label and the primary_conninfo line."
+  },
+  {
+   "cmd": "echo \"port=5432\" >> /tmp/r/postgresql.conf && pg_ctl -D /tmp/r -w start && psql -p 5432 -Atc \"select pg_is_in_recovery(), pg_last_wal_receive_lsn(), pg_last_wal_replay_lsn()\"",
+   "shows": "Starts the replica and prints t plus the receive and replay LSNs. Pick any free port, not one in use."
+  },
+  {
+   "cmd": "psql -p 5431 -x -c \"select application_name,state,sent_lsn,replay_lsn,sync_state from pg_stat_replication\"",
+   "shows": "On the primary: the walsender row with state = streaming and sync_state = async."
+  },
+  {
+   "cmd": "psql -p 5432 -c \"create table x(a int)\"",
+   "shows": "On the replica: ERROR: cannot execute CREATE TABLE in a read-only transaction."
+  },
+  {
+   "cmd": "pg_ctl -D /tmp/r promote && ls /tmp/r/pg_wal && cat /tmp/r/pg_wal/*.history",
+   "shows": "Promotion: a new 00000002.history file appears and shows where timeline 1 ended."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "replica/standby.signal",
+   "what": "Empty marker file written by pg_basebackup -R. Removed on promotion."
+  },
+  {
+   "path": "replica/backup_label",
+   "what": "From the base backup: START WAL LOCATION: 0/2000028, CHECKPOINT LOCATION, START TIMELINE: 1. Renamed to backup_label.old after promotion."
+  },
+  {
+   "path": "replica/postgresql.auto.conf",
+   "what": "Contains the primary_conninfo = '...host=127.0.0.1 port=54305...' line."
+  },
+  {
+   "path": "replica/pg_wal/000000010000000000000003",
+   "what": "WAL segment on timeline 1, written by the walreceiver."
+  },
+  {
+   "path": "replica/pg_wal/000000020000000000000003",
+   "what": "First WAL segment of the new timeline 2, created at promotion."
+  },
+  {
+   "path": "replica/pg_wal/00000002.history",
+   "what": "Timeline history file. Content seen: '1<TAB>0/3017530<TAB>no recovery target specified'."
+  },
+  {
+   "path": "src/backend/replication/",
+   "what": "walsender.c, walreceiver.c, syncrep.c, slot.c, libpqwalreceiver/, logical/, pgoutput/"
+  },
+  {
+   "path": "src/backend/replication/logical/",
+   "what": "decode.c, reorderbuffer.c, snapbuild.c, origin.c, worker.c, launcher.c, tablesync.c, slotsync.c"
+  },
+  {
+   "path": "src/backend/access/transam/xlogrecovery.c",
+   "what": "Recovery and standby replay driver."
+  },
+  {
+   "path": "src/backend/storage/ipc/standby.c",
+   "what": "Recovery conflicts and standby locks."
+  },
+  {
+   "path": "src/bin/pg_basebackup/",
+   "what": "pg_basebackup.c, receivelog.c, pg_receivewal.c, pg_recvlogical.c, pg_createsubscriber.c"
+  },
+  {
+   "path": "src/test/recovery/t/",
+   "what": "TAP tests: 001_stream_rep.pl, 004_timeline_switch.pl, 007_sync_rep.pl and more."
+  }
+ ],
+ "verified_by_running": [
+  "Ran initdb, a primary on 127.0.0.1:54305, then pg_basebackup -h 127.0.0.1 -p 54305 -D replica -R -X stream with PostgreSQL 16 from /opt/homebrew/opt/postgresql@16/bin. Unix socket paths inside the scratchpad tmp-repl dir exceeded the 103 byte limit ('Unix-domain socket path ... is too long'), so I used TCP on 127.0.0.1 with unix_socket_directories='' instead. Both servers lived only in tmp-repl.",
+  "ls replica showed standby.signal, backup_label, postgresql.auto.conf and PG_VERSION. postgresql.auto.conf held primary_conninfo = 'user=postgres ... host=127.0.0.1 port=54305 ...'. backup_label showed START WAL LOCATION: 0/2000028 (file 000000010000000000000002), BACKUP METHOD: streamed, START TIMELINE: 1.",
+  "pg_stat_replication on the primary: application_name walreceiver, state streaming, sent/write/flush/replay_lsn all 0/3017530, sync_state async.",
+  "pg_stat_wal_receiver on the replica: status streaming, receive_start_lsn 0/3000000, receive_start_tli 1, flushed_lsn 0/3017530, sender_host 127.0.0.1, slot_name empty.",
+  "On the replica: pg_is_in_recovery() = t, pg_last_wal_receive_lsn() = pg_last_wal_replay_lsn() = 0/3017530, select count(*) from t returned 5 (data created on the primary).",
+  "Read-only errors: INSERT gave 'ERROR: cannot execute INSERT in a read-only transaction'; CREATE TABLE gave the same wording; pg_current_wal_lsn() gave 'ERROR: recovery is in progress / HINT: WAL control functions cannot be executed during recovery.'",
+  "show hot_standby = on, max_standby_streaming_delay = 30s, hot_standby_feedback = off on the replica. pg_controldata showed 'Database cluster state: in archive recovery'.",
+  "ps showed processes 'startup recovering 000000010000000000000003', 'walreceiver streaming 0/3017530', and 'walsender postgres 127.0.0.1(56755) streaming 0/3017530'.",
+  "pg_ctl promote printed 'server promoted'. pg_is_in_recovery() became f, an INSERT worked, pg_walfile_name(pg_current_wal_lsn()) was 000000020000000000000003, and pg_wal contained 00000002.history with the line '1  0/3017530  no recovery target specified'. standby.signal vanished and backup_label became backup_label.old. Log lines: 'received promote request', 'terminating walreceiver process due to administrator command', 'redo done at 0/3017398', 'selected new timeline ID: 2', 'archive recovery complete'. After promotion pg_stat_replication on the primary had 0 rows and the old primary stayed on timeline 1 with 5 rows.",
+  "Stopped both servers with pg_ctl -m fast, deleted tmp-repl (ls confirmed it was gone), and confirmed no process still referenced ports 54305 or 54306.",
+  "Verified with ls and grep in the 20devel source: walsender.c, walreceiver.c, syncrep.c, slot.c, libpqwalreceiver/libpqwalreceiver.c, logical/{decode,reorderbuffer,snapbuild,origin,worker,slotsync}.c, pgoutput/pgoutput.c, pgrepack/ (new in 20devel), and function names such as StartReplication, WalSndLoop, XLogSendPhysical, XLogWalRcvProcessMsg, SyncRepWaitForLSN, ReplicationSlotCreate, ResolveRecoveryConflictWithSnapshot, KnownAssignedXidsGetAndSetXmin, CheckForStandbyTrigger. SYNC_REP_WAIT_WRITE/FLUSH/APPLY are in src/include/replication/syncrep.h; RECOVERY_CONFLICT_* are in src/include/storage/standby.h on this branch."
+ ]
+}

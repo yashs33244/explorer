@@ -1,0 +1,77 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "The whole server",
+  "caption": "A client talks to a forked backend, SQL flows through four stages, pages move between shared buffers and disk, and WAL plus helper processes keep it safe.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "The postmaster accepts the connection and forks a backend for this client."
+   },
+   {
+    "n": 2,
+    "meaning": "The backend sends the SQL through parser, rewriter, planner and executor."
+   },
+   {
+    "n": 3,
+    "meaning": "The executor reaches table and index pages through access methods and shared buffers."
+   },
+   {
+    "n": 4,
+    "meaning": "Every change is written to the WAL log first, which also feeds replicas."
+   },
+   {
+    "n": 5,
+    "meaning": "Helpers flush dirty pages (checkpointer) and clean old rows (autovacuum)."
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "INSERT then COMMIT",
+  "caption": "Follow the numbers down: the row is changed in memory, logged, and the WAL is flushed before the client hears committed, while the data file is written later.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client sends INSERT to its backend."
+   },
+   {
+    "n": 2,
+    "meaning": "Backend parses, plans and runs the query."
+   },
+   {
+    "n": 3,
+    "meaning": "Backend adds the row to a page in shared buffers."
+   },
+   {
+    "n": 4,
+    "meaning": "Backend logs the change as a WAL record."
+   },
+   {
+    "n": 5,
+    "meaning": "Client sends COMMIT."
+   },
+   {
+    "n": 6,
+    "meaning": "Backend flushes WAL to disk, so the commit is durable."
+   },
+   {
+    "n": 7,
+    "meaning": "Backend tells the client the commit worked."
+   },
+   {
+    "n": 8,
+    "meaning": "Later, a background process writes the changed page to the data file."
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "The data directory layout",
+  "caption": "Everything the server stores lives under one folder (PGDATA): settings, table files in base/ and global/, and safety records in pg_wal/ and pg_xact/.",
+  "badges": []
+ }
+]

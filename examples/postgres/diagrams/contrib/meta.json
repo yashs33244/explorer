@@ -1,0 +1,56 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Laptop to committer",
+  "caption": "Your change is built, tested, formatted and documented on your laptop, then travels as a patch through the mailing list and Commitfest to a committer.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Eight steps to a patch",
+  "caption": "Follow the numbers from building the tree to a committer pushing your patch, with the real command under each step.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Build the tree with meson and ninja, or configure and make"
+   },
+   {
+    "n": 2,
+    "meaning": "Add a SQL file, an expected output file and a parallel_schedule entry"
+   },
+   {
+    "n": 3,
+    "meaning": "Run the tests with make check-world or meson test"
+   },
+   {
+    "n": 4,
+    "meaning": "Format your C changes with pgindent"
+   },
+   {
+    "n": 5,
+    "meaning": "Update the SGML docs and check them with make html"
+   },
+   {
+    "n": 6,
+    "meaning": "Make a patch file with git format-patch"
+   },
+   {
+    "n": 7,
+    "meaning": "Email the patch to pgsql-hackers"
+   },
+   {
+    "n": 8,
+    "meaning": "Register in a Commitfest, get review, then a committer pushes it"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of a test",
+  "caption": "One regression test is a SQL file, an expected output file and a schedule line; a failed run writes regression.diffs, and isolation specs and TAP scripts cover other kinds of tests.",
+  "badges": []
+ }
+]

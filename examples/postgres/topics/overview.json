@@ -1,0 +1,130 @@
+{
+ "key": "overview",
+ "title": "The whole server on one page",
+ "one_liner": "A client talks to a forked backend. SQL goes through parse, rewrite, plan and execute. Rows live in 8kB pages behind shared buffers. WAL keeps it safe and feeds replicas.",
+ "analogy": "A restaurant: the host seats you (postmaster), your waiter takes the order (backend), the kitchen follows a recipe (planner and executor), the pantry is shared (buffers and files), and a logbook records everything (WAL).",
+ "big_picture": [
+  "One postmaster forks one backend process per client.",
+  "SQL text passes four stages: parser, rewriter, planner, executor.",
+  "The executor reads and writes 8kB pages through shared buffers.",
+  "Every change is logged in WAL before the page is written.",
+  "Helper processes flush pages, vacuum old rows and stream WAL to replicas."
+ ],
+ "flow": [
+  {
+   "step": "Connect",
+   "detail": "Client connects, postmaster forks a backend, backend authenticates.",
+   "where": "src/backend/postmaster/postmaster.c"
+  },
+  {
+   "step": "Parse",
+   "detail": "SQL text becomes a tree, names are resolved against catalogs.",
+   "where": "src/backend/parser/"
+  },
+  {
+   "step": "Rewrite",
+   "detail": "Views are replaced by the queries behind them.",
+   "where": "src/backend/rewrite/"
+  },
+  {
+   "step": "Plan",
+   "detail": "Cheapest Path chosen from statistics.",
+   "where": "src/backend/optimizer/"
+  },
+  {
+   "step": "Execute",
+   "detail": "Plan nodes pull rows one at a time.",
+   "where": "src/backend/executor/"
+  },
+  {
+   "step": "Read and write pages",
+   "detail": "Table and index code goes through shared buffers to data files.",
+   "where": "src/backend/access/, src/backend/storage/"
+  },
+  {
+   "step": "Commit",
+   "detail": "WAL record flushed first, then commit is durable.",
+   "where": "src/backend/access/transam/"
+  }
+ ],
+ "diagram": {
+  "claim": "Whole server architecture",
+  "nodes": [
+   {
+    "id": "client",
+    "label": "Client app",
+    "group": "Outside"
+   },
+   {
+    "id": "pm",
+    "label": "Postmaster",
+    "group": "Processes"
+   },
+   {
+    "id": "be",
+    "label": "Backend process",
+    "group": "Processes"
+   },
+   {
+    "id": "parse",
+    "label": "Parser + analyzer",
+    "group": "Query pipeline"
+   },
+   {
+    "id": "rw",
+    "label": "Rewriter",
+    "group": "Query pipeline"
+   },
+   {
+    "id": "plan",
+    "label": "Planner",
+    "group": "Query pipeline"
+   },
+   {
+    "id": "exec",
+    "label": "Executor",
+    "group": "Query pipeline"
+   },
+   {
+    "id": "am",
+    "label": "Table + index access",
+    "group": "Storage"
+   },
+   {
+    "id": "buf",
+    "label": "Shared buffers",
+    "group": "Storage"
+   },
+   {
+    "id": "disk",
+    "label": "Data files",
+    "group": "Storage"
+   },
+   {
+    "id": "wal",
+    "label": "WAL",
+    "group": "Safety"
+   },
+   {
+    "id": "ckpt",
+    "label": "Checkpointer",
+    "group": "Safety"
+   },
+   {
+    "id": "rep",
+    "label": "Replicas",
+    "group": "Safety"
+   },
+   {
+    "id": "vac",
+    "label": "Autovacuum",
+    "group": "Safety"
+   }
+  ],
+  "edges": []
+ },
+ "key_files": [],
+ "interview": [],
+ "contributor_tips": [],
+ "glossary": []
+}

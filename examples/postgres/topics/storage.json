@@ -1,0 +1,328 @@
+{
+ "key": "storage",
+ "title": "Storage: pages, tuples, buffers, TOAST",
+ "one_liner": "Postgres stores rows in 8kB pages, caches pages in shared buffers, reads files through smgr, and moves big values into TOAST tables.",
+ "analogy": "A table is a cabinet of 8kB folders. Shared buffers is your desk holding a few folders. TOAST is the storage room for oversized documents.",
+ "big_picture": [
+  "A table is a file of 8kB pages (BLCKSZ). Each page holds many row versions called tuples.",
+  "A page has a header, an array of line pointers, free space, then tuples growing from the end.",
+  "Code never reads disk directly. It asks the buffer manager, which keeps hot pages in shared_buffers.",
+  "When memory is full, a clock sweep picks a cold buffer to evict, writing it first if dirty.",
+  "smgr and md.c map (relation, fork, block) to a file offset. Forks are main, fsm, vm and init.",
+  "Values too big for a page are compressed or sliced into a TOAST table, leaving a small pointer."
+ ],
+ "flow": [
+  {
+   "step": "Executor asks to insert a row",
+   "detail": "heap_insert prepares the tuple header, may call TOAST, then needs a page with room.",
+   "where": "src/backend/access/heap/heapam.c: heap_insert"
+  },
+  {
+   "step": "Big values get TOASTed",
+   "detail": "If the row is over the threshold, big columns are compressed or moved out of line in chunks.",
+   "where": "src/backend/access/heap/heaptoast.c: heap_toast_insert_or_update"
+  },
+  {
+   "step": "Find a page with space",
+   "detail": "The free space map suggests a block. If none fits, the table is extended. ExtendBufferedRelBy may add several pages at once.",
+   "where": "src/backend/access/heap/hio.c: RelationGetBufferForTuple"
+  },
+  {
+   "step": "Pin the page in a buffer",
+   "detail": "ReadBuffer looks in the buffer table. On a miss it picks a victim and reads the block in.",
+   "where": "src/backend/storage/buffer/bufmgr.c: ReadBuffer_common"
+  },
+  {
+   "step": "Choose a victim by clock sweep",
+   "detail": "Ring buffers (used by seq scans and VACUUM) are tried first. Otherwise the sweep lowers usage counts and takes the first unpinned buffer with count zero.",
+   "where": "src/backend/storage/buffer/freelist.c: StrategyGetBuffer"
+  },
+  {
+   "step": "Read the block from disk",
+   "detail": "smgr dispatches to md.c, which finds the right segment file and reads 8kB.",
+   "where": "src/backend/storage/smgr/md.c: mdreadv"
+  },
+  {
+   "step": "Add the tuple to the page",
+   "detail": "With an exclusive lock, PageAddItemExtended adds a line pointer and copies the tuple. Then MarkBufferDirty and WAL.",
+   "where": "src/backend/storage/page/bufpage.c: PageAddItemExtended"
+  },
+  {
+   "step": "Later cleanup",
+   "detail": "Pruning frees dead tuples inside a page, on reads or in VACUUM. VACUUM also updates the free space map and visibility map.",
+   "where": "src/backend/access/heap/pruneheap.c: heap_page_prune_and_freeze; vacuumlazy.c: heap_vacuum_rel"
+  }
+ ],
+ "diagram": {
+  "claim": "An insert flows from heap code through TOAST, free space lookup, the buffer manager and smgr down to the data file.",
+  "nodes": [
+   {
+    "id": "heap",
+    "label": "heapam.c",
+    "group": "Access"
+   },
+   {
+    "id": "toast",
+    "label": "heaptoast.c",
+    "group": "Access"
+   },
+   {
+    "id": "hio",
+    "label": "hio.c",
+    "group": "Access"
+   },
+   {
+    "id": "fsm",
+    "label": "Free space map",
+    "group": "Helpers"
+   },
+   {
+    "id": "bufmgr",
+    "label": "bufmgr.c",
+    "group": "Buffer"
+   },
+   {
+    "id": "sweep",
+    "label": "Clock sweep",
+    "group": "Buffer"
+   },
+   {
+    "id": "page",
+    "label": "bufpage.c",
+    "group": "Page"
+   },
+   {
+    "id": "smgr",
+    "label": "smgr.c",
+    "group": "Disk"
+   },
+   {
+    "id": "md",
+    "label": "md.c",
+    "group": "Disk"
+   },
+   {
+    "id": "vm",
+    "label": "Visibility map",
+    "group": "Helpers"
+   },
+   {
+    "id": "wal",
+    "label": "WAL (XLogInsert)",
+    "group": "Access"
+   }
+  ],
+  "edges": [
+   {
+    "from": "heap",
+    "to": "toast",
+    "label": "shrinks"
+   },
+   {
+    "from": "heap",
+    "to": "hio",
+    "label": "requests"
+   },
+   {
+    "from": "hio",
+    "to": "fsm",
+    "label": "asks"
+   },
+   {
+    "from": "hio",
+    "to": "bufmgr",
+    "label": "pins"
+   },
+   {
+    "from": "bufmgr",
+    "to": "sweep",
+    "label": "evicts"
+   },
+   {
+    "from": "bufmgr",
+    "to": "smgr",
+    "label": "reads"
+   },
+   {
+    "from": "smgr",
+    "to": "md",
+    "label": "dispatches"
+   },
+   {
+    "from": "heap",
+    "to": "page",
+    "label": "adds"
+   },
+   {
+    "from": "heap",
+    "to": "vm",
+    "label": "clears"
+   },
+   {
+    "from": "heap",
+    "to": "wal",
+    "label": "logs change"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/storage/buffer/README",
+   "what": "Pin and content lock rules for shared buffers. Read first."
+  },
+  {
+   "path": "src/backend/storage/buffer/bufmgr.c",
+   "what": "ReadBuffer, pinning, dirty marking, FlushBuffer."
+  },
+  {
+   "path": "src/backend/storage/buffer/freelist.c",
+   "what": "Clock sweep victim selection in StrategyGetBuffer."
+  },
+  {
+   "path": "src/include/storage/bufpage.h",
+   "what": "PageHeaderData and page layout macros."
+  },
+  {
+   "path": "src/include/access/htup_details.h",
+   "what": "HeapTupleHeaderData, infomask bits, MaxHeapTuplesPerPage."
+  },
+  {
+   "path": "src/backend/access/heap/heapam.c",
+   "what": "heap_insert, heap_update, heap_delete."
+  },
+  {
+   "path": "src/backend/access/heap/heaptoast.c",
+   "what": "TOAST decisions on insert and update."
+  },
+  {
+   "path": "src/backend/storage/smgr/md.c",
+   "what": "Magnetic disk storage manager: files, segments, forks."
+  },
+  {
+   "path": "src/backend/storage/freespace/README",
+   "what": "How the free space map tree works."
+  }
+ ],
+ "interview": [
+  {
+   "q": "How big is a page and what is inside it?",
+   "answer": [
+    "Default size is 8kB, set by BLCKSZ at build time.",
+    "PageHeaderData comes first: pd_lsn, pd_lower, pd_upper, pd_special and more.",
+    "Then the line pointer array (ItemIdData) grows downward.",
+    "Tuples grow upward from the end. Free space sits between pd_lower and pd_upper."
+   ],
+   "trap": "Tuples are not stored in order at fixed offsets. Line pointers hold the offsets."
+  },
+  {
+   "q": "What is a line pointer and why does it exist?",
+   "answer": [
+    "ItemIdData has lp_off, lp_flags and lp_len.",
+    "States are LP_UNUSED, LP_NORMAL, LP_REDIRECT and LP_DEAD.",
+    "An indirection layer lets tuples move inside a page without changing their TID.",
+    "A TID is (block number, line pointer index)."
+   ],
+   "trap": "A TID points to a line pointer, not directly to a byte offset."
+  },
+  {
+   "q": "What is in the tuple header?",
+   "answer": [
+    "HeapTupleHeaderData has t_xmin, t_xmax and t_cid in HeapTupleFields.",
+    "t_ctid points to this tuple or its newer version.",
+    "t_infomask and t_infomask2 hold status bits and attribute count.",
+    "t_hoff is the header length. t_bits is the null bitmap."
+   ],
+   "trap": "Updates do not overwrite a row. They write a new version and set xmax on the old one."
+  },
+  {
+   "q": "What is shared_buffers and what is a pin?",
+   "answer": [
+    "It is a shared memory array of buffer slots, each holding one 8kB page.",
+    "A pin is a reference count that stops the buffer being evicted.",
+    "You need a pin to touch a page, plus a content lock to read or change tuples.",
+    "Read the README in src/backend/storage/buffer."
+   ],
+   "trap": "A pin is not a lock. A pin keeps the page in memory, a content lock guards its contents."
+  },
+  {
+   "q": "How does the clock sweep pick a victim?",
+   "answer": [
+    "ClockSweepTick advances a hand over all buffers.",
+    "Each use bumps a usage count, capped at BM_MAX_USAGE_COUNT (5).",
+    "The sweep decrements counts. A buffer with pin count zero and usage zero is chosen.",
+    "If the victim is dirty, FlushBuffer writes it first.",
+    "freelist.c is a historical name. There is no real free list, only the sweep hand."
+   ],
+   "trap": "It is not LRU. It approximates recency with small counters."
+  },
+  {
+   "q": "What are relation forks?",
+   "answer": [
+    "Each relation can have several files named by ForkNumber.",
+    "MAIN_FORKNUM holds data, FSM_FORKNUM free space, VISIBILITYMAP_FORKNUM the VM, INIT_FORKNUM unlogged init data.",
+    "md.c splits big forks into 1GB segment files.",
+    "smgr.c is the switch layer, md.c is the implementation."
+   ],
+   "trap": "The FSM and VM are separate files, not part of the heap pages."
+  },
+  {
+   "q": "How does TOAST work?",
+   "answer": [
+    "If a tuple is larger than TOAST_TUPLE_THRESHOLD, heap_toast_insert_or_update runs.",
+    "Columns with TYPSTORAGE_EXTENDED are compressed first, then moved out of line.",
+    "toast_save_datum slices values into chunks in a separate toast table.",
+    "Reading uses detoast_attr and toast_fetch_datum to rebuild the value."
+   ],
+   "trap": "TOAST is not only for text. Any varlena type with toastable storage can be toasted."
+  },
+  {
+   "q": "What do the free space map and visibility map do?",
+   "answer": [
+    "FSM tracks free bytes per heap page. GetPageWithFreeSpace uses it on inserts.",
+    "VM has bits VISIBILITYMAP_ALL_VISIBLE and VISIBILITYMAP_ALL_FROZEN per page.",
+    "VACUUM can skip all-visible pages. Index-only scans use the VM to skip heap fetches.",
+    "heap_insert and friends clear VM bits when a page changes."
+   ],
+   "trap": "The FSM is only a hint and may be stale. The VM bit must never be wrong in the unsafe direction."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/storage/buffer/README first, then bufpage.h and htup_details.h.",
+  "Install contrib pageinspect, pg_buffercache, pg_visibility and pg_freespacemap to see structures live.",
+  "Be careful with buffer lock order and WAL: change page, MarkBufferDirty, then XLogInsert inside a critical section.",
+  "Start with small fixes: comments, docs, or test coverage near heapam.c and bufmgr.c."
+ ],
+ "glossary": [
+  {
+   "term": "Tuple",
+   "meaning": "One stored version of a row inside a heap page."
+  },
+  {
+   "term": "TID",
+   "meaning": "Tuple ID: block number plus line pointer index."
+  },
+  {
+   "term": "Pin",
+   "meaning": "A reference count that keeps a buffer from being evicted."
+  },
+  {
+   "term": "Fork",
+   "meaning": "A separate file per relation: main, fsm, vm or init."
+  },
+  {
+   "term": "TOAST",
+   "meaning": "Storage for oversized values, compressed or moved to a side table."
+  },
+  {
+   "term": "LSN",
+   "meaning": "Log sequence number: position in the WAL, stored in pd_lsn."
+  }
+ ],
+ "more": [
+  "Write-ahead rule: a dirty page may not be flushed before WAL up to its pd_lsn is flushed.",
+  "Hint bits and HOT updates (heap-only tuples) are the first optimizations you meet in the tuple header.",
+  "Page checksums and full-page writes protect against torn pages.",
+  "Pruning needs a cleanup lock, which is a pin nobody else holds.",
+  "Hands-on: pageinspect, pg_buffercache, pg_visibility and pg_freespacemap."
+ ]
+}

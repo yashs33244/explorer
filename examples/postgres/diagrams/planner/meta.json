@@ -1,0 +1,60 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Planner building blocks",
+  "caption": "A parsed query goes through the planner steps, which ask the cost model for prices, and the cost model uses ANALYZE statistics from pg_statistic.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One query, nine steps",
+  "caption": "Follow the numbers to see a query tree become a costed Plan that EXPLAIN prints.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "planner() hands the Query tree to standard_planner"
+   },
+   {
+    "n": 2,
+    "meaning": "subquery_planner flattens and simplifies the query"
+   },
+   {
+    "n": 3,
+    "meaning": "grouping_planner handles GROUP BY, ORDER BY, LIMIT"
+   },
+   {
+    "n": 4,
+    "meaning": "query_planner and make_one_rel size and path each table"
+   },
+   {
+    "n": 5,
+    "meaning": "costsize.c turns pg_statistic numbers into row and cost estimates"
+   },
+   {
+    "n": 6,
+    "meaning": "standard_join_search tries join orders (GEQO if many tables)"
+   },
+   {
+    "n": 7,
+    "meaning": "add_path drops Paths that are worse"
+   },
+   {
+    "n": 8,
+    "meaning": "create_plan turns the best Path into a Plan"
+   },
+   {
+    "n": 9,
+    "meaning": "EXPLAIN prints each node with estimated cost and rows"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "RelOptInfo and Path anatomy",
+  "caption": "Each table or join keeps a RelOptInfo with a pathlist of Path structs, and each Path stores disabled_nodes, startup_cost and total_cost used to pick the winner.",
+  "badges": []
+ }
+]

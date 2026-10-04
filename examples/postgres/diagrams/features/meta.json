@@ -1,0 +1,60 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "PostgreSQL feature map",
+  "caption": "SQL goes through parser, planner and executor, while COPY and NOTIFY take a separate utility path, and everything ends up in tables, catalogs and the WAL that logical decoding reads.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Life of one INSERT",
+  "caption": "Follow the numbers to see one INSERT get parsed, planned, checked, stored, trigger-checked and committed.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client sends the INSERT text"
+   },
+   {
+    "n": 2,
+    "meaning": "Parser turns SQL into a tree"
+   },
+   {
+    "n": 3,
+    "meaning": "Planner builds a plan"
+   },
+   {
+    "n": 4,
+    "meaning": "Executor checks the CHECK constraint (ExecConstraints)"
+   },
+   {
+    "n": 5,
+    "meaning": "heap_insert stores the row and logs it to WAL"
+   },
+   {
+    "n": 6,
+    "meaning": "Unique index entry is added (nbtinsert.c)"
+   },
+   {
+    "n": 7,
+    "meaning": "AFTER trigger runs the foreign key check (ri_triggers.c)"
+   },
+   {
+    "n": 8,
+    "meaning": "COMMIT finishes the transaction (xact.c)"
+   },
+   {
+    "n": 9,
+    "meaning": "Client gets INSERT 0 1"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Features in the source tree",
+  "caption": "Each feature has a home folder: types in utils/adt, languages in src/pl, and optional extras in contrib.",
+  "badges": []
+ }
+]

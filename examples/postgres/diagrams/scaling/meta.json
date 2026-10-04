@@ -1,0 +1,102 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Hand-made sharding with postgres_fdw",
+  "caption": "Core Postgres has no built-in sharding, so you build it by hand: a coordinator prunes a partitioned table and postgres_fdw sends SQL to shard servers, while a replica only copies everything for reads.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client connects through a pooler (outside core)"
+   },
+   {
+    "n": 2,
+    "meaning": "Pooler forwards SQL to the coordinator"
+   },
+   {
+    "n": 3,
+    "meaning": "Coordinator asks pruning which partitions can match, using the partition bounds"
+   },
+   {
+    "n": 4,
+    "meaning": "Pruning keeps only the surviving foreign scans for postgres_fdw"
+   },
+   {
+    "n": 5,
+    "meaning": "postgres_fdw sends Remote SQL to the shard servers"
+   },
+   {
+    "n": 6,
+    "meaning": "Optional streaming replica receives WAL to scale reads"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One query, one shard",
+  "caption": "A SELECT for region eu and id 5 is pruned to one partition, so only Shard 1 gets Remote SQL and Shard 2 is never contacted.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client sends the SELECT to the coordinator"
+   },
+   {
+    "n": 2,
+    "meaning": "Planner prunes partitions (partprune.c) and keeps orders_s1"
+   },
+   {
+    "n": 3,
+    "meaning": "Coordinator asks postgres_fdw for rows"
+   },
+   {
+    "n": 4,
+    "meaning": "postgres_fdw writes the remote SQL string (deparse.c)"
+   },
+   {
+    "n": 5,
+    "meaning": "Remote SQL is sent to Shard 1"
+   },
+   {
+    "n": 6,
+    "meaning": "Shard 1 returns the rows"
+   },
+   {
+    "n": 7,
+    "meaning": "postgres_fdw passes rows to the coordinator"
+   },
+   {
+    "n": 8,
+    "meaning": "Coordinator returns the result to the client"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Partition tree in memory",
+  "caption": "The coordinator keeps three small structs about the partitioned table, and the oids[] array in PartitionDescData points to the child tables that pruning picks from.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "PartitionKeyData: how the table is split (strategy and key column)"
+   },
+   {
+    "n": 2,
+    "meaning": "PartitionDescData: the list of child table OIDs"
+   },
+   {
+    "n": 3,
+    "meaning": "PartitionBoundInfoData: the sorted bounds of each child"
+   },
+   {
+    "n": 4,
+    "meaning": "Child partitions, here foreign tables on two shards"
+   },
+   {
+    "n": 5,
+    "meaning": "Pruning returns indexes into oids[]"
+   }
+  ]
+ }
+]

@@ -1,0 +1,347 @@
+{
+ "key": "wal",
+ "title": "WAL, checkpoints, crash recovery and replication",
+ "one_liner": "PostgreSQL logs every change to a sequential journal (WAL) before touching data files, so it can recover from crashes and feed replicas.",
+ "analogy": "WAL is a ship's logbook. You write what you will do first. If the ship sinks, read the log and redo it. Copies of the log go to sister ships.",
+ "big_picture": [
+  "WAL means write-ahead log: a change is logged to disk before the data page is written.",
+  "Logging is fast because it is sequential appends. Data pages can be written lazily later.",
+  "Every WAL record has an LSN: a byte position in the log that only grows.",
+  "A checkpoint flushes dirty pages and notes a safe starting point for recovery.",
+  "After a crash, the startup process replays WAL from the last checkpoint (redo).",
+  "Replicas get the same WAL stream and replay it. Logical decoding turns WAL into row changes."
+ ],
+ "flow": [
+  {
+   "step": "Code builds a record",
+   "detail": "A table or index routine registers data and buffers, then calls XLogInsert with a resource manager id.",
+   "where": "src/backend/access/transam/xloginsert.c: XLogBeginInsert, XLogRegisterBuffer, XLogInsert"
+  },
+  {
+   "step": "Record is assembled",
+   "detail": "Header, block references and optional full page images are packed together. A full page image is added if the page was not logged since the last checkpoint.",
+   "where": "src/backend/access/transam/xloginsert.c: XLogRecordAssemble"
+  },
+  {
+   "step": "Space is reserved and copied",
+   "detail": "The backend claims a byte range in the WAL buffers, which gives the record its LSN, then copies the bytes in.",
+   "where": "src/backend/access/transam/xlog.c: XLogInsertRecord, ReserveXLogInsertLocation, CopyXLogRecordToWAL"
+  },
+  {
+   "step": "WAL is flushed at commit",
+   "detail": "RecordTransactionCommit calls XLogFlush so the log is durable. With synchronous_commit off, the WAL writer flushes later. A dirty page is flushed only after WAL up to its page LSN is on disk.",
+   "where": "src/backend/access/transam/xact.c: RecordTransactionCommit; xlog.c: XLogFlush, XLogWrite"
+  },
+  {
+   "step": "Checkpoint runs",
+   "detail": "The checkpointer writes dirty buffers, writes a checkpoint record and updates pg_control with its location.",
+   "where": "src/backend/postmaster/checkpointer.c: CheckpointerMain; src/backend/access/transam/xlog.c: CreateCheckPoint"
+  },
+  {
+   "step": "Crash recovery replays WAL",
+   "detail": "The startup process reads pg_control, finds the redo point, then reads records one by one and calls each rmgr redo function.",
+   "where": "src/backend/access/transam/xlogrecovery.c: PerformWalRecovery, ApplyWalRecord"
+  },
+  {
+   "step": "Replica streams WAL",
+   "detail": "The walsender sends WAL bytes. The walreceiver writes and flushes them. The startup process replays them.",
+   "where": "src/backend/replication/walsender.c: XLogSendPhysical; src/backend/replication/walreceiver.c: WalReceiverMain"
+  },
+  {
+   "step": "Logical decoding reads WAL",
+   "detail": "Each record goes to its rmgr decode function. Changes are grouped per transaction and sent to a subscriber.",
+   "where": "src/backend/replication/logical/decode.c: LogicalDecodingProcessRecord"
+  }
+ ],
+ "diagram": {
+  "claim": "A change flows from a backend into WAL, then to disk, replicas and recovery.",
+  "nodes": [
+   {
+    "id": "be",
+    "label": "Backend",
+    "group": "Write path"
+   },
+   {
+    "id": "ins",
+    "label": "XLogInsert",
+    "group": "Write path"
+   },
+   {
+    "id": "buf",
+    "label": "WAL buffers",
+    "group": "Write path"
+   },
+   {
+    "id": "seg",
+    "label": "WAL segments",
+    "group": "Disk"
+   },
+   {
+    "id": "ckp",
+    "label": "Checkpointer",
+    "group": "Disk"
+   },
+   {
+    "id": "ctl",
+    "label": "pg_control",
+    "group": "Disk"
+   },
+   {
+    "id": "st",
+    "label": "Startup process",
+    "group": "Recovery"
+   },
+   {
+    "id": "rm",
+    "label": "Rmgr redo",
+    "group": "Recovery"
+   },
+   {
+    "id": "ws",
+    "label": "Walsender",
+    "group": "Replication"
+   },
+   {
+    "id": "wr",
+    "label": "Walreceiver",
+    "group": "Replication"
+   },
+   {
+    "id": "ld",
+    "label": "Logical decode",
+    "group": "Replication"
+   }
+  ],
+  "edges": [
+   {
+    "from": "be",
+    "to": "ins",
+    "label": "builds record"
+   },
+   {
+    "from": "ins",
+    "to": "buf",
+    "label": "copies bytes"
+   },
+   {
+    "from": "buf",
+    "to": "seg",
+    "label": "flushes WAL"
+   },
+   {
+    "from": "ckp",
+    "to": "ctl",
+    "label": "records redo point"
+   },
+   {
+    "from": "ctl",
+    "to": "st",
+    "label": "tells start"
+   },
+   {
+    "from": "seg",
+    "to": "st",
+    "label": "feeds records"
+   },
+   {
+    "from": "st",
+    "to": "rm",
+    "label": "dispatches redo"
+   },
+   {
+    "from": "seg",
+    "to": "ws",
+    "label": "streams WAL"
+   },
+   {
+    "from": "ws",
+    "to": "wr",
+    "label": "sends bytes"
+   },
+   {
+    "from": "seg",
+    "to": "ld",
+    "label": "via walsender"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/access/transam/README",
+   "what": "Design notes: WAL rules, REDO routines, full page images, torn pages."
+  },
+  {
+   "path": "src/backend/access/transam/xlog.c",
+   "what": "Core WAL: insert, flush, checkpoint, startup."
+  },
+  {
+   "path": "src/backend/access/transam/xloginsert.c",
+   "what": "API to build and assemble WAL records."
+  },
+  {
+   "path": "src/backend/access/transam/xlogrecovery.c",
+   "what": "Redo loop and archive or standby recovery logic."
+  },
+  {
+   "path": "src/backend/postmaster/checkpointer.c",
+   "what": "Checkpointer process main loop and checkpoint requests."
+  },
+  {
+   "path": "src/backend/replication/walsender.c",
+   "what": "Sends WAL to standbys and logical subscribers."
+  },
+  {
+   "path": "src/backend/replication/walreceiver.c",
+   "what": "Standby side: receives and writes streamed WAL."
+  },
+  {
+   "path": "src/include/access/rmgrlist.h",
+   "what": "List of resource managers with redo, desc and decode callbacks."
+  },
+  {
+   "path": "src/backend/replication/logical/decode.c",
+   "what": "Turns WAL records into logical changes."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is WAL and why does Postgres have it?",
+   "answer": [
+    "WAL is an append-only log of every change.",
+    "Rule: log the change first, write the data page later.",
+    "Appending is fast and sequential, so commit is cheap.",
+    "After a crash, WAL lets Postgres redo lost page changes."
+   ],
+   "trap": "WAL is not a backup or an audit log. It is mainly for crash safety and replication."
+  },
+  {
+   "q": "What is an LSN?",
+   "answer": [
+    "LSN is a position in the WAL byte stream.",
+    "It is a 64-bit number, type XLogRecPtr in xlogdefs.h.",
+    "It only grows. Each page stores the LSN of its last change."
+   ],
+   "trap": "An LSN is not a transaction id. It is a byte offset in the log."
+  },
+  {
+   "q": "What happens at COMMIT?",
+   "answer": [
+    "The commit record is inserted into WAL.",
+    "XLogFlush forces WAL up to that LSN to disk.",
+    "Data pages are not forced to disk at commit."
+   ],
+   "trap": "Commit does not write the table data files. Only WAL must be on disk."
+  },
+  {
+   "q": "What is a resource manager (rmgr)?",
+   "answer": [
+    "Each kind of change (heap, btree, xact) has an rmgr.",
+    "rmgrlist.h lists them with redo, desc and decode functions.",
+    "Every record has xl_rmid saying who owns it.",
+    "Recovery calls the owner's rm_redo to replay it."
+   ],
+   "trap": "Rmgrs are not processes. They are tables of callbacks."
+  },
+  {
+   "q": "What is a full page write and why is it needed?",
+   "answer": [
+    "Disk may write only part of an 8K page in a crash (torn page).",
+    "So the first change to a page after a checkpoint logs the whole page.",
+    "Redo restores the page image, then applies later changes.",
+    "It is controlled by the full_page_writes setting."
+   ],
+   "trap": "It does not log every change as a full page. Only the first touch after a checkpoint."
+  },
+  {
+   "q": "What does a checkpoint do?",
+   "answer": [
+    "It flushes all dirty shared buffers to disk (CheckPointBuffers).",
+    "It writes a checkpoint record and stores its location in pg_control.",
+    "Recovery can then start from the redo point, not the log start.",
+    "Old WAL segments before that point can be removed or recycled."
+   ],
+   "trap": "A checkpoint does not stop the database. It is spread out over time."
+  },
+  {
+   "q": "How does crash recovery work?",
+   "answer": [
+    "The startup process reads pg_control to find the checkpoint.",
+    "PerformWalRecovery loops: read record, ApplyWalRecord.",
+    "ApplyWalRecord calls the rmgr redo function.",
+    "Redo skips a page if its LSN is newer (XLogReadBufferForRedo returns BLK_DONE).",
+    "At the end, the startup process writes an end-of-recovery record or checkpoint and the server opens for writes."
+   ],
+   "trap": "Recovery does not undo uncommitted work. Aborted rows are just invisible via MVCC."
+  },
+  {
+   "q": "How does streaming replication move data?",
+   "answer": [
+    "The standby walreceiver connects and asks the walsender for WAL.",
+    "The walsender runs XLogSendPhysical and sends WAL bytes.",
+    "The walreceiver writes and flushes it, then the startup process replays it.",
+    "Synchronous mode makes commit wait in SyncRepWaitForLSN."
+   ],
+   "trap": "Streaming sends WAL bytes, not SQL statements."
+  },
+  {
+   "q": "How is logical decoding different from physical replication?",
+   "answer": [
+    "Physical copies raw WAL, so the replica is a byte-level clone.",
+    "Logical decodes WAL into row changes through each rmgr's rm_decode.",
+    "LogicalDecodingProcessRecord drives it. ReorderBuffer groups changes per transaction.",
+    "Needs wal_level logical and a replication slot."
+   ],
+   "trap": "Logical decoding does not read tables. It reads WAL."
+  },
+  {
+   "q": "If you add a new WAL-logged operation, what must you write?",
+   "answer": [
+    "A record layout and an XLogInsert call with XLogRegisterData or buffers.",
+    "A redo function in the rmgr that replays it exactly.",
+    "A desc and identify entry so pg_waldump can print it.",
+    "Handle decode if logical replication needs it, and add tests."
+   ],
+   "trap": "Forgetting the redo side. Logging without a matching redo breaks recovery and standbys."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/access/transam/README first. It explains the rules in plain words.",
+  "Use src/bin/pg_waldump/pg_waldump.c to see real WAL records while you experiment.",
+  "Be careful: redo must be deterministic and must never fail in a critical section.",
+  "Start with small things: docs, rmgr desc output, or tests under src/test/recovery."
+ ],
+ "glossary": [
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log: sequential journal of all changes."
+  },
+  {
+   "term": "LSN",
+   "meaning": "Log sequence number: a byte position in WAL."
+  },
+  {
+   "term": "Checkpoint",
+   "meaning": "Point where dirty pages are flushed and a recovery start is recorded."
+  },
+  {
+   "term": "Redo",
+   "meaning": "Replaying WAL records to rebuild page changes."
+  },
+  {
+   "term": "Full page image",
+   "meaning": "Whole 8K page stored in WAL to guard against torn pages."
+  },
+  {
+   "term": "Rmgr",
+   "meaning": "Resource manager: callbacks that own one kind of WAL record."
+  }
+ ],
+ "more": [
+  "wal_level: minimal, replica and logical each log different amounts.",
+  "WAL lives in pg_wal as 16MB segment files that are recycled.",
+  "Replication slots hold back WAL until a consumer has read it.",
+  "Archiving and point-in-time recovery use archive_command and restore_command.",
+  "A failure inside a critical section is a PANIC. That is why redo must not fail.",
+  "Hands-on: pg_waldump and the TAP tests in src/test/recovery."
+ ]
+}

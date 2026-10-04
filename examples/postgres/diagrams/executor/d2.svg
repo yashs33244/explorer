@@ -1,0 +1,30 @@
+<svg class="hd" viewBox="0 0 800 480" role="img" aria-label="Eight steps of running one SELECT: portal start, executor start, build plan state tree, compile expressions, run, pull rows, send rows, finish" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="executor-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="15" y="50" width="770" height="140" rx="30"/><text class="d-s" x="35" y="72">Startup (once)</text>
+<rect class="d-blob" x="15" y="255" width="770" height="130" rx="30"/><text class="d-s" x="35" y="277">Running and stopping</text>
+<rect class="d-box g1" x="30" y="95" width="140" height="60" rx="14"/><text class="d-t" x="100" y="121" text-anchor="middle">Portal starts</text><text class="d-s" x="100" y="141" text-anchor="middle">PortalStart</text>
+<rect class="d-box g2" x="230" y="95" width="140" height="60" rx="14"/><text class="d-t" x="300" y="121" text-anchor="middle">ExecutorStart</text><text class="d-s" x="300" y="141" text-anchor="middle">InitPlan, EState</text>
+<rect class="d-box g3" x="430" y="95" width="140" height="60" rx="14"/><text class="d-t" x="500" y="121" text-anchor="middle">Build tree</text><text class="d-s" x="500" y="141" text-anchor="middle">ExecInitNode</text>
+<rect class="d-box g5" x="630" y="95" width="140" height="60" rx="14"/><text class="d-t" x="700" y="121" text-anchor="middle">Compile exprs</text><text class="d-s" x="700" y="141" text-anchor="middle">ExecInitQual</text>
+<rect class="d-box g2" x="630" y="295" width="140" height="60" rx="14"/><text class="d-t" x="700" y="321" text-anchor="middle">Run the plan</text><text class="d-s" x="700" y="341" text-anchor="middle">ExecutorRun</text>
+<rect class="d-box g3" x="430" y="295" width="140" height="60" rx="14"/><text class="d-t" x="500" y="321" text-anchor="middle">Pull from kids</text><text class="d-s" x="500" y="341" text-anchor="middle">ExecProcNode</text>
+<rect class="d-box g4" x="230" y="295" width="140" height="60" rx="14"/><text class="d-t" x="300" y="321" text-anchor="middle">Send rows</text><text class="d-s" x="300" y="341" text-anchor="middle">DestReceiver</text>
+<rect class="d-box g0" x="30" y="295" width="140" height="60" rx="14"/><text class="d-t" x="100" y="321" text-anchor="middle">Finish, free</text><text class="d-s" x="100" y="341" text-anchor="middle">ExecutorEnd</text>
+<path class="d-edge acc" d="M170,125 H230" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="200" y="117" text-anchor="middle">calls</text>
+<path class="d-edge acc" d="M370,125 H430" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="400" y="117" text-anchor="middle">builds</text>
+<path class="d-edge acc" d="M570,125 H630" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="600" y="117" text-anchor="middle">compiles</text>
+<path class="d-edge acc" d="M700,155 V295" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="716" y="230">runs</text>
+<path class="d-edge acc" d="M630,325 H570" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="600" y="317" text-anchor="middle">pulls</text>
+<path class="d-edge acc" d="M430,325 H370" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="400" y="317" text-anchor="middle">yields</text>
+<path class="d-edge acc" d="M230,325 H170" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="200" y="317" text-anchor="middle">then</text>
+<path class="d-edge" d="M300,355 V412" marker-end="url(#executor-d2-ah)"/><text class="d-lab" x="316" y="400">rows</text>
+<g transform="translate(280,418)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g><text class="d-t" x="330" y="445">Client</text>
+<circle class="d-badge" cx="30" cy="95" r="11"/><text class="d-bt" x="30" y="99">1</text>
+<circle class="d-badge" cx="230" cy="95" r="11"/><text class="d-bt" x="230" y="99">2</text>
+<circle class="d-badge" cx="430" cy="95" r="11"/><text class="d-bt" x="430" y="99">3</text>
+<circle class="d-badge" cx="630" cy="95" r="11"/><text class="d-bt" x="630" y="99">4</text>
+<circle class="d-badge" cx="630" cy="295" r="11"/><text class="d-bt" x="630" y="299">5</text>
+<circle class="d-badge" cx="430" cy="295" r="11"/><text class="d-bt" x="430" y="299">6</text>
+<circle class="d-badge" cx="230" cy="295" r="11"/><text class="d-bt" x="230" y="299">7</text>
+<circle class="d-badge" cx="30" cy="295" r="11"/><text class="d-bt" x="30" y="299">8</text>
+</svg>

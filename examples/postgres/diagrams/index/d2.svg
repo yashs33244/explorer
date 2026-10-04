@@ -1,0 +1,21 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Time-ordered steps of SELECT ... WHERE id = 42 using a btree index scan, from planner to client" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="index-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="15" y="15" width="180" height="575" rx="28"/><text class="d-t" x="105.0" y="44" text-anchor="middle">Planner</text>
+<rect class="d-blob" x="205" y="15" width="180" height="575" rx="28"/><text class="d-t" x="295.0" y="44" text-anchor="middle">Executor</text>
+<rect class="d-blob" x="395" y="15" width="195" height="575" rx="28"/><text class="d-t" x="492.5" y="44" text-anchor="middle">Index file (btree)</text>
+<rect class="d-blob" x="600" y="15" width="185" height="575" rx="28"/><text class="d-t" x="692.5" y="44" text-anchor="middle">Heap file</text>
+<rect class="d-box g0" x="30" y="95" width="150" height="52" rx="14"/><text class="d-t" x="105.0" y="117" text-anchor="middle">Cost index path</text><text class="d-s" x="105.0" y="135" text-anchor="middle">cost_index</text><circle class="d-badge" cx="32" cy="97" r="11"/><text class="d-bt" x="32" y="101">1</text>
+<rect class="d-box g1" x="220" y="175" width="150" height="52" rx="14"/><text class="d-t" x="295.0" y="197" text-anchor="middle">Open the scan</text><text class="d-s" x="295.0" y="215" text-anchor="middle">index_beginscan</text><circle class="d-badge" cx="222" cy="177" r="11"/><text class="d-bt" x="222" y="181">2</text>
+<rect class="d-box g4" x="410" y="255" width="165" height="52" rx="14"/><text class="d-t" x="492.5" y="277" text-anchor="middle">Walk root to leaf</text><text class="d-s" x="492.5" y="295" text-anchor="middle">_bt_first</text><circle class="d-badge" cx="412" cy="257" r="11"/><text class="d-bt" x="412" y="261">3</text>
+<rect class="d-box g1" x="220" y="335" width="150" height="52" rx="14"/><text class="d-t" x="295.0" y="357" text-anchor="middle">Receive a TID</text><text class="d-s" x="295.0" y="375" text-anchor="middle">xs_heaptid</text><circle class="d-badge" cx="222" cy="337" r="11"/><text class="d-bt" x="222" y="341">4</text>
+<rect class="d-box g3" x="610" y="415" width="165" height="52" rx="14"/><text class="d-t" x="692.5" y="437" text-anchor="middle">Read heap page</text><text class="d-s" x="692.5" y="455" text-anchor="middle">heap_hot_search_buffer</text><circle class="d-badge" cx="612" cy="417" r="11"/><text class="d-bt" x="612" y="421">5</text>
+<rect class="d-box g1" x="220" y="495" width="150" height="52" rx="14"/><text class="d-t" x="295.0" y="517" text-anchor="middle">Recheck, return</text><text class="d-s" x="295.0" y="535" text-anchor="middle">IndexNext</text><circle class="d-badge" cx="222" cy="497" r="11"/><text class="d-bt" x="222" y="501">6</text>
+<rect class="d-box g5" x="30" y="495" width="150" height="52" rx="14"/><g transform="translate(36,501) scale(0.8)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g><text class="d-t" x="115" y="526" text-anchor="middle">Client</text>
+<text class="d-s" x="105" y="200" text-anchor="middle">query</text><text class="d-m" x="105" y="220" text-anchor="middle">WHERE id = 42</text>
+<path class="d-edge acc" d="M180,121 C240,121 295,125 295,173" marker-end="url(#index-d2-ah)"/><text class="d-lab" x="232" y="112" text-anchor="middle">chosen plan</text>
+<path class="d-edge acc" d="M370,201 C430,201 492,210 492,253" marker-end="url(#index-d2-ah)"/><text class="d-lab" x="432" y="194" text-anchor="middle">amgettuple</text>
+<path class="d-edge acc" d="M410,281 C340,281 295,300 295,333" marker-end="url(#index-d2-ah)"/><text class="d-lab" x="352" y="282" text-anchor="middle">TID back</text>
+<path class="d-edge acc" d="M370,361 C560,361 690,361 690,413" marker-end="url(#index-d2-ah)"/><text class="d-lab" x="520" y="354" text-anchor="middle">heap fetch</text>
+<path class="d-edge acc" d="M610,445 C500,445 470,521 372,521" marker-end="url(#index-d2-ah)"/><text class="d-lab" x="500" y="478" text-anchor="middle">visible row</text>
+<path class="d-edge acc" d="M220,521 H182" marker-end="url(#index-d2-ah)"/><text class="d-lab" x="201" y="513" text-anchor="middle">rows</text>
+</svg>

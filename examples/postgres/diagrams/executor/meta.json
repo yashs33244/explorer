@@ -1,0 +1,86 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Executor components and wiring",
+  "caption": "A Portal calls ExecutorRun, which pulls one row at a time up through the plan tree from the scan that reads table pages.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "The Portal calls ExecutorRun"
+   },
+   {
+    "n": 2,
+    "meaning": "ExecutorRun pulls from the top node, and each node pulls from its child"
+   },
+   {
+    "n": 3,
+    "meaning": "The SeqScan node reads table pages from disk"
+   },
+   {
+    "n": 4,
+    "meaning": "The row travels back up in a TupleTableSlot"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One SELECT from start to finish",
+  "caption": "Follow the numbers: the executor builds its state tree first, then pulls rows, sends them to the client and cleans up.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "PortalStart picks a strategy and starts the executor"
+   },
+   {
+    "n": 2,
+    "meaning": "ExecutorStart creates the EState and calls InitPlan"
+   },
+   {
+    "n": 3,
+    "meaning": "ExecInitNode builds one PlanState per Plan node"
+   },
+   {
+    "n": 4,
+    "meaning": "WHERE and target lists are compiled into expression steps"
+   },
+   {
+    "n": 5,
+    "meaning": "PortalRun calls ExecutorRun, which loops in ExecutePlan"
+   },
+   {
+    "n": 6,
+    "meaning": "Each node pulls a row from its child with ExecProcNode"
+   },
+   {
+    "n": 7,
+    "meaning": "The DestReceiver sends each row to the client"
+   },
+   {
+    "n": 8,
+    "meaning": "ExecutorEnd frees the plan tree"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of a TupleTableSlot",
+  "caption": "A slot carries one row between nodes: tts_ops says what kind it is, and the value and null arrays hold the columns, or it can just point into a buffer page.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "tts_ops selects one of the four slot kinds"
+   },
+   {
+    "n": 2,
+    "meaning": "tts_values and tts_isnull hold the current row's columns and NULL flags"
+   },
+   {
+    "n": 3,
+    "meaning": "A buffer slot pins a page and points at the tuple inside, with no copy"
+   }
+  ]
+ }
+]

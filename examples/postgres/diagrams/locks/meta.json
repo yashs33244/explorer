@@ -1,0 +1,122 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Lock manager in shared memory",
+  "caption": "Backend A (the waiter) asks the shared lock table for a lock held by Backend B, queues, and is woken by a latch; the deadlock check only aborts someone if it finds a cycle.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Postmaster creates shared memory"
+   },
+   {
+    "n": 2,
+    "meaning": "Backend joins ProcArray"
+   },
+   {
+    "n": 3,
+    "meaning": "Tries a weak lock via fast-path slots"
+   },
+   {
+    "n": 4,
+    "meaning": "Requests a lock in the lock hash table"
+   },
+   {
+    "n": 5,
+    "meaning": "Conflict, so it joins the wait queue"
+   },
+   {
+    "n": 6,
+    "meaning": "After a timeout the deadlock check runs"
+   },
+   {
+    "n": 7,
+    "meaning": "Only if a cycle exists, a victim is aborted"
+   },
+   {
+    "n": 8,
+    "meaning": "Holder releases its locks"
+   },
+   {
+    "n": 9,
+    "meaning": "Lock manager sets the waiter's latch"
+   },
+   {
+    "n": 10,
+    "meaning": "Latch wakes the waiting backend"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One table lock conflict",
+  "caption": "Follow the arrows down: A takes the lock, B asks and must wait, the deadlock check finds no cycle, then A's commit wakes B.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Backend A runs ALTER TABLE and requests AccessExclusiveLock"
+   },
+   {
+    "n": 2,
+    "meaning": "Lock manager grants it"
+   },
+   {
+    "n": 3,
+    "meaning": "Backend B's SELECT wants AccessShareLock"
+   },
+   {
+    "n": 4,
+    "meaning": "Conflict is detected"
+   },
+   {
+    "n": 5,
+    "meaning": "B sleeps in the wait queue"
+   },
+   {
+    "n": 6,
+    "meaning": "After 1s the deadlock check finds no cycle"
+   },
+   {
+    "n": 7,
+    "meaning": "A commits and releases all locks"
+   },
+   {
+    "n": 8,
+    "meaning": "Lock manager grants B and wakes it"
+   },
+   {
+    "n": 9,
+    "meaning": "B's SELECT runs"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of the lock table",
+  "caption": "A LOCKTAG hashes to one of 16 partitions and keys a LOCK; PROCLOCKs link each LOCK to the PGPROCs holding or waiting for it.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "LOCKTAG identifies the locked object and is hashed to a partition"
+   },
+   {
+    "n": 2,
+    "meaning": "The hash code picks one of 16 partitions"
+   },
+   {
+    "n": 3,
+    "meaning": "LOCK, one per locked object"
+   },
+   {
+    "n": 4,
+    "meaning": "PROCLOCK, one per holder"
+   },
+   {
+    "n": 5,
+    "meaning": "LOCALLOCK, the backend's private copy"
+   }
+  ]
+ }
+]

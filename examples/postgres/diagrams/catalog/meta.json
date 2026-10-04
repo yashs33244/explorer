@@ -1,0 +1,56 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Catalog, caches, extensions, runtime",
+  "caption": "Catalog tables on disk fill in-memory caches, which feed function calls into built-in and extension code, with memory contexts and error handling on the side.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Lookup, call, error, invalidate",
+  "caption": "Follow numbers 1 to 8 to see a function call found through the caches, then an error cleaned up, then stale cache rows dropped.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Backend start sets up the catalog caches (InitCatalogCache)."
+   },
+   {
+    "n": 2,
+    "meaning": "Code looks up a catalog row with SearchSysCache1; a miss reads pg_proc from disk."
+   },
+   {
+    "n": 3,
+    "meaning": "fmgr_info finds the C function and fills FmgrInfo."
+   },
+   {
+    "n": 4,
+    "meaning": "FunctionCall1Coll calls the function and gets a Datum back."
+   },
+   {
+    "n": 5,
+    "meaning": "The function allocates memory with palloc in the current memory context."
+   },
+   {
+    "n": 6,
+    "meaning": "ereport(ERROR) jumps out with longjmp."
+   },
+   {
+    "n": 7,
+    "meaning": "MemoryContextReset frees everything in the context at once."
+   },
+   {
+    "n": 8,
+    "meaning": "After a catalog change, other backends drop stale cache rows (inval.c)."
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Memory context tree and node",
+  "caption": "Memory contexts form a tree under TopMemoryContext, and each node is a MemoryContextData struct whose reset frees all its chunks.",
+  "badges": []
+ }
+]

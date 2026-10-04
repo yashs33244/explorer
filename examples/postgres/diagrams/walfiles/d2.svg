@@ -1,0 +1,27 @@
+<svg class="hd" viewBox="0 0 800 470" role="img" aria-label="Lifecycle: an INSERT and COMMIT becomes a WAL record, is flushed, archived, checkpointed and replayed after a crash" xmlns="http://www.w3.org/2000/svg"><defs><marker id="walfiles-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="20" y="20" width="760" height="190" rx="30"/><text class="d-s" x="38" y="44">Commit path: the client waits</text>
+<rect class="d-blob" x="20" y="250" width="760" height="190" rx="30"/><text class="d-s" x="762" y="274" text-anchor="end">In the background</text>
+<rect class="d-box g2" x="44" y="70" width="118" height="104" rx="14"/><text class="d-t" x="103.0" y="106" text-anchor="middle">Build record</text><text class="d-s" x="103.0" y="128" text-anchor="middle">XLogBeginInsert</text><text class="d-s" x="103.0" y="146" text-anchor="middle">XLogRegisterData</text><circle class="d-badge" cx="50" cy="74" r="11"/><text class="d-bt" x="50" y="78">1</text>
+
+<rect class="d-box g2" x="242" y="70" width="118" height="104" rx="14"/><text class="d-t" x="301.0" y="106" text-anchor="middle">Copy in</text><text class="d-s" x="301.0" y="128" text-anchor="middle">XLogInsertRecord</text><text class="d-s" x="301.0" y="146" text-anchor="middle">to wal_buffers</text><circle class="d-badge" cx="248" cy="74" r="11"/><text class="d-bt" x="248" y="78">2</text>
+
+<rect class="d-box g2" x="440" y="70" width="118" height="104" rx="14"/><text class="d-t" x="499.0" y="106" text-anchor="middle">COMMIT</text><text class="d-s" x="499.0" y="128" text-anchor="middle">adds commit record</text><text class="d-s" x="499.0" y="146" text-anchor="middle">XLogFlush(lsn)</text><circle class="d-badge" cx="446" cy="74" r="11"/><text class="d-bt" x="446" y="78">3</text>
+
+<rect class="d-box g3" x="638" y="70" width="118" height="104" rx="14"/><text class="d-t" x="697.0" y="106" text-anchor="middle">Write + fsync</text><text class="d-s" x="697.0" y="128" text-anchor="middle">to pg_wal file</text><text class="d-s" x="697.0" y="146" text-anchor="middle">then client gets OK</text><circle class="d-badge" cx="644" cy="74" r="11"/><text class="d-bt" x="644" y="78">4</text>
+
+<rect class="d-box g3" x="44" y="300" width="118" height="104" rx="14"/><text class="d-t" x="103.0" y="336" text-anchor="middle">Segment full</text><text class="d-s" x="103.0" y="358" text-anchor="middle">makes .ready file</text><text class="d-s" x="103.0" y="376" text-anchor="middle">in archive_status</text><circle class="d-badge" cx="50" cy="304" r="11"/><text class="d-bt" x="50" y="308">5</text>
+
+<rect class="d-box g1" x="242" y="300" width="118" height="104" rx="14"/><text class="d-t" x="301.0" y="336" text-anchor="middle">Archive it</text><text class="d-s" x="301.0" y="358" text-anchor="middle">archiver runs</text><text class="d-s" x="301.0" y="376" text-anchor="middle">archive_command</text><circle class="d-badge" cx="248" cy="304" r="11"/><text class="d-bt" x="248" y="308">6</text>
+
+<rect class="d-box g1" x="440" y="300" width="118" height="104" rx="14"/><text class="d-t" x="499.0" y="336" text-anchor="middle">Checkpoint</text><text class="d-s" x="499.0" y="358" text-anchor="middle">dirty pages flushed</text><text class="d-s" x="499.0" y="376" text-anchor="middle">REDO in pg_control</text><circle class="d-badge" cx="446" cy="304" r="11"/><text class="d-bt" x="446" y="308">7</text>
+
+<rect class="d-box g4" x="638" y="300" width="118" height="104" rx="14"/><text class="d-t" x="697.0" y="336" text-anchor="middle">After a crash</text><text class="d-s" x="697.0" y="358" text-anchor="middle">startup process</text><text class="d-s" x="697.0" y="376" text-anchor="middle">replays from REDO</text><circle class="d-badge" cx="644" cy="304" r="11"/><text class="d-bt" x="644" y="308">8</text>
+
+<path class="d-edge acc" d="M162,122 L242,122" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="202.0" y="114" text-anchor="middle">inserts</text>
+<path class="d-edge acc" d="M162,352 L242,352" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="202.0" y="344" text-anchor="middle">notifies</text>
+<path class="d-edge acc" d="M360,122 L440,122" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="400.0" y="114" text-anchor="middle">commits</text>
+<path class="d-edge acc" d="M360,352 L440,352" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="400.0" y="344" text-anchor="middle">then</text>
+<path class="d-edge acc" d="M558,122 L638,122" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="598.0" y="114" text-anchor="middle">flushes</text>
+<path class="d-edge acc" d="M558,352 L638,352" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="598.0" y="344" text-anchor="middle">if crash</text>
+<path class="d-edge acc" d="M697.0,174 C697.0,240 103.0,234 103.0,300" marker-end="url(#walfiles-d2-ah)"/><text class="d-lab" x="400" y="236" text-anchor="middle">segment fills up</text>
+</svg>

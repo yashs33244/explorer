@@ -1,0 +1,60 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Postmaster, backends, shared memory",
+  "caption": "The postmaster forks one backend per connection; backends and helper processes share memory, and the helpers flush it to disk.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Life of one connection",
+  "caption": "Follow the numbers: connect, fork, startup packet, authenticate, query, then exit.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client connects to the postmaster"
+   },
+   {
+    "n": 2,
+    "meaning": "Postmaster forks a backend"
+   },
+   {
+    "n": 3,
+    "meaning": "Client sends the startup packet"
+   },
+   {
+    "n": 4,
+    "meaning": "Backend checks the pg_hba.conf rule and authenticates"
+   },
+   {
+    "n": 5,
+    "meaning": "Backend says auth ok and ReadyForQuery"
+   },
+   {
+    "n": 6,
+    "meaning": "Client sends a query"
+   },
+   {
+    "n": 7,
+    "meaning": "Backend returns rows and ReadyForQuery"
+   },
+   {
+    "n": 8,
+    "meaning": "Client sends Terminate"
+   },
+   {
+    "n": 9,
+    "meaning": "Backend exits and the postmaster gets SIGCHLD"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Startup packet and messages",
+  "caption": "The startup packet has no type letter, but every later message starts with one.",
+  "badges": []
+ }
+]

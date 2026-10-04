@@ -1,0 +1,70 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="The client connects to the postmaster, which forks a backend process per connection. Helper processes and backends share memory, which is saved to disk." xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="process-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="15" y="60" width="145" height="170" rx="30"/>
+<text class="d-s" x="29" y="80">Outside</text>
+<rect class="d-box g0" x="28" y="130" width="119" height="60" rx="14"/>
+<g transform="translate(68,84)"><g class="icon"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z" transform="translate(0,-4)"/></g></g>
+<text class="d-t" x="87" y="157" text-anchor="middle">Client</text>
+<text class="d-s" x="87" y="175" text-anchor="middle">(libpq)</text>
+
+<rect class="d-blob" x="230" y="60" width="140" height="170" rx="30"/>
+<text class="d-s" x="244" y="80">Parent</text>
+<rect class="d-box g1" x="240" y="130" width="120" height="60" rx="14"/>
+<g transform="translate(270,86)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,5 V9 M20,31 V35 M5,20 H9 M31,20 H35"/></g>
+<text class="d-t" x="300" y="166" text-anchor="middle">Postmaster</text>
+
+<rect class="d-blob" x="420" y="60" width="360" height="230" rx="30"/>
+<text class="d-s" x="766" y="80" text-anchor="end">One per connection</text>
+<rect class="d-box g2" x="436" y="95" width="140" height="50" rx="12"/>
+<text class="d-t" x="506" y="125" text-anchor="middle">Backend process</text>
+<rect class="d-box g3" x="624" y="95" width="140" height="50" rx="12"/>
+<text class="d-t" x="694" y="125" text-anchor="middle">auth.c + hba.c</text>
+<rect class="d-box g3" x="624" y="210" width="140" height="50" rx="12"/>
+<text class="d-t" x="694" y="240" text-anchor="middle">PostgresMain loop</text>
+<rect class="d-box g2" x="436" y="210" width="140" height="50" rx="12"/>
+<text class="d-t" x="506" y="240" text-anchor="middle">Parse, plan, run</text>
+
+<rect class="d-blob" x="15" y="340" width="350" height="215" rx="30"/>
+<text class="d-s" x="29" y="360">Helper processes</text>
+<rect class="d-box g4" x="30" y="372" width="320" height="42" rx="12"/>
+<text class="d-t" x="190" y="398" text-anchor="middle">Checkpointer + bgwriter</text>
+<rect class="d-box g4" x="30" y="428" width="320" height="42" rx="12"/>
+<text class="d-t" x="190" y="454" text-anchor="middle">WAL writer</text>
+<rect class="d-box g4" x="30" y="484" width="320" height="42" rx="12"/>
+<text class="d-t" x="190" y="510" text-anchor="middle">Autovacuum</text>
+
+<rect class="d-blob2" x="420" y="340" width="360" height="110" rx="30"/>
+<text class="d-s" x="766" y="358" text-anchor="end">In memory, shared</text>
+<rect class="d-box g5" x="436" y="368" width="328" height="60" rx="14"/>
+<g transform="translate(446,378) scale(0.75)"><rect class="d-fillpaper" x="4" y="4" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="16" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="28" width="32" height="9" rx="3"/><circle class="d-fillacc" cx="10" cy="9" r="1.8"/><circle class="d-fillacc" cx="10" cy="21" r="1.8"/></g>
+<text class="d-t" x="620" y="404" text-anchor="middle">Shared memory</text>
+
+<rect class="d-blob2" x="420" y="480" width="360" height="95" rx="30"/>
+<text class="d-s" x="766" y="498" text-anchor="end">On disk</text>
+<rect class="d-box g1" x="436" y="508" width="328" height="50" rx="14"/>
+<g transform="translate(448,516) scale(0.7)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="620" y="538" text-anchor="middle">Data files + WAL</text>
+
+<path class="d-edge acc" d="M147,160 H240" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="193" y="150" text-anchor="middle">connects</text>
+<path class="d-edge acc" d="M360,150 C395,150 400,120 436,120" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="398" y="168" text-anchor="middle">forks</text>
+<path class="d-edge dash" d="M130,130 V24 H506 V92" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="318" y="18" text-anchor="middle">then talks to its backend</text>
+<path class="d-edge" d="M576,120 H624" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="600" y="112" text-anchor="middle">checks</text>
+<path class="d-edge" d="M694,145 V210" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="694" y="182" text-anchor="middle">admits</text>
+<path class="d-edge" d="M624,235 H576" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="600" y="227" text-anchor="middle">runs</text>
+<path class="d-edge acc" d="M506,260 V368" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="506" y="324" text-anchor="middle">reads/writes</text>
+<path class="d-edge" d="M300,190 V340" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="300" y="278" text-anchor="middle">forks</text>
+<path class="d-edge" d="M350,393 H436" marker-start="url(#process-d1-ah)" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="393" y="385" text-anchor="middle">shares</text>
+<path class="d-edge" d="M365,540 H436" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="400" y="532" text-anchor="middle">flush</text>
+<path class="d-edge" d="M620,428 V508" marker-end="url(#process-d1-ah)"/>
+<text class="d-lab" x="620" y="472" text-anchor="middle">persists</text>
+</svg>

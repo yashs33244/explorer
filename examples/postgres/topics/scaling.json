@@ -1,0 +1,462 @@
+{
+ "key": "scaling",
+ "title": "Sharding, partitioning and scaling out",
+ "one_liner": "PostgreSQL core has no built-in sharding; it gives you partitioning, postgres_fdw, parallel query and replication, and you can combine them by hand.",
+ "analogy": "Think of a big library. Partitioning is splitting one huge catalogue into shelves inside the same building. Replication is photocopying the whole library into more buildings so more people can read. Sharding is giving each building a different part of the books, so no building holds everything. Core Postgres ships the shelves, the photocopier and a phone line between buildings (postgres_fdw), but not the manager who decides which building a book goes to.",
+ "big_picture": [
+  "Honest answer first: PostgreSQL core has NO built-in sharding. There is no shard map, no shard rebalancer and no distributed transaction manager in the tree.",
+  "Partitioning splits ONE logical table into many physical child tables inside ONE server. Types are range, list and hash. The planner skips children that cannot match (partition pruning), at plan time and at run time.",
+  "Replication copies the SAME data to other servers. Streaming (physical) replicas copy the whole cluster and scale reads. Logical replication copies chosen tables and lets you replicate between versions.",
+  "Sharding puts DIFFERENT rows on DIFFERENT servers. The exact difference: partitioning = same server, different tables; replication = different servers, same rows; sharding = different servers, different rows.",
+  "The core building block for hand-made sharding is postgres_fdw (contrib/postgres_fdw). A foreign table can be a partition of a local partitioned table, so each partition lives on another server.",
+  "In a hand-made shard setup the coordinator holds a partitioned table whose partitions are foreign tables. The planner prunes by the partition key, then each surviving foreign scan sends a deparsed SQL string (Remote SQL) to its shard with WHERE pushed down.",
+  "Parallel query (Gather and parallel workers) scales ONE query across CPU cores on one server. It is not scale-out across machines.",
+  "Outside core: Citus (coordinator and worker nodes, distributed tables, shard rebalancing), pgbouncer or pgcat (connection pooling), Patroni (failover), pg_partman (automatic partition creation). They are not in this repo.",
+  "Real run on PG 16.6 showed: a query with region='eu' AND id=5 became one Foreign Scan with Remote SQL containing both filters, and the other shard was never contacted.",
+  "Honest gap: the partition-wise aggregate was NOT pushed to the shards in my run. enable_partitionwise_aggregate is off by default, so the coordinator fetched all rows and ran HashAggregate itself.",
+  "Version note: the repo is 20devel. The files and functions below exist there. I ran the demo on released 16.6 only (brew). Declarative partitioning basics behave the same, but I did not diff 17, 18 or 20devel behaviour by running them."
+ ],
+ "flow": [
+  {
+   "step": "1. Define the partitioned table",
+   "detail": "CREATE TABLE orders (...) PARTITION BY LIST (region). Bounds of each child are stored in the catalog and loaded into a relcache PartitionKey and a PartitionBoundInfo.",
+   "where": "src/backend/utils/cache/partcache.c (RelationBuildPartitionKey), src/backend/partitioning/partbounds.c, src/backend/partitioning/partdesc.c"
+  },
+  {
+   "step": "2. Attach a foreign table as a partition",
+   "detail": "CREATE FOREIGN TABLE orders_s1 PARTITION OF orders FOR VALUES IN ('eu') SERVER s1. The partition lives on another server, reached by postgres_fdw.",
+   "where": "contrib/postgres_fdw/postgres_fdw.c, contrib/postgres_fdw/option.c"
+  },
+  {
+   "step": "3. Plan time pruning",
+   "detail": "The planner turns WHERE clauses into pruning steps and asks which partitions can match. Non-matching children are dropped before any path is built.",
+   "where": "src/backend/partitioning/partprune.c (gen_partprune_steps, get_matching_partitions)"
+  },
+  {
+   "step": "4. Optional partition-wise join and aggregate",
+   "detail": "If enable_partitionwise_join or enable_partitionwise_aggregate is on and partitions line up, the planner joins or aggregates child by child, which lets each foreign child do the work remotely.",
+   "where": "src/backend/optimizer/path/joinrels.c (try_partitionwise_join), src/backend/optimizer/plan/planner.c (create_partitionwise_grouping_paths)"
+  },
+  {
+   "step": "5. Build foreign paths",
+   "detail": "For each surviving foreign child the FDW adds a path. It also offers join and upper (aggregate) pushdown paths.",
+   "where": "contrib/postgres_fdw/postgres_fdw.c (postgresGetForeignPaths, postgresGetForeignJoinPaths, postgresGetForeignUpperPaths)"
+  },
+  {
+   "step": "6. Deparse to remote SQL",
+   "detail": "The FDW writes a SQL string with shippable WHERE clauses. This is the Remote SQL line you see in EXPLAIN VERBOSE.",
+   "where": "contrib/postgres_fdw/deparse.c, contrib/postgres_fdw/shippable.c"
+  },
+  {
+   "step": "7. Run time pruning",
+   "detail": "For generic plans or parameters unknown until execution, the executor prunes at startup or while running. EXPLAIN shows 'Subplans Removed'.",
+   "where": "src/backend/executor/execPartition.c (ExecInitPartitionExecPruning, ExecFindMatchingSubPlans)"
+  },
+  {
+   "step": "8. Execute, possibly async",
+   "detail": "Append runs the child scans. With async_capable on foreign servers, several remote scans can run at once through the async callbacks.",
+   "where": "contrib/postgres_fdw/postgres_fdw.c (postgresForeignAsyncRequest), src/include/foreign/fdwapi.h"
+  },
+  {
+   "step": "9. Writes route to the right child",
+   "detail": "On INSERT, the executor picks the partition for each row from the partition key. For a foreign partition the FDW sends the insert to the shard.",
+   "where": "src/backend/executor/execPartition.c (ExecFindPartition, get_partition_for_tuple)"
+  }
+ ],
+ "diagram": {
+  "claim": "A query hits the coordinator, the planner prunes partitions, and postgres_fdw sends SQL to the shards that survive.",
+  "nodes": [
+   {
+    "id": "client",
+    "label": "Client app",
+    "group": "outside"
+   },
+   {
+    "id": "pool",
+    "label": "pgbouncer / pgcat (outside core)",
+    "group": "outside"
+   },
+   {
+    "id": "coord",
+    "label": "Coordinator: partitioned table orders",
+    "group": "core"
+   },
+   {
+    "id": "prune",
+    "label": "partprune.c pruning",
+    "group": "core"
+   },
+   {
+    "id": "part",
+    "label": "partbounds.c / partdesc.c bounds",
+    "group": "core"
+   },
+   {
+    "id": "fdw",
+    "label": "postgres_fdw (FDW API)",
+    "group": "contrib"
+   },
+   {
+    "id": "s1",
+    "label": "Shard 1: orders_s1",
+    "group": "remote"
+   },
+   {
+    "id": "s2",
+    "label": "Shard 2: orders_s2",
+    "group": "remote"
+   },
+   {
+    "id": "par",
+    "label": "Parallel workers (Gather)",
+    "group": "core"
+   },
+   {
+    "id": "rep",
+    "label": "Streaming replica (read scaling)",
+    "group": "core"
+   }
+  ],
+  "edges": [
+   {
+    "from": "client",
+    "to": "pool",
+    "label": "connects through"
+   },
+   {
+    "from": "pool",
+    "to": "coord",
+    "label": "forwards SQL to"
+   },
+   {
+    "from": "coord",
+    "to": "part",
+    "label": "reads bounds from"
+   },
+   {
+    "from": "coord",
+    "to": "prune",
+    "label": "asks which children match"
+   },
+   {
+    "from": "prune",
+    "to": "fdw",
+    "label": "keeps surviving foreign scans for"
+   },
+   {
+    "from": "fdw",
+    "to": "s1",
+    "label": "sends Remote SQL to"
+   },
+   {
+    "from": "fdw",
+    "to": "s2",
+    "label": "sends Remote SQL to"
+   },
+   {
+    "from": "coord",
+    "to": "par",
+    "label": "may launch local"
+   },
+   {
+    "from": "coord",
+    "to": "rep",
+    "label": "streams WAL to"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/partitioning/partprune.c",
+   "what": "Partition pruning logic. Note: it lives in src/backend/partitioning/, NOT in optimizer/util/. Holds gen_partprune_steps, get_matching_partitions, make_partitionedrel_pruneinfo."
+  },
+  {
+   "path": "src/backend/partitioning/partbounds.c",
+   "what": "Creates and compares partition bounds (range, list, hash), for example partition_bounds_equal."
+  },
+  {
+   "path": "src/backend/partitioning/partdesc.c",
+   "what": "Builds the PartitionDesc (list of children) and PartitionDirectory."
+  },
+  {
+   "path": "src/backend/catalog/partition.c",
+   "what": "Catalog helpers such as get_partition_ancestors."
+  },
+  {
+   "path": "src/backend/utils/cache/partcache.c",
+   "what": "Loads the partition key into the relcache (RelationBuildPartitionKey)."
+  },
+  {
+   "path": "src/backend/executor/execPartition.c",
+   "what": "Tuple routing (ExecFindPartition, get_partition_for_tuple) and run time pruning."
+  },
+  {
+   "path": "src/backend/optimizer/path/joinrels.c",
+   "what": "try_partitionwise_join: join matching partitions pair by pair."
+  },
+  {
+   "path": "src/backend/optimizer/plan/planner.c",
+   "what": "create_partitionwise_grouping_paths: partition-wise aggregate."
+  },
+  {
+   "path": "src/backend/utils/misc/guc_parameters.dat",
+   "what": "Defines enable_partition_pruning, enable_partitionwise_join, enable_partitionwise_aggregate."
+  },
+  {
+   "path": "contrib/postgres_fdw/postgres_fdw.c",
+   "what": "The FDW: scan, join, upper-rel pushdown, async, batch insert callbacks."
+  },
+  {
+   "path": "contrib/postgres_fdw/deparse.c",
+   "what": "Turns plan pieces into the remote SQL string."
+  },
+  {
+   "path": "contrib/postgres_fdw/shippable.c",
+   "what": "Decides which functions and operators are safe to send to the remote server."
+  },
+  {
+   "path": "contrib/postgres_fdw/option.c",
+   "what": "Options like use_remote_estimate, async_capable, fetch_size, batch_size."
+  },
+  {
+   "path": "src/include/foreign/fdwapi.h",
+   "what": "The FdwRoutine struct: all FDW callbacks (GetForeignJoinPaths, GetForeignUpperPaths, ForeignAsyncRequest, ExecForeignBatchInsert, ...)."
+  }
+ ],
+ "interview": [
+  {
+   "q": "Does PostgreSQL have built-in sharding?",
+   "answer": [
+    "No. Core has no shard map, no rebalancer and no cross-shard transaction manager.",
+    "It gives you building blocks: partitioning, postgres_fdw, parallel query, replication.",
+    "Citus is the common extension that adds real sharding."
+   ],
+   "trap": "Saying 'partitioning is sharding'. Partitioning stays on one server."
+  },
+  {
+   "q": "What is the exact difference between partitioning, replication and sharding?",
+   "answer": [
+    "Partitioning: one table split into child tables on one server.",
+    "Replication: same data copied to other servers.",
+    "Sharding: different rows on different servers."
+   ],
+   "trap": "Thinking replicas increase write capacity. All writes still go to one primary."
+  },
+  {
+   "q": "What partition methods exist?",
+   "answer": [
+    "Range, list and hash, set with PARTITION BY.",
+    "Hash uses MODULUS and REMAINDER.",
+    "Partitions can be partitioned again (sub-partitioning)."
+   ]
+  },
+  {
+   "q": "What is partition pruning and when does it happen?",
+   "answer": [
+    "The planner skips children whose bounds cannot match the WHERE clause.",
+    "Plan time pruning works with constants. Run time pruning works with parameters or generic plans.",
+    "Controlled by enable_partition_pruning. Code is in src/backend/partitioning/partprune.c."
+   ],
+   "trap": "Looking for it in optimizer/util. It is in src/backend/partitioning/."
+  },
+  {
+   "q": "How can you see pruning in EXPLAIN?",
+   "answer": [
+    "Plan time: pruned children are simply missing from the plan. In my run, ts='2026-02-10' scanned only m2.",
+    "Run time: you see 'Subplans Removed: 1' under Append (I saw this with a generic plan).",
+    "With enable_partition_pruning=off both children appear."
+   ]
+  },
+  {
+   "q": "How does a query get routed in a hand-made postgres_fdw shard setup?",
+   "answer": [
+    "Coordinator has a partitioned table, each partition is a foreign table pointing at a server.",
+    "The planner prunes by the partition key, so only the right shard is contacted.",
+    "Each surviving foreign scan sends Remote SQL with pushed-down WHERE.",
+    "If the query does not filter on the partition key, every shard is scanned."
+   ],
+   "trap": "Expecting the coordinator to know about the shards' own indexes. It only sees foreign tables."
+  },
+  {
+   "q": "What does postgres_fdw push down to the remote server?",
+   "answer": [
+    "WHERE clauses with shippable functions and operators (shippable.c).",
+    "Joins when both tables are on the same foreign server (GetForeignJoinPaths).",
+    "Aggregates and sorts via GetForeignUpperPaths.",
+    "Not everything: in my run the GROUP BY across two shards was done on the coordinator."
+   ],
+   "trap": "Assuming aggregates are always pushed. For partitioned tables you usually need enable_partitionwise_aggregate."
+  },
+  {
+   "q": "What are the limits of the hand-made approach?",
+   "answer": [
+    "No distributed transactions with atomic commit across shards by default.",
+    "No automatic rebalancing or resharding.",
+    "Cross-shard joins pull rows to the coordinator.",
+    "The coordinator is a single point of failure unless you add failover such as Patroni."
+   ]
+  },
+  {
+   "q": "How do parallel query and replicas fit in?",
+   "answer": [
+    "Parallel query uses Gather and worker processes to speed up one query on one server.",
+    "Streaming replicas serve read-only queries and help read scaling and failover.",
+    "Neither spreads writes across machines."
+   ],
+   "trap": "Calling parallel query 'scale out'. It is scale up on one machine."
+  },
+  {
+   "q": "As a contributor, where would you improve foreign-partition behaviour?",
+   "answer": [
+    "Pushdown: contrib/postgres_fdw/postgres_fdw.c and deparse.c.",
+    "Planner: joinrels.c and planner.c for partition-wise paths.",
+    "Pruning: partprune.c.",
+    "Add tests in contrib/postgres_fdw/sql/postgres_fdw.sql and update expected output."
+   ]
+  }
+ ],
+ "contributor_tips": [
+  "Start by reading src/backend/partitioning/partprune.c top comments, then step through get_matching_partitions with a debugger on a small range-partitioned table.",
+  "postgres_fdw regression tests live in contrib/postgres_fdw/sql/postgres_fdw.sql with expected output in contrib/postgres_fdw/expected/. Change both together.",
+  "Docs to read: doc/src/sgml/ddl.sgml (partitioning), doc/src/sgml/postgres-fdw.sgml, doc/src/sgml/fdwhandler.sgml (FDW API).",
+  "Use EXPLAIN (VERBOSE, COSTS OFF) to see Remote SQL when testing pushdown changes.",
+  "If a patch touches the FdwRoutine struct in fdwapi.h, remember out-of-tree FDWs depend on it; discuss on pgsql-hackers first.",
+  "Never claim sharding exists in core in a patch description or mailing-list post. Say 'foreign-table partitions' or 'postgres_fdw based sharding'."
+ ],
+ "glossary": [
+  {
+   "term": "Partitioned table",
+   "meaning": "A logical table with no rows of its own; rows live in its partitions."
+  },
+  {
+   "term": "Partition pruning",
+   "meaning": "Skipping partitions that cannot contain matching rows."
+  },
+  {
+   "term": "Partition-wise join",
+   "meaning": "Joining two partitioned tables partition by partition when their bounds match."
+  },
+  {
+   "term": "FDW",
+   "meaning": "Foreign data wrapper: code that lets Postgres read or write data in another system."
+  },
+  {
+   "term": "Foreign table",
+   "meaning": "A local name for a table that lives on a remote server."
+  },
+  {
+   "term": "Remote SQL",
+   "meaning": "The SQL text postgres_fdw sends to the remote server, shown in EXPLAIN VERBOSE."
+  },
+  {
+   "term": "Coordinator",
+   "meaning": "The server that receives queries and talks to the shards."
+  },
+  {
+   "term": "Shard",
+   "meaning": "One server that holds a slice of the rows."
+  },
+  {
+   "term": "Streaming replica",
+   "meaning": "A read-only copy of the whole cluster fed by WAL."
+  },
+  {
+   "term": "Logical replication",
+   "meaning": "Copying selected tables as row changes, usable across versions."
+  },
+  {
+   "term": "Gather",
+   "meaning": "Plan node that collects rows from parallel worker processes."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "ls ~/postgres/src/backend/partitioning",
+   "shows": "The three source files: partbounds.c, partdesc.c, partprune.c."
+  },
+  {
+   "cmd": "grep -n \"enable_partition\" ~/postgres/src/backend/utils/misc/guc_parameters.dat",
+   "shows": "The GUC definitions for pruning and partition-wise join and aggregate."
+  },
+  {
+   "cmd": "psql -c \"create table m(ts date,v int) partition by range(ts); create table m1 partition of m for values from ('2026-01-01') to ('2026-02-01'); create table m2 partition of m for values from ('2026-02-01') to ('2026-03-01'); explain (costs off) select * from m where ts='2026-02-10';\"",
+   "shows": "Plan time pruning: only m2 is scanned (run on a scratch database you own)."
+  },
+  {
+   "cmd": "psql -c \"set enable_partition_pruning=off; explain (costs off) select * from m where ts='2026-02-10';\"",
+   "shows": "Both m1 and m2 are scanned when pruning is off."
+  },
+  {
+   "cmd": "psql -c \"prepare q(date) as select * from m where ts=\\$1; set plan_cache_mode=force_generic_plan; explain (analyze, costs off) execute q('2026-02-10');\"",
+   "shows": "Run time pruning: 'Subplans Removed: 1'."
+  },
+  {
+   "cmd": "psql -c \"explain (verbose, costs off) select * from orders where region='eu' and id=5;\"",
+   "shows": "On a coordinator with foreign-table partitions: one Foreign Scan and the Remote SQL string."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "src/backend/partitioning/partprune.c",
+   "what": "Pruning logic"
+  },
+  {
+   "path": "src/backend/partitioning/partbounds.c",
+   "what": "Partition bounds"
+  },
+  {
+   "path": "src/backend/partitioning/partdesc.c",
+   "what": "Partition descriptors"
+  },
+  {
+   "path": "src/backend/catalog/partition.c",
+   "what": "Catalog partition helpers"
+  },
+  {
+   "path": "src/backend/executor/execPartition.c",
+   "what": "Tuple routing and run time pruning"
+  },
+  {
+   "path": "src/backend/optimizer/path/joinrels.c",
+   "what": "Partition-wise join"
+  },
+  {
+   "path": "src/include/partitioning/",
+   "what": "Headers: partbounds.h, partdefs.h, partdesc.h, partprune.h"
+  },
+  {
+   "path": "src/include/foreign/fdwapi.h",
+   "what": "FDW callback API"
+  },
+  {
+   "path": "contrib/postgres_fdw/",
+   "what": "connection.c, deparse.c, option.c, postgres_fdw.c, shippable.c, sql/, expected/, t/"
+  },
+  {
+   "path": "doc/src/sgml/ddl.sgml",
+   "what": "Partitioning docs"
+  },
+  {
+   "path": "doc/src/sgml/postgres-fdw.sgml",
+   "what": "postgres_fdw docs"
+  },
+  {
+   "path": "doc/src/sgml/fdwhandler.sgml",
+   "what": "Writing an FDW"
+  }
+ ],
+ "verified_by_running": [
+  "ls confirmed src/backend/partitioning/{partbounds.c,partdesc.c,partprune.c}; src/backend/optimizer/util/partprune.c does NOT exist (the task hint was wrong).",
+  "configure shows PACKAGE_VERSION='20devel'.",
+  "grep found enable_partition_pruning, enable_partitionwise_join and enable_partitionwise_aggregate in src/backend/utils/misc/guc_parameters.dat.",
+  "grep found postgresGetForeignPaths, postgresGetForeignJoinPaths, postgresGetForeignUpperPaths, postgresForeignAsyncRequest, postgresExecForeignBatchInsert in contrib/postgres_fdw/postgres_fdw.c.",
+  "Ran a scratch PG 16.6 (Homebrew) on 127.0.0.1:54307 in the given temp dir (TCP only, because the unix socket path was too long); then stopped it and deleted the dir.",
+  "Hand-made shard demo: orders partitioned by LIST(region) with foreign-table partitions orders_s1 (shard1 db) and orders_s2 (shard2 db) via postgres_fdw.",
+  "region='eu' AND id=5 gave one Foreign Scan on orders_s1 with Remote SQL: SELECT id, region, amt FROM public.orders_s1 WHERE ((region = 'eu')) AND ((id = 5)).",
+  "region='us' gave a single Foreign Scan on orders_s2 (the eu shard was pruned).",
+  "GROUP BY region with default settings gave HashAggregate over Append of two Foreign Scans (aggregate NOT pushed down); the result was eu 1000 and us 1000.",
+  "Range demo: ts='2026-02-10' scanned only m2; hash demo: id=7 scanned only h1.",
+  "Generic plan with parameter showed 'Subplans Removed: 1' (run time pruning); with enable_partition_pruning=off both m1 and m2 were scanned.",
+  "I did NOT run 17, 18 or 20devel binaries, so version differences are not verified by execution."
+ ]
+}

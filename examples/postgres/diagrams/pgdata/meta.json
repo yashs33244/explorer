@@ -1,0 +1,48 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Processes and PGDATA files",
+  "caption": "Each Postgres process touches its own files in PGDATA; every arrow is labeled with what it does.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "PGDATA lifecycle",
+  "caption": "Follow steps 1 to 6 from creating the folder to a clean shutdown.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "initdb creates the folder tree and config"
+   },
+   {
+    "n": 2,
+    "meaning": "pg_ctl start writes postmaster.pid"
+   },
+   {
+    "n": 3,
+    "meaning": "Recovery check reads pg_control, replays WAL if needed"
+   },
+   {
+    "n": 4,
+    "meaning": "CREATE TABLE makes a new data file"
+   },
+   {
+    "n": 5,
+    "meaning": "VACUUM adds fsm and vm forks"
+   },
+   {
+    "n": 6,
+    "meaning": "pg_ctl stop checkpoints and removes the lock"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Unchanged",
+  "caption": "Unchanged from the previous version.",
+  "badges": []
+ }
+]

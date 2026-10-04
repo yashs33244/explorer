@@ -1,0 +1,449 @@
+{
+ "key": "security",
+ "title": "Security: roles, auth and network exposure",
+ "one_liner": "Postgres decides who you are (roles + pg_hba.conf + auth method), what you may touch (ACLs, row level security), and where it listens (listen_addresses), in that order.",
+ "analogy": "A building. The street door (listen_addresses and pg_hba.conf) decides who may even knock. The guard (SCRAM) checks your ID. The badge (your role) opens only some rooms (ACLs), and inside a room some shelves are locked to you (row level security).",
+ "big_picture": [
+  "Users and groups are the same thing: a role. A row in pg_authid. pg_roles is a safe view of it without passwords.",
+  "Before any SQL runs, the postmaster reads pg_hba.conf top to bottom. The FIRST line that matches connection type, database, user and address wins. It names the auth method.",
+  "The method (trust, scram-sha-256, md5, cert, peer, gss, ldap, oauth) proves who you are. SCRAM never sends the password and stores only a salted verifier.",
+  "After login, every object access calls an ACL check (aclchk.c). An ACL is a list like alice=r/owner (who=privs/grantor).",
+  "Row level security (rowsecurity.c) rewrites queries to add policy filters. Table owners and superusers skip it unless FORCE is set; superusers always skip.",
+  "Network exposure is a separate dial: listen_addresses picks interfaces, pg_hba.conf picks who is allowed. Publishing a Docker port opens the container to the world, so pg_hba.conf is your last defence.",
+  "Superuser skips almost every check, including file access on the server. Treat it like root."
+ ],
+ "flow": [
+  {
+   "step": "Client connects",
+   "detail": "postmaster accepts on a socket listed in listen_addresses or a Unix socket, forks a backend, optionally negotiates TLS.",
+   "where": "src/backend/libpq/be-secure.c, be-secure-openssl.c (be_tls_open_server)"
+  },
+  {
+   "step": "Find the pg_hba line",
+   "detail": "hba_getauthmethod calls check_hba, which walks the parsed lines loaded by load_hba. First match wins. No match means rejection.",
+   "where": "src/backend/libpq/hba.c"
+  },
+  {
+   "step": "Run the auth method",
+   "detail": "ClientAuthentication switches on the method. For scram-sha-256 it runs the SASL exchange.",
+   "where": "src/backend/libpq/auth.c (ClientAuthentication)"
+  },
+  {
+   "step": "SCRAM exchange",
+   "detail": "scram_init loads the stored verifier from pg_authid, scram_exchange handles client-first, server-first, client-final, server-final. For unknown users a mock salt is used so attackers cannot tell.",
+   "where": "src/backend/libpq/auth-scram.c"
+  },
+  {
+   "step": "Session role is set",
+   "detail": "session_user is the login role. current_user can change with SET ROLE or inside SECURITY DEFINER functions.",
+   "where": "src/backend/utils/init/miscinit.c"
+  },
+  {
+   "step": "Privilege check per object",
+   "detail": "Executor and parser call pg_class_aclmask_ext or object_aclcheck. Group membership is resolved by has_privs_of_role.",
+   "where": "src/backend/catalog/aclchk.c, src/backend/utils/adt/acl.c"
+  },
+  {
+   "step": "Row level security",
+   "detail": "get_row_security_policies adds policy quals to the query tree if the table has RLS on.",
+   "where": "src/backend/rewrite/rowsecurity.c"
+  }
+ ],
+ "diagram": {
+  "claim": "A connection must pass the network gate, the pg_hba.conf match, the auth method, then ACL and RLS checks.",
+  "nodes": [
+   {
+    "id": "client",
+    "label": "Client (psql, app)",
+    "group": "outside"
+   },
+   {
+    "id": "listen",
+    "label": "listen_addresses + port",
+    "group": "network"
+   },
+   {
+    "id": "tls",
+    "label": "TLS (be-secure-openssl.c)",
+    "group": "network"
+   },
+   {
+    "id": "hba",
+    "label": "pg_hba.conf (hba.c)",
+    "group": "auth"
+   },
+   {
+    "id": "auth",
+    "label": "ClientAuthentication (auth.c)",
+    "group": "auth"
+   },
+   {
+    "id": "scram",
+    "label": "SCRAM (auth-scram.c)",
+    "group": "auth"
+   },
+   {
+    "id": "authid",
+    "label": "pg_authid verifier",
+    "group": "catalog"
+   },
+   {
+    "id": "role",
+    "label": "Session role",
+    "group": "authz"
+   },
+   {
+    "id": "acl",
+    "label": "ACL checks (aclchk.c)",
+    "group": "authz"
+   },
+   {
+    "id": "rls",
+    "label": "Row security (rowsecurity.c)",
+    "group": "authz"
+   },
+   {
+    "id": "data",
+    "label": "Table data",
+    "group": "storage"
+   }
+  ],
+  "edges": [
+   {
+    "from": "client",
+    "to": "listen",
+    "label": "connects to"
+   },
+   {
+    "from": "listen",
+    "to": "tls",
+    "label": "may upgrade via"
+   },
+   {
+    "from": "tls",
+    "to": "hba",
+    "label": "hands connection to"
+   },
+   {
+    "from": "hba",
+    "to": "auth",
+    "label": "selects method for"
+   },
+   {
+    "from": "auth",
+    "to": "scram",
+    "label": "runs"
+   },
+   {
+    "from": "scram",
+    "to": "authid",
+    "label": "reads verifier from"
+   },
+   {
+    "from": "scram",
+    "to": "role",
+    "label": "establishes"
+   },
+   {
+    "from": "role",
+    "to": "acl",
+    "label": "is checked by"
+   },
+   {
+    "from": "acl",
+    "to": "rls",
+    "label": "then filtered by"
+   },
+   {
+    "from": "rls",
+    "to": "data",
+    "label": "limits rows of"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/libpq/hba.c",
+   "what": "Parses pg_hba.conf (parse_hba_line, load_hba) and matches a connection (check_hba, hba_getauthmethod)."
+  },
+  {
+   "path": "src/backend/libpq/auth.c",
+   "what": "ClientAuthentication: picks and runs the auth method; auth_failed builds the error."
+  },
+  {
+   "path": "src/backend/libpq/auth-scram.c",
+   "what": "Server side of SCRAM-SHA-256 (scram_init, scram_exchange, scram_mock_salt)."
+  },
+  {
+   "path": "src/backend/libpq/crypt.c",
+   "what": "Password hash checks; holds the md5 code and the md5_password_warnings flag."
+  },
+  {
+   "path": "src/backend/libpq/be-secure-openssl.c",
+   "what": "OpenSSL TLS for the server (be_tls_init, be_tls_open_server)."
+  },
+  {
+   "path": "src/backend/libpq/auth-oauth.c",
+   "what": "OAuth bearer token auth, a newer method (not in 16/17)."
+  },
+  {
+   "path": "src/backend/catalog/aclchk.c",
+   "what": "GRANT/REVOKE execution (ExecuteGrantStmt) and privilege checks (object_aclcheck, pg_class_aclmask_ext)."
+  },
+  {
+   "path": "src/backend/utils/adt/acl.c",
+   "what": "ACL data type and role membership logic (has_privs_of_role)."
+  },
+  {
+   "path": "src/backend/rewrite/rowsecurity.c",
+   "what": "get_row_security_policies: injects RLS policy conditions."
+  },
+  {
+   "path": "src/backend/commands/policy.c",
+   "what": "CREATE POLICY and friends."
+  },
+  {
+   "path": "src/include/catalog/pg_authid.dat",
+   "what": "The built-in predefined roles (pg_read_all_data, pg_monitor, ...)."
+  },
+  {
+   "path": "src/common/file_perm.c",
+   "what": "Data directory permission modes (owner-only or group-readable)."
+  },
+  {
+   "path": "src/backend/utils/init/miscinit.c",
+   "what": "Startup check that rejects a data directory with invalid permissions."
+  },
+  {
+   "path": "src/backend/libpq/pg_hba.conf.sample",
+   "what": "Template for pg_hba.conf with the method list explained."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is the difference between a user and a group in Postgres?",
+   "answer": [
+    "There is none. Both are roles.",
+    "A role with LOGIN can connect. A role used for membership is what people call a group.",
+    "CREATE USER is CREATE ROLE with LOGIN."
+   ],
+   "trap": "Saying users and groups are separate tables. Both live in pg_authid."
+  },
+  {
+   "q": "Why can you read pg_roles but not pg_authid as a normal user?",
+   "answer": [
+    "pg_authid holds password hashes, so only superusers can read it.",
+    "pg_roles is a view over it that shows the password column as asterisks."
+   ]
+  },
+  {
+   "q": "How does Postgres pick a line in pg_hba.conf?",
+   "answer": [
+    "It reads top to bottom and uses the first line that matches type, database, user and address.",
+    "Later lines are never looked at, even if they would match better.",
+    "No match means the connection is rejected."
+   ],
+   "trap": "Putting a broad 'host all all 0.0.0.0/0 trust' line above a strict one."
+  },
+  {
+   "q": "Which auth method should you use for passwords, and why not md5?",
+   "answer": [
+    "scram-sha-256. It is the default password_encryption (I saw 'scram-sha-256' in a running server).",
+    "md5 hashes are replayable by anyone who steals the stored hash, and md5 is deprecated.",
+    "In 20devel crypt.c has an md5_password_warnings setting that warns when md5 passwords are used. 16 has no such warning: I created an md5 role there with no message."
+   ]
+  },
+  {
+   "q": "What happens when you GRANT a privilege? What does alice=r/me mean?",
+   "answer": [
+    "GRANT edits the object's ACL column (relacl for tables), through ExecuteGrantStmt in aclchk.c.",
+    "Format is grantee=privileges/grantor. r is SELECT. A blank grantee means PUBLIC.",
+    "I saw {me=arwdDxt/me,alice=r/me} after granting select."
+   ]
+  },
+  {
+   "q": "Do predefined roles like pg_read_all_data bypass row level security?",
+   "answer": [
+    "No. They bypass table privilege checks only.",
+    "I granted pg_read_all_data to a role and it could read the table, but it still saw only the rows its policy allowed.",
+    "Only superusers and BYPASSRLS roles skip RLS; owners skip it unless FORCE ROW LEVEL SECURITY."
+   ],
+   "trap": "Assuming 'read all data' means every row regardless of policy."
+  },
+  {
+   "q": "Why is SECURITY DEFINER dangerous without SET search_path?",
+   "answer": [
+    "The function runs with the owner's rights, but name lookup uses the caller's search_path.",
+    "A caller can put their own schema first and shadow a function or operator, so the owner's rights run the caller's code.",
+    "Fix: SET search_path on the function (I used pg_catalog), and schema-qualify names.",
+    "Check: inside my definer function, current_user was the owner while session_user was alice."
+   ],
+   "trap": "Thinking current_user and session_user are the same inside a SECURITY DEFINER function."
+  },
+  {
+   "q": "If I run `docker run -p 5432:5432 postgres`, who can reach it?",
+   "answer": [
+    "Anyone who can reach the host's IP, because -p 5432:5432 binds all host interfaces. Use -p 127.0.0.1:5432:5432 to keep it local.",
+    "Inside the container the image listens on all addresses so the port mapping works, so listen_addresses is not your protection.",
+    "The official image requires POSTGRES_PASSWORD and sets password auth for TCP in pg_hba.conf, but this is from memory: I could not run Docker here, so check the image's docker-entrypoint.sh yourself.",
+    "Your real defences are a strong password, a narrow pg_hba.conf, a bind to 127.0.0.1, and a firewall."
+   ],
+   "trap": "Believing the container is private. Docker publishing can also bypass host firewall rules on Linux."
+  },
+  {
+   "q": "How does the server protect PGDATA, and what does superuser really allow?",
+   "answer": [
+    "At start it checks the data directory mode and refuses to start if group or world have access (miscinit.c, 'has invalid permissions'). Group read is allowed only if initdb used group access (file_perm.c).",
+    "Superuser skips ACL checks and RLS, can load C code, and COPY ... PROGRAM runs shell commands as the OS postgres user.",
+    "pg_read_server_files, pg_write_server_files and pg_execute_server_program give those file and program powers to non-superusers, so grant them as carefully as superuser."
+   ]
+  }
+ ],
+ "contributor_tips": [
+  "Start in hba.c. It is self contained and has TAP tests under src/test/authentication.",
+  "Auth changes need docs in doc/src/sgml/client-auth.sgml and the sample pg_hba.conf.sample kept in sync.",
+  "Predefined roles are defined in src/include/catalog/pg_authid.dat. Adding one needs a catversion bump and docs in user-manag.sgml.",
+  "Never log passwords or hashes. Use auth_failed's logdetail for hints that only the server log sees.",
+  "Security bugs go privately to security@postgresql.org, not the public lists.",
+  "Test with pg_hba_file_rules to see how your file was parsed without restarting."
+ ],
+ "glossary": [
+  {
+   "term": "Role",
+   "meaning": "A named identity. Can be a user, a group, or both."
+  },
+  {
+   "term": "ACL",
+   "meaning": "Access control list stored on an object, such as relacl on a table."
+  },
+  {
+   "term": "pg_hba.conf",
+   "meaning": "Host based authentication file. Rules for who may connect and how."
+  },
+  {
+   "term": "SCRAM",
+   "meaning": "A password protocol that proves you know the password without sending it."
+  },
+  {
+   "term": "Verifier",
+   "meaning": "The salted, iterated hash stored in pg_authid.rolpassword, starting SCRAM-SHA-256$4096:."
+  },
+  {
+   "term": "RLS",
+   "meaning": "Row level security. Policies that filter which rows a role sees or writes."
+  },
+  {
+   "term": "SECURITY DEFINER",
+   "meaning": "A function that runs with its owner's privileges instead of the caller's."
+  },
+  {
+   "term": "search_path",
+   "meaning": "The ordered list of schemas used to find unqualified names."
+  },
+  {
+   "term": "Predefined role",
+   "meaning": "A built-in role like pg_monitor that bundles a set of powers."
+  },
+  {
+   "term": "listen_addresses",
+   "meaning": "Setting that picks which network interfaces the server accepts TCP on. Default is localhost."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "psql -c \"select rolname, rolsuper, rolcanlogin from pg_roles order by 1\"",
+   "shows": "Every role, including the pg_ predefined ones."
+  },
+  {
+   "cmd": "psql -c \"select line_number,type,database,user_name,address,auth_method from pg_hba_file_rules\"",
+   "shows": "How the server parsed pg_hba.conf, in order. Needs superuser."
+  },
+  {
+   "cmd": "psql -c \"show password_encryption\" -c \"show listen_addresses\"",
+   "shows": "Default hashing method and which interfaces the server listens on."
+  },
+  {
+   "cmd": "psql -c \"create table t(id int); grant select on t to public; select relacl from pg_class where relname='t'\"",
+   "shows": "The ACL text, with the empty grantee for PUBLIC."
+  },
+  {
+   "cmd": "psql -c \"select roleid::regrole, member::regrole, inherit_option, set_option from pg_auth_members\"",
+   "shows": "Role membership, with the inherit and set options."
+  },
+  {
+   "cmd": "grep -n \"rolname\" src/include/catalog/pg_authid.dat",
+   "shows": "Run in the postgres source tree: the list of predefined roles."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "src/backend/libpq/hba.c",
+   "what": "pg_hba.conf parsing and matching"
+  },
+  {
+   "path": "src/backend/libpq/auth.c",
+   "what": "authentication dispatcher"
+  },
+  {
+   "path": "src/backend/libpq/auth-scram.c",
+   "what": "SCRAM server"
+  },
+  {
+   "path": "src/backend/libpq/auth-oauth.c",
+   "what": "OAuth server (newer)"
+  },
+  {
+   "path": "src/backend/libpq/be-secure-openssl.c",
+   "what": "OpenSSL TLS"
+  },
+  {
+   "path": "src/backend/libpq/pg_hba.conf.sample",
+   "what": "template copied by initdb"
+  },
+  {
+   "path": "src/backend/libpq/pg_hosts.conf.sample",
+   "what": "new sample file in 20devel; not in 16"
+  },
+  {
+   "path": "src/backend/catalog/aclchk.c",
+   "what": "GRANT/REVOKE and ACL checks"
+  },
+  {
+   "path": "src/backend/utils/adt/acl.c",
+   "what": "ACL type and role membership"
+  },
+  {
+   "path": "src/backend/rewrite/rowsecurity.c",
+   "what": "RLS query rewriting"
+  },
+  {
+   "path": "src/include/catalog/pg_authid.dat",
+   "what": "predefined roles"
+  },
+  {
+   "path": "src/common/file_perm.c",
+   "what": "PGDATA file mode settings"
+  },
+  {
+   "path": "PGDATA/pg_hba.conf",
+   "what": "live auth rules (seen in a scratch cluster)"
+  },
+  {
+   "path": "PGDATA/pg_ident.conf",
+   "what": "user name maps (seen in a scratch cluster)"
+  }
+ ],
+ "verified_by_running": [
+  "Ran initdb from Homebrew postgresql@16 (16.6) with -A scram-sha-256: pg_hba.conf had local, 127.0.0.1/32 and ::1/128 lines all scram-sha-256.",
+  "The PGDATA directory was drwx------ after initdb.",
+  "Server on port 54309 with listen_addresses=127.0.0.1; a long Unix socket path failed ('too long'), so I used unix_socket_directories='' and TCP only.",
+  "show password_encryption returned scram-sha-256; show ssl returned off; new role password began SCRAM-SHA-256$4096:.",
+  "Select from pg_roles for pg_ names listed 14 predefined roles on 16 (no pg_maintain or pg_signal_autovacuum_worker, which 20devel's pg_authid.dat has).",
+  "GRANT select produced relacl {me=arwdDxt/me,alice=r/me}; ALTER DEFAULT PRIVILEGES row in pg_default_acl showed bob=r.",
+  "Wrong password gave: FATAL: password authentication failed for user \"alice\".",
+  "With RLS on and a policy owner = current_user, a role in pg_read_all_data still saw only its own row; the SECURITY DEFINER function with SET search_path returned 'me / alice' (current_user / session_user).",
+  "With password_encryption='md5' on 16, creating a role worked with no warning and the hash started with md5.",
+  "I did NOT verify the PGDATA permission refusal at startup (my test hit 'postmaster.pid already exists' since the server was running), and I did NOT run Docker. Those answers come from reading source and memory.",
+  "Stopped the server with pg_ctl and deleted the temp dir; port 54309 had no listener."
+ ]
+}

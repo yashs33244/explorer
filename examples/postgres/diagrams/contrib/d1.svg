@@ -1,0 +1,66 @@
+<svg class="hd" viewBox="0 0 800 422" role="img" aria-label="Where a change travels: your laptop (build, tests, formatting, docs), then a patch file, the pgsql-hackers mailing list, the Commitfest and a committer" xmlns="http://www.w3.org/2000/svg"><defs><marker id="contrib-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="14" y="14" width="500" height="398" rx="40"/>
+<rect class="d-blob2" x="556" y="14" width="230" height="398" rx="40"/>
+<text class="d-s" x="30" y="402" text-anchor="start">On your laptop</text>
+<text class="d-s" x="572" y="402" text-anchor="start">Public review</text>
+<rect class="d-box g0" x="34" y="62" width="116" height="84" rx="14"/>
+<g transform="translate(79.0,70) scale(0.65)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="92.0" y="114" text-anchor="middle">Your code</text>
+<text class="d-s" x="92.0" y="132" text-anchor="middle">C files in src</text>
+<rect class="d-box g1" x="204" y="62" width="116" height="84" rx="14"/>
+<g transform="translate(249.0,70) scale(0.65)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="262.0" y="114" text-anchor="middle">Build</text>
+<text class="d-s" x="262.0" y="132" text-anchor="middle">meson/configure</text>
+<rect class="d-box g2" x="374" y="62" width="116" height="84" rx="14"/>
+<g transform="translate(419.0,70) scale(0.65)"><rect class="d-fillpaper" x="3" y="5" width="34" height="23" rx="3"/><path class="d-line" d="M14,35 H26 M20,28 V35"/><path class="d-lineacc" d="M9,14 H21 M9,20 H28"/></g>
+<text class="d-t" x="432.0" y="114" text-anchor="middle">Run tests</text>
+<text class="d-s" x="432.0" y="132" text-anchor="middle">regress, TAP</text>
+<rect class="d-box g3" x="374" y="182" width="116" height="84" rx="14"/>
+<g transform="translate(419.0,190) scale(0.65)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="432.0" y="234" text-anchor="middle">Expected</text>
+<text class="d-s" x="432.0" y="252" text-anchor="middle">.out files</text>
+<rect class="d-box g4" x="204" y="182" width="116" height="84" rx="14"/>
+<g transform="translate(249.0,190) scale(0.65)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="262.0" y="234" text-anchor="middle">pgindent</text>
+<text class="d-s" x="262.0" y="252" text-anchor="middle">one C style</text>
+<rect class="d-box g5" x="34" y="182" width="116" height="84" rx="14"/>
+<g transform="translate(79.0,190) scale(0.65)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="92.0" y="234" text-anchor="middle">Docs</text>
+<text class="d-s" x="92.0" y="252" text-anchor="middle">doc/src/sgml</text>
+<path class="d-edge acc" d="M150,104 H202" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="177" y="96" text-anchor="middle">compiles</text>
+<path class="d-edge acc" d="M320,104 H372" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="346" y="96" text-anchor="middle">installs</text>
+<path class="d-edge acc" d="M432,146 V180" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="440" y="168" text-anchor="start">compares</text>
+<path class="d-edge acc" d="M372,224 H322" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="347" y="216" text-anchor="middle">passes</text>
+<path class="d-edge acc" d="M202,224 H152" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="177" y="216" text-anchor="middle">formats</text>
+<path class="d-edge dash" d="M432,62 V40 H92 V60" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="262" y="44" text-anchor="middle">fix on fail</text>
+<path class="d-edge acc" d="M92,266 V363 H574" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="330" y="355" text-anchor="middle">bundles</text>
+<rect class="d-box g0" x="576" y="332" width="190" height="62" rx="14"/>
+<g transform="translate(586,343) scale(0.9)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="632" y="360" text-anchor="start">Patch file</text>
+<text class="d-s" x="632" y="378" text-anchor="start">git format-patch</text>
+<rect class="d-box g1" x="576" y="242" width="190" height="62" rx="14"/>
+<g transform="translate(586,253) scale(0.9)"><rect class="d-fillpaper" x="6" y="4" width="28" height="32" rx="3"/><path class="d-line" d="M12,4 V36"/><path class="d-lineacc" d="M17,12 H29 M17,19 H29 M17,26 H25"/></g>
+<text class="d-t" x="632" y="270" text-anchor="start">pgsql-hackers</text>
+<text class="d-s" x="632" y="288" text-anchor="start">mailing list</text>
+<rect class="d-box g2" x="576" y="152" width="190" height="62" rx="14"/>
+<g transform="translate(586,163) scale(0.9)"><circle class="d-fillpaper" cx="20" cy="20" r="15"/><path class="d-lineacc" d="M20,10 V20 L27,24"/></g>
+<text class="d-t" x="632" y="180" text-anchor="start">Commitfest</text>
+<text class="d-s" x="632" y="198" text-anchor="start">tracks the patch</text>
+<rect class="d-box g3" x="576" y="62" width="190" height="62" rx="14"/>
+<g transform="translate(586,73) scale(0.9)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="632" y="90" text-anchor="start">Committer</text>
+<text class="d-s" x="632" y="108" text-anchor="start">pushes to master</text>
+<path class="d-edge acc" d="M671,332 V306" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="681" y="323" text-anchor="start">emails</text>
+<path class="d-edge acc" d="M671,242 V216" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="681" y="233" text-anchor="start">registers</text>
+<path class="d-edge acc" d="M671,152 V126" marker-end="url(#contrib-d1-ah)"/>
+<text class="d-lab" x="681" y="143" text-anchor="start">assigns</text>
+</svg>

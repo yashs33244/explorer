@@ -1,0 +1,110 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "MVCC building blocks",
+  "caption": "Writers add row versions to heap pages, readers use a snapshot to pick one version, and background VACUUM removes old versions.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "xact.c asks varsup.c for a transaction id (xid) when the first write happens"
+   },
+   {
+    "n": 2,
+    "meaning": "heapam.c writes the new tuple version into a heap page"
+   },
+   {
+    "n": 3,
+    "meaning": "commit emits a WAL record to pg_wal"
+   },
+   {
+    "n": 4,
+    "meaning": "procarray.c scans running backends and fills the snapshot (xmin, xmax, xip)"
+   },
+   {
+    "n": 5,
+    "meaning": "HeapTupleSatisfiesMVCC looks up commit status in pg_xact and filters heap tuples"
+   },
+   {
+    "n": 6,
+    "meaning": "autovacuum launches a VACUUM worker (vacuumlazy.c)"
+   },
+   {
+    "n": 7,
+    "meaning": "pruneheap.c removes dead tuples from the heap page"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One UPDATE, two readers, VACUUM",
+  "caption": "Follow the numbers: session A updates a row, session B first sees the old version, then the new one after commit, and VACUUM finally frees the old copy.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Session A runs UPDATE and gets xid 100 from GetNewTransactionId"
+   },
+   {
+    "n": 2,
+    "meaning": "heap_update sets xmax=100 on the old tuple and writes a new tuple with xmin=100"
+   },
+   {
+    "n": 3,
+    "meaning": "Session B starts a SELECT and takes a snapshot where xid 100 is still in progress"
+   },
+   {
+    "n": 4,
+    "meaning": "HeapTupleSatisfiesMVCC shows B the old tuple and hides the new one"
+   },
+   {
+    "n": 5,
+    "meaning": "Session A runs COMMIT (CommitTransaction)"
+   },
+   {
+    "n": 6,
+    "meaning": "Commit is written to WAL first, then pg_xact marks xid 100 committed"
+   },
+   {
+    "n": 7,
+    "meaning": "Session B runs a new statement with a fresh snapshot and sees the new tuple"
+   },
+   {
+    "n": 8,
+    "meaning": "VACUUM (lazy_scan_heap) finds the old tuple that no snapshot needs"
+   },
+   {
+    "n": 9,
+    "meaning": "The old tuple becomes LP_DEAD then LP_UNUSED so its space can be reused"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Heap page and tuple header",
+  "caption": "Every row version sits in an 8 kB page and carries a small header with xmin, xmax and ctid that the visibility check reads.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Zoom into one old tuple on the page to see its header"
+   },
+   {
+    "n": 2,
+    "meaning": "t_xmin: the xid that inserted this version"
+   },
+   {
+    "n": 3,
+    "meaning": "t_xmax: the xid that deleted or locked this version"
+   },
+   {
+    "n": 4,
+    "meaning": "t_ctid: points to the newer version of the row"
+   },
+   {
+    "n": 5,
+    "meaning": "t_infomask: hint bits that cache commit status"
+   }
+  ]
+ }
+]

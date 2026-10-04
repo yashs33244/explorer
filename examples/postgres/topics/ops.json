@@ -1,0 +1,535 @@
+{
+ "key": "ops",
+ "title": "Configuration, backups, upgrades and observability",
+ "one_liner": "How a running PostgreSQL is tuned (GUCs), watched (logs and pg_stat views), saved (dump, basebackup, WAL archive) and moved to a new major version (pg_upgrade).",
+ "analogy": "Think of a ship. GUCs are the dials on the bridge, some you can turn while sailing and some only in port. Logs and pg_stat views are the gauges and the captain's diary. Backups are lifeboats of different sizes. pg_upgrade is moving the crew to a new ship without unloading the cargo.",
+ "big_picture": [
+  "Every setting is a GUC (Grand Unified Configuration) row in a big table. Each has a context that says when it may change: internal, postmaster, sighup, superuser-backend, backend, superuser, user.",
+  "Values come from layers: built-in default, postgresql.conf, postgresql.auto.conf (written by ALTER SYSTEM), command line, per-database or per-role, then SET in a session. The source column in pg_settings tells you which layer won.",
+  "Reload (pg_ctl reload or pg_reload_conf) re-reads the files and applies sighup and user settings. postmaster settings need a restart, and pg_settings.pending_restart turns true until then.",
+  "Observability has two halves. Text logs (log_min_duration_statement, log_line_prefix, logging_collector) and counters (the cumulative statistics system behind pg_stat_* views). Backends keep counters locally and flush them to shared memory at most once per second.",
+  "EXPLAIN shows one plan. auto_explain logs plans of slow queries. pg_stat_statements aggregates cost per normalized query.",
+  "Three backup ideas. pg_dump is logical (SQL or custom archive of one database). pg_basebackup is physical (a copy of the whole cluster files). Physical backup plus archived WAL gives point-in-time recovery (PITR).",
+  "pg_upgrade moves a cluster to a new major version by dumping only the schema and reusing the data files (copy, link, clone, copy-file-range, or swap). Minor versions (16.5 to 16.6) just swap binaries and restart.",
+  "In 20devel the GUC table is no longer written by hand in guc_tables.c. It is generated from src/backend/utils/misc/guc_parameters.dat by gen_guc_tables.pl. pg_upgrade also gained --swap, --copy-file-range, --no-statistics and --set-char-signedness, which the released 16 binary does not have."
+ ],
+ "flow": [
+  {
+   "step": "Startup reads config",
+   "detail": "The postmaster reads postgresql.conf, then postgresql.auto.conf, through ProcessConfigFile. Each value goes through set_config_option, which checks context and source priority.",
+   "where": "src/backend/utils/misc/guc-file.l, guc.c"
+  },
+  {
+   "step": "ALTER SYSTEM writes a file",
+   "detail": "AlterSystemSetConfigFile rewrites postgresql.auto.conf. It does not change the running value. Needs a reload or restart.",
+   "where": "src/backend/utils/misc/guc.c:4525"
+  },
+  {
+   "step": "Reload",
+   "detail": "SELECT pg_reload_conf() or pg_ctl reload sends SIGHUP to the postmaster, which re-reads files and forwards the signal. Changed postmaster-context values are not applied and pending_restart becomes true.",
+   "where": "src/backend/storage/ipc/signalfuncs.c:286"
+  },
+  {
+   "step": "Session SET and RESET",
+   "detail": "SET goes through ExecSetVariableStmt. Internal settings error with 'cannot be changed'. Postmaster ones error with 'cannot be changed without restarting the server'. RESET goes back to the default of the best lower layer.",
+   "where": "src/backend/utils/misc/guc_funcs.c:45"
+  },
+  {
+   "step": "Backends count things",
+   "detail": "Each backend bumps local pending counters. pgstat_report_stat flushes them to shared memory no more often than PGSTAT_MIN_INTERVAL (1000 ms). Reads default to stats_fetch_consistency=cache.",
+   "where": "src/backend/utils/activity/pgstat.c:739"
+  },
+  {
+   "step": "Stats survive a clean shutdown",
+   "detail": "At shutdown the stats are written to pg_stat/pgstat.stat and restored at startup. After a crash they are reset.",
+   "where": "pgstat_write_statsfile, pgstat_restore_stats in pgstat.c"
+  },
+  {
+   "step": "Autovacuum acts",
+   "detail": "The launcher starts workers. do_autovacuum looks at n_dead_tup and thresholds from pgstat data to decide what to vacuum or analyze. Progress shows in pg_stat_progress_vacuum.",
+   "where": "src/backend/postmaster/autovacuum.c:406, 1987"
+  },
+  {
+   "step": "Backups",
+   "detail": "pg_dump reads through a snapshot and emits schema and data. pg_basebackup streams files over a replication connection, writes backup_label and backup_manifest. archive_command copies each finished WAL segment for PITR.",
+   "where": "src/bin/pg_dump/pg_dump.c, src/bin/pg_basebackup/pg_basebackup.c"
+  },
+  {
+   "step": "pg_upgrade",
+   "detail": "Checks both clusters, dumps the old schema, restores it into the new empty cluster, then transfers relation files by the chosen mode. --check does only the checks.",
+   "where": "src/bin/pg_upgrade/pg_upgrade.c, check.c, relfilenumber.c, option.c"
+  }
+ ],
+ "diagram": {
+  "claim": "Config files and SQL feed the GUC table. The postmaster and backends produce logs and counters. Backup and upgrade tools read the data directory.",
+  "nodes": [
+   {
+    "id": "conf",
+    "label": "postgresql.conf",
+    "group": "config"
+   },
+   {
+    "id": "auto",
+    "label": "postgresql.auto.conf",
+    "group": "config"
+   },
+   {
+    "id": "guc",
+    "label": "GUC table (guc.c)",
+    "group": "server"
+   },
+   {
+    "id": "pm",
+    "label": "postmaster",
+    "group": "server"
+   },
+   {
+    "id": "be",
+    "label": "backend",
+    "group": "server"
+   },
+   {
+    "id": "stats",
+    "label": "pgstat shared memory",
+    "group": "observe"
+   },
+   {
+    "id": "logs",
+    "label": "server log",
+    "group": "observe"
+   },
+   {
+    "id": "av",
+    "label": "autovacuum",
+    "group": "server"
+   },
+   {
+    "id": "wal",
+    "label": "WAL archive",
+    "group": "backup"
+   },
+   {
+    "id": "dump",
+    "label": "pg_dump",
+    "group": "backup"
+   },
+   {
+    "id": "bb",
+    "label": "pg_basebackup",
+    "group": "backup"
+   },
+   {
+    "id": "pgu",
+    "label": "pg_upgrade",
+    "group": "backup"
+   }
+  ],
+  "edges": [
+   {
+    "from": "conf",
+    "to": "guc",
+    "label": "loads into"
+   },
+   {
+    "from": "auto",
+    "to": "guc",
+    "label": "overrides"
+   },
+   {
+    "from": "be",
+    "to": "auto",
+    "label": "ALTER SYSTEM writes"
+   },
+   {
+    "from": "pm",
+    "to": "guc",
+    "label": "reloads on SIGHUP"
+   },
+   {
+    "from": "be",
+    "to": "stats",
+    "label": "flushes counters to"
+   },
+   {
+    "from": "be",
+    "to": "logs",
+    "label": "writes slow statements to"
+   },
+   {
+    "from": "av",
+    "to": "stats",
+    "label": "reads dead tuples from"
+   },
+   {
+    "from": "pm",
+    "to": "wal",
+    "label": "archives segments to"
+   },
+   {
+    "from": "dump",
+    "to": "be",
+    "label": "reads data via"
+   },
+   {
+    "from": "bb",
+    "to": "pm",
+    "label": "streams files from"
+   },
+   {
+    "from": "pgu",
+    "to": "pm",
+    "label": "starts old and new"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/utils/misc/guc.c",
+   "what": "Core GUC engine: set_config_option, ProcessConfigFileInternal, AlterSystemSetConfigFile."
+  },
+  {
+   "path": "src/backend/utils/misc/guc_parameters.dat",
+   "what": "20devel: the source list of every GUC, with its context and group. Header comments explain how to add one."
+  },
+  {
+   "path": "src/backend/utils/misc/gen_guc_tables.pl",
+   "what": "Perl script that turns the .dat file into the C tables."
+  },
+  {
+   "path": "src/backend/utils/misc/guc_tables.c",
+   "what": "Enum tables and group names for the GUC system."
+  },
+  {
+   "path": "src/backend/utils/misc/guc_funcs.c",
+   "what": "SET, SHOW, RESET statement handling and the pg_settings view function (has pending_restart column)."
+  },
+  {
+   "path": "src/backend/utils/misc/guc-file.l",
+   "what": "Lexer for postgresql.conf and ProcessConfigFile."
+  },
+  {
+   "path": "src/backend/utils/misc/postgresql.conf.sample",
+   "what": "Template copied into new clusters by initdb."
+  },
+  {
+   "path": "src/include/utils/guc.h",
+   "what": "GucContext enum (PGC_INTERNAL to PGC_USERSET) and GucSource."
+  },
+  {
+   "path": "src/backend/utils/activity/pgstat.c",
+   "what": "Cumulative stats core: flush rules, shutdown write and startup restore."
+  },
+  {
+   "path": "src/backend/utils/activity/pgstat_relation.c",
+   "what": "Per-table counters behind pg_stat_user_tables."
+  },
+  {
+   "path": "src/backend/utils/activity/wait_event_names.txt",
+   "what": "List of wait events shown in pg_stat_activity."
+  },
+  {
+   "path": "src/backend/postmaster/autovacuum.c",
+   "what": "Autovacuum launcher and workers."
+  },
+  {
+   "path": "src/backend/postmaster/syslogger.c",
+   "what": "The logging collector process."
+  },
+  {
+   "path": "src/backend/commands/explain.c",
+   "what": "EXPLAIN: ExplainQuery and ExplainOnePlan."
+  },
+  {
+   "path": "contrib/auto_explain/auto_explain.c",
+   "what": "Module that logs plans of slow queries."
+  },
+  {
+   "path": "contrib/pg_stat_statements/pg_stat_statements.c",
+   "what": "Per-query aggregate stats extension."
+  },
+  {
+   "path": "src/bin/pg_upgrade/",
+   "what": "pg_upgrade. Start with IMPLEMENTATION, then option.c, check.c, relfilenumber.c."
+  },
+  {
+   "path": "src/bin/pg_basebackup/pg_basebackup.c",
+   "what": "Physical base backup client."
+  },
+  {
+   "path": "src/bin/pg_dump/pg_dump.c",
+   "what": "Logical dump tool."
+  },
+  {
+   "path": "src/bin/pg_ctl/pg_ctl.c",
+   "what": "start, stop, restart, reload, status, promote. Default shutdown mode is FAST_MODE."
+  },
+  {
+   "path": "src/bin/pg_resetwal/pg_resetwal.c",
+   "what": "Last-resort WAL reset tool."
+  },
+  {
+   "path": "src/bin/pg_controldata/ and src/backend/utils/misc/pg_controldata.c",
+   "what": "Print pg_control contents (tool and SQL functions)."
+  },
+  {
+   "path": "src/bin/scripts/pg_isready.c",
+   "what": "Connection check tool (exit 0 means accepting connections)."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is a GUC and how do you read one?",
+   "answer": [
+    "A GUC is a configuration parameter.",
+    "SHOW name for one value, SELECT * FROM pg_settings for all with context, source and file."
+   ],
+   "trap": "Saying SHOW and pg_settings can differ. They show the same current value. pg_settings only adds metadata."
+  },
+  {
+   "q": "Difference between reload and restart?",
+   "answer": [
+    "Reload re-reads config files, no downtime. It applies sighup and user context settings.",
+    "Restart is needed for postmaster context, such as shared_buffers, max_connections, logging_collector."
+   ],
+   "trap": "Thinking pg_reload_conf applies everything. I ran it after ALTER SYSTEM SET max_connections=50 and pg_settings showed setting 100 with pending_restart = t."
+  },
+  {
+   "q": "What does ALTER SYSTEM actually do?",
+   "answer": [
+    "It writes a line into postgresql.auto.conf in the data directory.",
+    "It does not change the live value until reload or restart.",
+    "That file wins over postgresql.conf."
+   ],
+   "trap": "Hand-editing postgresql.auto.conf. The header says do not edit it."
+  },
+  {
+   "q": "List the GUC contexts from strongest limit to weakest.",
+   "answer": [
+    "internal (fixed, e.g. block_size), postmaster, sighup, superuser-backend, backend, superuser, user.",
+    "In my 16 run there were 142 user, 94 sighup, 57 postmaster, 44 superuser, 18 internal, 4 superuser-backend, 2 backend."
+   ],
+   "trap": "Believing internal can be changed with a restart. It is compile or initdb time."
+  },
+  {
+   "q": "What does RESET do after ALTER SYSTEM SET work_mem?",
+   "answer": [
+    "RESET returns the session to the value from the config layers, not the factory default.",
+    "I saw SET 1MB then RESET give back 8MB."
+   ],
+   "trap": "Expecting 4MB, the built-in default."
+  },
+  {
+   "q": "How do you find slow queries?",
+   "answer": [
+    "Set log_min_duration_statement (0 logs everything, -1 disables).",
+    "Use log_line_prefix to add time, pid and user.",
+    "logging_collector=on (postmaster context) writes files under log/ in the data directory.",
+    "pg_stat_statements aggregates by query. auto_explain logs the plan."
+   ],
+   "trap": "Setting it to 0 in production. It logs every statement."
+  },
+  {
+   "q": "Why are pg_stat_* numbers a little stale or odd?",
+   "answer": [
+    "Backends flush counters at most once per second.",
+    "Within a transaction stats_fetch_consistency=cache keeps a stable snapshot.",
+    "pg_stat_force_next_flush() flushes now, useful in tests.",
+    "Stats are saved at clean shutdown in pg_stat/pgstat.stat and lost after a crash."
+   ],
+   "trap": "Reading n_live_tup as exact. It is an estimate (I saw 200000 for a 100000 row table after an UPDATE and ANALYZE)."
+  },
+  {
+   "q": "pg_dump vs pg_basebackup vs WAL archiving?",
+   "answer": [
+    "pg_dump: logical, one database, can restore to a newer major version, slower on big data. Restore with psql or pg_restore.",
+    "pg_basebackup: physical copy of the entire cluster, same major version and architecture. Has backup_label and backup_manifest.",
+    "WAL archiving adds continuous log files, so with a base backup you can recover to any point (PITR) using restore_command and recovery_target_time."
+   ],
+   "trap": "Thinking a file-copy of a running data directory is a backup. Without pg_basebackup or backup mode it is inconsistent."
+  },
+  {
+   "q": "How does pg_upgrade work and what are its modes?",
+   "answer": [
+    "It restores the old schema into a new cluster and reuses the data files.",
+    "Default --copy copies files. --link (-k) makes hard links so it is fastest but the old cluster cannot be started after the new one runs. --clone uses filesystem reflinks. --copy-file-range and --swap exist in 20devel (option.c).",
+    "Run pg_upgrade --check first.",
+    "Minor upgrades (16.5 to 16.6) need no pg_upgrade: stop, install binaries, start."
+   ],
+   "trap": "Using --link without a backup. Also new cluster must be freshly initdb-ed, and extension libraries must exist for the new version."
+  },
+  {
+   "q": "When do you use pg_resetwal, and when never?",
+   "answer": [
+    "It clears WAL and rewrites pg_control. It is only for a cluster that will not start and has no good backup.",
+    "Use -n for a dry run, which prints values and changes nothing. I ran it on a stopped cluster.",
+    "After it, dump the data and rebuild the cluster in a fresh initdb."
+   ],
+   "trap": "Using it to fix slowness or a full pg_wal directory. It can leave data inconsistent and silently corrupt. Never run it on a running server or as routine cleanup."
+  }
+ ],
+ "contributor_tips": [
+  "To add a GUC in 20devel, edit guc_parameters.dat (not a C table), add the variable, a line in postgresql.conf.sample, and docs in doc/src/sgml/config.sgml. Read the header comment of guc_parameters.dat first.",
+  "Check that the sample config and pg_settings agree. There is a TAP test that compares them.",
+  "A new stats kind is a pgstat_<name>.c file in src/backend/utils/activity. Kind ids live in src/include/utils/pgstat_kind.h and built-in kinds are registered in pgstat.c.",
+  "New wait events go in wait_event_names.txt, which a Perl script turns into code and docs.",
+  "pg_upgrade has a cross-version test, see src/bin/pg_upgrade/TESTING and the t/ directory.",
+  "Test changes to a tool against a throwaway cluster. On macOS keep the socket path under 103 bytes or the server will not start."
+ ],
+ "glossary": [
+  {
+   "term": "GUC",
+   "meaning": "Grand Unified Configuration: a named server setting."
+  },
+  {
+   "term": "context",
+   "meaning": "The rule for when a setting can be changed."
+  },
+  {
+   "term": "pending_restart",
+   "meaning": "pg_settings column that is true when the config file has a new value that needs a restart."
+  },
+  {
+   "term": "SIGHUP",
+   "meaning": "The signal that tells the postmaster to re-read config files."
+  },
+  {
+   "term": "cumulative statistics",
+   "meaning": "Counters (scans, tuples, WAL) kept in shared memory and shown in pg_stat_* views."
+  },
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log: the journal of changes written before data files."
+  },
+  {
+   "term": "PITR",
+   "meaning": "Point-in-time recovery: base backup plus replayed WAL up to a chosen moment."
+  },
+  {
+   "term": "backup_label",
+   "meaning": "File in a base backup that says where WAL replay must start."
+  },
+  {
+   "term": "pg_control",
+   "meaning": "Small file global/pg_control with cluster state. Printed by pg_controldata."
+  },
+  {
+   "term": "hard link",
+   "meaning": "Two names for the same file. This is why pg_upgrade --link is fast and one-way."
+  },
+  {
+   "term": "autovacuum",
+   "meaning": "Background workers that clean dead rows and refresh planner stats."
+  },
+  {
+   "term": "normalized query",
+   "meaning": "A query with constants replaced by placeholders so pg_stat_statements can group similar ones."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "psql -c \"select name,setting,context,pending_restart from pg_settings where name in ('work_mem','shared_buffers','block_size')\"",
+   "shows": "Contexts user, postmaster, internal and the pending_restart column (verified on a scratch 16.6 server)."
+  },
+  {
+   "cmd": "psql -c \"alter system set work_mem='8MB'\" -c \"select pg_reload_conf()\" -c \"show work_mem\"",
+   "shows": "ALTER SYSTEM plus reload takes effect with no restart (verified; use only on a scratch server)."
+  },
+  {
+   "cmd": "psql -c \"explain (analyze,buffers) select * from t where id=5\"",
+   "shows": "A real plan with buffer hits and planning time."
+  },
+  {
+   "cmd": "psql -c \"select relname,seq_scan,idx_scan,n_dead_tup,last_autovacuum from pg_stat_user_tables\"",
+   "shows": "Cumulative table stats and autovacuum activity."
+  },
+  {
+   "cmd": "pg_basebackup -D base2 -X stream && cat base2/backup_label && pg_verifybackup base2",
+   "shows": "A physical backup, its backup_label and a successful manifest check."
+  },
+  {
+   "cmd": "pg_controldata -D data | head; pg_resetwal -n -D data",
+   "shows": "pg_control fields, and a dry-run of pg_resetwal that changes nothing (cluster must be stopped)."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "data/postgresql.conf",
+   "what": "Main hand-edited config file."
+  },
+  {
+   "path": "data/postgresql.auto.conf",
+   "what": "Written by ALTER SYSTEM. I saw work_mem = '8MB' and max_connections = '50' in it."
+  },
+  {
+   "path": "data/pg_hba.conf",
+   "what": "Client authentication rules."
+  },
+  {
+   "path": "data/PG_VERSION",
+   "what": "Major version of the cluster."
+  },
+  {
+   "path": "data/global/pg_control",
+   "what": "Control file read by pg_controldata."
+  },
+  {
+   "path": "data/pg_wal/",
+   "what": "WAL segments."
+  },
+  {
+   "path": "data/pg_stat/",
+   "what": "Where pgstat.stat is saved at clean shutdown."
+  },
+  {
+   "path": "data/log/",
+   "what": "Log files when logging_collector=on."
+  },
+  {
+   "path": "base2/backup_label",
+   "what": "Created by pg_basebackup: START WAL LOCATION, CHECKPOINT LOCATION, backup method."
+  },
+  {
+   "path": "base2/backup_manifest",
+   "what": "File list with checksums used by pg_verifybackup."
+  },
+  {
+   "path": "base1/base.tar.gz and pg_wal.tar.gz",
+   "what": "Output of pg_basebackup -Ft -z -X stream."
+  },
+  {
+   "path": "arch/000000010000000000000001",
+   "what": "A WAL segment copied by archive_command after pg_switch_wal."
+  }
+ ],
+ "verified_by_running": [
+  "Used brew PostgreSQL 16.6 (catalog version 202307071) in the given temp dir on port 54310; the repo itself is 20devel (AC_INIT in configure.ac) and was not built.",
+  "First start failed: the Unix socket path in that temp dir is longer than 103 bytes. Fixed with listen_addresses='127.0.0.1' and unix_socket_directories=''.",
+  "pg_isready -h 127.0.0.1 -p 54310 printed 'accepting connections' with exit code 0.",
+  "pg_settings showed work_mem user, max_connections and shared_buffers postmaster, block_size internal, log_min_duration_statement superuser.",
+  "After ALTER SYSTEM SET work_mem='8MB' and max_connections=50 and pg_reload_conf(): work_mem was 8192 and max_connections stayed 100 with pending_restart = t. postgresql.auto.conf had the two lines.",
+  "SET block_size gave 'parameter \"block_size\" cannot be changed'. SET shared_buffers gave 'cannot be changed without restarting the server'.",
+  "SET work_mem='1MB' then RESET returned 8MB, the ALTER SYSTEM value.",
+  "Context counts in 16.6: user 142, sighup 94, postmaster 57, superuser 44, internal 18, superuser-backend 4, backend 2.",
+  "pg_settings sourcefile for work_mem pointed to postgresql.auto.conf line 3, and for max_connections to postgresql.conf.",
+  "log_min_duration_statement=0 with logging_collector=on wrote 'duration: 2.533 ms statement: ...' lines into data/log/.",
+  "pg_stat_user_tables showed idx_scan 1, n_tup_upd 999, n_dead_tup 999, last_analyze set. stats_fetch_consistency was cache.",
+  "EXPLAIN (analyze, buffers) gave an Index Scan with Buffers: shared hit=5 and a Planning buffers line.",
+  "pg_stat_activity listed archiver, autovacuum launcher, background writer, checkpointer, walwriter, logical replication launcher.",
+  "pg_switch_wal() with archive_command copied segments 000000010000000000000001 and ...02 to arch/, and pg_stat_archiver archived_count went 1 to 2 with failed_count 0.",
+  "pg_dump -Fc made a 2 MB archive and pg_restore -l listed TABLE, TABLE DATA and INDEX entries.",
+  "pg_basebackup -Ft -z gave base.tar.gz, pg_wal.tar.gz and backup_manifest. A plain pg_basebackup gave backup_label (BACKUP METHOD: streamed) and pg_verifybackup said 'backup successfully verified'.",
+  "pg_ctl status printed 'server is running'; pg_ctl -m fast stop printed 'server stopped'. pg_ctl --help lists modes smart, fast, immediate.",
+  "pg_controldata on the stopped cluster: Database cluster state: shut down. pg_resetwal -n printed current pg_control values and changed nothing.",
+  "pg_upgrade --check from 16 to 16 could not run: its temp server also hit the long socket path error. I did not get a successful --check.",
+  "pg_upgrade --help in 16.6 lists --link, --clone, --copy only. The 20devel source option.c also has --copy-file-range, --swap, --no-statistics, --set-char-signedness.",
+  "Cleanup: server stopped, then data, new, base1, base2, arch, dump and the temp dir tmp-ops were removed and ls confirmed it is gone."
+ ],
+ "more": [
+  "shared_preload_libraries needs a restart. It is how pg_stat_statements and auto_explain get loaded.",
+  "pg_stat_activity is the first live view to open. It has wait_event, and pg_cancel_backend and pg_terminate_backend act on its pids.",
+  "pg_dump skips roles and tablespaces. Use pg_dumpall --globals-only for those, and pg_restore -j for parallel restore.",
+  "An inactive replication slot makes pg_wal grow without limit.",
+  "After pg_upgrade, run the generated analyze step so the planner has statistics again.",
+  "In the official image, major version upgrades need pg_upgrade or dump and restore."
+ ]
+}

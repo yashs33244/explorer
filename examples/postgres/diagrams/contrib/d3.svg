@@ -1,0 +1,43 @@
+<svg class="hd" viewBox="0 0 800 458" role="img" aria-label="Anatomy of one regression test: sql file, expected output file, schedule line, real results and diffs, plus isolation specs and TAP scripts" xmlns="http://www.w3.org/2000/svg"><defs><marker id="contrib-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="14" y="14" width="772" height="274" rx="36"/>
+<text class="d-m" x="34" y="38" text-anchor="start">src/test/regress/</text>
+<rect class="d-box g1" x="40" y="52" width="230" height="38" rx="14"/>
+<g transform="translate(48,61) scale(0.5)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-m" x="76" y="76" text-anchor="start">sql/boolean.sql</text>
+<path class="d-edge dash" d="M272,71 H318"/>
+<text class="d-s" x="326" y="76" text-anchor="start">Your SQL. psql runs it.</text>
+<rect class="d-box g2" x="40" y="98" width="230" height="38" rx="14"/>
+<g transform="translate(48,107) scale(0.5)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-m" x="76" y="122" text-anchor="start">expected/boolean.out</text>
+<path class="d-edge dash" d="M272,117 H318"/>
+<text class="d-s" x="326" y="122" text-anchor="start">The answer you expect. Kept in git.</text>
+<rect class="d-box g3" x="40" y="144" width="230" height="38" rx="14"/>
+<g transform="translate(48,153) scale(0.5)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-m" x="76" y="168" text-anchor="start">parallel_schedule</text>
+<path class="d-edge dash" d="M272,163 H318"/>
+<text class="d-s" x="326" y="168" text-anchor="start">test: boolean char name ... runs as one group</text>
+<rect class="d-box g4" x="40" y="190" width="230" height="38" rx="14"/>
+<g transform="translate(48,199) scale(0.5)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-m" x="76" y="214" text-anchor="start">results/boolean.out</text>
+<path class="d-edge dash" d="M272,209 H318"/>
+<text class="d-s" x="326" y="214" text-anchor="start">Real output. Made when you run tests.</text>
+<rect class="d-box g5" x="40" y="236" width="230" height="38" rx="14"/>
+<g transform="translate(48,245) scale(0.5)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-m" x="76" y="260" text-anchor="start">regression.diffs</text>
+<path class="d-edge dash" d="M272,255 H318"/>
+<text class="d-s" x="326" y="260" text-anchor="start">Written only when output differs.</text>
+<rect class="d-blob2" x="14" y="304" width="772" height="140" rx="36"/>
+<text class="d-m" x="34" y="330" text-anchor="start">src/test/isolation/</text>
+<text class="d-m" x="420" y="330" text-anchor="start">src/test/recovery/t/</text>
+<rect class="d-box g1" x="40" y="342" width="165" height="38" rx="14"/>
+<text class="d-m" x="122" y="366" text-anchor="middle">specs/*.spec</text>
+<rect class="d-box g2" x="225" y="342" width="165" height="38" rx="14"/>
+<text class="d-m" x="307" y="366" text-anchor="middle">expected/*.out</text>
+<text class="d-s" x="40" y="408" text-anchor="start">Concurrency: steps for 2+ sessions</text>
+<rect class="d-box g3" x="420" y="342" width="170" height="38" rx="14"/>
+<text class="d-m" x="505" y="366" text-anchor="middle">001_stream_rep.pl</text>
+<rect class="d-box g4" x="610" y="342" width="160" height="38" rx="14"/>
+<text class="d-m" x="690" y="366" text-anchor="middle">002_archiving.pl</text>
+<text class="d-s" x="420" y="408" text-anchor="start">TAP: Perl scripts, need TAP tests on</text>
+<path class="d-edge dash" d="M405,326 V430"/>
+</svg>

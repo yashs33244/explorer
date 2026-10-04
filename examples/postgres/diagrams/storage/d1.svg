@@ -1,0 +1,40 @@
+<svg class="hd" viewBox="0 0 800 405" role="img" aria-label="Architecture of Postgres storage: heap code in a backend, shared buffers in shared memory, and relation files on disk" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="storage-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="20" y="15" width="270" height="372" rx="36"/>
+<rect class="d-blob" x="315" y="15" width="250" height="372" rx="36"/>
+<rect class="d-blob" x="590" y="15" width="190" height="372" rx="36"/>
+<text class="d-t" x="155" y="40" text-anchor="middle">Heap code (in a backend)</text>
+<text class="d-t" x="440" y="40" text-anchor="middle">Shared memory</text>
+<text class="d-t" x="685" y="40" text-anchor="middle">On disk</text>
+<rect class="d-box g1" x="80" y="60" width="170" height="46" rx="12"/>
+<text class="d-t" x="165" y="80" text-anchor="middle">heaptoast.c</text><text class="d-s" x="165" y="97" text-anchor="middle">shrinks big values</text>
+<rect class="d-box g1" x="80" y="145" width="170" height="46" rx="12"/>
+<text class="d-t" x="165" y="165" text-anchor="middle">heapam.c</text><text class="d-s" x="165" y="182" text-anchor="middle">heap_insert</text>
+<rect class="d-box g1" x="80" y="230" width="170" height="46" rx="12"/>
+<text class="d-t" x="165" y="250" text-anchor="middle">hio.c</text><text class="d-s" x="165" y="267" text-anchor="middle">finds a page with room</text>
+<rect class="d-box g1" x="80" y="315" width="170" height="46" rx="12"/>
+<text class="d-t" x="165" y="335" text-anchor="middle">bufpage.c</text><text class="d-s" x="165" y="352" text-anchor="middle">adds the tuple</text>
+<rect class="d-box g2" x="335" y="60" width="210" height="86" rx="14"/>
+<g transform="translate(345,83)"><rect class="d-fillpaper" x="5" y="4" width="30" height="32" rx="3"/><path class="d-lineacc" d="M5,12 H35"/><rect class="d-fillacc" x="10" y="17" width="20" height="4" rx="1"/><rect class="d-fillacc" x="10" y="24" width="14" height="4" rx="1"/></g>
+<text class="d-t" x="395" y="96">shared_buffers</text><text class="d-s" x="395" y="114">8kB slots of</text><text class="d-s" x="395" y="130">cached pages</text>
+<rect class="d-box g2" x="335" y="230" width="210" height="46" rx="12"/>
+<text class="d-t" x="440" y="250" text-anchor="middle">bufmgr.c</text><text class="d-s" x="440" y="267" text-anchor="middle">ReadBuffer, pin, flush</text>
+<rect class="d-box g4" x="335" y="315" width="210" height="46" rx="12"/>
+<text class="d-t" x="440" y="335" text-anchor="middle">Clock sweep</text><text class="d-s" x="440" y="352" text-anchor="middle">picks a cold buffer</text>
+<rect class="d-box g5" x="605" y="60" width="160" height="62" rx="14"/>
+<g transform="translate(610,71)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="655" y="87">Table files</text><text class="d-s" x="655" y="106">main, _fsm, _vm</text>
+<rect class="d-box g3" x="605" y="148" width="160" height="46" rx="12"/>
+<text class="d-t" x="685" y="168" text-anchor="middle">md.c</text><text class="d-s" x="685" y="185" text-anchor="middle">finds the segment</text>
+<rect class="d-box g3" x="605" y="230" width="160" height="46" rx="12"/>
+<text class="d-t" x="685" y="250" text-anchor="middle">smgr.c</text><text class="d-s" x="685" y="267" text-anchor="middle">storage manager</text>
+<path class="d-edge" d="M165,145 L165,106" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="172" y="130">shrinks</text>
+<path class="d-edge" d="M165,191 L165,230" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="172" y="215">requests</text>
+<path class="d-edge" d="M80,168 C38,168 38,338 80,338" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="50" y="258" text-anchor="middle">adds</text>
+<path class="d-edge acc" d="M250,253 L335,253" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="292" y="247" text-anchor="middle">pins</text>
+<path class="d-edge" d="M440,230 L440,146" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="447" y="192">fills</text>
+<path class="d-edge" d="M440,276 L440,315" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="447" y="300">evicts</text>
+<path class="d-edge acc" d="M545,253 L605,253" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="575" y="247" text-anchor="middle">reads</text>
+<path class="d-edge" d="M685,230 L685,194" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="692" y="217">dispatches</text>
+<path class="d-edge" d="M685,148 L685,122" marker-end="url(#storage-d1-ah)"/><text class="d-lab" x="692" y="140">opens</text>
+</svg>

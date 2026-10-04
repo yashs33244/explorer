@@ -1,0 +1,57 @@
+<svg class="hd" viewBox="0 0 800 530" role="img" aria-label="Life of an INSERT: parse, plan, check, store, trigger, commit, reply" xmlns="http://www.w3.org/2000/svg"><defs><marker id="features-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="14" y="14" width="772" height="170" rx="34"/>
+<text class="d-s" x="34" y="36">Compile the statement</text>
+<rect class="d-blob" x="14" y="226" width="772" height="290" rx="34"/>
+<text class="d-s" x="34" y="248">Check, store and commit</text>
+<rect class="d-box g5" x="30" y="72" width="150" height="64" rx="14"/>
+<g transform="translate(38,88.0) scale(.8)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="127.0" y="101.0" text-anchor="middle">Client</text><text class="d-s" x="127.0" y="118.0" text-anchor="middle">INSERT INTO ...</text>
+<rect class="d-box g0" x="220" y="72" width="150" height="64" rx="14"/>
+<g transform="translate(228,88.0) scale(.8)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="317.0" y="101.0" text-anchor="middle">Parser</text><text class="d-s" x="317.0" y="118.0" text-anchor="middle">parser/gram.y</text>
+<rect class="d-box g1" x="410" y="72" width="150" height="64" rx="14"/>
+<g transform="translate(418,88.0) scale(.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="507.0" y="101.0" text-anchor="middle">Planner</text><text class="d-s" x="507.0" y="118.0" text-anchor="middle">optimizer/</text>
+<rect class="d-box g2" x="600" y="72" width="150" height="64" rx="14"/>
+<g transform="translate(608,88.0) scale(.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="697.0" y="101.0" text-anchor="middle">Executor</text><text class="d-s" x="697.0" y="118.0" text-anchor="middle">ExecConstraints</text>
+<path class="d-edge" d="M180,104 H220" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="200" y="96" text-anchor="middle">SQL</text>
+<path class="d-edge" d="M370,104 H410" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="390" y="96" text-anchor="middle">tree</text>
+<path class="d-edge" d="M560,104 H600" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="580" y="96" text-anchor="middle">plan</text>
+<rect class="d-box g0" x="600" y="290" width="150" height="64" rx="14"/>
+<g transform="translate(608,306.0) scale(.8)"><rect class="d-fillpaper" x="5" y="4" width="30" height="32" rx="3"/><path class="d-lineacc" d="M5,12 H35"/><rect class="d-fillacc" x="10" y="17" width="20" height="4" rx="1"/><rect class="d-fillacc" x="10" y="24" width="14" height="4" rx="1"/></g>
+<text class="d-t" x="697.0" y="319.0" text-anchor="middle">Heap insert</text><text class="d-s" x="697.0" y="336.0" text-anchor="middle">heapam.c</text>
+<rect class="d-box g1" x="410" y="290" width="150" height="64" rx="14"/>
+<g transform="translate(418,306.0) scale(.8)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="507.0" y="319.0" text-anchor="middle">Index entry</text><text class="d-s" x="507.0" y="336.0" text-anchor="middle">nbtinsert.c</text>
+<rect class="d-box g3" x="220" y="290" width="150" height="64" rx="14"/>
+<g transform="translate(228,306.0) scale(.8)"><rect class="d-fillpaper" x="7" y="17" width="26" height="19" rx="4"/><path class="d-line" d="M12,17 V12 C12,3 28,3 28,12 V17"/><circle class="d-fillacc" cx="20" cy="26" r="2.6"/></g>
+<text class="d-t" x="317.0" y="319.0" text-anchor="middle">FK trigger</text><text class="d-s" x="317.0" y="336.0" text-anchor="middle">ri_triggers.c</text>
+<rect class="d-box g2" x="30" y="290" width="150" height="64" rx="14"/>
+<g transform="translate(38,306.0) scale(.8)"><circle class="d-fillpaper" cx="20" cy="20" r="15"/><path class="d-lineacc" d="M20,10 V20 L27,24"/></g>
+<text class="d-t" x="127.0" y="319.0" text-anchor="middle">COMMIT</text><text class="d-s" x="127.0" y="336.0" text-anchor="middle">xact.c</text>
+<path class="d-edge" d="M675,136 V290" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="675" y="215" text-anchor="middle">CHECK ok, store</text>
+<path class="d-edge" d="M600,322 H560" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="580" y="314" text-anchor="middle">key</text>
+<path class="d-edge" d="M410,322 H370" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="390" y="314" text-anchor="middle">fires</text>
+<path class="d-edge" d="M220,322 H180" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="200" y="314" text-anchor="middle">flush</text>
+<rect class="d-box g5" x="30" y="430" width="150" height="52" rx="14"/>
+<g transform="translate(38,440.0) scale(.8)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="127.0" y="453.0" text-anchor="middle">Client</text><text class="d-s" x="127.0" y="470.0" text-anchor="middle">"INSERT 0 1"</text>
+<path class="d-edge" d="M105,354 V430" marker-end="url(#features-d2-ah)"/>
+<text class="d-lab" x="105" y="400" text-anchor="middle">reply</text>
+<circle class="d-badge" cx="36" cy="76" r="11"/><text class="d-bt" x="36" y="80">1</text>
+<circle class="d-badge" cx="226" cy="76" r="11"/><text class="d-bt" x="226" y="80">2</text>
+<circle class="d-badge" cx="416" cy="76" r="11"/><text class="d-bt" x="416" y="80">3</text>
+<circle class="d-badge" cx="606" cy="76" r="11"/><text class="d-bt" x="606" y="80">4</text>
+<circle class="d-badge" cx="606" cy="294" r="11"/><text class="d-bt" x="606" y="298">5</text>
+<circle class="d-badge" cx="416" cy="294" r="11"/><text class="d-bt" x="416" y="298">6</text>
+<circle class="d-badge" cx="226" cy="294" r="11"/><text class="d-bt" x="226" y="298">7</text>
+<circle class="d-badge" cx="36" cy="294" r="11"/><text class="d-bt" x="36" y="298">8</text>
+<circle class="d-badge" cx="36" cy="434" r="11"/><text class="d-bt" x="36" y="438">9</text></svg>

@@ -1,0 +1,625 @@
+{
+ "key": "pgdata",
+ "title": "Files on disk: the data directory (PGDATA)",
+ "one_liner": "PGDATA is one folder that holds everything a PostgreSQL server owns: your table files, the write-ahead log, transaction status, config files and a control file.",
+ "analogy": "PGDATA is a filing cabinet. The drawers named base and global hold the actual papers (tables). The pg_wal drawer is the diary of every change. pg_xact is a list of which jobs finished. pg_control is the sticky note on the front that says when you last tidied up.",
+ "big_picture": [
+  "A cluster is one PGDATA folder. One postmaster process owns it. postmaster.pid is the lock that stops a second server from using it.",
+  "Every table, index and TOAST table is one or more plain files. The file name is a number called the relfilenode, not the table name.",
+  "Files for a database live in base/<database oid>/. Files shared by all databases (pg_database, pg_authid, pg_tablespace) live in global/.",
+  "Each relation can have extra forks: _fsm (free space map), _vm (visibility map), _init (for unlogged tables). The main fork has no suffix.",
+  "Big relations are cut into 1GB segments: 16444, 16444.1, 16444.2. The size is RELSEG_SIZE blocks times BLCKSZ (131072 x 8192 = 1GB).",
+  "Small directories hold shared state that must survive a crash: pg_xact (commit status), pg_multixact, pg_subtrans, pg_commit_ts, pg_serial, pg_notify. They are SLRU files.",
+  "pg_wal holds 16MB WAL segments. pg_control records the last checkpoint so crash recovery knows where to start replaying.",
+  "Some catalogs cannot find their own file through pg_class, so pg_filenode.map (global/ and per database) maps catalog oid to relfilenode.",
+  "Config files live inside PGDATA by default: postgresql.conf (you edit it), postgresql.auto.conf (ALTER SYSTEM writes it), pg_hba.conf, pg_ident.conf.",
+  "Signal files change how the server starts: standby.signal (be a standby), recovery.signal (point in time recovery), backup_label (a backup needs recovery)."
+ ],
+ "flow": [
+  {
+   "step": "initdb creates the tree",
+   "detail": "initdb makes the directories from a fixed list (subdirs[]), copies the config templates, then runs the backend in bootstrap mode to build template1 in base/1, then creates template0 (base/4) and postgres (base/5).",
+   "where": "src/bin/initdb/initdb.c (subdirs[], create_data_directory, bootstrap_template1)"
+  },
+  {
+   "step": "The postmaster takes the lock file",
+   "detail": "The postmaster writes postmaster.pid (pid, data dir, start time, port, socket dir, listen address, shared memory key, status). A second start sees the pid and refuses.",
+   "where": "src/backend/utils/init/miscinit.c (CreateLockFile)"
+  },
+  {
+   "step": "Recovery check",
+   "detail": "The server reads global/pg_control. If the state is not 'shut down', it replays WAL from the last checkpoint REDO location. If backup_label exists it starts from there instead.",
+   "where": "src/backend/access/transam/xlog.c (StartupXLOG), src/include/catalog/pg_control.h"
+  },
+  {
+   "step": "CREATE TABLE picks a file number",
+   "detail": "A new relation gets a relfilenode from the OID counter. Rows are written into 8KB pages of base/<db oid>/<relfilenode>.",
+   "where": "src/backend/catalog/catalog.c (GetNewRelFileNumber)"
+  },
+  {
+   "step": "Path is built from three numbers",
+   "detail": "GetRelationPath turns (tablespace oid, database oid, relfilenode, fork) into base/5/16444, base/5/16444_fsm, global/1262 or pg_tblspc/<spc>/PG_<ver>_<catver>/<db>/<file>.",
+   "where": "src/common/relpath.c (GetRelationPath, forkNames[])"
+  },
+  {
+   "step": "VACUUM adds forks",
+   "detail": "VACUUM creates the _fsm and _vm forks. Before VACUUM only the main fork exists.",
+   "where": "src/backend/storage/freespace/freespace.c, src/backend/access/heap/visibilitymap.c"
+  },
+  {
+   "step": "Growing past 1GB",
+   "detail": "md.c opens the next segment file (name.1, name.2) once a segment reaches RELSEG_SIZE blocks.",
+   "where": "src/backend/storage/smgr/md.c"
+  },
+  {
+   "step": "Temp files",
+   "detail": "Sorts and hashes that overflow work_mem write pgsql_tmp<pid>.<n> into base/pgsql_tmp (or tablespace/pgsql_tmp). They are deleted at end of use and swept at server start.",
+   "where": "src/backend/storage/file/fd.c (OpenTemporaryFile, RemovePgTempFiles), src/include/common/file_utils.h (PG_TEMP_FILES_DIR)"
+  },
+  {
+   "step": "Checkpoint and shutdown",
+   "detail": "A clean stop writes a shutdown checkpoint, sets pg_control to 'shut down', removes postmaster.pid and saves stats to pg_stat/pgstat.stat.",
+   "where": "src/backend/access/transam/xlog.c (ShutdownXLOG), src/backend/utils/activity/pgstat.c"
+  }
+ ],
+ "diagram": {
+  "claim": "PGDATA is a set of directories where the postmaster, backends and checkpointer each read or write their own files.",
+  "nodes": [
+   {
+    "id": "initdb",
+    "label": "initdb",
+    "group": "tool"
+   },
+   {
+    "id": "postmaster",
+    "label": "postmaster",
+    "group": "process"
+   },
+   {
+    "id": "backend",
+    "label": "backend process",
+    "group": "process"
+   },
+   {
+    "id": "ckpt",
+    "label": "checkpointer",
+    "group": "process"
+   },
+   {
+    "id": "base",
+    "label": "base/<db oid>/ heap + index files",
+    "group": "data"
+   },
+   {
+    "id": "global",
+    "label": "global/ shared catalogs + pg_control",
+    "group": "data"
+   },
+   {
+    "id": "wal",
+    "label": "pg_wal/ 16MB segments",
+    "group": "log"
+   },
+   {
+    "id": "xact",
+    "label": "pg_xact commit status (SLRU)",
+    "group": "log"
+   },
+   {
+    "id": "pid",
+    "label": "postmaster.pid",
+    "group": "lock"
+   },
+   {
+    "id": "conf",
+    "label": "postgresql.conf + auto.conf + pg_hba.conf",
+    "group": "config"
+   },
+   {
+    "id": "tmp",
+    "label": "base/pgsql_tmp",
+    "group": "temp"
+   }
+  ],
+  "edges": [
+   {
+    "from": "initdb",
+    "to": "base",
+    "label": "creates template1 in"
+   },
+   {
+    "from": "initdb",
+    "to": "conf",
+    "label": "copies templates into"
+   },
+   {
+    "from": "postmaster",
+    "to": "pid",
+    "label": "locks via"
+   },
+   {
+    "from": "postmaster",
+    "to": "conf",
+    "label": "reads"
+   },
+   {
+    "from": "backend",
+    "to": "base",
+    "label": "reads and writes pages in"
+   },
+   {
+    "from": "backend",
+    "to": "wal",
+    "label": "appends records to"
+   },
+   {
+    "from": "backend",
+    "to": "xact",
+    "label": "marks commit in"
+   },
+   {
+    "from": "backend",
+    "to": "tmp",
+    "label": "spills sorts to"
+   },
+   {
+    "from": "ckpt",
+    "to": "base",
+    "label": "flushes dirty pages to"
+   },
+   {
+    "from": "ckpt",
+    "to": "global",
+    "label": "updates pg_control in"
+   },
+   {
+    "from": "postmaster",
+    "to": "global",
+    "label": "startup process reads pg_control"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/bin/initdb/initdb.c",
+   "what": "Creates PGDATA. subdirs[] at line 232 lists every directory initdb makes."
+  },
+  {
+   "path": "src/common/relpath.c",
+   "what": "forkNames[] (main, fsm, vm, init) and GetRelationPath(), which builds the relation file path."
+  },
+  {
+   "path": "src/include/common/relpath.h",
+   "what": "RelFileNumber type (an Oid) and ForkNumber enum."
+  },
+  {
+   "path": "src/include/catalog/catalog.h",
+   "what": "GetNewRelFileNumber and IsSharedRelation declarations. OID ranges are in access/transam.h."
+  },
+  {
+   "path": "src/backend/catalog/catalog.c",
+   "what": "Picks new OIDs and relfilenumbers, checks the file does not already exist."
+  },
+  {
+   "path": "src/backend/storage/file/fd.c",
+   "what": "Virtual file descriptors, temp files, RemovePgTempFiles at startup, fsync of PGDATA."
+  },
+  {
+   "path": "src/include/common/file_utils.h",
+   "what": "PG_TEMP_FILES_DIR and PG_TEMP_FILE_PREFIX, both 'pgsql_tmp'."
+  },
+  {
+   "path": "src/backend/storage/smgr/md.c",
+   "what": "Magnetic disk storage manager: opens, extends and splits relation files into 1GB segments."
+  },
+  {
+   "path": "src/backend/utils/cache/relmapper.c",
+   "what": "Reads and writes pg_filenode.map (RELMAPPER_FILENAME)."
+  },
+  {
+   "path": "src/include/catalog/pg_control.h",
+   "what": "struct ControlFileData, the layout of global/pg_control."
+  },
+  {
+   "path": "src/include/access/xlog.h",
+   "what": "BACKUP_LABEL_FILE and TABLESPACE_MAP names."
+  },
+  {
+   "path": "src/backend/utils/init/miscinit.c",
+   "what": "CreateLockFile writes postmaster.pid."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is PGDATA and what makes one cluster?",
+   "answer": [
+    "It is the data directory. Its path is given by -D or the PGDATA env var.",
+    "One PGDATA is one cluster, run by one postmaster.",
+    "It holds many databases. They are folders under base/."
+   ],
+   "trap": "A cluster is not a database. Many databases share one PGDATA, one WAL and one pg_control."
+  },
+  {
+   "q": "Where is my table on disk?",
+   "answer": [
+    "Run SELECT pg_relation_filepath('t'). I got base/5/16444.",
+    "5 is the database oid, 16444 is the relfilenode.",
+    "The file is a series of 8KB pages."
+   ],
+   "trap": "The file name is not the table name. The name is a number."
+  },
+  {
+   "q": "Are the table oid and its file name the same number?",
+   "answer": [
+    "Often at first, yes (t had oid 16444 and relfilenode 16444).",
+    "TRUNCATE, VACUUM FULL, CLUSTER and some ALTER TABLE give the table a new relfilenode. I saw t move from base/5/16444 to base/5/16504 after TRUNCATE. The oid stays the same.",
+    "The truth is pg_class.relfilenode."
+   ],
+   "trap": "Do not map oid to file by assuming they match. For mapped catalogs pg_class.relfilenode is 0."
+  },
+  {
+   "q": "What are _fsm and _vm files?",
+   "answer": [
+    "_fsm is the free space map. It tells INSERT which pages have room.",
+    "_vm is the visibility map. It marks all-visible and all-frozen pages, so VACUUM and index-only scans skip them.",
+    "They appear after VACUUM. Before it, my table t had only the main file."
+   ],
+   "trap": "They are forks of the same relation, not separate tables. pg_relation_size(rel,'fsm') shows their size."
+  },
+  {
+   "q": "What is a TOAST table and how do I find its file?",
+   "answer": [
+    "Big values (over about 2KB per row) are compressed or stored out of line in a TOAST table.",
+    "pg_class.reltoastrelid points to it. Mine was pg_toast.pg_toast_16449 in base/5/16452, with an index in base/5/16453.",
+    "The name pg_toast_<oid of parent table>."
+   ],
+   "trap": "A table gets a TOAST table only if it has a column type that can be toasted (like text), even when no value is large. Check reltoastrelid."
+  },
+  {
+   "q": "Why does a big table have files named 16517.1?",
+   "answer": [
+    "Each file is capped at RELSEG_SIZE blocks, 131072 x 8KB = 1GB.",
+    "I loaded 1.2GB. Result: 16517 at 1073741824 bytes and 16517.1 at 213573632 bytes.",
+    "The _fsm fork is separate (16517_fsm), it is not a segment."
+   ],
+   "trap": "The 1GB size is a compile-time option (--with-segsize). pg_controldata prints 'Blocks per segment of large relation'."
+  },
+  {
+   "q": "What is pg_filenode.map and why does it exist?",
+   "answer": [
+    "Some catalogs (pg_class, pg_proc and others) cannot look up their own file in pg_class. That would be a chicken and egg problem.",
+    "So a tiny file maps catalog oid to relfilenode. There is one in global/ (shared catalogs) and one per database dir. Each is 524 bytes.",
+    "VACUUM FULL pg_class moved it from base/5/1259 to base/5/16507 and updated the map."
+   ],
+   "trap": "pg_class.relfilenode shows 0 for these catalogs. Use pg_relation_filepath() instead."
+  },
+  {
+   "q": "What does global/pg_control hold and why must it never be edited?",
+   "answer": [
+    "It is one 8KB file with a CRC. It stores system identifier, last checkpoint location, REDO location, timeline, next XID, next OID, cluster state, and key settings like wal_level.",
+    "Crash recovery starts from it. Run pg_controldata -D <dir> to read it.",
+    "pg_resetwal is the last-resort tool if it is lost."
+   ],
+   "trap": "Editing or deleting it can silently lose data. pg_controldata is read only and safe, even on a running server."
+  },
+  {
+   "q": "postgresql.conf vs postgresql.auto.conf: which wins?",
+   "answer": [
+    "auto.conf is read after postgresql.conf, so it wins.",
+    "ALTER SYSTEM writes only auto.conf. I set work_mem = '8MB' and pg_settings.sourcefile showed auto.conf.",
+    "Remove a line with ALTER SYSTEM RESET."
+   ],
+   "trap": "Hand edits to auto.conf can be overwritten. Also, the commented line #work_mem = 4MB in postgresql.conf is just the default, not a setting."
+  },
+  {
+   "q": "What are backup_label, tablespace_map and standby.signal and when do they exist?",
+   "answer": [
+    "backup_label says 'start recovery from this checkpoint'. It exists inside a base backup. In PG15 and later pg_backup_start does not write it into the live PGDATA, the backup tool adds it to the copy. pg_basebackup -R gave me backup_label, backup_manifest and an empty standby.signal.",
+    "tablespace_map is the same idea for tablespace symlinks. It appears in backups only when tablespaces exist.",
+    "standby.signal is an empty file. Its presence makes the server start as a standby."
+   ],
+   "trap": "If you restore a backup and delete backup_label to 'fix' a startup error, you can corrupt the cluster. It tells recovery where to start."
+  }
+ ],
+ "contributor_tips": [
+  "Read initdb.c subdirs[] first. It is the shortest accurate list of what PGDATA contains for a given version.",
+  "In 20devel initdb creates pg_wal/summaries (WAL summarizer, added in 17) and still creates pg_stat_tmp. My 16.6 run had no pg_wal/summaries.",
+  "Never hard-code 'base/' or fork suffixes in a patch. Use GetRelationPath or relpathbackend from relpath.c.",
+  "Any new directory or file under PGDATA needs thought for: initdb, pg_basebackup (whether to copy it), pg_rewind, pg_upgrade and the fsync step in fd.c (SyncDataDirectory).",
+  "Backup tools skip some files on purpose (postmaster.pid, pgsql_tmp, pg_replslot content). See the exclude lists in src/backend/backup/basebackup.c.",
+  "Use pg_relation_filepath, pg_relation_size(rel, 'fsm') and pg_controldata to check your patch against a scratch cluster. Always use a throw-away -D."
+ ],
+ "glossary": [
+  {
+   "term": "PGDATA",
+   "meaning": "The data directory of one cluster."
+  },
+  {
+   "term": "relfilenode (RelFileNumber)",
+   "meaning": "The number used as the file name of a relation. It is not always the same as its oid."
+  },
+  {
+   "term": "oid",
+   "meaning": "Object id. A 4-byte number that names a row in a catalog table, such as a table or a database."
+  },
+  {
+   "term": "fork",
+   "meaning": "One of several files that belong to a relation: main, fsm, vm, init."
+  },
+  {
+   "term": "FSM",
+   "meaning": "Free space map. Remembers free room per page."
+  },
+  {
+   "term": "VM",
+   "meaning": "Visibility map. Two bits per page: all-visible, all-frozen."
+  },
+  {
+   "term": "TOAST",
+   "meaning": "The Oversized-Attribute Storage Technique. Stores big values in a side table."
+  },
+  {
+   "term": "segment",
+   "meaning": "One 1GB file of a large relation. Names end in .1, .2 and so on."
+  },
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log. Every change is logged here before the data page is written."
+  },
+  {
+   "term": "SLRU",
+   "meaning": "Simple least-recently-used cache backed by small files. Used by pg_xact, pg_subtrans, pg_multixact, pg_commit_ts, pg_notify, pg_serial."
+  },
+  {
+   "term": "checkpoint",
+   "meaning": "A point where all dirty pages are flushed so recovery can start there."
+  },
+  {
+   "term": "tablespace",
+   "meaning": "An extra directory for relation files, linked from pg_tblspc/<oid>."
+  },
+  {
+   "term": "postmaster",
+   "meaning": "The parent server process. It forks one backend per connection."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "initdb -D /tmp/demo_pgdata && ls -l /tmp/demo_pgdata",
+   "shows": "The top-level directories and config files that initdb creates (use a throw-away path)."
+  },
+  {
+   "cmd": "pg_ctl -D /tmp/demo_pgdata -o \"-p 54399\" -l /tmp/demo.log start && cat /tmp/demo_pgdata/postmaster.pid",
+   "shows": "The lock file: pid, data dir, start time, port, socket dir, listen address, shm key, status 'ready'."
+  },
+  {
+   "cmd": "psql -p 54399 -d postgres -c \"create table t as select g from generate_series(1,10000) g\" -c \"select pg_relation_filepath('t'), oid, relfilenode from pg_class where relname='t'\"",
+   "shows": "The path base/5/<number> and that oid and relfilenode start equal."
+  },
+  {
+   "cmd": "psql -p 54399 -d postgres -c \"vacuum t\" -c \"select pg_relation_size('t','main'), pg_relation_size('t','fsm'), pg_relation_size('t','vm')\" && ls -l /tmp/demo_pgdata/base/5 | grep -E '_fsm|_vm' | tail -3",
+   "shows": "The _fsm and _vm forks appear after VACUUM."
+  },
+  {
+   "cmd": "pg_controldata -D /tmp/demo_pgdata | head -20",
+   "shows": "Cluster state, checkpoint location, next XID and OID, and block size from global/pg_control."
+  },
+  {
+   "cmd": "pg_ctl -D /tmp/demo_pgdata stop && rm -rf /tmp/demo_pgdata /tmp/demo.log",
+   "shows": "Clean shutdown (postmaster.pid disappears), then delete the throw-away cluster."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "PG_VERSION",
+   "what": "3 bytes, the major version ('16'). Checked at startup."
+  },
+  {
+   "path": "postgresql.conf",
+   "what": "Main config file, 29690 bytes, all settings commented to defaults."
+  },
+  {
+   "path": "postgresql.auto.conf",
+   "what": "88 bytes at first, only a warning comment. ALTER SYSTEM appends here."
+  },
+  {
+   "path": "pg_hba.conf",
+   "what": "Client authentication rules. initdb default is trust for local and loopback."
+  },
+  {
+   "path": "pg_ident.conf",
+   "what": "User name maps for ident and peer auth. Only comments after initdb."
+  },
+  {
+   "path": "postmaster.pid",
+   "what": "Created at start, removed at stop. Lock file with pid, paths, port, status."
+  },
+  {
+   "path": "postmaster.opts",
+   "what": "The command line the postmaster was started with. The postmaster writes it, and pg_ctl reads it for restart."
+  },
+  {
+   "path": "global/pg_control",
+   "what": "8192 bytes. Checkpoint and cluster state. Read with pg_controldata."
+  },
+  {
+   "path": "global/pg_filenode.map",
+   "what": "524 bytes. Map for shared catalogs (pg_database is global/1262)."
+  },
+  {
+   "path": "global/1262",
+   "what": "pg_database heap file. Other numbered files here are shared catalogs and their indexes."
+  },
+  {
+   "path": "base/1",
+   "what": "template1, the model database (oid 1)."
+  },
+  {
+   "path": "base/4",
+   "what": "template0, the pristine copy (oid 4)."
+  },
+  {
+   "path": "base/5",
+   "what": "postgres, the default database (oid 5). User tables got numbers from 16384 up."
+  },
+  {
+   "path": "base/5/pg_filenode.map",
+   "what": "524 bytes. Maps pg_class, pg_proc, etc. to files. Each database has one."
+  },
+  {
+   "path": "base/5/PG_VERSION",
+   "what": "Version marker for that database."
+  },
+  {
+   "path": "base/5/1259",
+   "what": "pg_class heap before VACUUM FULL moved it to base/5/16507."
+  },
+  {
+   "path": "base/5/16444",
+   "what": "My table t, 1417216 bytes (173 pages of 8KB)."
+  },
+  {
+   "path": "base/5/16444_fsm",
+   "what": "Free space map of t, 24576 bytes, created by VACUUM."
+  },
+  {
+   "path": "base/5/16444_vm",
+   "what": "Visibility map of t, 8192 bytes, created by VACUUM."
+  },
+  {
+   "path": "base/5/16452",
+   "what": "TOAST table of table big (pg_toast.pg_toast_16449); its index is 16453."
+  },
+  {
+   "path": "base/5/16517",
+   "what": "First 1GB segment (1073741824 bytes) of a 1.2GB table."
+  },
+  {
+   "path": "base/5/16517.1",
+   "what": "Second segment, 213573632 bytes."
+  },
+  {
+   "path": "base/pgsql_tmp",
+   "what": "Temp spill files for big sorts. I saw pgsql_tmp61456.0 and .1 during a query. Empty otherwise."
+  },
+  {
+   "path": "pg_wal/000000010000000000000001",
+   "what": "16777216 bytes WAL segment. Name = timeline 8 hex, then log id and segment."
+  },
+  {
+   "path": "pg_wal/archive_status",
+   "what": "Marker files (.ready/.done) for WAL archiving."
+  },
+  {
+   "path": "pg_xact/0000",
+   "what": "Commit status, 2 bits per transaction (SLRU)."
+  },
+  {
+   "path": "pg_multixact/offsets/0000",
+   "what": "Multixact offsets, SLRU (row lock by several transactions)."
+  },
+  {
+   "path": "pg_multixact/members/0000",
+   "what": "Multixact members, SLRU."
+  },
+  {
+   "path": "pg_subtrans/0000",
+   "what": "Subtransaction to parent map (SLRU)."
+  },
+  {
+   "path": "pg_commit_ts",
+   "what": "Commit timestamps. Empty because track_commit_timestamp is off."
+  },
+  {
+   "path": "pg_serial",
+   "what": "Old committed serializable transaction info. Empty until SSI needs it."
+  },
+  {
+   "path": "pg_notify",
+   "what": "LISTEN/NOTIFY queue pages. Empty in my run."
+  },
+  {
+   "path": "pg_twophase",
+   "what": "State files of PREPARE TRANSACTION. Empty, max_prepared_transactions is 0."
+  },
+  {
+   "path": "pg_snapshots",
+   "what": "Exported snapshots. I saw 00000003-0000003E-1 while pg_export_snapshot was live."
+  },
+  {
+   "path": "pg_replslot/s1/state",
+   "what": "One folder per replication slot. 200 byte state file. Created and removed with the slot."
+  },
+  {
+   "path": "pg_logical/replorigin_checkpoint",
+   "what": "8 bytes. Replication origin positions."
+  },
+  {
+   "path": "pg_logical/snapshots",
+   "what": "Logical decoding snapshots. Empty."
+  },
+  {
+   "path": "pg_logical/mappings",
+   "what": "Logical rewrite mappings. Empty."
+  },
+  {
+   "path": "pg_dynshmem",
+   "what": "Dynamic shared memory files. Empty because dynamic_shared_memory_type is posix."
+  },
+  {
+   "path": "pg_stat/pgstat.stat",
+   "what": "Stats saved at clean shutdown (80556 bytes). Empty while running."
+  },
+  {
+   "path": "pg_stat_tmp",
+   "what": "Old stats temp dir. Empty. Still created by initdb, still in 20devel."
+  },
+  {
+   "path": "pg_tblspc/16513",
+   "what": "Symlink to a tablespace directory. Inside it: PG_16_202307071/<db oid>/<relfilenode>."
+  },
+  {
+   "path": "backup_label",
+   "what": "Only in a base backup copy, never in the running cluster. 227 bytes in my pg_basebackup."
+  },
+  {
+   "path": "standby.signal",
+   "what": "Empty file. -R in pg_basebackup creates it, plus primary_conninfo in postgresql.auto.conf."
+  },
+  {
+   "path": "tablespace_map",
+   "what": "Only in backups of clusters that use tablespaces. Not created in my backup."
+  }
+ ],
+ "verified_by_running": [
+  "initdb from postgresql@16 (16.6) into the temp dir exited 0. Fresh PGDATA was 39MB with 24 entries.",
+  "find showed base/1, base/4, base/5 each with 299 files; global has pg_control (8192) and pg_filenode.map (524); pg_wal had one 16777216 byte segment.",
+  "Start with -k <long path> failed: the unix socket path was longer than 103 bytes. I used -c unix_socket_directories='' with TCP on 127.0.0.1:54302 instead.",
+  "postmaster.pid had 8 lines: pid, data dir, start time, port 54302, empty socket dir, listen address 'localhost', shm key '321048693     65538', and 'ready'.",
+  "pg_database oids: postgres 5, template1 1, template0 4.",
+  "pg_relation_filepath('t') = base/5/16444 with oid 16444 and relfilenode 16444. After VACUUM: 16444 (1417216), 16444_fsm (24576), 16444_vm (8192). Before VACUUM only the main file existed.",
+  "Table big: reltoastrelid = pg_toast.pg_toast_16449 at base/5/16452 (409600 bytes), index at base/5/16453.",
+  "TRUNCATE moved t from base/5/16444 to base/5/16504 (new relfilenode, same oid).",
+  "pg_class showed relfilenode 0 and path base/5/1259; after VACUUM FULL pg_class the path was base/5/16507 (map updated).",
+  "pg_database path is global/1262.",
+  "pg_controldata: pg_control version 1300, catalog version 202307071, state 'in production' while running and 'shut down' after stop, block size 8192, blocks per segment 131072.",
+  "1.2GB table seg: base/5/16517 = 1073741824 bytes and base/5/16517.1 = 213573632 bytes.",
+  "Tablespace ts1: pg_tblspc/16513 is a symlink, relation path pg_tblspc/16513/PG_16_202307071/5/16514.",
+  "Sort with work_mem 64kB created base/pgsql_tmp/pgsql_tmp61456.0 (4200000 bytes) and .1 (12492800) during the query. Directory remained, empty.",
+  "Physical slot s1 created pg_replslot/s1/state (200 bytes). pg_export_snapshot created pg_snapshots/00000003-0000003E-1 (83 bytes).",
+  "pg_commit_ts, pg_dynshmem, pg_serial, pg_twophase, pg_notify were empty. pg_stat was empty while running and held pgstat.stat after stop.",
+  "ALTER SYSTEM SET work_mem='8MB' wrote it to postgresql.auto.conf; pg_settings sourcefile pointed to auto.conf.",
+  "pg_basebackup -R produced backup_label (227 bytes), backup_manifest, an empty standby.signal and primary_conninfo in postgresql.auto.conf. A tablespace backup in tar failed because the symlink target was over the 99 char tar limit, so I dropped the tablespace first.",
+  "pg_backup_start in 16 did not create backup_label or tablespace_map in the live PGDATA.",
+  "Server stopped with pg_ctl stop -m fast, postmaster.pid removed, whole tmp-pgdata dir deleted and no postgres process on port 54302 left.",
+  "Source checked in the 20devel repo (PACKAGE_VERSION 20devel): initdb.c subdirs[] lists pg_wal/summaries and pg_stat_tmp; relpath.c forkNames is main/fsm/vm/init; file_utils.h defines PG_TEMP_FILES_DIR 'pgsql_tmp'; xlog.h defines backup_label and tablespace_map; relmapper.c defines pg_filenode.map."
+ ],
+ "more": [
+  "In Docker, mount a volume on PGDATA or the data dies with the container. Images up to 17 use /var/lib/postgresql/data; newer images use a versioned subfolder.",
+  "initdb refuses a non-empty directory. A volume root with lost+found breaks it, so point PGDATA at a subdirectory.",
+  "PGDATA must be owned by the server user with mode 0700 or 0750, or the server refuses to start.",
+  "Never copy a live PGDATA with cp or rsync as a backup. Use pg_basebackup.",
+  "WAL segment size is chosen at initdb (--wal-segsize). 16MB is only the default.",
+  "Deleting files from pg_wal by hand is a classic cause of corruption. Replication slots and failed archiving make it grow."
+ ]
+}

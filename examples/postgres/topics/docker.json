@@ -1,0 +1,454 @@
+{
+ "key": "docker",
+ "title": "Running in Docker and what the kernel gives it",
+ "one_liner": "A container is just Linux processes with fences around them, so PostgreSQL still needs the same kernel gifts: files, shared memory, semaphores, sockets and signals.",
+ "analogy": "A container is a rented room in a big building. The building (kernel) still supplies the plumbing and power. The room only limits how much you can use, such as a small /dev/shm closet.",
+ "big_picture": [
+  "The official image starts as root, fixes folder ownership, then uses gosu to become the postgres user (uid 999) before running initdb or the server.",
+  "PostgreSQL refuses to run as root (check_root in src/backend/main/main.c) and wants the data directory to be mode 0700 or 0750 (checkDataDir in src/backend/utils/init/miscinit.c).",
+  "Shared buffers use mmap shared memory by default on Linux (shared_memory_type = mmap). Parallel queries use dynamic shared memory from shm_open, which lives in /dev/shm. Docker gives only 64MB there by default.",
+  "Docker stops a container with STOPSIGNAL. The image sets SIGINT, which the postmaster treats as fast shutdown. Plain SIGTERM would mean smart shutdown, which waits for clients.",
+  "The server itself needs no special Linux capabilities. The entrypoint needs CHOWN, SETUID and SETGID while it is root, and sometimes DAC_OVERRIDE and FOWNER for mounts it did not create.",
+  "In the 18 image, PGDATA is /var/lib/postgresql/18/docker and the VOLUME is /var/lib/postgresql. Older images used VOLUME /var/lib/postgresql/data."
+ ],
+ "flow": [
+  {
+   "step": "Container starts as root",
+   "detail": "ENTRYPOINT is docker-entrypoint.sh, CMD is postgres. The script sees uid 0.",
+   "where": "docker-library/postgres 18/bookworm/Dockerfile"
+  },
+  {
+   "step": "Prepare directories",
+   "detail": "mkdir -p PGDATA, chmod 00700, chown to postgres. /var/run/postgresql is created with mode 3777 in the Dockerfile.",
+   "where": "docker-entrypoint.sh"
+  },
+  {
+   "step": "Step down with gosu",
+   "detail": "exec gosu postgres re-runs the script as the postgres user, so the server never runs as root.",
+   "where": "docker-entrypoint.sh"
+  },
+  {
+   "step": "initdb on first start",
+   "detail": "If PGDATA has no PG_VERSION, docker_init_database_dir runs initdb --username=... --pwfile=<(printf ...) using POSTGRES_PASSWORD, plus POSTGRES_INITDB_ARGS.",
+   "where": "docker-entrypoint.sh"
+  },
+  {
+   "step": "Temporary server",
+   "detail": "pg_ctl starts a server with listen_addresses='' (unix socket only) and runs /docker-entrypoint-initdb.d/* (.sql piped to psql, .sh run or sourced). Then pg_ctl -m fast stops it.",
+   "where": "docker-entrypoint.sh"
+  },
+  {
+   "step": "exec postgres",
+   "detail": "exec \"$@\" replaces the shell so postgres is PID 1 and gets the stop signal directly.",
+   "where": "docker-entrypoint.sh"
+  },
+  {
+   "step": "Server startup checks",
+   "detail": "check_root, checkDataDir (permissions), then shared memory (mmap) and semaphores are created.",
+   "where": "src/backend/main/main.c, miscinit.c, sysv_shmem.c, posix_sema.c"
+  },
+  {
+   "step": "docker stop",
+   "detail": "Docker sends SIGINT. The postmaster maps it to a fast shutdown: abort sessions, checkpoint, exit.",
+   "where": "src/backend/postmaster/postmaster.c"
+  }
+ ],
+ "diagram": {
+  "claim": "A docker run goes from a root entrypoint, through gosu, to a postmaster that asks the kernel for memory, semaphores and sockets.",
+  "nodes": [
+   {
+    "id": "dockerd",
+    "label": "Container runtime",
+    "group": "host"
+   },
+   {
+    "id": "entry",
+    "label": "docker-entrypoint.sh",
+    "group": "image"
+   },
+   {
+    "id": "gosu",
+    "label": "gosu postgres",
+    "group": "image"
+   },
+   {
+    "id": "initdb",
+    "label": "initdb",
+    "group": "postgres"
+   },
+   {
+    "id": "pm",
+    "label": "postmaster",
+    "group": "postgres"
+   },
+   {
+    "id": "shm",
+    "label": "mmap shared memory",
+    "group": "kernel"
+   },
+   {
+    "id": "dsm",
+    "label": "/dev/shm (DSM)",
+    "group": "kernel"
+   },
+   {
+    "id": "sem",
+    "label": "POSIX semaphores",
+    "group": "kernel"
+   },
+   {
+    "id": "sock",
+    "label": "unix socket / TCP",
+    "group": "kernel"
+   },
+   {
+    "id": "vol",
+    "label": "VOLUME PGDATA",
+    "group": "host"
+   },
+   {
+    "id": "cache",
+    "label": "OS page cache",
+    "group": "kernel"
+   }
+  ],
+  "edges": [
+   {
+    "from": "dockerd",
+    "to": "entry",
+    "label": "starts as root"
+   },
+   {
+    "from": "entry",
+    "to": "gosu",
+    "label": "drops privileges via"
+   },
+   {
+    "from": "gosu",
+    "to": "initdb",
+    "label": "runs"
+   },
+   {
+    "from": "initdb",
+    "to": "vol",
+    "label": "writes cluster to"
+   },
+   {
+    "from": "gosu",
+    "to": "pm",
+    "label": "execs"
+   },
+   {
+    "from": "pm",
+    "to": "shm",
+    "label": "maps"
+   },
+   {
+    "from": "pm",
+    "to": "dsm",
+    "label": "opens with shm_open"
+   },
+   {
+    "from": "pm",
+    "to": "sem",
+    "label": "initializes"
+   },
+   {
+    "from": "pm",
+    "to": "sock",
+    "label": "listens on"
+   },
+   {
+    "from": "pm",
+    "to": "cache",
+    "label": "reads and fsyncs through"
+   },
+   {
+    "from": "dockerd",
+    "to": "pm",
+    "label": "sends SIGINT to"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/main/main.c",
+   "what": "check_root refuses to run as uid 0 (unless --version/--help style flags come first)."
+  },
+  {
+   "path": "src/backend/utils/init/miscinit.c",
+   "what": "checkDataDir: owner check and mode must be 0700 or 0750."
+  },
+  {
+   "path": "src/include/common/file_perm.h",
+   "what": "PG_DIR_MODE_GROUP is u=rwx,g=rx (0750)."
+  },
+  {
+   "path": "src/backend/port/sysv_shmem.c",
+   "what": "Main shared memory: anonymous mmap, huge pages (MAP_HUGETLB), small SysV key for locking."
+  },
+  {
+   "path": "src/include/storage/pg_shmem.h",
+   "what": "DEFAULT_SHARED_MEMORY_TYPE is MMAP on this platform path; SHMEM_TYPE_SYSV and MMAP enum."
+  },
+  {
+   "path": "src/backend/storage/ipc/dsm_impl.c",
+   "what": "Dynamic shared memory; POSIX variant uses shm_open and resizes the segment (error text: could not resize shared memory segment)."
+  },
+  {
+   "path": "src/include/storage/dsm_impl.h",
+   "what": "DEFAULT_DYNAMIC_SHARED_MEMORY_TYPE is DSM_IMPL_POSIX on Linux."
+  },
+  {
+   "path": "src/backend/port/posix_sema.c",
+   "what": "Unnamed POSIX semaphores via sem_init."
+  },
+  {
+   "path": "src/backend/port/sysv_sema.c",
+   "what": "SysV semaphore fallback."
+  },
+  {
+   "path": "src/backend/postmaster/postmaster.c",
+   "what": "handle_pm_shutdown_request_signal: SIGTERM smart, SIGINT fast, SIGQUIT immediate."
+  },
+  {
+   "path": "src/backend/storage/file/fd.c",
+   "what": "max_files_per_process (default 1000), virtual file descriptors, debug_io_direct check."
+  },
+  {
+   "path": "doc/src/sgml/runtime.sgml",
+   "what": "Docs for kernel resources and Linux memory overcommit / OOM killer."
+  },
+  {
+   "path": "src/backend/utils/misc/postgresql.conf.sample",
+   "what": "Defaults. The upstream sample says unix_socket_directories /tmp. The Debian image patches it to /var/run/postgresql."
+  }
+ ],
+ "interview": [
+  {
+   "q": "Why does Postgres refuse to run as root?",
+   "answer": [
+    "A bug or malicious extension would then have full control of the machine.",
+    "check_root in src/backend/main/main.c prints a refusal and exits.",
+    "In Docker the entrypoint starts as root only to chown, then uses gosu to become postgres."
+   ],
+   "trap": "Running the container with --user root and expecting the server to start. It will not."
+  },
+  {
+   "q": "What permissions must the data directory have?",
+   "answer": [
+    "0700, or 0750 if group read is wanted.",
+    "checkDataDir in miscinit.c rejects anything else with 'has invalid permissions'.",
+    "I ran it with mode 0755 and got exactly that FATAL plus the detail line."
+   ],
+   "trap": "Bind mounts from a host with a different uid or loose mode break startup. Fix the mount, not the check."
+  },
+  {
+   "q": "Why does the Docker image have a VOLUME and what is PGDATA?",
+   "answer": [
+    "PGDATA is where the cluster lives, in 18 it is /var/lib/postgresql/18/docker.",
+    "VOLUME /var/lib/postgresql keeps data outside the container layer so it survives removal.",
+    "Older images (17 and earlier) use /var/lib/postgresql/data as the volume."
+   ],
+   "trap": "Mounting an old-style path on an 18 image and thinking data persists."
+  },
+  {
+   "q": "What does POSTGRES_PASSWORD do and when does it apply?",
+   "answer": [
+    "It is passed to initdb through --pwfile, only on first init of an empty PGDATA.",
+    "Changing it later has no effect on an existing volume.",
+    "POSTGRES_PASSWORD_FILE works for Docker secrets."
+   ],
+   "trap": "Changing the env var and expecting the password to change."
+  },
+  {
+   "q": "How does /docker-entrypoint-initdb.d work?",
+   "answer": [
+    "After initdb, a temporary server starts with listen_addresses='' and runs each file in order.",
+    "*.sql go to psql, executable *.sh run, others .sh are sourced.",
+    "Scripts run only on an empty data directory."
+   ],
+   "trap": "Putting scripts there and expecting them to rerun on restart."
+  },
+  {
+   "q": "Why STOPSIGNAL SIGINT?",
+   "answer": [
+    "The postmaster maps SIGTERM to smart, SIGINT to fast, SIGQUIT to immediate shutdown (postmaster.c).",
+    "Smart waits for all clients to leave, so docker stop would hit its timeout and SIGKILL.",
+    "Fast aborts sessions and checkpoints cleanly. I sent SIGINT to a scratch server and saw 'checkpoint starting: shutdown immediate' then 'database system is shut down'."
+   ],
+   "trap": "SIGKILL or immediate means crash recovery on next start."
+  },
+  {
+   "q": "Why do parallel queries fail with a 64MB /dev/shm?",
+   "answer": [
+    "Parallel workers share data through DSM segments. With dynamic_shared_memory_type=posix these are shm_open files in /dev/shm.",
+    "Docker limits /dev/shm to 64MB by default.",
+    "When the segment cannot be resized you see 'could not resize shared memory segment ... No space left on device'.",
+    "Fix with --shm-size, or reduce parallel workers and work_mem."
+   ],
+   "trap": "Blaming shared_buffers. Main shared memory is a separate mmap, not /dev/shm."
+  },
+  {
+   "q": "How does main shared memory differ from DSM, and what about huge pages?",
+   "answer": [
+    "Main segment: shared_memory_type defaults to mmap on Linux, a small SysV segment is kept just for the interlock.",
+    "huge_pages defaults to try: MAP_HUGETLB is attempted and quietly dropped if it fails. 'on' needs mmap type and reserved host huge pages.",
+    "In a container, huge pages must be reserved on the host and allowed to the container."
+   ],
+   "trap": "Setting huge_pages=on in a container with no hugepage allocation, so the server will not start."
+  },
+  {
+   "q": "What is double buffering and why does fsync matter in containers?",
+   "answer": [
+    "Postgres caches pages in shared_buffers and the kernel caches them again in the page cache.",
+    "fsync (default on) forces WAL and data to disk so a crash does not lose commits.",
+    "Container memory limits (cgroups) usually count page cache too.",
+    "O_DIRECT is only exposed as the developer setting debug_io_direct."
+   ],
+   "trap": "Turning fsync off for speed on data you care about. Overlay filesystems do not make it safe."
+  },
+  {
+   "q": "Why can the OOM killer kill Postgres in a container, and what helps?",
+   "answer": [
+    "The cgroup memory limit makes the kernel kill the largest process when exceeded.",
+    "If a backend dies by SIGKILL the postmaster restarts all backends in crash recovery.",
+    "Docs in runtime.sgml suggest vm.overcommit_memory=2 (host setting) and sizing work_mem times connections carefully.",
+    "Set container memory above shared_buffers plus connections times work_mem."
+   ],
+   "trap": "Thinking the container can set vm.overcommit_memory. It is a host kernel setting."
+  },
+  {
+   "q": "Which capabilities does it need, and how do sockets and ulimit fit in?",
+   "answer": [
+    "The server needs none. The entrypoint typically needs CHOWN, SETUID and SETGID while root, sometimes more for existing mounts. Drop the rest.",
+    "Default listen_addresses is localhost, which is unreachable from outside a container, so the image config makes it listen on all interfaces. The init temp server uses '' (socket only).",
+    "max_files_per_process defaults to 1000 and Postgres checks the real ulimit -n at start; a low nofile limit shrinks usable files."
+   ],
+   "trap": "Assuming EXPOSE 5432 publishes the port. It only documents it; you still need -p."
+  }
+ ],
+ "contributor_tips": [
+  "Compare behavior against docs: doc/src/sgml/runtime.sgml covers kernel resources and OOM.",
+  "When touching shmem or DSM code, test with a small /dev/shm or tmpfs to see the failure path.",
+  "Use a scratch cluster with pg_ctl -D tmpdir and a high port; never reuse a real data directory.",
+  "Keep unix socket paths short: my first run failed because the path exceeded the 103 byte macOS limit (Linux limit is 107)."
+ ],
+ "glossary": [
+  {
+   "term": "gosu",
+   "meaning": "A tiny tool that switches user then execs a command, with no extra process left behind."
+  },
+  {
+   "term": "PGDATA",
+   "meaning": "The directory holding the database cluster files."
+  },
+  {
+   "term": "DSM",
+   "meaning": "Dynamic shared memory, temporary segments used by parallel queries."
+  },
+  {
+   "term": "/dev/shm",
+   "meaning": "A tmpfs RAM-backed folder where POSIX shared memory lives."
+  },
+  {
+   "term": "Smart / fast / immediate shutdown",
+   "meaning": "SIGTERM waits for clients; SIGINT disconnects them and checkpoints; SIGQUIT exits at once and needs crash recovery."
+  },
+  {
+   "term": "OOM killer",
+   "meaning": "The kernel feature that kills a process when memory runs out."
+  },
+  {
+   "term": "Capability",
+   "meaning": "One slice of root power, such as CHOWN."
+  },
+  {
+   "term": "Page cache",
+   "meaning": "Kernel memory holding recently read or written file data."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "cd ~/postgres && sed -n 443,452p src/backend/main/main.c",
+   "shows": "The root refusal message."
+  },
+  {
+   "cmd": "cd ~/postgres && sed -n 340,360p src/backend/utils/init/miscinit.c",
+   "shows": "The 0700 or 0750 permission check."
+  },
+  {
+   "cmd": "cd ~/postgres && sed -n 2076,2092p src/backend/postmaster/postmaster.c",
+   "shows": "SIGTERM smart, SIGINT fast, SIGQUIT immediate."
+  },
+  {
+   "cmd": "curl -s https://raw.githubusercontent.com/docker-library/postgres/master/18/bookworm/Dockerfile | grep -E 'PGDATA|VOLUME|STOPSIGNAL|gosu|ENTRYPOINT'",
+   "shows": "The image settings."
+  },
+  {
+   "cmd": "D=$(mktemp -d /tmp/pgd.XXXX); /opt/homebrew/opt/postgresql@16/bin/initdb -D $D/data >/dev/null; chmod 755 $D/data; /opt/homebrew/opt/postgresql@16/bin/postgres -D $D/data -p 55439; rm -rf $D",
+   "shows": "The invalid permissions FATAL."
+  },
+  {
+   "cmd": "cd ~/postgres && grep -n 'DEFAULT_DYNAMIC_SHARED_MEMORY_TYPE' src/include/storage/dsm_impl.h",
+   "shows": "posix DSM is the Linux default."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "src/backend/main/main.c",
+   "what": "check_root"
+  },
+  {
+   "path": "src/backend/utils/init/miscinit.c",
+   "what": "checkDataDir"
+  },
+  {
+   "path": "src/backend/port/sysv_shmem.c",
+   "what": "main shared memory"
+  },
+  {
+   "path": "src/backend/port/posix_sema.c",
+   "what": "POSIX semaphores"
+  },
+  {
+   "path": "src/backend/port/sysv_sema.c",
+   "what": "SysV semaphores"
+  },
+  {
+   "path": "src/backend/storage/ipc/dsm_impl.c",
+   "what": "dynamic shared memory"
+  },
+  {
+   "path": "src/backend/postmaster/postmaster.c",
+   "what": "shutdown signals"
+  },
+  {
+   "path": "src/backend/storage/file/fd.c",
+   "what": "max_files_per_process, debug_io_direct"
+  },
+  {
+   "path": "src/backend/utils/misc/postgresql.conf.sample",
+   "what": "default settings"
+  },
+  {
+   "path": "doc/src/sgml/runtime.sgml",
+   "what": "kernel resources and OOM docs"
+  }
+ ],
+ "verified_by_running": [
+  "Fetched docker-entrypoint.sh and 18/bookworm/Dockerfile from docker-library/postgres master (gosu postgres, STOPSIGNAL SIGINT, PGDATA /var/lib/postgresql/18/docker, VOLUME /var/lib/postgresql).",
+  "ls confirmed all listed source files exist in the 20devel repo.",
+  "Postgres 16.6 started with data dir mode 0755 printed: FATAL data directory has invalid permissions, DETAIL Permissions should be u=rwx (0700) or u=rwx,g=rx (0750).",
+  "Scratch 16.6 server on port 55439 with listen_addresses='' made only a unix socket and .lock file; SHOW gave shared_memory_type=mmap, dynamic_shared_memory_type=posix, huge_pages=try, max_files_per_process=1000.",
+  "kill -INT on the postmaster logged 'checkpoint starting: shutdown immediate' and 'database system is shut down'; postmaster.pid was removed.",
+  "Temp dir deleted. Docker was not started; the docker binary exists but the daemon was not used."
+ ],
+ "more": [
+  "Scripts in /docker-entrypoint-initdb.d run only when PGDATA is empty. .sql.gz files are decompressed and non-executable .sh files are sourced.",
+  "Postgres is PID 1 in the container. Use docker run --init if you worry about zombie processes.",
+  "docker stop sends SIGINT (a fast shutdown), then SIGKILL after 10 seconds. Raise --stop-timeout when checkpoints are long.",
+  "Shared memory is anonymous mmap, so no SHMMAX tuning is needed. It still counts against the container memory limit, like page cache does.",
+  "The image listens on all interfaces, but the port is unreachable until you publish it with -p. EXPOSE is only documentation."
+ ]
+}

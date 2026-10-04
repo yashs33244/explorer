@@ -1,0 +1,466 @@
+{
+ "key": "features",
+ "title": "What PostgreSQL gives you out of the box",
+ "one_liner": "PostgreSQL ships with rich data types, powerful SQL, procedural languages, full-text search, strong safety rules, data-integration tools and an extension system, all living in a few well-named source folders.",
+ "analogy": "Think of PostgreSQL as a well-stocked workshop. The main room has the standard tools (types, SQL, constraints). The side rooms (src/pl, contrib) hold power tools you can switch on with one command (CREATE EXTENSION). Every tool has a label on the door, and that label is a source directory.",
+ "big_picture": [
+  "Postgres is built so that almost everything is a catalog row: types, functions, operators, index methods, languages. That is why so many features can be added without changing the core.",
+  "The core engine lives in src/backend. Parser turns SQL into a tree, the rewriter and planner shape it, and the executor runs it. Most SQL features you use are a node type in one of those stages.",
+  "Built-in data types mostly live in src/backend/utils/adt (adt means abstract data type). One .c file per type family, for example jsonb.c, rangetypes.c, uuid.c, enum.c.",
+  "Procedural languages live in src/pl (plpgsql, plperl, plpython, tcl). Only plpgsql is installed in every new database by default.",
+  "Optional extras live in contrib. You turn one on with CREATE EXTENSION. On the 16.6 install I ran, 58 extensions were listed in pg_available_extensions.",
+  "Integration features are spread out: LISTEN/NOTIFY in src/backend/commands/async.c, COPY in src/backend/commands/copy*.c, logical decoding in src/backend/replication/logical, foreign data wrappers in src/backend/foreign plus contrib/postgres_fdw.",
+  "Version note: the repo is 20devel. I ran SQL on a scratch PostgreSQL 16.6 (the only server binary on this machine), so anything newer is checked in source only. MERGE ... RETURNING and merge_action() are 17+ (I saw the syntax error on 16.6, and merge_action is in primnodes.h). uuidv7 generation (generate_uuidv7 in uuid.c) is 18+. Virtual generated columns (ATTRIBUTE_GENERATED_VIRTUAL 'v' in pg_attribute.h) are 18+."
+ ],
+ "flow": [
+  {
+   "step": "Theme 1: Data types",
+   "detail": "1) Arrays: SELECT ARRAY[1,2,3] @> ARRAY[2]; (src/backend/utils/adt/arrayfuncs.c). 2) jsonb: SELECT '{\"a\":{\"b\":5}}'::jsonb #>> '{a,b}'; returns 5 (jsonb.c, jsonb_op.c, jsonb_gin.c). 3) Ranges: SELECT '[2024-01-01,2024-02-01)'::daterange * '[2024-01-15,2024-03-01)'::daterange; returns [2024-01-15,2024-02-01) (rangetypes.c, multirangetypes.c). 4) Enums: CREATE TYPE mood AS ENUM ('sad','ok','happy'); then 'ok'::mood < 'happy'::mood is true (enum.c, commands/typecmds.c). 5) Composite: CREATE TYPE pt AS (x int, y int); SELECT (row(1,2)::pt).y; (rowtypes.c). 6) uuid and text search types: SELECT gen_random_uuid(); (uuid.c) and to_tsvector/to_tsquery (tsvector.c, tsquery.c).",
+   "where": "src/backend/utils/adt"
+  },
+  {
+   "step": "Theme 2: Query power",
+   "detail": "1) Recursive CTE: WITH RECURSIVE t(n) AS (SELECT 1 UNION ALL SELECT n+1 FROM t WHERE n<5) SELECT sum(n) FROM t; gave 15 (nodeRecursiveunion.c, nodeCtescan.c, parser/parse_cte.c). 2) Window functions: SELECT x, sum(x) OVER (ORDER BY x) FROM generate_series(1,4) x; gave 1,3,6,10 (nodeWindowAgg.c). 3) LATERAL: SELECT g, l.v FROM generate_series(1,2) g, LATERAL (SELECT g*10 AS v) l; gave 10 and 20 (planner and executor). 4) MERGE: MERGE INTO kv t USING (VALUES (1,'c'),(2,'d')) s(k,v) ON t.k=s.k WHEN MATCHED THEN UPDATE SET v=s.v WHEN NOT MATCHED THEN INSERT (k,v) VALUES (s.k,s.v); MERGE 2 on 16.6 (parser/parse_merge.c, executor/nodeModifyTable.c). 5) Upsert: INSERT INTO kv VALUES (1,'b') ON CONFLICT (k) DO UPDATE SET v=excluded.v RETURNING *; (nodeModifyTable.c). 6) Job queues: SELECT * FROM kv ORDER BY k FOR UPDATE SKIP LOCKED LIMIT 1; skips rows other sessions hold (nodeLockRows.c).",
+   "where": "src/backend/executor, src/backend/parser"
+  },
+  {
+   "step": "Theme 3: Programmability",
+   "detail": "1) Function: CREATE FUNCTION dbl(i int) RETURNS int LANGUAGE plpgsql AS $$ BEGIN RETURN i*2; END $$; dbl(21) gave 42 (commands/functioncmds.c). 2) Procedure: CREATE PROCEDURE bump() ... ; CALL bump(); procedures can run transaction control, functions cannot. 3) Trigger: CREATE TRIGGER kv_ai AFTER INSERT ON kv FOR EACH ROW EXECUTE FUNCTION trg(); my insert wrote 'INSERT 9' to an audit table (commands/trigger.c). 4) Event trigger: CREATE EVENT TRIGGER et ON ddl_command_end EXECUTE FUNCTION ddl_log(); printed 'ddl: CREATE TABLE' (commands/event_trigger.c). 5) Languages: only c, internal, plpgsql, sql exist by default (I listed pg_language). plperl, plpython and pltcl are separate extensions in src/pl/plperl, src/pl/plpython, src/pl/tcl. plpgsql itself is src/pl/plpgsql/src (pl_gram.y, pl_comp.c, pl_exec.c).",
+   "where": "src/pl, src/backend/commands"
+  },
+  {
+   "step": "Theme 4: Search",
+   "detail": "1) Full-text: SELECT to_tsvector('english','The quick brown foxes jumped') @@ to_tsquery('english','fox & jump'); true, because stemming turns foxes into fox (src/backend/tsearch: wparser_def.c, dict_*.c, ts_parse.c; ranking in utils/adt/tsrank.c). 2) GIN on text search: CREATE INDEX ON w USING gin (to_tsvector('english', t)); (src/backend/access/gin). 3) Trigrams: CREATE EXTENSION pg_trgm; SELECT t, similarity(t,'postgrs') FROM w ORDER BY 2 DESC; gave postgre 0.6 then postgres 0.545 (contrib/pg_trgm/trgm_op.c). 4) Fuzzy index: CREATE INDEX ON w USING gin (t gin_trgm_ops); speeds LIKE and similarity (trgm_gin.c, trgm_gist.c). 5) jsonb search: a GIN index on a jsonb column speeds the @> operator (utils/adt/jsonb_gin.c). 6) Dictionaries and parsers are pluggable: see src/backend/tsearch/dicts and dict_ispell.c.",
+   "where": "src/backend/tsearch, contrib/pg_trgm"
+  },
+  {
+   "step": "Theme 5: Integrity and safety",
+   "detail": "1) Transactional DDL: BEGIN; CREATE TABLE td(i int); ROLLBACK; then to_regclass('td') is NULL (access/transam/xact.c). 2) CHECK constraint: price numeric CHECK (price>0); inserting -1 gave 'violates check constraint \"c_price_check\"' (catalog/heap.c). 3) Generated column: b int GENERATED ALWAYS AS (a*2) STORED; a=3 gave b=6 (virtual columns are 18+). 4) Row level security: ALTER TABLE doc ENABLE ROW LEVEL SECURITY; CREATE POLICY p ON doc USING (owner = current_user); as role alice only alice's row showed (commands/policy.c, rewrite/rowsecurity.c). 5) Other constraints: PRIMARY KEY, UNIQUE, FOREIGN KEY, EXCLUDE (commands/tablecmds.c, utils/adt/ri_triggers.c for foreign key checks).",
+   "where": "src/backend/catalog, src/backend/rewrite"
+  },
+  {
+   "step": "Theme 6: Integration",
+   "detail": "1) LISTEN/NOTIFY: LISTEN ch; NOTIFY ch, 'hi'; psql printed 'Asynchronous notification \"ch\" with payload \"hi\"' (commands/async.c: Async_Listen, Async_Notify, AtCommit_Notify). 2) COPY: COPY (SELECT 1 AS a, 'x' AS b) TO STDOUT WITH CSV HEADER; (commands/copy.c DoCopy, copyfrom.c, copyto.c). 3) Foreign data wrappers: CREATE EXTENSION postgres_fdw; CREATE SERVER ... ; CREATE FOREIGN TABLE kv_remote(...) SERVER loop; SELECT count(*) FROM kv_remote; returned 4 (src/backend/foreign/foreign.c, commands/foreigncmds.c, contrib/postgres_fdw/postgres_fdw.c). 4) Publications: CREATE PUBLICATION pub FOR TABLE kv; (commands/publicationcmds.c). 5) Logical decoding: needs wal_level=logical; SELECT pg_create_logical_replication_slot('s','pgoutput'); then pg_logical_slot_peek_binary_changes returned changes after an INSERT (replication/logical/decode.c, reorderbuffer.c, replication/pgoutput/pgoutput.c; contrib/test_decoding is a readable example plugin).",
+   "where": "src/backend/commands, src/backend/replication"
+  },
+  {
+   "step": "Theme 7: Extensibility",
+   "detail": "1) CREATE EXTENSION reads a .control file and a SQL script (commands/extension.c). 2) pg_stat_statements: add it to shared_preload_libraries, CREATE EXTENSION, SELECT calls FROM pg_stat_statements; (contrib/pg_stat_statements/pg_stat_statements.c). 3) pgcrypto: crypt('pw', gen_salt('bf')) and digest('a','sha256') (contrib/pgcrypto/pgcrypto.c, crypt-blowfish.c). 4) hstore and citext: 'a=>1,b=>2'::hstore -> 'b' gave 2, and 'ABC'::citext = 'abc' is true (contrib/hstore/hstore_op.c, contrib/citext/citext.c). 5) uuid-ossp: uuid_generate_v4() (contrib/uuid-ossp/uuid-ossp.c). 6) Inspection tools: pageinspect page_header(get_raw_page('kv',0)) gave lower 56, upper 7872; amcheck bt_index_check('kv_pkey') returned cleanly (contrib/pageinspect/rawpage.c, contrib/amcheck/verify_nbtree.c). postgres_fdw and pg_trgm are covered above.",
+   "where": "contrib/, src/backend/commands/extension.c"
+  }
+ ],
+ "diagram": {
+  "claim": "A SQL statement goes through parser, rewriter, planner and executor, and each built-in feature plugs in at one of these stages or in the catalogs and extension layer.",
+  "nodes": [
+   {
+    "id": "sql",
+    "label": "SQL text from client",
+    "group": "input"
+   },
+   {
+    "id": "parser",
+    "label": "Parser (src/backend/parser)",
+    "group": "core"
+   },
+   {
+    "id": "rewrite",
+    "label": "Rewriter + RLS (src/backend/rewrite)",
+    "group": "core"
+   },
+   {
+    "id": "planner",
+    "label": "Planner (src/backend/optimizer)",
+    "group": "core"
+   },
+   {
+    "id": "executor",
+    "label": "Executor (src/backend/executor)",
+    "group": "core"
+   },
+   {
+    "id": "adt",
+    "label": "Data types (utils/adt)",
+    "group": "types"
+   },
+   {
+    "id": "pl",
+    "label": "PL languages (src/pl)",
+    "group": "programs"
+   },
+   {
+    "id": "tsearch",
+    "label": "Text search (src/backend/tsearch)",
+    "group": "search"
+   },
+   {
+    "id": "async",
+    "label": "LISTEN/NOTIFY and COPY (commands)",
+    "group": "integration"
+   },
+   {
+    "id": "repl",
+    "label": "Logical decoding (replication/logical)",
+    "group": "integration"
+   },
+   {
+    "id": "ext",
+    "label": "Extensions (commands/extension.c + contrib)",
+    "group": "extend"
+   }
+  ],
+  "edges": [
+   {
+    "from": "sql",
+    "to": "parser",
+    "label": "is parsed by"
+   },
+   {
+    "from": "parser",
+    "to": "rewrite",
+    "label": "hands tree to"
+   },
+   {
+    "from": "rewrite",
+    "to": "planner",
+    "label": "feeds"
+   },
+   {
+    "from": "planner",
+    "to": "executor",
+    "label": "emits plan for"
+   },
+   {
+    "from": "executor",
+    "to": "adt",
+    "label": "calls operators in"
+   },
+   {
+    "from": "executor",
+    "to": "pl",
+    "label": "invokes functions in"
+   },
+   {
+    "from": "adt",
+    "to": "tsearch",
+    "label": "shares tsvector with"
+   },
+   {
+    "from": "executor",
+    "to": "async",
+    "label": "utility.c runs"
+   },
+   {
+    "from": "executor",
+    "to": "repl",
+    "label": "logged to WAL, read by"
+   },
+   {
+    "from": "ext",
+    "to": "adt",
+    "label": "adds new types to"
+   },
+   {
+    "from": "ext",
+    "to": "pl",
+    "label": "installs languages into"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/utils/adt/jsonb.c",
+   "what": "jsonb input and output; neighbours jsonb_op.c, jsonb_gin.c, jsonb_util.c"
+  },
+  {
+   "path": "src/backend/utils/adt/rangetypes.c",
+   "what": "range types; multirangetypes.c holds multiranges"
+  },
+  {
+   "path": "src/backend/executor/nodeModifyTable.c",
+   "what": "executes INSERT, UPDATE, DELETE, MERGE and ON CONFLICT"
+  },
+  {
+   "path": "src/backend/executor/nodeLockRows.c",
+   "what": "row locking, including SKIP LOCKED handling"
+  },
+  {
+   "path": "src/backend/parser/parse_merge.c",
+   "what": "turns MERGE syntax into a query tree"
+  },
+  {
+   "path": "src/pl/plpgsql/src/pl_exec.c",
+   "what": "the plpgsql interpreter"
+  },
+  {
+   "path": "src/backend/tsearch/ts_parse.c",
+   "what": "text search parsing and dictionary pipeline"
+  },
+  {
+   "path": "src/backend/commands/async.c",
+   "what": "LISTEN, UNLISTEN, NOTIFY"
+  },
+  {
+   "path": "src/backend/commands/extension.c",
+   "what": "CREATE/ALTER/DROP EXTENSION"
+  },
+  {
+   "path": "src/backend/rewrite/rowsecurity.c",
+   "what": "adds row level security policy quals to queries"
+  },
+  {
+   "path": "src/backend/replication/logical/decode.c",
+   "what": "reads WAL and decodes it into row changes"
+  },
+  {
+   "path": "contrib/postgres_fdw/postgres_fdw.c",
+   "what": "FDW that talks to another Postgres server"
+  }
+ ],
+ "interview": [
+  {
+   "q": "Which PL languages come installed in a fresh database?",
+   "answer": [
+    "plpgsql, plus the sql and internal and c languages.",
+    "I listed pg_language on a new database and saw exactly: c, internal, plpgsql, sql.",
+    "plperl, plpython and pltcl are built from src/pl only if you configure them, and then loaded with CREATE EXTENSION."
+   ],
+   "trap": "Saying plpython is built in. It is optional and needs a build flag."
+  },
+  {
+   "q": "What is the difference between a function and a procedure?",
+   "answer": [
+    "A function returns a value and is used inside queries.",
+    "A procedure is run with CALL and can COMMIT or ROLLBACK inside its body.",
+    "Both are stored in pg_proc; prokind tells them apart."
+   ]
+  },
+  {
+   "q": "Where does the code for jsonb live, and what indexes help it?",
+   "answer": [
+    "src/backend/utils/adt/jsonb*.c.",
+    "A GIN index (jsonb_gin.c) speeds containment @> and key-exists ? operators.",
+    "jsonb is stored in a parsed binary form, so it does not keep key order or duplicate keys."
+   ],
+   "trap": "Confusing json (stores the text as typed) with jsonb (binary, deduplicated)."
+  },
+  {
+   "q": "How do INSERT ... ON CONFLICT and MERGE differ?",
+   "answer": [
+    "ON CONFLICT relies on a unique index and is atomic under concurrency.",
+    "MERGE joins a source to a target and can do update, delete or insert per row. It can raise a unique violation under races.",
+    "Both are executed in nodeModifyTable.c.",
+    "MERGE ... RETURNING and merge_action() arrived in 17; on 16.6 I got a syntax error."
+   ],
+   "trap": "Assuming MERGE is a drop-in upsert with the same concurrency guarantees."
+  },
+  {
+   "q": "How does SKIP LOCKED work for queues?",
+   "answer": [
+    "SELECT ... FOR UPDATE SKIP LOCKED ignores rows another transaction has locked.",
+    "Workers can each grab different jobs without waiting.",
+    "The handling is in executor/nodeLockRows.c (the 'couldn't lock tuple in SKIP LOCKED mode' branch)."
+   ]
+  },
+  {
+   "q": "Is DDL transactional in Postgres?",
+   "answer": [
+    "Yes. BEGIN; CREATE TABLE ...; ROLLBACK leaves no table. I checked: to_regclass returned NULL.",
+    "Catalog rows are ordinary heap tuples, so an aborted transaction leaves no visible catalog change. Cache invalidation then tells other backends.",
+    "A few commands cannot run in a transaction block, for example CREATE DATABASE and CREATE INDEX CONCURRENTLY."
+   ],
+   "trap": "Thinking all DDL is rollbackable. Some utility commands are not."
+  },
+  {
+   "q": "How does row level security get applied to a query?",
+   "answer": [
+    "Policies are stored in pg_policy.",
+    "The rewriter adds policy conditions to the query (rewrite/rowsecurity.c) before planning.",
+    "Table owners bypass RLS unless FORCE ROW LEVEL SECURITY is set; superusers and BYPASSRLS roles always bypass it."
+   ],
+   "trap": "Testing as the table owner or superuser and thinking RLS is broken."
+  },
+  {
+   "q": "Why can LISTEN/NOTIFY messages arrive late, and what are its limits?",
+   "answer": [
+    "Notifications are sent only when the sending transaction commits (AtCommit_Notify in async.c).",
+    "A listening client sees them between its own commands.",
+    "Payload is limited to under 8000 bytes, and there is a shared queue that can fill up (pg_notification_queue_usage())."
+   ],
+   "trap": "Using NOTIFY as a reliable message queue. Messages are lost if nobody is listening."
+  },
+  {
+   "q": "What does logical decoding need to work, and who reads the output?",
+   "answer": [
+    "wal_level must be logical and you need a replication slot.",
+    "decode.c reads WAL, reorderbuffer.c groups changes per transaction, and an output plugin (pgoutput, or test_decoding) formats them.",
+    "Publications and subscriptions are built on top of this."
+   ],
+   "trap": "Forgetting to drop an unused slot; it holds WAL and can fill the disk."
+  },
+  {
+   "q": "How is an extension installed and what is in it?",
+   "answer": [
+    "A .control file, one or more SQL scripts, and often a shared library.",
+    "CREATE EXTENSION runs the script and records the objects so DROP EXTENSION removes them together (commands/extension.c).",
+    "pg_stat_statements also needs shared_preload_libraries and a restart."
+   ],
+   "trap": "Running CREATE EXTENSION pg_stat_statements without preloading; the view then errors."
+  }
+ ],
+ "contributor_tips": [
+  "Pick a feature, then follow its regression test. Tests live in src/test/regress/sql and contrib/<name>/sql; expected output is in the matching expected folder.",
+  "Contrib modules are the friendliest first patches: small, self-contained, and each has its own Makefile and meson.build.",
+  "Always check which version a behaviour came in. This repo is 20devel, so compare with the release notes in doc/src/sgml/release-*.sgml before claiming a bug.",
+  "When you add a new SQL-visible function, you must edit src/include/catalog/pg_proc.dat and bump catversion.",
+  "Run make check (or meson test) before sending a patch. Patches go to the pgsql-hackers mailing list, not GitHub pull requests."
+ ],
+ "glossary": [
+  {
+   "term": "adt",
+   "meaning": "Abstract data type. The folder src/backend/utils/adt holds built-in types and their functions."
+  },
+  {
+   "term": "contrib",
+   "meaning": "Optional extension modules shipped in the Postgres source tree."
+  },
+  {
+   "term": "CTE",
+   "meaning": "Common table expression, the WITH clause."
+  },
+  {
+   "term": "FDW",
+   "meaning": "Foreign data wrapper. A plugin that lets you query outside data as a table."
+  },
+  {
+   "term": "GIN",
+   "meaning": "Generalized inverted index. Good for arrays, jsonb and text search."
+  },
+  {
+   "term": "RLS",
+   "meaning": "Row level security. Policies hide rows per user."
+  },
+  {
+   "term": "WAL",
+   "meaning": "Write-ahead log. Every change is written here first."
+  },
+  {
+   "term": "Logical decoding",
+   "meaning": "Turning WAL into row-level changes that other systems can read."
+  },
+  {
+   "term": "PL",
+   "meaning": "Procedural language, a language you can write server functions in."
+  },
+  {
+   "term": "Upsert",
+   "meaning": "Insert, or update if the row already exists (ON CONFLICT)."
+  }
+ ],
+ "try_it": [
+  {
+   "cmd": "initdb -D /tmp/pgplay && pg_ctl -D /tmp/pgplay -o \"-p 54330 -k /tmp -c listen_addresses=''\" -l /tmp/pgplay/log start",
+   "shows": "Starts a throwaway server on a private port and socket. Stop with pg_ctl -D /tmp/pgplay stop and delete the folder after."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54330 postgres -c \"select '{\\\"a\\\":{\\\"b\\\":5}}'::jsonb #>> '{a,b}', int4range(1,10) @> 5\"",
+   "shows": "jsonb path extraction and a range containment test (returns 5 and t)."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54330 postgres -c \"with recursive t(n) as (select 1 union all select n+1 from t where n<5) select sum(n) from t\"",
+   "shows": "A recursive CTE; prints 15."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54330 postgres -c \"select name, default_version from pg_available_extensions order by 1 limit 10\"",
+   "shows": "The contrib extensions you can switch on with CREATE EXTENSION."
+  },
+  {
+   "cmd": "psql -h /tmp -p 54330 postgres -c \"begin; create table td(i int); rollback; select to_regclass('td')\"",
+   "shows": "Transactional DDL: the table is gone after rollback (prints empty)."
+  },
+  {
+   "cmd": "ls src/backend/utils/adt | grep -E '^(jsonb|rangetypes|uuid|enum)'",
+   "shows": "Run in the postgres repo: the source files behind the data types."
+  }
+ ],
+ "file_tree": [
+  {
+   "path": "src/backend/utils/adt",
+   "what": "Built-in data types and their functions (jsonb.c, rangetypes.c, uuid.c, enum.c, arrayfuncs.c, rowtypes.c, tsvector.c)"
+  },
+  {
+   "path": "src/backend/tsearch",
+   "what": "Full-text search parser, dictionaries, ispell (wparser_def.c, ts_parse.c, dict_*.c, spell.c)"
+  },
+  {
+   "path": "src/backend/commands",
+   "what": "Utility commands: async.c, copy.c, copyfrom.c, copyto.c, event_trigger.c, extension.c, trigger.c, policy.c, publicationcmds.c, foreigncmds.c"
+  },
+  {
+   "path": "src/backend/executor",
+   "what": "Plan execution nodes (nodeModifyTable.c, nodeLockRows.c, nodeWindowAgg.c, nodeRecursiveunion.c, nodeCtescan.c, nodeForeignscan.c)"
+  },
+  {
+   "path": "src/backend/parser",
+   "what": "SQL parsing (parse_merge.c, parse_cte.c)"
+  },
+  {
+   "path": "src/backend/rewrite",
+   "what": "Rule rewriting and row level security (rowsecurity.c)"
+  },
+  {
+   "path": "src/backend/foreign",
+   "what": "FDW core API (foreign.c)"
+  },
+  {
+   "path": "src/backend/replication/logical",
+   "what": "Logical decoding (decode.c, reorderbuffer.c, snapbuild.c, worker.c)"
+  },
+  {
+   "path": "src/backend/replication/pgoutput",
+   "what": "The built-in logical replication output plugin (pgoutput.c)"
+  },
+  {
+   "path": "src/backend/access/gin",
+   "what": "GIN index implementation"
+  },
+  {
+   "path": "src/pl/plpgsql/src",
+   "what": "plpgsql language (pl_gram.y, pl_comp.c, pl_exec.c)"
+  },
+  {
+   "path": "src/pl/plperl",
+   "what": "PL/Perl (plperl.c)"
+  },
+  {
+   "path": "src/pl/plpython",
+   "what": "PL/Python (plpy_*.c)"
+  },
+  {
+   "path": "src/pl/tcl",
+   "what": "PL/Tcl"
+  },
+  {
+   "path": "contrib",
+   "what": "Optional modules: pg_stat_statements, pgcrypto, postgres_fdw, pg_trgm, amcheck, pageinspect, hstore, citext, uuid-ossp and more"
+  }
+ ],
+ "verified_by_running": [
+  "Ran a scratch PostgreSQL 16.6 (Homebrew) in a temp dir on port 54329 with a unix socket only; stopped it and deleted the data dir.",
+  "Array contains, jsonb path, daterange intersection, enum compare, composite field, gen_random_uuid all returned expected values.",
+  "tsvector @@ tsquery with stemming returned true; recursive CTE sum returned 15; window running sum gave 1,3,6,10; LATERAL returned 10 and 20.",
+  "ON CONFLICT DO UPDATE ... RETURNING worked; MERGE worked (MERGE 2) but MERGE ... RETURNING gave a syntax error on 16.6 (17+ feature).",
+  "SKIP LOCKED, plpgsql function and procedure, row trigger and event trigger (NOTICE ddl: CREATE TABLE) all worked.",
+  "pg_language on a fresh DB listed only c, internal, plpgsql, sql.",
+  "pg_trgm similarity: postgre 0.6, postgres 0.545 for 'postgrs'.",
+  "Transactional DDL rollback left no table; CHECK violation error text seen; stored generated column gave 6; RLS as role alice showed only alice's row.",
+  "LISTEN/NOTIFY delivered the payload in psql; COPY TO STDOUT CSV HEADER worked; publication and pgoutput logical slot returned changes with wal_level=logical.",
+  "postgres_fdw loopback foreign table counted 4 rows; pgcrypto, hstore, citext, uuid-ossp, pageinspect, amcheck, pg_stat_statements all loaded and returned results; pg_available_extensions had 58 rows.",
+  "Verified with ls that all cited source paths exist in the 20devel repo (configure says PACKAGE_VERSION 20devel) and grep confirmed merge_action in primnodes.h, generate_uuidv7 in uuid.c, ATTRIBUTE_GENERATED_VIRTUAL in pg_attribute.h."
+ ],
+ "more": [
+  "COPY and LISTEN/NOTIFY are utility commands. They skip the planner and go through tcop/utility.c ProcessUtility.",
+  "Primary key, unique and exclusion constraints are enforced by index code, not by triggers.",
+  "PostGIS, pgvector and TimescaleDB are third-party. They are not in this source tree.",
+  "Not covered here but built in: views, materialized views, sequences and identity columns, jsonpath, parallel query, JIT, plan caching, tablespaces and domains."
+ ]
+}

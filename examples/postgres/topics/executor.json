@@ -1,0 +1,346 @@
+{
+ "key": "executor",
+ "title": "Executor",
+ "one_liner": "The executor runs the planner's plan tree by pulling one row at a time from the top node down to the table scans.",
+ "analogy": "A kitchen line: the head chef asks for one dish, each cook asks the cook before them, and the pantry hands over one item at a time.",
+ "big_picture": [
+  "The planner makes a read-only Plan tree. The executor builds a matching PlanState tree for all changing data.",
+  "Execution is pull-based: the top node asks its children for one row, they ask theirs, down to the scans.",
+  "Every node has the same call shape: ExecProcNode(node) returns one TupleTableSlot, or an empty slot when done.",
+  "Rows travel in TupleTableSlots, a wrapper over a buffer tuple, heap tuple, minimal tuple or plain values.",
+  "WHERE clauses and target lists become flat ExprState step arrays. JIT can compile them to machine code for costly queries.",
+  "A Portal is the cursor-like object that drives the executor, so clients can fetch rows in batches."
+ ],
+ "flow": [
+  {
+   "step": "Portal starts",
+   "detail": "PortalStart picks a strategy such as PORTAL_ONE_SELECT and calls executor startup.",
+   "where": "src/backend/tcop/pquery.c: PortalStart"
+  },
+  {
+   "step": "ExecutorStart",
+   "detail": "Creates the EState (snapshot, memory context) and calls InitPlan.",
+   "where": "src/backend/executor/execMain.c: standard_ExecutorStart, InitPlan"
+  },
+  {
+   "step": "Build PlanState tree",
+   "detail": "ExecInitNode makes one PlanState per Plan node and sets its ExecProcNode function pointer.",
+   "where": "src/backend/executor/execProcnode.c: ExecInitNode"
+  },
+  {
+   "step": "Compile expressions",
+   "detail": "Quals go through ExecInitQual and target lists through ExecBuildProjectionInfo. ExecReadyExpr picks the interpreter or a JIT function.",
+   "where": "src/backend/executor/execExpr.c: ExecInitQual, ExecBuildProjectionInfo, ExecReadyExpr"
+  },
+  {
+   "step": "Run the plan",
+   "detail": "PortalRun calls ExecutorRun, which calls ExecutePlan to pull slots from the top node in a loop.",
+   "where": "src/backend/executor/execMain.c: standard_ExecutorRun, ExecutePlan"
+  },
+  {
+   "step": "Nodes pull from children",
+   "detail": "Each node calls ExecProcNode on its child, e.g. ExecHashJoin pulls from outer and hashed inner plans.",
+   "where": "src/backend/executor/nodeHashjoin.c: ExecHashJoin"
+  },
+  {
+   "step": "Send rows out",
+   "detail": "ExecutePlan hands each slot to the DestReceiver, which sends it to the client.",
+   "where": "src/backend/executor/execMain.c: ExecutePlan"
+  },
+  {
+   "step": "Finish and clean up",
+   "detail": "ExecutorFinish runs after-triggers. ExecutorEnd calls ExecEndPlan, which calls ExecEndNode to free everything.",
+   "where": "src/backend/executor/execMain.c: standard_ExecutorEnd, ExecEndPlan"
+  }
+ ],
+ "diagram": {
+  "claim": "A Portal drives ExecutorRun, which pulls slots up through the PlanState tree from scans to the client.",
+  "nodes": [
+   {
+    "id": "portal",
+    "label": "Portal",
+    "group": "Protocol"
+   },
+   {
+    "id": "execmain",
+    "label": "ExecutorRun",
+    "group": "Executor core"
+   },
+   {
+    "id": "estate",
+    "label": "EState",
+    "group": "Executor core"
+   },
+   {
+    "id": "top",
+    "label": "Top PlanState",
+    "group": "Plan tree"
+   },
+   {
+    "id": "join",
+    "label": "HashJoin node",
+    "group": "Plan tree"
+   },
+   {
+    "id": "sort",
+    "label": "Child (Hash/Sort)",
+    "group": "Plan tree"
+   },
+   {
+    "id": "scan",
+    "label": "SeqScan node",
+    "group": "Plan tree"
+   },
+   {
+    "id": "expr",
+    "label": "ExprState",
+    "group": "Expressions"
+   },
+   {
+    "id": "jit",
+    "label": "LLVM JIT",
+    "group": "Expressions"
+   },
+   {
+    "id": "slot",
+    "label": "TupleTableSlot",
+    "group": "Data"
+   },
+   {
+    "id": "heap",
+    "label": "Table pages",
+    "group": "Storage"
+   }
+  ],
+  "edges": [
+   {
+    "from": "portal",
+    "to": "execmain",
+    "label": "calls"
+   },
+   {
+    "from": "execmain",
+    "to": "estate",
+    "label": "uses"
+   },
+   {
+    "from": "execmain",
+    "to": "top",
+    "label": "pulls"
+   },
+   {
+    "from": "top",
+    "to": "join",
+    "label": "pulls"
+   },
+   {
+    "from": "join",
+    "to": "sort",
+    "label": "pulls"
+   },
+   {
+    "from": "sort",
+    "to": "scan",
+    "label": "pulls"
+   },
+   {
+    "from": "scan",
+    "to": "heap",
+    "label": "reads"
+   },
+   {
+    "from": "heap",
+    "to": "slot",
+    "label": "fills"
+   },
+   {
+    "from": "scan",
+    "to": "expr",
+    "label": "evaluates"
+   },
+   {
+    "from": "expr",
+    "to": "jit",
+    "label": "compiles"
+   },
+   {
+    "from": "slot",
+    "to": "sort",
+    "label": "to parent"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/executor/README",
+   "what": "Design notes: plan tree vs state tree, expression steps, EvalPlanQual, MERGE."
+  },
+  {
+   "path": "src/backend/executor/execMain.c",
+   "what": "ExecutorStart/Run/Finish/End, InitPlan and ExecutePlan."
+  },
+  {
+   "path": "src/backend/executor/execProcnode.c",
+   "what": "ExecInitNode, ExecProcNodeFirst, MultiExecProcNode, ExecEndNode dispatch."
+  },
+  {
+   "path": "src/backend/executor/execExpr.c",
+   "what": "Compiles expression trees into flat ExprEvalStep arrays."
+  },
+  {
+   "path": "src/backend/executor/execExprInterp.c",
+   "what": "ExecInterpExpr, the interpreter that runs expression steps."
+  },
+  {
+   "path": "src/backend/executor/execTuples.c",
+   "what": "TupleTableSlot creation, store and clear functions for each slot type."
+  },
+  {
+   "path": "src/backend/executor/nodeSeqscan.c",
+   "what": "Simplest scan node: SeqNext and ExecSeqScan variants."
+  },
+  {
+   "path": "src/backend/executor/nodeHashjoin.c",
+   "what": "ExecHashJoin with HJ_BUILD_HASHTABLE state machine."
+  },
+  {
+   "path": "src/backend/tcop/pquery.c",
+   "what": "PortalStart, PortalRun and PortalRunSelect drive the executor."
+  },
+  {
+   "path": "src/backend/jit/llvm/llvmjit_expr.c",
+   "what": "llvm_compile_expr turns expression steps into native code."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What does the executor do, and what does it get as input?",
+   "answer": [
+    "It runs the plan the planner made and produces result rows.",
+    "Input is a PlannedStmt holding a Plan tree.",
+    "It also handles INSERT, UPDATE, DELETE and MERGE via a ModifyTable node."
+   ],
+   "trap": "The executor does not choose the plan. That is the planner's job."
+  },
+  {
+   "q": "What is the difference between a Plan node and a PlanState node?",
+   "answer": [
+    "Plan nodes are read-only and made by the planner.",
+    "PlanState nodes mirror them and hold all runtime data.",
+    "Read-only plans can be cached and reused safely."
+   ],
+   "trap": "Plan and PlanState are not the same tree. They are parallel trees of equal shape."
+  },
+  {
+   "q": "What does pull-based (demand-pull) execution mean?",
+   "answer": [
+    "The top node asks for one row. It calls ExecProcNode on its child.",
+    "Each child does the same, down to a scan node.",
+    "A node returns one slot, or NULL or an empty slot at the end."
+   ],
+   "trap": "Rows are not pushed up in bulk. Each call yields a single row."
+  },
+  {
+   "q": "How does ExecProcNode know which function to call?",
+   "answer": [
+    "Each PlanState has an ExecProcNode function pointer set by ExecInitNode.",
+    "ExecSetExecProcNode first points it at ExecProcNodeFirst.",
+    "The first call checks stack depth, then swaps in the real function or ExecProcNodeInstr for EXPLAIN ANALYZE."
+   ],
+   "trap": "It is not a big switch on every call. It is a pointer set once."
+  },
+  {
+   "q": "What is a TupleTableSlot and why does it exist?",
+   "answer": [
+    "A slot is a container that passes one row between nodes.",
+    "It has types: TTSOpsBufferHeapTuple, TTSOpsHeapTuple, TTSOpsMinimalTuple, TTSOpsVirtual.",
+    "It lets nodes read columns without copying until needed."
+   ],
+   "trap": "A slot is not a tuple copy. It may just point into a buffer page."
+  },
+  {
+   "q": "How do SeqScan and IndexScan share code?",
+   "answer": [
+    "Both use ExecScan with an access method callback: SeqNext or IndexNext.",
+    "ExecScan applies the qual (WHERE) and the projection.",
+    "Only the way of fetching the next raw row differs."
+   ]
+  },
+  {
+   "q": "How does Hash Join work, and why is it a state machine?",
+   "answer": [
+    "It first builds a hash table from the inner side (HJ_BUILD_HASHTABLE).",
+    "Then it reads outer rows and probes the table for matches.",
+    "It must remember where it was between calls, since it returns one row per call."
+   ],
+   "trap": "It is not a nested loop. Rows are matched by hash bucket, not by scanning all pairs."
+  },
+  {
+   "q": "How are Sort and Agg different from scans?",
+   "answer": [
+    "Sort is blocking: ExecSort reads all input into tuplesort, then returns rows in order.",
+    "Agg has strategies AGG_PLAIN, AGG_SORTED and AGG_HASHED.",
+    "These nodes may spill to disk when memory runs out."
+   ],
+   "trap": "Sort cannot return the first row before it reads all input."
+  },
+  {
+   "q": "How are expressions evaluated and when does JIT kick in?",
+   "answer": [
+    "ExecInitExpr, ExecInitQual and friends turn the tree into a flat steps array.",
+    "ExecInterpExpr runs the steps in one loop, no recursion.",
+    "The planner decides on JIT: standard_planner sets jitFlags when cost is above jit_above_cost (default 100000).",
+    "Then ExecReadyExpr may call llvm_compile_expr. This needs a build with LLVM."
+   ],
+   "trap": "JIT is not always faster. Compile time can cost more than it saves on cheap queries."
+  },
+  {
+   "q": "What is a Portal and how does it relate to the executor?",
+   "answer": [
+    "A Portal holds a query plus its execution state, like a cursor.",
+    "PortalRun calls ExecutorRun, optionally with a row count limit.",
+    "Strategies like PORTAL_ONE_SELECT allow fetching in batches; PORTAL_MULTI_QUERY runs everything at once."
+   ],
+   "trap": "Portals are not only for DECLARE CURSOR. Every query goes through one."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/executor/README first, then nodeSeqscan.c. It is the smallest complete node.",
+  "Trace one SELECT in gdb from PortalRun down to SeqNext to see the pull model live.",
+  "Adding a node touches many places: Plan, PlanState, ExecInitNode, ExecProcNode, EXPLAIN. Mirror an existing small node.",
+  "Be careful with memory contexts and slot ownership. Many bugs are a slot pointing to freed data."
+ ],
+ "glossary": [
+  {
+   "term": "PlanState",
+   "meaning": "Runtime state for one plan node, with an ExecProcNode pointer."
+  },
+  {
+   "term": "EState",
+   "meaning": "Per-query executor state: snapshot, memory context, range table."
+  },
+  {
+   "term": "TupleTableSlot",
+   "meaning": "Container that carries one row between nodes."
+  },
+  {
+   "term": "ExprState",
+   "meaning": "Flat compiled form of one expression, stored in steps[]."
+  },
+  {
+   "term": "Portal",
+   "meaning": "Cursor-like object that holds a query and drives execution."
+  },
+  {
+   "term": "JIT",
+   "meaning": "Compiles expressions to native code at run time using LLVM."
+  }
+ ],
+ "more": [
+  "This is the Volcano or iterator model: one tuple per call.",
+  "ExprContext is reset after every tuple so per-row memory does not leak.",
+  "ModifyTable runs INSERT, UPDATE, DELETE and MERGE, with RETURNING.",
+  "Gather and parallel workers; Hash batches and Sort spill to disk past work_mem.",
+  "Extensions hook in with ExecutorStart_hook and friends."
+ ]
+}

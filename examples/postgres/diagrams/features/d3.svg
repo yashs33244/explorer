@@ -1,0 +1,30 @@
+<svg class="hd" viewBox="0 0 800 606" role="img" aria-label="Where each PostgreSQL feature lives in the source tree" xmlns="http://www.w3.org/2000/svg"><defs><marker id="features-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box g5" x="14" y="272" width="140" height="60" rx="14"/>
+<g transform="translate(22,286.0) scale(.8)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="106.0" y="299.0" text-anchor="middle">postgres/</text><text class="d-s" x="106.0" y="316.0" text-anchor="middle">the repo</text>
+<rect class="d-blob" x="420" y="14" width="366" height="236" rx="34"/>
+<rect class="d-box g0" x="190" y="106.0" width="190" height="52" rx="14"/>
+<text class="d-t" x="285.0" y="129.0" text-anchor="middle">src/backend/</text><text class="d-s" x="285.0" y="146.0" text-anchor="middle">the engine</text>
+<path class="d-edge" d="M154,302 C172,302 172,132.0 190,132.0"/>
+<path class="d-edge" d="M380,132.0 H420"/>
+<rect class="d-box g4" x="436" y="44" width="340" height="34" rx="10"/><text class="d-t" x="450" y="66">utils/adt/</text><text class="d-s" x="762" y="66" text-anchor="end">jsonb.c, rangetypes.c</text>
+<rect class="d-box g4" x="436" y="84" width="340" height="34" rx="10"/><text class="d-t" x="450" y="106">tsearch/</text><text class="d-s" x="762" y="106" text-anchor="end">stemming, dictionaries</text>
+<rect class="d-box g4" x="436" y="124" width="340" height="34" rx="10"/><text class="d-t" x="450" y="146">commands/</text><text class="d-s" x="762" y="146" text-anchor="end">copy.c, async.c, extension.c</text>
+<rect class="d-box g4" x="436" y="164" width="340" height="34" rx="10"/><text class="d-t" x="450" y="186">replication/logical/</text><text class="d-s" x="762" y="186" text-anchor="end">decode.c</text>
+<rect class="d-box g4" x="436" y="204" width="340" height="34" rx="10"/><text class="d-t" x="450" y="226">foreign/</text><text class="d-s" x="762" y="226" text-anchor="end">foreign.c, FDW glue</text>
+<rect class="d-blob" x="420" y="262" width="366" height="118" rx="34"/>
+<rect class="d-box g1" x="190" y="295.0" width="190" height="52" rx="14"/>
+<text class="d-t" x="285.0" y="318.0" text-anchor="middle">src/pl/</text><text class="d-s" x="285.0" y="335.0" text-anchor="middle">languages</text>
+<path class="d-edge" d="M154,302 C172,302 172,321.0 190,321.0"/>
+<path class="d-edge" d="M380,321.0 H420"/>
+<rect class="d-box g4" x="436" y="292" width="340" height="34" rx="10"/><text class="d-t" x="450" y="314">plpgsql/src/</text><text class="d-s" x="762" y="314" text-anchor="end">pl_gram.y, pl_exec.c</text>
+<rect class="d-box g4" x="436" y="332" width="340" height="34" rx="10"/><text class="d-t" x="450" y="354">plperl, plpython, tcl</text><text class="d-s" x="762" y="354" text-anchor="end">extra languages</text>
+<rect class="d-blob" x="420" y="392" width="366" height="198" rx="34"/>
+<rect class="d-box g2" x="190" y="465.0" width="190" height="52" rx="14"/>
+<text class="d-t" x="285.0" y="488.0" text-anchor="middle">contrib/</text><text class="d-s" x="285.0" y="505.0" text-anchor="middle">CREATE EXTENSION</text>
+<path class="d-edge" d="M154,302 C172,302 172,491.0 190,491.0"/>
+<path class="d-edge" d="M380,491.0 H420"/>
+<rect class="d-box g4" x="436" y="422" width="340" height="34" rx="10"/><text class="d-t" x="450" y="444">pg_trgm/</text><text class="d-s" x="762" y="444" text-anchor="end">similarity, LIKE index</text>
+<rect class="d-box g4" x="436" y="462" width="340" height="34" rx="10"/><text class="d-t" x="450" y="484">postgres_fdw/</text><text class="d-s" x="762" y="484" text-anchor="end">foreign tables</text>
+<rect class="d-box g4" x="436" y="502" width="340" height="34" rx="10"/><text class="d-t" x="450" y="524">pgcrypto/</text><text class="d-s" x="762" y="524" text-anchor="end">hashes, crypt()</text>
+<rect class="d-box g4" x="436" y="542" width="340" height="34" rx="10"/><text class="d-t" x="450" y="564">pg_stat_statements/</text><text class="d-s" x="762" y="564" text-anchor="end">query stats</text></svg>

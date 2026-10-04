@@ -1,0 +1,56 @@
+<svg class="hd" viewBox="0 0 800 510" role="img" aria-label="Eight steps from docker run to a clean docker stop" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="docker-d2-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="15" y="20" width="770" height="170" rx="36"/>
+<text class="d-s" x="40" y="46">Entrypoint script, first start</text>
+<rect class="d-blob" x="15" y="215" width="770" height="150" rx="36"/>
+<text class="d-s" x="40" y="241">Then PostgreSQL itself</text>
+<rect class="d-blob2" x="15" y="395" width="770" height="95" rx="36"/>
+<text class="d-s" x="40" y="419">Linux kernel</text>
+
+<rect class="d-box g1" x="30" y="70" width="130" height="90" rx="14"/>
+<g transform="translate(53,76) scale(.6)"><rect class="d-fillpaper" x="4" y="4" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="16" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="28" width="32" height="9" rx="3"/></g>
+<text class="d-t" x="95" y="124" text-anchor="middle">docker run</text><text class="d-s" x="95" y="144" text-anchor="middle">entrypoint, uid 0</text>
+<rect class="d-box g1" x="240" y="70" width="130" height="90" rx="14"/>
+<g transform="translate(263,76) scale(.6)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28"/></g>
+<text class="d-t" x="305" y="124" text-anchor="middle">Prepare PGDATA</text><text class="d-s" x="305" y="144" text-anchor="middle">mkdir, chmod 700</text>
+<rect class="d-box g1" x="450" y="70" width="130" height="90" rx="14"/>
+<g transform="translate(473,76) scale(.6)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="515" y="124" text-anchor="middle">gosu postgres</text><text class="d-s" x="515" y="144" text-anchor="middle">now uid 999</text>
+<rect class="d-box g2" x="660" y="70" width="130" height="90" rx="14"/>
+<g transform="translate(683,76) scale(.6)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/></g>
+<text class="d-t" x="725" y="124" text-anchor="middle">initdb</text><text class="d-s" x="725" y="144" text-anchor="middle">no PG_VERSION yet</text>
+
+<rect class="d-box g2" x="660" y="250" width="130" height="90" rx="14"/>
+<g transform="translate(683,256) scale(.6)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="725" y="304" text-anchor="middle">Temp server</text><text class="d-s" x="725" y="324" text-anchor="middle">runs initdb.d files</text>
+<rect class="d-box g2" x="450" y="250" width="130" height="90" rx="14"/>
+<g transform="translate(473,256) scale(.6)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37"/></g>
+<text class="d-t" x="515" y="304" text-anchor="middle">exec postgres</text><text class="d-s" x="515" y="324" text-anchor="middle">becomes PID 1</text>
+<rect class="d-box g2" x="240" y="250" width="130" height="90" rx="14"/>
+<g transform="translate(263,256) scale(.6)"><rect class="d-fillpaper" x="7" y="17" width="26" height="19" rx="4"/><path class="d-line" d="M12,17 V12 C12,3 28,3 28,12 V17"/></g>
+<text class="d-t" x="305" y="304" text-anchor="middle">Startup checks</text><text class="d-s" x="305" y="324" text-anchor="middle">not root, mode 0700</text>
+<rect class="d-box g3" x="30" y="250" width="130" height="90" rx="14"/>
+<g transform="translate(53,256) scale(.6)"><circle class="d-fillpaper" cx="20" cy="20" r="15"/><path class="d-lineacc" d="M20,10 V20 L27,24"/></g>
+<text class="d-t" x="95" y="304" text-anchor="middle">docker stop</text><text class="d-s" x="95" y="324" text-anchor="middle">SIGINT, fast exit</text>
+
+<rect class="d-box g4" x="200" y="425" width="210" height="50" rx="14"/>
+<text class="d-t" x="305" y="455" text-anchor="middle">shm, semaphores, socket</text>
+
+<path class="d-edge acc" d="M160,115 H240" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="200" y="108" text-anchor="middle">runs</text>
+<path class="d-edge acc" d="M370,115 H450" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="410" y="108" text-anchor="middle">drops via</text>
+<path class="d-edge acc" d="M580,115 H660" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="620" y="108" text-anchor="middle">if empty</text>
+<path class="d-edge acc" d="M725,160 V250" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="733" y="210">starts</text>
+<path class="d-edge acc" d="M660,295 H580" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="620" y="288" text-anchor="middle">stops, then</text>
+<path class="d-edge acc" d="M450,295 H370" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="410" y="288" text-anchor="middle">runs</text>
+<path class="d-edge acc" d="M240,295 H160" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="200" y="288" text-anchor="middle">waits for</text>
+<path class="d-edge dash" d="M305,340 V425" marker-end="url(#docker-d2-ah)"/><text class="d-lab" x="313" y="388">asks for</text>
+
+<g><circle class="d-badge" cx="30" cy="70" r="11"/><text class="d-bt" x="30" y="74">1</text></g>
+<g><circle class="d-badge" cx="240" cy="70" r="11"/><text class="d-bt" x="240" y="74">2</text></g>
+<g><circle class="d-badge" cx="450" cy="70" r="11"/><text class="d-bt" x="450" y="74">3</text></g>
+<g><circle class="d-badge" cx="660" cy="70" r="11"/><text class="d-bt" x="660" y="74">4</text></g>
+<g><circle class="d-badge" cx="660" cy="250" r="11"/><text class="d-bt" x="660" y="254">5</text></g>
+<g><circle class="d-badge" cx="450" cy="250" r="11"/><text class="d-bt" x="450" y="254">6</text></g>
+<g><circle class="d-badge" cx="240" cy="250" r="11"/><text class="d-bt" x="240" y="254">7</text></g>
+<g><circle class="d-badge" cx="30" cy="250" r="11"/><text class="d-bt" x="30" y="254">8</text></g>
+</svg>

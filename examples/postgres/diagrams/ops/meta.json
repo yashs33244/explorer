@@ -1,0 +1,52 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Who talks to whom",
+  "caption": "Config files feed the GUC table, backends send counters and logs out, and backup and upgrade tools all go through the postmaster.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Changing a setting live",
+  "caption": "ALTER SYSTEM only writes a file, and the new value reaches running backends after a reload sends SIGHUP.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "You run ALTER SYSTEM SET in psql and a backend receives it"
+   },
+   {
+    "n": 2,
+    "meaning": "The backend writes the new value into postgresql.auto.conf (the running value does not change yet)"
+   },
+   {
+    "n": 3,
+    "meaning": "You call pg_reload_conf()"
+   },
+   {
+    "n": 4,
+    "meaning": "The backend sends SIGHUP to the postmaster"
+   },
+   {
+    "n": 5,
+    "meaning": "The postmaster re-reads postgresql.conf and postgresql.auto.conf"
+   },
+   {
+    "n": 6,
+    "meaning": "The postmaster forwards SIGHUP to the backends, which apply the change (postmaster-only settings wait for a restart)"
+   },
+   {
+    "n": 7,
+    "meaning": "You see the new value and its source in pg_settings"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "The data directory map",
+  "caption": "Each folder or file in the data directory belongs to one job: settings, logs and stats, or the data that backups and pg_upgrade copy.",
+  "badges": []
+ }
+]

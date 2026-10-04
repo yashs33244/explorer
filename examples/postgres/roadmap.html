@@ -1,0 +1,18 @@
+<div class="road">
+<div class="step"><b>1. Build it and get a green baseline</b><p>Install meson, ninja, bison, flex and icu with brew. From <code>repos/postgres</code>:</p><pre><code>meson setup build --buildtype=debug -Dcassert=true -Dtap_tests=enabled
+ninja -C build
+meson test -C build --suite setup --suite regress</code></pre><p>Turn on cassert while developing. Leave it off when you benchmark.</p></div>
+<div class="step"><b>2. Ask the code graph</b><p>graphify already mapped the source into <code>repos/postgres/graphify-out/graph.json</code> (about 47,000 nodes). Ask it questions from <code>repos/postgres</code>:</p><pre><code>graphify query "how does a commit reach the WAL?"
+graphify explain "heap_insert"
+graphify path "PostgresMain" "XLogInsert"</code></pre><p>Read <code>GRAPH_REPORT.md</code> next to it for the main communities.</p></div>
+<div class="step"><b>3. Watch a query move through the code</b><p>Start a server, connect with psql, attach lldb to the backend process and break at <code>exec_simple_query</code>. Step into <code>raw_parser</code>, then <code>pg_plan_queries</code>, then <code>ExecutorRun</code>.</p></div>
+<div class="step"><b>4. Look at the real container</b><p>Docker was not running when I wrote this, so these commands are untested. Start Docker Desktop, then:</p><pre><code>docker run -d --name pg -e POSTGRES_PASSWORD=x postgres
+docker exec pg sh -c 'echo $PGDATA; ls -la $PGDATA; id'
+docker exec pg sh -c 'ps -eo pid,user,args | head'
+docker exec pg df -h /dev/shm
+docker stop pg   # watch the logs: SIGINT, fast shutdown</code></pre><p>Match what you see with the Docker and files-on-disk parts above.</p></div>
+<div class="step"><b>5. Look at real pages</b><p>Create the extensions <code>pageinspect</code>, <code>pg_buffercache</code> and <code>pg_visibility</code>. Insert, update and delete a row, then read the raw page with <code>heap_page_items</code> to see xmin, xmax and line pointers change.</p></div>
+<div class="step"><b>6. Review before you write</b><p>Subscribe to pgsql-hackers. Pick a small patch in the Commitfest app, apply it, run the tests and reply with what you found. This is the fastest way to learn the style and get known.</p></div>
+<div class="step"><b>7. Pick a small first patch and send it</b><ul><li>A docs fix, a clearer error message or a missing test.</li><li>Make the patch with <code>git format-patch</code>, one version per revision (v1, v2, ...).</li><li>Email it to pgsql-hackers with a short cover note: what, why, how you tested.</li><li>Register it in the Commitfest app. Run <code>pgindent</code> on the files you changed.</li></ul></div>
+<div class="step warn"><b>Before you send anything: check the AI rules</b><p>PostgreSQL contributors are still discussing how AI-assisted patches should be handled. Read the current policy and recent pgsql-hackers threads first. Write and understand every line yourself, because reviewers will ask you to explain it.</p></div>
+</div>

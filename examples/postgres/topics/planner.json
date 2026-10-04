@@ -1,0 +1,347 @@
+{
+ "key": "planner",
+ "title": "Planner and optimizer",
+ "one_liner": "The planner turns a parsed query into the cheapest executable plan by guessing costs from table statistics.",
+ "analogy": "Like a GPS: it lists many routes, estimates time for each using traffic data, picks the fastest, then gives turn-by-turn steps.",
+ "big_picture": [
+  "The planner gets a Query tree from the parser and must pick how to run it, not what it returns.",
+  "It builds many Paths. A Path is one possible way to get rows, like seq scan or index scan.",
+  "Each Path gets a cost from formulas in costsize.c. Fewest disabled nodes wins first, then lowest cost.",
+  "Costs depend on row-count guesses. Those guesses come from pg_statistic, filled by ANALYZE.",
+  "Join order is searched by dynamic programming. With many tables, GEQO (a genetic search) takes over.",
+  "The cheapest Path becomes a Plan tree. EXPLAIN prints that tree with its cost estimates."
+ ],
+ "flow": [
+  {
+   "step": "Enter the planner",
+   "detail": "planner() calls standard_planner() unless an extension hook replaces it.",
+   "where": "src/backend/optimizer/plan/planner.c: planner, standard_planner"
+  },
+  {
+   "step": "Simplify the query",
+   "detail": "subquery_planner() flattens subqueries and cleans up expressions before any costing.",
+   "where": "src/backend/optimizer/plan/planner.c: subquery_planner; src/backend/optimizer/prep/prepjointree.c: pull_up_subqueries"
+  },
+  {
+   "step": "Plan the top level",
+   "detail": "grouping_planner() handles GROUP BY, ORDER BY, LIMIT on top of the scan/join result.",
+   "where": "src/backend/optimizer/plan/planner.c: grouping_planner"
+  },
+  {
+   "step": "Find the join relation",
+   "detail": "query_planner() sorts out quals, then make_one_rel() sizes and paths each base table, then joins them.",
+   "where": "src/backend/optimizer/plan/planmain.c: query_planner; src/backend/optimizer/path/allpaths.c: make_one_rel"
+  },
+  {
+   "step": "Estimate rows and cost",
+   "detail": "Selectivity code reads pg_statistic. Cost functions turn that into startup and total cost.",
+   "where": "src/backend/optimizer/path/costsize.c: cost_seqscan, set_baserel_size_estimates; src/backend/optimizer/path/clausesel.c: clauselist_selectivity"
+  },
+  {
+   "step": "Search join orders",
+   "detail": "standard_join_search() builds joins level by level. Past geqo_threshold, geqo() is used.",
+   "where": "src/backend/optimizer/path/allpaths.c: standard_join_search; src/backend/optimizer/geqo/geqo_main.c: geqo"
+  },
+  {
+   "step": "Keep only good Paths",
+   "detail": "add_path() drops a Path if another has fewer disabled nodes or lower cost and is at least as useful. set_cheapest() picks winners.",
+   "where": "src/backend/optimizer/util/pathnode.c: add_path, set_cheapest"
+  },
+  {
+   "step": "Make the Plan",
+   "detail": "create_plan() converts the best Path into Plan nodes. set_plan_references() fixes up column references.",
+   "where": "src/backend/optimizer/plan/createplan.c: create_plan; src/backend/optimizer/plan/setrefs.c: set_plan_references"
+  },
+  {
+   "step": "Show it",
+   "detail": "EXPLAIN walks the plan and prints each node with its estimated cost and rows.",
+   "where": "src/backend/commands/explain.c: ExplainOnePlan, ExplainNode"
+  }
+ ],
+ "diagram": {
+  "claim": "A Query is simplified, costed with statistics, searched for the best join order, and turned into a Plan that EXPLAIN prints.",
+  "nodes": [
+   {
+    "id": "parser",
+    "label": "Parser Query",
+    "group": "Input"
+   },
+   {
+    "id": "subq",
+    "label": "subquery_planner",
+    "group": "Planner"
+   },
+   {
+    "id": "qp",
+    "label": "query_planner",
+    "group": "Planner"
+   },
+   {
+    "id": "paths",
+    "label": "Base rel Paths",
+    "group": "Path search"
+   },
+   {
+    "id": "join",
+    "label": "Join search",
+    "group": "Path search"
+   },
+   {
+    "id": "cost",
+    "label": "costsize.c",
+    "group": "Cost model"
+   },
+   {
+    "id": "stats",
+    "label": "pg_statistic",
+    "group": "Statistics"
+   },
+   {
+    "id": "analyze",
+    "label": "ANALYZE",
+    "group": "Statistics"
+   },
+   {
+    "id": "cp",
+    "label": "create_plan",
+    "group": "Output"
+   },
+   {
+    "id": "explain",
+    "label": "EXPLAIN",
+    "group": "Output"
+   },
+   {
+    "id": "gp",
+    "label": "grouping_planner",
+    "group": "Planner"
+   }
+  ],
+  "edges": [
+   {
+    "from": "parser",
+    "to": "subq",
+    "label": "feeds"
+   },
+   {
+    "from": "qp",
+    "to": "paths",
+    "label": "builds"
+   },
+   {
+    "from": "paths",
+    "to": "join",
+    "label": "seeds"
+   },
+   {
+    "from": "paths",
+    "to": "cost",
+    "label": "asks"
+   },
+   {
+    "from": "join",
+    "to": "cost",
+    "label": "asks"
+   },
+   {
+    "from": "analyze",
+    "to": "stats",
+    "label": "writes"
+   },
+   {
+    "from": "stats",
+    "to": "cost",
+    "label": "informs"
+   },
+   {
+    "from": "cp",
+    "to": "explain",
+    "label": "prints"
+   },
+   {
+    "from": "subq",
+    "to": "gp",
+    "label": "calls"
+   },
+   {
+    "from": "gp",
+    "to": "qp",
+    "label": "calls"
+   },
+   {
+    "from": "join",
+    "to": "cp",
+    "label": "via upper rels"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/optimizer/README",
+   "what": "Design overview of Paths, join pairs, pathkeys and the planner stages."
+  },
+  {
+   "path": "src/backend/optimizer/plan/planner.c",
+   "what": "Entry points: standard_planner, subquery_planner, grouping_planner."
+  },
+  {
+   "path": "src/backend/optimizer/path/allpaths.c",
+   "what": "make_one_rel, base-rel paths, standard_join_search, GEQO switch."
+  },
+  {
+   "path": "src/backend/optimizer/path/costsize.c",
+   "what": "All cost formulas: scans, joins, sorts, and row-count estimates."
+  },
+  {
+   "path": "src/backend/optimizer/util/pathnode.c",
+   "what": "Path constructors plus add_path and set_cheapest pruning."
+  },
+  {
+   "path": "src/backend/optimizer/geqo/geqo_main.c",
+   "what": "Genetic join-order search used for queries with many tables."
+  },
+  {
+   "path": "src/backend/optimizer/plan/createplan.c",
+   "what": "Turns the chosen Path tree into a Plan tree."
+  },
+  {
+   "path": "src/backend/commands/analyze.c",
+   "what": "ANALYZE: samples rows and writes pg_statistic."
+  },
+  {
+   "path": "src/backend/utils/adt/selfuncs.c",
+   "what": "Operator selectivity functions that read pg_statistic."
+  },
+  {
+   "path": "src/backend/commands/explain.c",
+   "what": "EXPLAIN output: ExplainOnePlan and ExplainNode."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What does the planner do, in one sentence?",
+   "answer": [
+    "It picks the cheapest way to run a query.",
+    "Input is a Query tree. Output is a Plan tree for the executor.",
+    "It never changes the answer, only how it is computed."
+   ],
+   "trap": "It does not pick the 'fastest' for sure. It picks the lowest estimated cost, which can be wrong."
+  },
+  {
+   "q": "What is a Path, and how is it different from a Plan?",
+   "answer": [
+    "A Path is one candidate way to produce rows, used only while planning.",
+    "A Plan is the final node tree the executor runs.",
+    "Paths carry planning info like pathkeys. Plans carry what execution needs.",
+    "Only the cheapest Path is converted to a Plan."
+   ],
+   "trap": "People think the planner builds Plans for every option. It builds Paths and makes just one Plan."
+  },
+  {
+   "q": "Name the main stages from planner() to the finished plan.",
+   "answer": [
+    "planner calls standard_planner, then subquery_planner.",
+    "subquery_planner simplifies, then grouping_planner runs.",
+    "query_planner and make_one_rel build scan and join Paths.",
+    "create_plan and set_plan_references produce the final Plan."
+   ]
+  },
+  {
+   "q": "What is cost, and what units is it in?",
+   "answer": [
+    "Cost is an estimate with a startup part and a total part.",
+    "Units are arbitrary, anchored to seq_page_cost = 1.0.",
+    "Defaults live in include/optimizer/cost.h, like DEFAULT_RANDOM_PAGE_COST 4.0 and DEFAULT_CPU_TUPLE_COST 0.01.",
+    "It is not milliseconds."
+   ],
+   "trap": "Cost is not time. You cannot compare costs across different servers or settings."
+  },
+  {
+   "q": "How does cost_seqscan work at a high level?",
+   "answer": [
+    "Disk cost is seq_page_cost times the table's page count.",
+    "CPU cost is per-tuple cost times row count, plus qual evaluation.",
+    "Sum is startup cost plus run cost, stored on the Path."
+   ]
+  },
+  {
+   "q": "Where do row-count estimates come from?",
+   "answer": [
+    "ANALYZE samples rows (acquire_sample_rows) and writes pg_statistic.",
+    "It stores things like most common values and histograms (STATISTIC_KIND_MCV, STATISTIC_KIND_HISTOGRAM).",
+    "Selectivity functions in selfuncs.c read them, found via clauselist_selectivity.",
+    "Selectivity times table rows gives the estimated rows."
+   ],
+   "trap": "Statistics are a sample, not live data. Stale stats after big changes cause bad plans."
+  },
+  {
+   "q": "How does add_path keep the search small?",
+   "answer": [
+    "It compares a new Path to existing ones for the same relation.",
+    "A Path is dropped if another is cheaper (disabled nodes first, then cost) and no worse on sort order or parameterization.",
+    "Cheaper-but-unsorted Paths survive if sorted ones cost more, since sort order may help later joins.",
+    "set_cheapest then records the cheapest startup and total Paths."
+   ],
+   "trap": "It does not keep only the single cheapest Path. Sorted and parameterized Paths can survive too."
+  },
+  {
+   "q": "How is join order chosen, and when does GEQO kick in?",
+   "answer": [
+    "standard_join_search builds join rels level by level with dynamic programming.",
+    "Each level combines smaller join rels using join_search_one_level and make_join_rel.",
+    "If enable_geqo is on and levels_needed reaches geqo_threshold, geqo() runs instead.",
+    "GEQO is a randomized genetic search: faster, but may miss the best order."
+   ],
+   "trap": "GEQO does not skip join method choice. It still asks the normal path code for each join pair."
+  },
+  {
+   "q": "Why can EXPLAIN show rows=1 but the real run returns a million?",
+   "answer": [
+    "EXPLAIN shows estimates only. EXPLAIN ANALYZE adds actual numbers.",
+    "Bad estimates come from stale stats, correlated columns, or functions the planner cannot see through.",
+    "Fixes: run ANALYZE, raise default_statistics_target, or use extended statistics in src/backend/statistics."
+   ],
+   "trap": "A wrong plan is usually a wrong estimate, not a bug in the cost formula."
+  }
+ ],
+ "contributor_tips": [
+  "Start with src/backend/optimizer/README, then read standard_planner top to bottom.",
+  "Run EXPLAIN on small queries and trace each node back to a create_*_path function in pathnode.c.",
+  "Be careful: changing a cost formula shifts plans in many regression tests, so expect expected-output diffs.",
+  "Good first areas: selfuncs.c edge cases, missing EXPLAIN details, or docs in doc/src/sgml/planstats.sgml."
+ ],
+ "glossary": [
+  {
+   "term": "Path",
+   "meaning": "One candidate way to produce a relation's rows, with a cost."
+  },
+  {
+   "term": "Plan",
+   "meaning": "The final node tree the executor runs."
+  },
+  {
+   "term": "RelOptInfo",
+   "meaning": "Planner's record for a table or join, holding its Paths and row estimate."
+  },
+  {
+   "term": "Selectivity",
+   "meaning": "Fraction of rows a condition is expected to keep, from 0 to 1."
+  },
+  {
+   "term": "GEQO",
+   "meaning": "Genetic query optimizer: random search for join order on big joins."
+  },
+  {
+   "term": "pg_statistic",
+   "meaning": "Catalog table where ANALYZE stores per-column statistics."
+  }
+ ],
+ "more": [
+  "When does each scan win? Seq, index, index-only and bitmap. When does each join win? Nested loop, hash and merge.",
+  "Pathkeys track sort order, so ORDER BY or a merge join can skip a Sort.",
+  "join_collapse_limit and from_collapse_limit cap the search before GEQO matters.",
+  "Custom vs generic plans for prepared statements: plan_cache_mode.",
+  "Read cost=startup..total rows width, and loops, in EXPLAIN ANALYZE.",
+  "Extension points: planner_hook, set_rel_pathlist_hook, join_search_hook."
+ ]
+}

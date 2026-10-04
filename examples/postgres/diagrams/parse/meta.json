@@ -1,0 +1,81 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Parser pipeline components",
+  "caption": "SQL text passes through the scanner and grammar with no catalog access, then analyze.c looks names up in the catalogs and the rewriter applies view rules before the planner.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One SELECT through parsing",
+  "caption": "Follow SELECT price FROM items from the raw text to a checked Query tree, noticing that the FROM clause is read before the column name is resolved.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "exec_simple_query receives the SQL string"
+   },
+   {
+    "n": 2,
+    "meaning": "raw_parser starts the raw parse"
+   },
+   {
+    "n": 3,
+    "meaning": "scan.l splits the text into tokens"
+   },
+   {
+    "n": 4,
+    "meaning": "gram.y builds the raw tree (SelectStmt)"
+   },
+   {
+    "n": 5,
+    "meaning": "parse analysis starts in transformStmt"
+   },
+   {
+    "n": 6,
+    "meaning": "transformFromClause opens items and fills the namespace"
+   },
+   {
+    "n": 7,
+    "meaning": "colNameToVar turns the name price into a Var"
+   },
+   {
+    "n": 8,
+    "meaning": "fireRIRrules expands any views"
+   },
+   {
+    "n": 9,
+    "meaning": "the rewritten Query goes to the planner"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of a Query tree",
+  "caption": "A Query holds a range table, a join tree and a target list, and each Var points back to a range table entry by number.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Query is the top struct, defined in parsenodes.h"
+   },
+   {
+    "n": 2,
+    "meaning": "rtable lists the tables the statement reads"
+   },
+   {
+    "n": 3,
+    "meaning": "jointree holds FROM and the WHERE quals"
+   },
+   {
+    "n": 4,
+    "meaning": "targetList holds the output columns"
+   },
+   {
+    "n": 5,
+    "meaning": "Var.varno points at a range table entry"
+   }
+  ]
+ }
+]

@@ -1,0 +1,39 @@
+<svg class="hd" viewBox="0 0 800 455" role="img" aria-label="Anatomy of a Query tree for SELECT price FROM items WHERE price > 5, showing Query, RangeTblEntry, FromExpr, TargetEntry and Var" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="parse-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="10" y="14" width="780" height="410" rx="30"/>
+<rect class="d-box g2" x="30" y="40" width="210" height="272" rx="14"/>
+<text class="d-t" x="46" y="68">Query</text><text class="d-s" x="46" y="88">struct in parsenodes.h</text>
+<text class="d-s" x="46" y="120">commandType = CMD_SELECT</text>
+<text class="d-s" x="46" y="152">rtable (List)</text>
+<text class="d-s" x="46" y="186">jointree (FromExpr)</text>
+<text class="d-s" x="46" y="220">targetList (List)</text>
+<text class="d-s" x="46" y="254">resultRelation = 0</text>
+<text class="d-s" x="46" y="288">hasAggs = false</text>
+<circle class="d-fillacc" cx="240" cy="148" r="4"/><circle class="d-fillacc" cx="240" cy="182" r="4"/><circle class="d-fillacc" cx="240" cy="216" r="4"/>
+
+<rect class="d-box g3" x="340" y="40" width="220" height="110" rx="14"/>
+<text class="d-t" x="356" y="66">RangeTblEntry</text>
+<text class="d-s" x="356" y="92">rtekind = RTE_RELATION</text><text class="d-s" x="356" y="114">relid = OID of items</text><text class="d-s" x="356" y="136">inh = true</text>
+<rect class="d-box g1" x="340" y="170" width="220" height="90" rx="14"/>
+<text class="d-t" x="356" y="194">FromExpr</text>
+<text class="d-s" x="356" y="219">fromlist = [RangeTblRef]</text><text class="d-s" x="356" y="241">quals = price > 5</text>
+<rect class="d-box g4" x="340" y="290" width="220" height="108" rx="14"/>
+<text class="d-t" x="356" y="316">TargetEntry</text>
+<text class="d-s" x="356" y="342">expr = Var</text><text class="d-s" x="356" y="364">resno = 1</text><text class="d-s" x="356" y="386">resname = price</text>
+<rect class="d-box g5" x="620" y="290" width="150" height="108" rx="14"/>
+<text class="d-t" x="636" y="316">Var</text>
+<text class="d-s" x="636" y="342">varno = 1</text><text class="d-s" x="636" y="364">varattno = 2</text><text class="d-s" x="636" y="386">vartype = int4</text>
+
+<path class="d-edge acc" d="M240,148 C290,148 290,95 338,95" marker-end="url(#parse-d3-ah)"/><text class="d-lab" x="292" y="125" text-anchor="middle">holds</text>
+<path class="d-edge acc" d="M240,182 C290,182 290,215 338,215" marker-end="url(#parse-d3-ah)"/><text class="d-lab" x="296" y="204" text-anchor="middle">points to</text>
+<path class="d-edge acc" d="M240,216 C290,216 290,344 338,344" marker-end="url(#parse-d3-ah)"/><text class="d-lab" x="292" y="288" text-anchor="middle">holds</text>
+<path class="d-edge acc" d="M560,344 H618" marker-end="url(#parse-d3-ah)"/><text class="d-lab" x="589" y="336" text-anchor="middle">expr</text>
+<path class="d-edge dash" d="M695,290 V120 Q695,95 670,95 H562" marker-end="url(#parse-d3-ah)"/><text class="d-lab" x="695" y="200" text-anchor="middle">varno</text>
+<text class="d-s" x="400" y="412" text-anchor="middle">Example: SELECT price FROM items WHERE price &gt; 5</text>
+
+<g><circle class="d-badge" cx="240" cy="40" r="11"/><text class="d-bt" x="240" y="44">1</text></g>
+<g><circle class="d-badge" cx="262" cy="148" r="11"/><text class="d-bt" x="262" y="152">2</text></g>
+<g><circle class="d-badge" cx="262" cy="182" r="11"/><text class="d-bt" x="262" y="186">3</text></g>
+<g><circle class="d-badge" cx="262" cy="216" r="11"/><text class="d-bt" x="262" y="220">4</text></g>
+<g><circle class="d-badge" cx="695" cy="250" r="11"/><text class="d-bt" x="695" y="254">5</text></g>
+</svg>

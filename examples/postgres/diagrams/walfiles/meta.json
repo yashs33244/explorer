@@ -1,0 +1,56 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Who writes and reads WAL",
+  "caption": "A backend copies records into wal_buffers and flushes them to pg_wal at COMMIT, while the walwriter, archiver, checkpointer and startup process each handle one job around the segment files.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "INSERT and COMMIT to recovery",
+  "caption": "Follow the numbers: the client only waits for steps 1 to 4, and the archiving, checkpoint and crash replay steps happen later in the background.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Code builds a WAL record with XLogBeginInsert and XLogRegisterData"
+   },
+   {
+    "n": 2,
+    "meaning": "XLogInsertRecord copies the record into wal_buffers"
+   },
+   {
+    "n": 3,
+    "meaning": "COMMIT adds a commit record and calls XLogFlush"
+   },
+   {
+    "n": 4,
+    "meaning": "WAL is written and fsynced to the pg_wal segment, then the client gets OK"
+   },
+   {
+    "n": 5,
+    "meaning": "A full segment gets a .ready file in archive_status"
+   },
+   {
+    "n": 6,
+    "meaning": "The archiver runs archive_command and renames the flag to .done"
+   },
+   {
+    "n": 7,
+    "meaning": "A checkpoint flushes dirty pages and stores the REDO location in pg_control"
+   },
+   {
+    "n": 8,
+    "meaning": "After a crash the startup process replays WAL from the REDO location"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of a WAL record",
+  "caption": "A 24 hex digit file name points to a 16MB segment of 8kB pages, and each record inside starts with an XLogRecord header followed by block headers, a data header and the data.",
+  "badges": []
+ }
+]

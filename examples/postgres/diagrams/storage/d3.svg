@@ -1,0 +1,51 @@
+<svg class="hd" viewBox="0 0 800 570" role="img" aria-label="Anatomy of an 8kB heap page and the header of one tuple" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="storage-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="110" y="12" width="280" height="546" rx="30"/>
+<rect class="d-blob" x="470" y="12" width="310" height="546" rx="30"/>
+<text class="d-t" x="250" y="40" text-anchor="middle">One 8kB page (BLCKSZ)</text>
+<text class="d-t" x="625" y="40" text-anchor="middle">One tuple header</text>
+<rect class="d-box g1" x="130" y="56" width="240" height="106" rx="12"/>
+<text class="d-t" x="250" y="77" text-anchor="middle">PageHeaderData, 24 bytes</text>
+<text class="d-s" x="250" y="99" text-anchor="middle">pd_lsn  pd_checksum  pd_flags</text>
+<text class="d-s" x="250" y="117" text-anchor="middle">pd_lower  pd_upper</text>
+<text class="d-s" x="250" y="135" text-anchor="middle">pd_special  pd_prune_xid</text>
+<text class="d-s" x="250" y="153" text-anchor="middle">pd_pagesize_version</text>
+<rect class="d-box g2" x="130" y="176" width="240" height="66" rx="12"/>
+<text class="d-t" x="250" y="195" text-anchor="middle">Line pointers (4 bytes each)</text>
+<rect class="d-box g0" x="142" y="208" width="64" height="26" rx="6"/><text class="d-s" x="174" y="225" text-anchor="middle">lp 1</text>
+<rect class="d-box g0" x="218" y="208" width="64" height="26" rx="6"/><text class="d-s" x="250" y="225" text-anchor="middle">lp 2</text>
+<rect class="d-box g0" x="294" y="208" width="64" height="26" rx="6"/><text class="d-s" x="326" y="225" text-anchor="middle">lp 3</text>
+<rect class="d-blob2" x="130" y="256" width="240" height="68" rx="12"/>
+<text class="d-t" x="250" y="286" text-anchor="middle">Free space</text><text class="d-s" x="250" y="306" text-anchor="middle">tuples fill it from the end</text>
+<rect class="d-box g3" x="130" y="338" width="240" height="40" rx="10"/><text class="d-t" x="250" y="363" text-anchor="middle">Tuple 3</text>
+<rect class="d-box g3" x="130" y="388" width="240" height="40" rx="10"/><text class="d-t" x="250" y="413" text-anchor="middle">Tuple 2</text>
+<rect class="d-box g3" x="130" y="438" width="240" height="40" rx="10"/><text class="d-t" x="250" y="463" text-anchor="middle">Tuple 1</text>
+<rect class="d-box g5" x="130" y="494" width="240" height="40" rx="10"/><text class="d-t" x="250" y="513" text-anchor="middle">Special space</text><text class="d-s" x="250" y="528" text-anchor="middle">empty in heap pages</text>
+<!-- gutter markers -->
+<text class="d-t" x="14" y="261">pd_lower</text>
+<path class="d-edge acc" d="M80,256 L128,261" marker-end="url(#storage-d3-ah)"/>
+<text class="d-t" x="14" y="323">pd_upper</text>
+<path class="d-edge acc" d="M80,318 L128,321" marker-end="url(#storage-d3-ah)"/>
+<text class="d-t" x="8" y="509">pd_special</text>
+<path class="d-edge acc" d="M80,513 L128,513" marker-end="url(#storage-d3-ah)"/>
+<!-- lp -> tuple -->
+<path class="d-edge" d="M326,234 L326,338" marker-end="url(#storage-d3-ah)"/><text class="d-lab" x="334" y="328">lp_off</text>
+<!-- zoom -->
+<path class="d-edge acc" d="M370,458 L468,458" marker-end="url(#storage-d3-ah)"/><text class="d-lab" x="420" y="450" text-anchor="middle">zoom in</text>
+<!-- tuple header fields -->
+<rect class="d-box g1" x="490" y="56" width="270" height="40" rx="9"/><text class="d-t" x="502" y="80">t_xmin</text><text class="d-s" x="600" y="80">inserting xid, 4 bytes</text>
+<rect class="d-box g1" x="490" y="104" width="270" height="40" rx="9"/><text class="d-t" x="502" y="128">t_xmax</text><text class="d-s" x="600" y="128">deleting xid, 4 bytes</text>
+<rect class="d-box g1" x="490" y="152" width="270" height="40" rx="9"/><text class="d-t" x="502" y="176">t_cid</text><text class="d-s" x="600" y="176">command id, 4 bytes</text>
+<rect class="d-box g2" x="490" y="200" width="270" height="40" rx="9"/><text class="d-t" x="502" y="224">t_ctid</text><text class="d-s" x="600" y="224">newer version, 6 bytes</text>
+<rect class="d-box g2" x="490" y="248" width="270" height="40" rx="9"/><text class="d-t" x="502" y="272">t_infomask2</text><text class="d-s" x="600" y="272">attr count, 2 bytes</text>
+<rect class="d-box g2" x="490" y="296" width="270" height="40" rx="9"/><text class="d-t" x="502" y="320">t_infomask</text><text class="d-s" x="600" y="320">hint bits, 2 bytes</text>
+<rect class="d-box g4" x="490" y="344" width="270" height="40" rx="9"/><text class="d-t" x="502" y="368">t_hoff</text><text class="d-s" x="600" y="368">header size, 1 byte</text>
+<rect class="d-box g4" x="490" y="392" width="270" height="40" rx="9"/><text class="d-t" x="502" y="416">t_bits</text><text class="d-s" x="600" y="416">null bitmap, if any</text>
+<rect class="d-box g3" x="490" y="448" width="270" height="56" rx="9"/><text class="d-t" x="625" y="472" text-anchor="middle">User data</text><text class="d-s" x="625" y="491" text-anchor="middle">the column values</text>
+<!-- badges -->
+<g><circle class="d-badge" cx="130" cy="56" r="11"/><text class="d-bt" x="130" y="60">1</text></g>
+<g><circle class="d-badge" cx="130" cy="176" r="11"/><text class="d-bt" x="130" y="180">2</text></g>
+<g><circle class="d-badge" cx="370" cy="256" r="11"/><text class="d-bt" x="370" y="260">3</text></g>
+<g><circle class="d-badge" cx="370" cy="338" r="11"/><text class="d-bt" x="370" y="342">4</text></g>
+<g><circle class="d-badge" cx="490" cy="56" r="11"/><text class="d-bt" x="490" y="60">5</text></g>
+</svg>

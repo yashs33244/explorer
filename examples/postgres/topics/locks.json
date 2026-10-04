@@ -1,0 +1,332 @@
+{
+ "key": "locks",
+ "title": "Locks, shared memory and concurrency",
+ "one_liner": "Postgres backends share one memory region and use four kinds of locks, from tiny spinlocks to deadlock-checked table locks, to avoid stepping on each other.",
+ "analogy": "A busy kitchen: one shared pantry (shared memory), a quick hand-grab rule (spinlock), a queue for the recipe book (LWLock), and a booking sheet for tables (heavyweight locks).",
+ "big_picture": [
+  "The postmaster creates one big shared memory block at startup. Every backend inherits it through fork().",
+  "In the normal fork build, the main segment is inherited at the same address, so plain pointers work. Dynamic shared memory (DSM) segments are not, so they use relative pointers.",
+  "Spinlocks are the smallest lock. They busy-wait and protect only a few instructions.",
+  "LWLocks guard shared data structures. They have shared and exclusive modes and sleep when blocked.",
+  "Heavyweight locks guard user-visible things like tables and rows. They have 8 modes and deadlock detection.",
+  "Latches wake sleeping processes. Wait events tell pg_stat_activity what a backend is waiting for."
+ ],
+ "flow": [
+  {
+   "step": "Postmaster sizes and builds shared memory",
+   "detail": "CalculateShmemSize adds up every subsystem. CreateSharedMemoryAndSemaphores then makes the one big segment.",
+   "where": "src/backend/storage/ipc/ipci.c: CreateSharedMemoryAndSemaphores"
+  },
+  {
+   "step": "Subsystems register callbacks",
+   "detail": "Each subsystem lists a request_fn and init_fn (ShmemCallbacks). It calls ShmemRequestStruct to name and size its area.",
+   "where": "src/include/storage/shmem.h; src/include/storage/subsystemlist.h; src/backend/storage/ipc/ipci.c; src/backend/storage/ipc/shmem.c"
+  },
+  {
+   "step": "Backend starts and joins the ProcArray",
+   "detail": "Each backend owns a PGPROC slot. ProcArrayAdd puts it in the list that snapshots scan.",
+   "where": "src/backend/storage/ipc/procarray.c: ProcArrayAdd"
+  },
+  {
+   "step": "Query asks for a table lock",
+   "detail": "LockAcquireExtended tries the fast path for weak locks. If that is not allowed it uses the shared lock hash table.",
+   "where": "src/backend/storage/lmgr/lock.c: LockAcquireExtended"
+  },
+  {
+   "step": "Conflict found, backend sleeps",
+   "detail": "JoinWaitQueue puts the backend on the lock wait queue. ProcSleep then starts the deadlock_timeout timer and sleeps on a latch.",
+   "where": "src/backend/storage/lmgr/proc.c: JoinWaitQueue, ProcSleep"
+  },
+  {
+   "step": "Timer fires, deadlock check runs",
+   "detail": "CheckDeadLock calls DeadLockCheck, which looks for cycles in the wait graph. It may reorder the queue or raise an error.",
+   "where": "src/backend/storage/lmgr/proc.c: CheckDeadLock; src/backend/storage/lmgr/deadlock.c: DeadLockCheck"
+  },
+  {
+   "step": "Holder releases, waiter wakes",
+   "detail": "LockRelease or LockReleaseAll frees the lock. ProcWakeup grants it to waiters and sets their latch.",
+   "where": "src/backend/storage/lmgr/lock.c: LockReleaseAll; src/backend/storage/lmgr/proc.c: ProcWakeup"
+  },
+  {
+   "step": "Commit clears the transaction",
+   "detail": "CommitTransaction calls ProcArrayEndTransaction to clear the xid, then releases locks via ResourceOwnerRelease.",
+   "where": "src/backend/access/transam/xact.c: CommitTransaction; src/backend/utils/resowner/resowner.c: ResourceOwnerRelease; proc.c: ProcReleaseLocks"
+  }
+ ],
+ "diagram": {
+  "claim": "A backend takes a table lock, may wait on a latch, and is woken by the lock holder; the deadlock check runs on a timer.",
+  "nodes": [
+   {
+    "id": "pm",
+    "label": "Postmaster",
+    "group": "Startup"
+   },
+   {
+    "id": "shm",
+    "label": "Shared memory",
+    "group": "Startup"
+   },
+   {
+    "id": "be",
+    "label": "Backend A",
+    "group": "Backends"
+   },
+   {
+    "id": "fp",
+    "label": "Fast-path slots",
+    "group": "Lock manager"
+   },
+   {
+    "id": "lt",
+    "label": "Lock hash table",
+    "group": "Lock manager"
+   },
+   {
+    "id": "wq",
+    "label": "Wait queue",
+    "group": "Lock manager"
+   },
+   {
+    "id": "dd",
+    "label": "Deadlock check",
+    "group": "Lock manager"
+   },
+   {
+    "id": "hold",
+    "label": "Backend B",
+    "group": "Backends"
+   },
+   {
+    "id": "latch",
+    "label": "Latch",
+    "group": "Wakeup"
+   },
+   {
+    "id": "pa",
+    "label": "ProcArray",
+    "group": "Startup"
+   }
+  ],
+  "edges": [
+   {
+    "from": "pm",
+    "to": "shm",
+    "label": "creates"
+   },
+   {
+    "from": "be",
+    "to": "pa",
+    "label": "joins"
+   },
+   {
+    "from": "be",
+    "to": "fp",
+    "label": "tries weak lock"
+   },
+   {
+    "from": "be",
+    "to": "lt",
+    "label": "requests lock"
+   },
+   {
+    "from": "lt",
+    "to": "wq",
+    "label": "queues on conflict"
+   },
+   {
+    "from": "wq",
+    "to": "dd",
+    "label": "triggers after timeout"
+   },
+   {
+    "from": "dd",
+    "to": "be",
+    "label": "aborts victim"
+   },
+   {
+    "from": "hold",
+    "to": "lt",
+    "label": "releases"
+   },
+   {
+    "from": "lt",
+    "to": "latch",
+    "label": "sets"
+   },
+   {
+    "from": "latch",
+    "to": "be",
+    "label": "wakes"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/storage/lmgr/README",
+   "what": "Best overview: four lock types, LOCK and PROCLOCK, fast path, deadlock rules"
+  },
+  {
+   "path": "src/backend/storage/ipc/shmem.c",
+   "what": "Named shared memory allocation and the ShmemCallbacks lifecycle"
+  },
+  {
+   "path": "src/backend/storage/lmgr/lock.c",
+   "what": "Heavyweight lock manager: acquire, release, fast path"
+  },
+  {
+   "path": "src/backend/storage/lmgr/lwlock.c",
+   "what": "Lightweight locks built on one atomic state word"
+  },
+  {
+   "path": "src/backend/storage/lmgr/deadlock.c",
+   "what": "Wait-for graph search and queue rearranging"
+  },
+  {
+   "path": "src/backend/storage/ipc/latch.c",
+   "what": "SetLatch, WaitLatch, ResetLatch for waking processes"
+  },
+  {
+   "path": "src/backend/storage/ipc/procarray.c",
+   "what": "ProcArray: running transactions and GetSnapshotData"
+  },
+  {
+   "path": "src/backend/storage/lmgr/README-SSI",
+   "what": "Design of serializable snapshot isolation and predicate locks"
+  },
+  {
+   "path": "src/backend/storage/ipc/waiteventset.c",
+   "what": "WaitEventSet, the epoll/kqueue/poll machinery under latches."
+  }
+ ],
+ "interview": [
+  {
+   "q": "Why does Postgres use shared memory, and who creates it?",
+   "answer": [
+    "Backends are separate processes. They need one place to share locks, buffers and the ProcArray.",
+    "The postmaster creates it once at startup. Children inherit it via fork().",
+    "In the fork build the main segment has the same address in all processes, so plain pointers work. DSM segments do not, so they use relative pointers.",
+    "Allocated memory is never freed. Hash tables reuse entries through free lists."
+   ],
+   "trap": "Shared memory is not resizable at runtime. Changing size needs a restart."
+  },
+  {
+   "q": "What are the four kinds of locks in Postgres?",
+   "answer": [
+    "Spinlocks: tiny, busy-wait, no deadlock detection.",
+    "LWLocks: shared or exclusive, guard shared structures, released automatically on error.",
+    "Regular (heavyweight) locks: table-driven modes, deadlock detection, released at transaction end.",
+    "SIReadLock predicate locks: used by SERIALIZABLE, they never block anyone."
+   ],
+   "trap": "Predicate locks do not block. They only record read dependencies."
+  },
+  {
+   "q": "When should you use a spinlock instead of an LWLock?",
+   "answer": [
+    "Only for a few instructions with no function calls that can block and no kernel calls.",
+    "Waiters spin and retry with growing sleeps. After NUM_DELAYS (1000) tries, s_lock_stuck reports an error.",
+    "If you need to hold it longer or read shared state for a while, use an LWLock."
+   ],
+   "trap": "Do not hold a spinlock across a palloc, elog or I/O call."
+  },
+  {
+   "q": "How does an LWLock work and what happens when it is contended?",
+   "answer": [
+    "One atomic state word holds the shared-holder count, an exclusive bit and a has-waiters flag (LW_FLAG_HAS_WAITERS).",
+    "If the lock is free, LWLockAcquire just does an atomic update. This is fast.",
+    "If not, LWLockQueueSelf adds the backend to a wait list and it sleeps on its semaphore.",
+    "Waiters wake roughly in order. A run of shared waiters wakes together, an exclusive waiter wakes alone. LWLockReleaseAll runs on error recovery."
+   ],
+   "trap": "LWLocks have no deadlock detection and no timeout. Lock ordering is your job."
+  },
+  {
+   "q": "What are the heavyweight lock modes and how is a conflict decided?",
+   "answer": [
+    "Eight modes, from AccessShareLock (SELECT) to AccessExclusiveLock (ALTER TABLE, DROP TABLE).",
+    "Each LOCK has a grantMask bitmask of held modes.",
+    "A request conflicts if its row in the conflict table ANDed with grantMask is non-zero (LockCheckConflicts).",
+    "Readers (AccessShare) do not conflict with writers (RowExclusive)."
+   ],
+   "trap": "SELECT still takes a table lock. It is just a weak one that rarely conflicts."
+  },
+  {
+   "q": "What is the fast-path lock and why does it exist?",
+   "answer": [
+    "Most queries take weak locks on tables that nobody else locks strongly.",
+    "Fast path stores them in the backend's own PGPROC slots, guarded by a per-backend LWLock.",
+    "This avoids the busy shared lock hash table partitions.",
+    "A strong lock (like AccessExclusive) first bumps FastPathStrongRelationLocks, then moves other backends' fast-path locks into the main table."
+   ],
+   "trap": "Fast path is only for weak locks on non-shared relations. It is not used for every lock."
+  },
+  {
+   "q": "How does Postgres detect a deadlock?",
+   "answer": [
+    "A backend waits first. After deadlock_timeout (default 1s) a timer calls CheckDeadLock in proc.c.",
+    "DeadLockCheck builds a wait-for graph and searches for a cycle.",
+    "Hard edges cannot be changed. Soft edges (queue order) can be reordered to avoid the cycle.",
+    "If no reorder helps, the backend that found the cycle errors out."
+   ],
+   "trap": "Detection does not run on every wait. That would be expensive."
+  },
+  {
+   "q": "How do latches and wait events fit in?",
+   "answer": [
+    "A latch is a flag a process can sleep on. SetLatch wakes it and WaitLatch waits.",
+    "Pattern: ResetLatch, check the condition, then WaitLatch. This avoids lost wakeups.",
+    "Before sleeping, code calls pgstat_report_wait_start with an ID from wait_event_names.txt.",
+    "That ID shows up as wait_event in pg_stat_activity."
+   ],
+   "trap": "Check the condition between ResetLatch and WaitLatch. Otherwise you can miss a wakeup."
+  },
+  {
+   "q": "How do row locks differ from table locks, and what is SSI?",
+   "answer": [
+    "Row locks live in the tuple header (xmax), not the lock table. See README.tuplock and heap_lock_tuple in heapam.c.",
+    "Waiting on a row actually waits on the other transaction's ID via XactLockTableWait.",
+    "Under SERIALIZABLE, SSI records reads as SIReadLocks (predicate.c) and tracks rw-conflicts.",
+    "A dangerous structure of two adjacent rw-conflict edges causes a serialization failure."
+   ],
+   "trap": "Row locks do not fill up the shared lock table, so locking millions of rows is fine."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/storage/lmgr/README first, then skim lock.c along its function list.",
+  "Add a test or doc fix around wait events in src/backend/utils/activity/wait_event_names.txt as a gentle first patch.",
+  "Always keep spinlock sections tiny and never call anything that can error while holding one.",
+  "Use pg_locks and pg_stat_activity on a running server to see the code you read."
+ ],
+ "glossary": [
+  {
+   "term": "Backend",
+   "meaning": "A server process handling one client connection."
+  },
+  {
+   "term": "PGPROC",
+   "meaning": "Per-backend struct in shared memory holding lock and transaction state."
+  },
+  {
+   "term": "LOCALLOCK",
+   "meaning": "A backend's private record of locks it holds or wants."
+  },
+  {
+   "term": "Latch",
+   "meaning": "A flag a process sleeps on until another process sets it."
+  },
+  {
+   "term": "Wait event",
+   "meaning": "A label showing what a backend is currently waiting for."
+  },
+  {
+   "term": "rw-conflict",
+   "meaning": "One transaction read data another concurrently wrote, used by SSI."
+  }
+ ],
+ "more": [
+  "LOCK, PROCLOCK and LOCALLOCK are three views of one lock. The lock hash has 16 partitions.",
+  "Advisory locks are user-level locks (pg_advisory_lock).",
+  "Row lock modes (FOR UPDATE, FOR SHARE) and MultiXact for shared row locks.",
+  "Readers do not block writers. That comes from MVCC, not from locks.",
+  "Hands-on: pg_locks, pg_blocking_pids(), log_lock_waits, lock_timeout.",
+  "Prepared transactions keep locks via dummy PGPROC entries."
+ ]
+}

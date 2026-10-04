@@ -1,0 +1,50 @@
+<svg class="hd" viewBox="0 0 800 460" role="img" aria-label="Annotated layout of the official postgres image: volume, PGDATA, socket directory, init scripts, /dev/shm, plus stop signals and shared memory" xmlns="http://www.w3.org/2000/svg">
+<rect class="d-blob" x="15" y="20" width="470" height="420" rx="36"/>
+<text class="d-s" x="36" y="42">Inside the container (18 image)</text>
+<rect class="d-blob" x="505" y="20" width="282" height="420" rx="36"/>
+<text class="d-s" x="526" y="42">What the kernel gives</text>
+
+<path class="d-line" d="M52,96 V129 H70"/>
+<path class="d-line" d="M82,146 V229 M82,179 H100 M82,229 H100"/>
+
+<rect class="d-box g1" x="40" y="62" width="160" height="34" rx="10"/>
+<text class="d-m" x="120" y="83" text-anchor="middle">/var/lib/postgresql</text>
+<text class="d-s" x="212" y="83">VOLUME, outlives the container</text>
+<rect class="d-box g2" x="70" y="112" width="110" height="34" rx="10"/>
+<text class="d-m" x="125" y="133" text-anchor="middle">18/docker</text>
+<text class="d-s" x="192" y="133">PGDATA, mode 0700 or 0750</text>
+<rect class="d-box g2" x="100" y="162" width="110" height="34" rx="10"/>
+<text class="d-m" x="155" y="183" text-anchor="middle">PG_VERSION</text>
+<text class="d-s" x="222" y="183">there = initdb already ran</text>
+<rect class="d-box g2" x="100" y="212" width="140" height="34" rx="10"/>
+<text class="d-m" x="170" y="233" text-anchor="middle">postgresql.conf</text>
+<text class="d-s" x="252" y="233">server settings</text>
+
+<rect class="d-box g3" x="40" y="272" width="160" height="34" rx="10"/>
+<text class="d-m" x="120" y="293" text-anchor="middle">/var/run/postgresql</text>
+<text class="d-s" x="212" y="293">unix socket, mode 3777</text>
+<rect class="d-box g4" x="40" y="322" width="200" height="34" rx="10"/>
+<text class="d-m" x="140" y="343" text-anchor="middle">/docker-entrypoint-initdb.d</text>
+<text class="d-s" x="252" y="343">*.sql, *.sh, first start</text>
+<rect class="d-box g5" x="40" y="372" width="90" height="34" rx="10"/>
+<text class="d-m" x="85" y="393" text-anchor="middle">/dev/shm</text>
+<text class="d-s" x="142" y="393">tmpfs, 64MB by default</text>
+
+<text class="d-s" x="526" y="68">Stop signals (postmaster.c)</text>
+<rect class="d-box g0" x="526" y="76" width="240" height="40" rx="10"/>
+<text class="d-m" x="540" y="93">SIGTERM</text><text class="d-s" x="540" y="109">smart, waits for clients</text>
+<rect class="d-box g1" x="526" y="124" width="240" height="40" rx="10"/>
+<text class="d-m" x="540" y="141">SIGINT</text><text class="d-s" x="540" y="157">fast, what docker stop sends</text>
+<rect class="d-box g0" x="526" y="172" width="240" height="40" rx="10"/>
+<text class="d-m" x="540" y="189">SIGQUIT</text><text class="d-s" x="540" y="205">immediate, needs crash recovery</text>
+
+<text class="d-s" x="526" y="236">Shared memory</text>
+<rect class="d-box g4" x="526" y="244" width="240" height="40" rx="10"/>
+<text class="d-m" x="540" y="261">main segment: mmap</text><text class="d-s" x="540" y="277">shared_buffers, not in /dev/shm</text>
+<rect class="d-box g5" x="526" y="292" width="240" height="40" rx="10"/>
+<text class="d-m" x="540" y="309">DSM: shm_open</text><text class="d-s" x="540" y="325">parallel queries, 64MB limit</text>
+
+<text class="d-s" x="526" y="356">Capabilities</text>
+<rect class="d-box g3" x="526" y="364" width="240" height="62" rx="10"/>
+<text class="d-m" x="540" y="382">server needs none</text><text class="d-s" x="540" y="399">entrypoint usually: CHOWN, SETUID,</text><text class="d-s" x="540" y="415">SETGID, sometimes more (mounts)</text>
+</svg>

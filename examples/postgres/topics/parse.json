@@ -1,0 +1,329 @@
+{
+ "key": "parse",
+ "title": "Parser, analyzer and rewriter",
+ "one_liner": "Turns SQL text into tokens, then a raw tree, then a checked Query tree, and finally expands views and rules before planning.",
+ "analogy": "Like a post office: the scanner reads letters, the parser checks grammar, the analyzer looks up real addresses, and the rewriter swaps nicknames (views) for full addresses.",
+ "big_picture": [
+  "Parsing has three stages: scan into tokens, parse into a raw tree, analyze into a Query tree.",
+  "The raw parse needs no catalog access. In an aborted transaction only this stage runs, just enough to spot COMMIT or ROLLBACK.",
+  "Parse analysis looks names up in the catalogs: tables, columns, types, functions, operators.",
+  "The output is a Query struct. Table names become range table entries, column names become Var nodes.",
+  "The rewriter then expands views and rules. A view is a stored ON SELECT rule that replaces the view with its query.",
+  "The rewritten Query goes on to the planner. Each stage hands one tree to the next."
+ ],
+ "flow": [
+  {
+   "step": "Backend receives SQL text",
+   "detail": "The simple query protocol hands the string to exec_simple_query, which starts the pipeline.",
+   "where": "src/backend/tcop/postgres.c: exec_simple_query"
+  },
+  {
+   "step": "Raw parse starts",
+   "detail": "pg_parse_query calls raw_parser. It sets up the scanner and the bison parser, then runs the grammar.",
+   "where": "src/backend/parser/parser.c: raw_parser"
+  },
+  {
+   "step": "Scan into tokens",
+   "detail": "The flex scanner splits text into identifiers, keywords, numbers and strings. base_yylex adds one-token lookahead tricks on top.",
+   "where": "src/backend/parser/scan.l; parser.c: base_yylex"
+  },
+  {
+   "step": "Grammar builds raw tree",
+   "detail": "gram.y rules build nodes such as SelectStmt, ColumnRef and A_Expr. Nothing is looked up yet, so names are just strings.",
+   "where": "src/backend/parser/gram.y: SelectStmt, simple_select"
+  },
+  {
+   "step": "Parse analysis",
+   "detail": "parse_analyze_fixedparams makes a ParseState and calls transformTopLevelStmt, which calls transformStmt, which picks the right transform function.",
+   "where": "src/backend/parser/analyze.c: parse_analyze_fixedparams, transformStmt"
+  },
+  {
+   "step": "Transform a SELECT",
+   "detail": "transformSelectStmt handles FROM first, then the target list, then WHERE, then sort and group. FROM comes first so column names have something to match.",
+   "where": "src/backend/parser/analyze.c: transformSelectStmt"
+  },
+  {
+   "step": "Resolve names",
+   "detail": "transformFromClause opens tables via parserOpenTable and fills the namespace. transformColumnRef finds columns with colNameToVar. Operators and functions resolve in make_op and ParseFuncOrColumn.",
+   "where": "src/backend/parser/parse_clause.c, parse_relation.c, parse_expr.c, parse_oper.c, parse_func.c"
+  },
+  {
+   "step": "Rewrite",
+   "detail": "pg_rewrite_query calls QueryRewrite. RewriteQuery applies non-SELECT rules, then fireRIRrules expands views using ApplyRetrieveRule.",
+   "where": "src/backend/rewrite/rewriteHandler.c: QueryRewrite, fireRIRrules, ApplyRetrieveRule"
+  }
+ ],
+ "diagram": {
+  "claim": "SQL text flows through scanner, grammar, analyzer and rewriter, with the analyzer and rewriter reading the catalogs.",
+  "nodes": [
+   {
+    "id": "sql",
+    "label": "SQL text",
+    "group": "Input"
+   },
+   {
+    "id": "scan",
+    "label": "scan.l scanner",
+    "group": "Raw parse"
+   },
+   {
+    "id": "gram",
+    "label": "gram.y grammar",
+    "group": "Raw parse"
+   },
+   {
+    "id": "raw",
+    "label": "Raw parse tree",
+    "group": "Raw parse"
+   },
+   {
+    "id": "ana",
+    "label": "analyze.c",
+    "group": "Analysis"
+   },
+   {
+    "id": "ns",
+    "label": "ParseState namespace",
+    "group": "Analysis"
+   },
+   {
+    "id": "cat",
+    "label": "System catalogs",
+    "group": "Catalog"
+   },
+   {
+    "id": "query",
+    "label": "Query tree",
+    "group": "Analysis"
+   },
+   {
+    "id": "rw",
+    "label": "rewriteHandler.c",
+    "group": "Rewrite"
+   },
+   {
+    "id": "rules",
+    "label": "pg_rewrite rules",
+    "group": "Catalog"
+   },
+   {
+    "id": "plan",
+    "label": "Planner",
+    "group": "Output"
+   }
+  ],
+  "edges": [
+   {
+    "from": "sql",
+    "to": "scan",
+    "label": "feeds"
+   },
+   {
+    "from": "scan",
+    "to": "gram",
+    "label": "emits tokens"
+   },
+   {
+    "from": "gram",
+    "to": "raw",
+    "label": "builds"
+   },
+   {
+    "from": "raw",
+    "to": "ana",
+    "label": "enters"
+   },
+   {
+    "from": "ana",
+    "to": "ns",
+    "label": "fills"
+   },
+   {
+    "from": "ana",
+    "to": "cat",
+    "label": "looks up"
+   },
+   {
+    "from": "ana",
+    "to": "query",
+    "label": "produces"
+   },
+   {
+    "from": "query",
+    "to": "rw",
+    "label": "enters"
+   },
+   {
+    "from": "rules",
+    "to": "rw",
+    "label": "supplies"
+   },
+   {
+    "from": "rw",
+    "to": "plan",
+    "label": "hands off"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/parser/README",
+   "what": "One-line map of every file in the parser directory."
+  },
+  {
+   "path": "src/backend/parser/parser.c",
+   "what": "raw_parser entry point and the base_yylex lookahead filter."
+  },
+  {
+   "path": "src/backend/parser/scan.l",
+   "what": "The flex lexer that breaks SQL text into tokens."
+  },
+  {
+   "path": "src/backend/parser/gram.y",
+   "what": "The bison grammar that builds the raw parse tree."
+  },
+  {
+   "path": "src/backend/parser/analyze.c",
+   "what": "Top level of parse analysis, including transformSelectStmt."
+  },
+  {
+   "path": "src/backend/parser/parse_relation.c",
+   "what": "Range table entries, namespace items and column lookup."
+  },
+  {
+   "path": "src/backend/parser/parse_expr.c",
+   "what": "Turns raw expressions like ColumnRef into typed expression nodes."
+  },
+  {
+   "path": "src/backend/rewrite/rewriteHandler.c",
+   "what": "QueryRewrite, rule firing and view expansion."
+  },
+  {
+   "path": "src/include/nodes/parsenodes.h",
+   "what": "Defines Query, RangeTblEntry and the raw statement structs."
+  }
+ ],
+ "interview": [
+  {
+   "q": "What are the main steps from SQL text to a plan?",
+   "answer": [
+    "Scan into tokens, then parse into a raw tree.",
+    "Parse analysis makes a Query tree.",
+    "The rewriter expands views and rules.",
+    "Then the planner makes a plan."
+   ],
+   "trap": "Parse and analyze are not one step. They are separate, and only analysis touches the catalogs."
+  },
+  {
+   "q": "What do scan.l and gram.y each do?",
+   "answer": [
+    "scan.l is a flex lexer. It makes tokens.",
+    "gram.y is a bison grammar. It builds nodes from tokens.",
+    "raw_parser in parser.c drives both."
+   ]
+  },
+  {
+   "q": "Why can the raw parser run without catalog access?",
+   "answer": [
+    "It only checks grammar and keeps names as plain strings.",
+    "A table name is just a RangeVar until analysis.",
+    "So parsing works even when the transaction is aborted."
+   ],
+   "trap": "Saying the parser checks that a table exists. It does not. Analysis does."
+  },
+  {
+   "q": "What is the difference between a raw parse tree and a Query?",
+   "answer": [
+    "Raw tree: SelectStmt, ColumnRef, A_Expr, with unresolved names.",
+    "Query: range table, Var nodes, typed expressions, resolved functions.",
+    "Query is defined in parsenodes.h."
+   ]
+  },
+  {
+   "q": "In what order does transformSelectStmt work, and why?",
+   "answer": [
+    "WITH first, then FROM, then target list, then WHERE, then sort and group.",
+    "FROM comes before the target list so the namespace is filled.",
+    "Column names in SELECT and WHERE are then looked up in that namespace."
+   ],
+   "trap": "Thinking the target list is handled first because it appears first in the text."
+  },
+  {
+   "q": "How does a column name like price become a Var?",
+   "answer": [
+    "transformColumnRef in parse_expr.c handles the ColumnRef.",
+    "It searches ParseState's p_namespace using colNameToVar.",
+    "Two matches raise an ambiguity error. No match raises a missing column error.",
+    "The result is a Var that points at a range table entry."
+   ]
+  },
+  {
+   "q": "How are views implemented?",
+   "answer": [
+    "A view is a table with an ON SELECT rule stored in pg_rewrite.",
+    "fireRIRrules finds that rule for each relation in the range table.",
+    "ApplyRetrieveRule swaps the view entry for a subquery.",
+    "RIR means Retrieve-Instead-Retrieve."
+   ],
+   "trap": "Believing views store data or are expanded in the planner. The rewriter expands them."
+  },
+  {
+   "q": "What does QueryRewrite do in its steps?",
+   "answer": [
+    "Step 1: RewriteQuery applies non-SELECT rules and can return zero or many queries.",
+    "Step 2: fireRIRrules expands view rules on each query.",
+    "Step 3: decide which query sets the command tag.",
+    "It returns a list of Query trees."
+   ]
+  },
+  {
+   "q": "Where would you add a new SQL keyword or syntax?",
+   "answer": [
+    "Add the keyword to src/include/parser/kwlist.h.",
+    "Add grammar rules in gram.y and a node in parsenodes.h.",
+    "Handle the node in analyze.c or the matching parse_*.c file.",
+    "Add a regression test under src/test/regress."
+   ],
+   "trap": "Forgetting the keyword category lists in gram.y. The script src/backend/parser/check_keywords.pl catches it."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/parser/README first, then trace one SELECT by hand from raw_parser to QueryRewrite.",
+  "Start with a small regression test or error-message fix in a parse_*.c file, using src/test/regress/sql/select.sql as a model.",
+  "Be careful with gram.y: bison conflicts can appear from a single new rule. Rebuild and check for them.",
+  "Read doc/src/sgml/rules.sgml for the plain-language story of rules and views."
+ ],
+ "glossary": [
+  {
+   "term": "Raw parse tree",
+   "meaning": "Output of gram.y. Grammar is checked, names are not resolved."
+  },
+  {
+   "term": "Query",
+   "meaning": "Analyzed statement tree that the rewriter and planner consume."
+  },
+  {
+   "term": "ParseState",
+   "meaning": "Working state during analysis, holding the range table and namespace."
+  },
+  {
+   "term": "Range table (RTE)",
+   "meaning": "List of relations, subqueries and functions a query reads from."
+  },
+  {
+   "term": "Var",
+   "meaning": "A resolved column reference: which range table entry and which column."
+  },
+  {
+   "term": "RIR rule",
+   "meaning": "Retrieve-Instead-Retrieve: the ON SELECT rule that implements a view."
+  }
+ ],
+ "more": [
+  "What is a utility statement? CREATE TABLE, COPY and friends become a Query with commandType CMD_UTILITY.",
+  "A string with many statements gives a List of RawStmt, each analyzed on its own.",
+  "Node copy, equal and out code is generated from parsenodes.h by gen_node_support.pl.",
+  "post_parse_analyze_hook is where pg_stat_statements computes its query id.",
+  "Debug GUCs: debug_print_parse, debug_print_rewritten, debug_pretty_print."
+ ]
+}

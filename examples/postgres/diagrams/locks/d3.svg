@@ -1,0 +1,41 @@
+<svg class="hd" viewBox="0 0 800 570" role="img" aria-label="Anatomy of the lock table: LOCKTAG, LOCK, PROCLOCK, LOCALLOCK and PGPROC" xmlns="http://www.w3.org/2000/svg"><defs><marker id="locks-d3-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob2" x="12" y="10" width="776" height="318" rx="30"/><text class="d-t" x="30" y="32">Shared memory: lock hash table</text>
+<rect class="d-box g3" x="30" y="44" width="26" height="26" rx="5"/><text class="d-s" x="43" y="62" text-anchor="middle">0</text>
+<rect class="d-box g3" x="60" y="44" width="26" height="26" rx="5"/><text class="d-s" x="73" y="62" text-anchor="middle">1</text>
+<rect class="d-box g3" x="90" y="44" width="26" height="26" rx="5"/><text class="d-s" x="103" y="62" text-anchor="middle">2</text>
+<rect class="d-box g3" x="120" y="44" width="26" height="26" rx="5"/><text class="d-s" x="133" y="62" text-anchor="middle">3</text>
+<rect class="d-box g3" x="150" y="44" width="26" height="26" rx="5"/><text class="d-s" x="163" y="62" text-anchor="middle">4</text>
+<rect class="d-box g3" x="180" y="44" width="26" height="26" rx="5"/><text class="d-s" x="193" y="62" text-anchor="middle">5</text>
+<rect class="d-box g3" x="210" y="44" width="26" height="26" rx="5"/><text class="d-s" x="223" y="62" text-anchor="middle">6</text>
+<rect class="d-box g3" x="240" y="44" width="26" height="26" rx="5"/><text class="d-s" x="253" y="62" text-anchor="middle">7</text>
+<rect class="d-box g3" x="270" y="44" width="26" height="26" rx="5"/><text class="d-s" x="283" y="62" text-anchor="middle">8</text>
+<rect class="d-box g3" x="300" y="44" width="26" height="26" rx="5"/><text class="d-s" x="313" y="62" text-anchor="middle">9</text>
+<rect class="d-box g3" x="330" y="44" width="26" height="26" rx="5"/><text class="d-s" x="343" y="62" text-anchor="middle">10</text>
+<rect class="d-box g3" x="360" y="44" width="26" height="26" rx="5"/><text class="d-s" x="373" y="62" text-anchor="middle">11</text>
+<rect class="d-box g3" x="390" y="44" width="26" height="26" rx="5"/><text class="d-s" x="403" y="62" text-anchor="middle">12</text>
+<rect class="d-box g3" x="420" y="44" width="26" height="26" rx="5"/><text class="d-s" x="433" y="62" text-anchor="middle">13</text>
+<rect class="d-box g3" x="450" y="44" width="26" height="26" rx="5"/><text class="d-s" x="463" y="62" text-anchor="middle">14</text>
+<rect class="d-box g3" x="480" y="44" width="26" height="26" rx="5"/><text class="d-s" x="493" y="62" text-anchor="middle">15</text>
+<text class="d-s" x="546" y="62">partition = hashcode % 16</text>
+<rect class="d-box g0" x="15" y="96" width="205" height="180" rx="12"/><text class="d-t" x="51" y="116">LOCKTAG</text><path class="d-line" d="M25,126 H210" opacity="0.35"/><text class="d-m" x="29" y="143">locktag_field1</text><path class="d-line" d="M25,150 H210" opacity="0.35"/><text class="d-m" x="29" y="167">locktag_field2</text><path class="d-line" d="M25,174 H210" opacity="0.35"/><text class="d-m" x="29" y="191">locktag_field3</text><path class="d-line" d="M25,198 H210" opacity="0.35"/><text class="d-m" x="29" y="215">locktag_field4</text><path class="d-line" d="M25,222 H210" opacity="0.35"/><text class="d-m" x="29" y="239">locktag_type</text><path class="d-line" d="M25,246 H210" opacity="0.35"/><text class="d-m" x="29" y="263">locktag_lockmethodid</text>
+<rect class="d-box g1" x="290" y="96" width="215" height="204" rx="12"/><text class="d-t" x="326" y="116">LOCK (one per object)</text><path class="d-line" d="M300,126 H495" opacity="0.35"/><text class="d-m" x="304" y="143">tag  (LOCKTAG)</text><path class="d-line" d="M300,150 H495" opacity="0.35"/><text class="d-m" x="304" y="167">grantMask</text><path class="d-line" d="M300,174 H495" opacity="0.35"/><text class="d-m" x="304" y="191">waitMask</text><path class="d-line" d="M300,198 H495" opacity="0.35"/><text class="d-m" x="304" y="215">procLocks</text><path class="d-line" d="M300,222 H495" opacity="0.35"/><text class="d-m" x="304" y="239">waitProcs</text><path class="d-line" d="M300,246 H495" opacity="0.35"/><text class="d-m" x="304" y="263">requested[]</text><path class="d-line" d="M300,270 H495" opacity="0.35"/><text class="d-m" x="304" y="287">granted[]</text>
+<rect class="d-box g4" x="575" y="96" width="210" height="180" rx="12"/><text class="d-t" x="611" y="116">PROCLOCK (per holder)</text><path class="d-line" d="M585,126 H775" opacity="0.35"/><text class="d-m" x="589" y="143">tag.myLock</text><path class="d-line" d="M585,150 H775" opacity="0.35"/><text class="d-m" x="589" y="167">tag.myProc</text><path class="d-line" d="M585,174 H775" opacity="0.35"/><text class="d-m" x="589" y="191">holdMask</text><path class="d-line" d="M585,198 H775" opacity="0.35"/><text class="d-m" x="589" y="215">releaseMask</text><path class="d-line" d="M585,222 H775" opacity="0.35"/><text class="d-m" x="589" y="239">lockLink</text><path class="d-line" d="M585,246 H775" opacity="0.35"/><text class="d-m" x="589" y="263">procLink</text>
+<text class="d-s" x="22" y="292">Table lock: field1 = database OID</text><text class="d-s" x="22" y="310">field2 = table OID</text>
+<path class="d-edge" d="M100,96 L100,72" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="108" y="88">hash to partition</text>
+<circle class="d-badge" cx="30" cy="112" r="11"/><text class="d-bt" x="30" y="116">1</text>
+<circle class="d-badge" cx="305" cy="112" r="11"/><text class="d-bt" x="305" y="116">3</text>
+<circle class="d-badge" cx="590" cy="112" r="11"/><text class="d-bt" x="590" y="116">4</text>
+<circle class="d-badge" cx="526" cy="57" r="11"/><text class="d-bt" x="526" y="61">2</text>
+<path class="d-edge" d="M220,138 L290,138" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="255" y="130" text-anchor="middle">is the key</text>
+<path class="d-edge" d="M575,138 L505,138" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="540" y="130" text-anchor="middle">myLock</text>
+<path class="d-edge" d="M505,210 C540,210 540,234 575,234" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="545" y="252" text-anchor="middle">chains</text>
+<rect class="d-blob" x="12" y="346" width="776" height="214" rx="30"/><text class="d-t" x="30" y="370">Backends</text>
+<rect class="d-box g5" x="30" y="412" width="190" height="70" rx="12"/><text class="d-t" x="125.0" y="444.0" text-anchor="middle">LOCALLOCK</text><text class="d-s" x="125.0" y="461.0" text-anchor="middle">private copy per backend</text>
+<rect class="d-box g4" x="305" y="412" width="190" height="70" rx="12"/><text class="d-t" x="400.0" y="444.0" text-anchor="middle">PGPROC: Backend B</text><text class="d-s" x="400.0" y="461.0" text-anchor="middle">waiting for the lock</text>
+<rect class="d-box g2" x="590" y="412" width="190" height="70" rx="12"/><text class="d-t" x="685.0" y="444.0" text-anchor="middle">PGPROC: Backend A</text><text class="d-s" x="685.0" y="461.0" text-anchor="middle">holds the lock</text>
+<circle class="d-badge" cx="45" cy="412" r="11"/><text class="d-bt" x="45" y="416">5</text>
+<path class="d-edge" d="M120,412 C120,350 265,320 292,300" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="230" y="350" text-anchor="middle">lock</text>
+<path class="d-edge" d="M400,314 L400,412" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="400" y="372" text-anchor="middle">waitProcs</text>
+<path class="d-edge" d="M685,262 L685,412" marker-end="url(#locks-d3-ah)"/><text class="d-lab" x="685" y="372" text-anchor="middle">myProc</text>
+<text class="d-s" x="30" y="520">LOCALLOCK skips the shared table</text><text class="d-s" x="30" y="538">when a backend re-locks the same thing.</text>
+</svg>

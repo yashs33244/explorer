@@ -1,0 +1,56 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Three gates before your data",
+  "caption": "A connection passes the network door, then proves who it is using pg_hba.conf and SCRAM, then faces ACL and row security checks before it touches table data.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One login, then a SELECT",
+  "caption": "Follow the numbers: the client connects, the first matching pg_hba.conf line picks SCRAM, the stored verifier proves the password, and then each SELECT is checked by ACLs and row security.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client connects to the postmaster socket (psql -U alice)"
+   },
+   {
+    "n": 2,
+    "meaning": "Postmaster forks a backend and may negotiate TLS"
+   },
+   {
+    "n": 3,
+    "meaning": "check_hba walks pg_hba.conf and the first matching line wins"
+   },
+   {
+    "n": 4,
+    "meaning": "ClientAuthentication runs the SCRAM exchange"
+   },
+   {
+    "n": 5,
+    "meaning": "The stored verifier is loaded from pg_authid"
+   },
+   {
+    "n": 6,
+    "meaning": "Proof is accepted and the session role is set"
+   },
+   {
+    "n": 7,
+    "meaning": "A SELECT arrives and the ACL check runs (aclchk.c)"
+   },
+   {
+    "n": 8,
+    "meaning": "Row level security adds policy filters, so only allowed rows come back"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "pg_hba.conf lines and ACL entries",
+  "caption": "A pg_hba.conf line is read left to right as TYPE, DATABASE, USER, ADDRESS, METHOD and the first match wins, while an ACL entry reads grantee=privileges/grantor.",
+  "badges": []
+ }
+]

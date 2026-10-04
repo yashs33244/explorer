@@ -1,0 +1,77 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Storage layers in Postgres",
+  "caption": "Heap code asks the buffer manager for pages, and only on a cache miss does smgr and md.c read the table file from disk.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Life of an INSERT",
+  "caption": "Follow numbers 1 to 8 to see a big row get shrunk, placed in a pinned buffer page, and cleaned up later.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "heap_insert starts and prepares the tuple"
+   },
+   {
+    "n": 2,
+    "meaning": "Big values are compressed or moved to a TOAST table"
+   },
+   {
+    "n": 3,
+    "meaning": "hio.c finds a page with room using the free space map"
+   },
+   {
+    "n": 4,
+    "meaning": "ReadBuffer pins the page in shared buffers"
+   },
+   {
+    "n": 5,
+    "meaning": "On a cache miss, the clock sweep picks a victim buffer"
+   },
+   {
+    "n": 6,
+    "meaning": "md.c reads the 8kB block from the data file"
+   },
+   {
+    "n": 7,
+    "meaning": "PageAddItemExtended adds the tuple, then the buffer is dirtied and WAL written"
+   },
+   {
+    "n": 8,
+    "meaning": "Pruning and VACUUM clean up dead tuples later"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of an 8kB page",
+  "caption": "A page has a header and line pointers at the top, tuples growing up from the bottom, and each tuple starts with its own header.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "PageHeaderData, 24 bytes at the start of the page"
+   },
+   {
+    "n": 2,
+    "meaning": "Line pointer array, one 4 byte entry per tuple"
+   },
+   {
+    "n": 3,
+    "meaning": "Free space between pd_lower and pd_upper"
+   },
+   {
+    "n": 4,
+    "meaning": "Tuples stored from the end of the page backwards"
+   },
+   {
+    "n": 5,
+    "meaning": "HeapTupleHeaderData fields of one tuple"
+   }
+  ]
+ }
+]

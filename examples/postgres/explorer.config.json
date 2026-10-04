@@ -1,0 +1,79 @@
+{
+  "title": "Inside PostgreSQL",
+  "brandSub": "a beginner's field guide",
+  "storageKey": "pg-guide-known",
+  "kicker": "repos/postgres, built on master (20devel)",
+  "heroTitle": "How PostgreSQL works, and where you can step in",
+  "heroLede": "You are new here and want to contribute, so this guide explains the server the way a senior committer would in an interview. It follows one server from the Docker container and the files on disk, through the query engine and the write-ahead log, out to replicas and sharding. Every part has three diagrams, a walk through the real code, and the questions you would be asked.",
+  "how": [
+    { "title": "Look", "text": "Start with the three diagrams. They show what connects to what." },
+    { "title": "Answer", "text": "Cover the answers and try every question out loud." },
+    { "title": "Open the file", "text": "Every path here exists in your clone. Open one after each part." }
+  ],
+  "overviewKey": "overview",
+  "lifecycle": {
+    "title": "Life of one query",
+    "steps": [
+      { "name": "Connect", "text": "The client opens a socket. The postmaster forks a backend for it.", "topic": "process" },
+      { "name": "Parse", "text": "SQL text becomes a tree. Names are looked up in the catalogs.", "topic": "parse" },
+      { "name": "Rewrite", "text": "Views are swapped for the queries behind them.", "topic": "parse" },
+      { "name": "Plan", "text": "The planner guesses costs and picks the cheapest way to run it.", "topic": "planner" },
+      { "name": "Execute", "text": "Plan nodes pull one row at a time from the scans up.", "topic": "executor" },
+      { "name": "Read and write", "text": "Rows come from 8kB pages cached in shared buffers. Visibility rules decide which version you see.", "topic": "storage" },
+      { "name": "Commit", "text": "The change is written to WAL first. Then the commit is durable.", "topic": "wal" }
+    ]
+  },
+  "callouts": [
+    { "style": "soft", "title": "Three ideas that explain most of Postgres", "items": [
+      { "bold": "Never overwrite.", "text": "An UPDATE writes a new row version. Old versions stay until VACUUM removes them. That is how readers and writers avoid blocking each other." },
+      { "bold": "Log first.", "text": "Every change goes to the WAL before the data page. After a crash, the log is replayed. Replicas replay the same log." },
+      { "bold": "Everything plugs in.", "text": "Index types, table storage, functions, hooks and extensions all go through small tables of function pointers." }
+    ] },
+    { "style": "more", "title": "Honest answers to the questions people ask first", "items": [
+      { "bold": "Does Postgres shard by itself?", "text": "No. Core gives partitioning, foreign tables and replicas. Real sharding needs extensions such as Citus." },
+      { "bold": "Does it need special kernel permissions in Docker?", "text": "The server needs none. It refuses to run as root." },
+      { "bold": "Where is my data?", "text": "In 8kB pages inside files under one data directory." }
+    ] }
+  ],
+  "groups": [
+    { "name": "Run it", "topics": ["docker", "pgdata", "memory"] },
+    { "name": "The query engine", "topics": ["process", "parse", "planner", "executor"] },
+    { "name": "Data and safety", "topics": ["storage", "mvcc", "wal", "walfiles", "index", "locks"] },
+    { "name": "Scale and operate", "topics": ["replicas", "scaling", "security", "ops"] },
+    { "name": "Extend and contribute", "topics": ["features", "catalog", "contrib"] }
+  ],
+  "navLabels": {
+    "docker": "Docker and the kernel", "pgdata": "Files on disk (PGDATA)", "memory": "Memory map",
+    "process": "Processes", "parse": "Parser", "planner": "Planner", "executor": "Executor",
+    "storage": "Storage", "mvcc": "MVCC and VACUUM", "wal": "WAL", "walfiles": "WAL files and records", "index": "Indexes", "locks": "Locks",
+    "replicas": "Read replicas", "scaling": "Sharding and scaling", "security": "Security and auth", "ops": "Config, backup, upgrade",
+    "features": "Built-in features", "catalog": "Catalogs and C APIs", "contrib": "Build, test, patch"
+  },
+  "tryItNote": "Run these in a scratch folder. The checks were run against Homebrew PostgreSQL 16.",
+  "extraSections": [
+    {
+      "id": "backlog", "navLabel": "Contribution backlog", "kicker": "Researched 2026-10-04",
+      "title": "Open work you can pick up",
+      "lede": "37 tickets found on the pgsql-bugs list, the Commitfest app, the wiki TODO and in the source, each checked against git history and the mailing list. Scroll the table. Status changes daily, so reread the thread before you start.",
+      "table": {
+        "file": "backlog.json", "tallAfter": 8,
+        "caption": "Difficulty runs from 1 (docs and tests) to 5 (deep core change).",
+        "columns": [
+          { "key": "rank", "label": "#", "kind": "num" },
+          { "key": "track", "label": "Track", "kind": "pill" },
+          { "key": "title", "label": "Ticket" },
+          { "key": "area", "label": "Area" },
+          { "key": "difficulty", "label": "Diff", "kind": "num" },
+          { "key": "hours", "label": "Hours", "kind": "num" },
+          { "key": "status", "label": "Status when checked" },
+          { "key": "recheck", "label": "Second check", "kind": "pill" },
+          { "key": "source", "label": "Source", "kind": "link" }
+        ]
+      }
+    },
+    { "id": "roadmap", "navLabel": "Your first patch", "kicker": "Your plan", "title": "From reading to a first patch",
+      "lede": "PostgreSQL is learned best by building it, breaking it and reading other people's patches before writing your own.",
+      "htmlFile": "roadmap.html" }
+  ],
+  "footer": "Built from a read of the PostgreSQL source, plus real runs against Homebrew PostgreSQL 16, then checked file by file by a second pass. Function names change between releases, so confirm against the branch you build."
+}

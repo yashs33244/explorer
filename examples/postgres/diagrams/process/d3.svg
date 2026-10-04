@@ -1,0 +1,49 @@
+<svg class="hd" viewBox="0 0 800 590" role="img" aria-label="Layout of the startup packet and of a normal protocol message, with the one-letter message types." xmlns="http://www.w3.org/2000/svg">
+<rect class="d-blob" x="20" y="15" width="760" height="190" rx="30"/>
+<text class="d-s" x="40" y="42">Startup packet (first message)</text>
+<rect class="d-box g1" x="40" y="62" width="90" height="56" rx="10"/><text class="d-t" x="85" y="95" text-anchor="middle">length</text>
+<rect class="d-box g2" x="138" y="62" width="110" height="56" rx="10"/><text class="d-t" x="193" y="95" text-anchor="middle">196608</text>
+<rect class="d-box g3" x="256" y="62" width="80" height="56" rx="10"/><text class="d-t" x="296" y="95" text-anchor="middle">user\0</text>
+<rect class="d-box g0" x="344" y="62" width="90" height="56" rx="10"/><text class="d-t" x="389" y="95" text-anchor="middle">alice\0</text>
+<rect class="d-box g3" x="442" y="62" width="100" height="56" rx="10"/><text class="d-t" x="492" y="95" text-anchor="middle">database\0</text>
+<rect class="d-box g0" x="550" y="62" width="80" height="56" rx="10"/><text class="d-t" x="590" y="95" text-anchor="middle">mydb\0</text>
+<rect class="d-box g4" x="638" y="62" width="60" height="56" rx="10"/><text class="d-t" x="668" y="95" text-anchor="middle">\0</text>
+<text class="d-s" x="85" y="140" text-anchor="middle">Int32</text>
+<text class="d-s" x="193" y="140" text-anchor="middle">protocol 3.0</text>
+<text class="d-s" x="296" y="140" text-anchor="middle">key</text>
+<text class="d-s" x="389" y="140" text-anchor="middle">value</text>
+<text class="d-s" x="492" y="140" text-anchor="middle">key</text>
+<text class="d-s" x="590" y="140" text-anchor="middle">value</text>
+<text class="d-s" x="668" y="140" text-anchor="middle">end</text>
+<text class="d-s" x="40" y="164">No type letter: it starts with length</text>
+<text class="d-s" x="40" y="182">Read by ProcessStartupPacket in backend_startup.c</text>
+
+<rect class="d-blob" x="20" y="225" width="760" height="130" rx="30"/>
+<text class="d-s" x="40" y="252">Normal message (after startup)</text>
+<rect class="d-box g5" x="40" y="268" width="60" height="50" rx="10"/><text class="d-t" x="70" y="299" text-anchor="middle">Q</text>
+<rect class="d-box g2" x="108" y="268" width="100" height="50" rx="10"/><text class="d-t" x="158" y="299" text-anchor="middle">length</text>
+<rect class="d-box g0" x="216" y="268" width="160" height="50" rx="10"/><text class="d-t" x="296" y="299" text-anchor="middle">SELECT 1\0</text>
+<text class="d-s" x="70" y="340" text-anchor="middle">1 byte type</text>
+<text class="d-s" x="158" y="340" text-anchor="middle">Int32</text>
+<text class="d-s" x="296" y="340" text-anchor="middle">payload</text>
+<text class="d-s" x="420" y="299">Length counts itself plus the payload</text>
+<text class="d-s" x="420" y="322">Every later message starts with a letter</text>
+
+<rect class="d-blob2" x="20" y="375" width="370" height="200" rx="30"/>
+<text class="d-s" x="40" y="400">Client sends</text>
+<rect class="d-box g5" x="40" y="415" width="165" height="36" rx="10"/><text class="d-t" x="122" y="438" text-anchor="middle">Q simple query</text>
+<rect class="d-box g5" x="215" y="415" width="160" height="36" rx="10"/><text class="d-t" x="295" y="438" text-anchor="middle">P Parse</text>
+<rect class="d-box g5" x="40" y="463" width="165" height="36" rx="10"/><text class="d-t" x="122" y="486" text-anchor="middle">B Bind</text>
+<rect class="d-box g5" x="215" y="463" width="160" height="36" rx="10"/><text class="d-t" x="295" y="486" text-anchor="middle">E Execute</text>
+<rect class="d-box g5" x="40" y="511" width="165" height="36" rx="10"/><text class="d-t" x="122" y="534" text-anchor="middle">S Sync</text>
+<rect class="d-box g5" x="215" y="511" width="160" height="36" rx="10"/><text class="d-t" x="295" y="534" text-anchor="middle">X Terminate</text>
+
+<rect class="d-blob2" x="410" y="375" width="370" height="200" rx="30"/>
+<text class="d-s" x="430" y="400">Backend replies</text>
+<rect class="d-box g3" x="430" y="415" width="165" height="36" rx="10"/><text class="d-t" x="512" y="438" text-anchor="middle">R auth request</text>
+<rect class="d-box g3" x="605" y="415" width="160" height="36" rx="10"/><text class="d-t" x="685" y="438" text-anchor="middle">Z ReadyForQuery</text>
+<rect class="d-box g3" x="430" y="463" width="165" height="36" rx="10"/><text class="d-t" x="512" y="486" text-anchor="middle">T RowDescription</text>
+<rect class="d-box g3" x="605" y="463" width="160" height="36" rx="10"/><text class="d-t" x="685" y="486" text-anchor="middle">D DataRow</text>
+<rect class="d-box g3" x="430" y="511" width="165" height="36" rx="10"/><text class="d-t" x="512" y="534" text-anchor="middle">C CommandComplete</text>
+<rect class="d-box g3" x="605" y="511" width="160" height="36" rx="10"/><text class="d-t" x="685" y="534" text-anchor="middle">E ErrorResponse</text>
+</svg>

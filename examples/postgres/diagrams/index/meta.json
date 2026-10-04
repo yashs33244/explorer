@@ -1,0 +1,48 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Index scan components",
+  "caption": "The planner picks an index, the executor calls it only through the generic index API, btree finds TIDs, and the table AM turns each TID into a visible heap row.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "One index lookup, step by step",
+  "caption": "Follow the numbers to see a query for id = 42 travel from planner to btree to the heap and back to the client.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Planner costs the index path with cost_index and picks it"
+   },
+   {
+    "n": 2,
+    "meaning": "Executor (IndexNext) opens the scan with index_beginscan"
+   },
+   {
+    "n": 3,
+    "meaning": "btree walks from the root to the leaf page via _bt_first"
+   },
+   {
+    "n": 4,
+    "meaning": "The index hands back a TID, stored in xs_heaptid"
+   },
+   {
+    "n": 5,
+    "meaning": "The heap table AM reads the page and finds the visible row version"
+   },
+   {
+    "n": 6,
+    "meaning": "Executor rechecks quals if needed and sends the row to the client"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of a btree page",
+  "caption": "An 8kB index page holds a header, line pointers, free space, index tuples that carry TIDs, and a special area with the sibling links.",
+  "badges": []
+ }
+]

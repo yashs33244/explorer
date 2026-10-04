@@ -1,0 +1,102 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Shared and private memory",
+  "caption": "The postmaster makes one shared block, then forks backends that each keep their own private memory.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Postmaster creates the shared block at startup"
+   },
+   {
+    "n": 2,
+    "meaning": "Postmaster forks a backend for each client"
+   },
+   {
+    "n": 3,
+    "meaning": "The backend maps the shared block"
+   },
+   {
+    "n": 4,
+    "meaning": "The backend allocates private memory contexts"
+   },
+   {
+    "n": 5,
+    "meaning": "Page cache reads and writes data files"
+   },
+   {
+    "n": 6,
+    "meaning": "The OS OOM killer may kill a backend"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "Memory from startup to kill",
+  "caption": "Startup sizes and carves the shared block once, then every connection forks a backend that builds contexts and runs queries.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Register shared structs"
+   },
+   {
+    "n": 2,
+    "meaning": "Add up the size needed"
+   },
+   {
+    "n": 3,
+    "meaning": "Create the shared block"
+   },
+   {
+    "n": 4,
+    "meaning": "Carve the block into structs"
+   },
+   {
+    "n": 5,
+    "meaning": "Postmaster forks a backend"
+   },
+   {
+    "n": 6,
+    "meaning": "Backend builds its memory contexts"
+   },
+   {
+    "n": 7,
+    "meaning": "Backend runs a query"
+   },
+   {
+    "n": 8,
+    "meaning": "Child may be killed on OOM"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "The memory context tree",
+  "caption": "Contexts nest in a tree and the badge shows how long each lives, so resetting a context frees everything below it.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Lives as long as the whole backend"
+   },
+   {
+    "n": 2,
+    "meaning": "Lives for one client command"
+   },
+   {
+    "n": 3,
+    "meaning": "Lives for one transaction"
+   },
+   {
+    "n": 4,
+    "meaning": "Lives for one query"
+   },
+   {
+    "n": 5,
+    "meaning": "Reset for every row"
+   }
+  ]
+ }
+]

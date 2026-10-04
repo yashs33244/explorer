@@ -1,0 +1,56 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "Container, postmaster and kernel",
+  "caption": "The container runtime starts a root entrypoint that hands over to the postgres user, and the postmaster then asks the Linux kernel for shared memory, semaphores, sockets and file caching.",
+  "badges": []
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "From docker run to docker stop",
+  "caption": "Follow the numbers: the entrypoint starts as root, prepares the data folder, steps down to postgres, runs initdb once, then execs the real server, which later gets SIGINT for a fast shutdown.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "docker run starts docker-entrypoint.sh as root (uid 0)"
+   },
+   {
+    "n": 2,
+    "meaning": "The script creates PGDATA, sets mode 700 and chowns it to postgres"
+   },
+   {
+    "n": 3,
+    "meaning": "gosu postgres re-runs the script as uid 999 so the server is never root"
+   },
+   {
+    "n": 4,
+    "meaning": "On an empty PGDATA (no PG_VERSION) initdb creates the cluster"
+   },
+   {
+    "n": 5,
+    "meaning": "A temporary socket-only server runs /docker-entrypoint-initdb.d files, then pg_ctl stops it"
+   },
+   {
+    "n": 6,
+    "meaning": "exec postgres replaces the shell, so postgres is PID 1"
+   },
+   {
+    "n": 7,
+    "meaning": "Startup checks refuse root, require mode 0700 or 0750, and ask the kernel for shared memory, semaphores and sockets"
+   },
+   {
+    "n": 8,
+    "meaning": "docker stop sends SIGINT, which the postmaster treats as a fast shutdown"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Layout of the postgres image",
+  "caption": "The image keeps data in a VOLUME under /var/lib/postgresql, a socket directory, an init-scripts folder and a small /dev/shm, while the kernel supplies stop signals and two kinds of shared memory.",
+  "badges": []
+ }
+]

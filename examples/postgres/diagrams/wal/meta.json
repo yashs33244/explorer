@@ -1,0 +1,86 @@
+[
+ {
+  "file": "d1.svg",
+  "role": "architecture",
+  "title": "WAL components and data flow",
+  "caption": "A backend writes records into WAL buffers and then pg_wal on disk, and the same WAL feeds crash recovery and replicas.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "The backend builds a WAL record with XLogInsert"
+   },
+   {
+    "n": 2,
+    "meaning": "The record bytes are copied into WAL buffers in shared memory"
+   },
+   {
+    "n": 3,
+    "meaning": "WAL is flushed to the segment files in pg_wal"
+   }
+  ]
+ },
+ {
+  "file": "d2.svg",
+  "role": "lifecycle",
+  "title": "INSERT and COMMIT through WAL",
+  "caption": "At COMMIT only the WAL is forced to disk, and the dirty data page is written later by a checkpoint.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "Client sends INSERT to its backend"
+   },
+   {
+    "n": 2,
+    "meaning": "Backend changes the page in shared buffers, which becomes dirty"
+   },
+   {
+    "n": 3,
+    "meaning": "Backend writes the change record into WAL buffers"
+   },
+   {
+    "n": 4,
+    "meaning": "Client sends COMMIT"
+   },
+   {
+    "n": 5,
+    "meaning": "Backend adds the commit record to WAL buffers"
+   },
+   {
+    "n": 6,
+    "meaning": "XLogFlush writes and syncs WAL to pg_wal"
+   },
+   {
+    "n": 7,
+    "meaning": "Backend tells the client the commit is done"
+   },
+   {
+    "n": 8,
+    "meaning": "Later, a checkpoint writes the dirty page to the data files"
+   }
+  ]
+ },
+ {
+  "file": "d3.svg",
+  "role": "structure",
+  "title": "Anatomy of a WAL record",
+  "caption": "Zoom from a 16MB segment file to an 8kB page, to one record, to the 24 byte XLogRecord header fields.",
+  "badges": [
+   {
+    "n": 1,
+    "meaning": "A WAL segment file in pg_wal is a run of 8kB pages"
+   },
+   {
+    "n": 2,
+    "meaning": "Each page has a page header followed by WAL records"
+   },
+   {
+    "n": 3,
+    "meaning": "A record is a header, block headers, main data header, then block and main data"
+   },
+   {
+    "n": 4,
+    "meaning": "The XLogRecord header fields, including xl_rmid which names the owner of the redo code"
+   }
+  ]
+ }
+]

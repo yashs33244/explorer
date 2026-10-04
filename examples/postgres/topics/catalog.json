@@ -1,0 +1,334 @@
+{
+ "key": "catalog",
+ "title": "System catalogs, extensibility, memory contexts and errors",
+ "one_liner": "Postgres stores its own metadata in tables, caches it, calls functions through Datums, lets extensions hook in, and cleans memory and errors with contexts and longjmp.",
+ "analogy": "A library keeps its own card catalog as books too. Memory contexts are labeled trash bins, each emptied in one go.",
+ "big_picture": [
+  "System catalogs (pg_class, pg_proc, pg_type) are normal tables describing every table, function and type.",
+  "Reading catalogs on every query is slow, so catcache/syscache and relcache keep hot rows in memory.",
+  "Every SQL-callable C function takes PG_FUNCTION_ARGS and returns a Datum, a generic one-word value.",
+  "Extensions are shared libraries. They announce themselves with PG_MODULE_MAGIC and plug in via _PG_init and hooks.",
+  "palloc allocates inside a MemoryContext. Resetting or deleting a context frees everything in it at once.",
+  "ereport(ERROR) jumps back to a handler with longjmp. PG_TRY lets C code catch it."
+ ],
+ "flow": [
+  {
+   "step": "Catalog rows are defined",
+   "detail": "Built-in catalog rows live in .dat files. genbki.pl turns them into bootstrap data at build time.",
+   "where": "src/include/catalog/pg_proc.dat and src/backend/catalog/genbki.pl"
+  },
+  {
+   "step": "Caches start up",
+   "detail": "At backend start, the catalog cache and relation cache are initialised in phases.",
+   "where": "src/backend/utils/cache/syscache.c InitCatalogCache; relcache.c RelationCacheInitialize"
+  },
+  {
+   "step": "Code looks up a catalog row",
+   "detail": "Callers use SearchSysCache1, read columns with SysCacheGetAttr, then must ReleaseSysCache.",
+   "where": "src/backend/utils/cache/syscache.c SearchSysCache1"
+  },
+  {
+   "step": "Function is resolved",
+   "detail": "fmgr_info finds the C function pointer, built-in or from a shared library, and fills FmgrInfo.",
+   "where": "src/backend/utils/fmgr/fmgr.c fmgr_info; dfmgr.c load_external_function"
+  },
+  {
+   "step": "Function is called",
+   "detail": "Args travel in FunctionCallInfo. FunctionCall1Coll and friends wrap the call and return a Datum.",
+   "where": "src/backend/utils/fmgr/fmgr.c FunctionCall1Coll"
+  },
+  {
+   "step": "Extension plugs in",
+   "detail": "Library is loaded, _PG_init saves the old hook pointer and installs its own, e.g. ExecutorStart_hook.",
+   "where": "contrib/pg_stat_statements/pg_stat_statements.c _PG_init"
+  },
+  {
+   "step": "Memory is allocated",
+   "detail": "palloc uses CurrentMemoryContext. MemoryContextReset or Delete frees the whole group.",
+   "where": "src/backend/utils/mmgr/mcxt.c MemoryContextReset"
+  },
+  {
+   "step": "Errors unwind",
+   "detail": "ereport calls errstart and errfinish. ERROR does a longjmp to the PG_TRY or top-level handler.",
+   "where": "src/backend/utils/error/elog.c errfinish, pg_re_throw"
+  },
+  {
+   "step": "Catalog change invalidates caches",
+   "detail": "Changes queue invalidation messages. Other backends run AcceptInvalidationMessages and drop stale entries.",
+   "where": "src/backend/utils/cache/inval.c AcceptInvalidationMessages"
+  }
+ ],
+ "diagram": {
+  "claim": "A catalog lookup flows through caches, then function calls reach built-in or extension code, with memory and errors managed on the side.",
+  "nodes": [
+   {
+    "id": "cat",
+    "label": "pg_catalog tables",
+    "group": "Storage"
+   },
+   {
+    "id": "inval",
+    "label": "inval.c",
+    "group": "Cache"
+   },
+   {
+    "id": "sys",
+    "label": "syscache/catcache",
+    "group": "Cache"
+   },
+   {
+    "id": "rel",
+    "label": "relcache",
+    "group": "Cache"
+   },
+   {
+    "id": "fmgr",
+    "label": "fmgr",
+    "group": "Calls"
+   },
+   {
+    "id": "dfmgr",
+    "label": "dfmgr loader",
+    "group": "Extensions"
+   },
+   {
+    "id": "ext",
+    "label": "Extension .so",
+    "group": "Extensions"
+   },
+   {
+    "id": "hook",
+    "label": "Hook pointers",
+    "group": "Extensions"
+   },
+   {
+    "id": "mcxt",
+    "label": "MemoryContext",
+    "group": "Runtime"
+   },
+   {
+    "id": "elog",
+    "label": "elog.c",
+    "group": "Runtime"
+   }
+  ],
+  "edges": [
+   {
+    "from": "cat",
+    "to": "sys",
+    "label": "fills"
+   },
+   {
+    "from": "cat",
+    "to": "rel",
+    "label": "builds"
+   },
+   {
+    "from": "inval",
+    "to": "sys",
+    "label": "evicts"
+   },
+   {
+    "from": "inval",
+    "to": "rel",
+    "label": "rebuilds"
+   },
+   {
+    "from": "sys",
+    "to": "fmgr",
+    "label": "supplies"
+   },
+   {
+    "from": "fmgr",
+    "to": "dfmgr",
+    "label": "requests"
+   },
+   {
+    "from": "dfmgr",
+    "to": "ext",
+    "label": "loads"
+   },
+   {
+    "from": "ext",
+    "to": "hook",
+    "label": "installs"
+   },
+   {
+    "from": "ext",
+    "to": "mcxt",
+    "label": "allocates"
+   },
+   {
+    "from": "ext",
+    "to": "elog",
+    "label": "raises"
+   },
+   {
+    "from": "elog",
+    "to": "mcxt",
+    "label": "resets"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "src/backend/utils/cache/syscache.c",
+   "what": "SearchSysCache and friends, the main catalog lookup API"
+  },
+  {
+   "path": "src/backend/utils/cache/relcache.c",
+   "what": "Caches Relation descriptors for tables and indexes"
+  },
+  {
+   "path": "src/backend/utils/cache/inval.c",
+   "what": "Cache invalidation messages across backends"
+  },
+  {
+   "path": "src/backend/utils/fmgr/fmgr.c",
+   "what": "fmgr_info and FunctionCall helpers"
+  },
+  {
+   "path": "src/backend/utils/fmgr/dfmgr.c",
+   "what": "Loads shared libraries and finds functions in them"
+  },
+  {
+   "path": "src/include/fmgr.h",
+   "what": "PG_FUNCTION_ARGS, PG_GETARG macros, PG_MODULE_MAGIC"
+  },
+  {
+   "path": "src/backend/utils/mmgr/README",
+   "what": "Design notes on memory contexts"
+  },
+  {
+   "path": "src/backend/utils/mmgr/mcxt.c",
+   "what": "Generic MemoryContext create, reset, delete code"
+  },
+  {
+   "path": "src/backend/utils/error/elog.c",
+   "what": "ereport, errfinish, error data and rethrow"
+  },
+  {
+   "path": "contrib/pg_stat_statements/pg_stat_statements.c",
+   "what": "Good example of _PG_init and chained hooks"
+  }
+ ],
+ "interview": [
+  {
+   "q": "What is a system catalog?",
+   "answer": [
+    "Ordinary tables in the pg_catalog schema.",
+    "They store metadata: tables (pg_class), columns, types (pg_type), functions (pg_proc).",
+    "Postgres uses its own tables to describe itself."
+   ],
+   "trap": "Catalogs are not hidden C structs. They are real tables you can SELECT from."
+  },
+  {
+   "q": "Why do we have syscache and relcache?",
+   "answer": [
+    "Catalog lookups happen constantly. Going to disk or scanning each time is slow.",
+    "syscache caches single catalog rows by key.",
+    "relcache caches whole Relation descriptors with columns, indexes and more."
+   ]
+  },
+  {
+   "q": "What do you do after SearchSysCache?",
+   "answer": [
+    "Read fields, using SysCacheGetAttr for variable columns.",
+    "Call ReleaseSysCache when finished.",
+    "The tuple is pinned in the cache and must not be modified."
+   ],
+   "trap": "Do not pfree the tuple or modify it in place. It belongs to the cache."
+  },
+  {
+   "q": "What is a Datum and what does PG_FUNCTION_ARGS mean?",
+   "answer": [
+    "Datum is a generic value, either the value itself or a pointer.",
+    "PG_FUNCTION_ARGS expands to FunctionCallInfo fcinfo.",
+    "Use PG_GETARG_INT32(n) to read args and PG_RETURN_INT32(x) to return."
+   ]
+  },
+  {
+   "q": "How does a SQL call reach C code?",
+   "answer": [
+    "fmgr_info looks up the function in pg_proc and fills FmgrInfo.",
+    "Built-ins are found through fmgr_isbuiltin.",
+    "Others go through load_external_function in dfmgr.c.",
+    "The call itself passes a FunctionCallInfo."
+   ]
+  },
+  {
+   "q": "What do PG_MODULE_MAGIC and PG_FUNCTION_INFO_V1 do?",
+   "answer": [
+    "PG_MODULE_MAGIC marks a library as built for this server version.",
+    "The loader checks it, and refuses mismatched libraries.",
+    "PG_FUNCTION_INFO_V1 declares a function with the version 1 calling convention."
+   ]
+  },
+  {
+   "q": "How does an extension change server behavior?",
+   "answer": [
+    "_PG_init runs when the library loads.",
+    "It stores the previous hook, like prev_ExecutorStart, then sets its own.",
+    "Its hook calls the previous one, or the standard function if none.",
+    "CREATE EXTENSION runs scripts via CreateExtension in extension.c."
+   ],
+   "trap": "Forgetting to chain to the previous hook breaks other extensions."
+  },
+  {
+   "q": "How does memory management work in Postgres?",
+   "answer": [
+    "palloc allocates in CurrentMemoryContext.",
+    "pfree works on any chunk because the chunk knows its context.",
+    "Contexts form a tree under TopMemoryContext.",
+    "Resetting a context frees all its children and chunks."
+   ],
+   "trap": "Do not assume you must pfree everything. Contexts usually clean up for you."
+  },
+  {
+   "q": "What happens on ereport(ERROR), and when do you use PG_TRY?",
+   "answer": [
+    "errstart and errfinish build the error, then it longjmps out.",
+    "Normal code does not return from an ERROR.",
+    "PG_TRY catches it in C. Do cleanup in PG_CATCH or PG_FINALLY, then PG_RE_THROW.",
+    "Variables changed inside PG_TRY and used after should be volatile."
+   ],
+   "trap": "Swallowing an error without cleaning up leaves a broken transaction state."
+  }
+ ],
+ "contributor_tips": [
+  "Read src/backend/utils/mmgr/README and src/backend/utils/fmgr/README first. They are short and explain the design.",
+  "Start by reading contrib/pg_stat_statements/pg_stat_statements.c to see hooks and _PG_init in a real module.",
+  "Always pair SearchSysCache with ReleaseSysCache and check for invalid tuples.",
+  "Be careful which memory context you allocate in. Wrong context causes leaks or dangling pointers."
+ ],
+ "glossary": [
+  {
+   "term": "Datum",
+   "meaning": "Generic one-word value passed to and from functions."
+  },
+  {
+   "term": "MemoryContext",
+   "meaning": "A group of allocations that is freed together."
+  },
+  {
+   "term": "syscache",
+   "meaning": "In-memory cache of catalog rows, looked up by key."
+  },
+  {
+   "term": "relcache",
+   "meaning": "Cache of table and index descriptors."
+  },
+  {
+   "term": "hook",
+   "meaning": "A function pointer that extensions can override."
+  },
+  {
+   "term": "PG_TRY",
+   "meaning": "Macro block that catches ERROR in C code."
+  }
+ ],
+ "more": [
+  "Catalog changes need a catversion bump (catversion.h).",
+  "Hands-on: read contrib/pg_stat_statements for hooks, and src/test/modules for tiny examples."
+ ]
+}

@@ -1,0 +1,319 @@
+{
+ "key": "contrib",
+ "title": "Build, test and contribution workflow",
+ "one_liner": "You build with meson or configure, prove your change with regress, isolation and TAP tests, format with pgindent, then mail a patch to pgsql-hackers.",
+ "analogy": "Like fixing a car part: build the car, run the test track, polish to the shop's style, then send your repair note to the mechanics' mailing list.",
+ "big_picture": [
+  "The tree has two build systems: configure plus make (configure.ac, GNUmakefile.in) and meson (meson.build). Both build the same code.",
+  "Tests live in src/test (regress, isolation, recovery, ...), in contrib/*/ and in src/bin/*/t. \"make check-world\" runs most of them. TAP tests need --enable-tap-tests (meson: -Dtap_tests=enabled).",
+  "Regress tests compare real output to saved expected .out files. Any difference is a failure, written to regression.diffs.",
+  "pgindent reformats C code to one style. It uses pg_bsd_indent and src/tools/pgindent/typedefs.list.",
+  "Docs are DocBook files ending in .sgml in doc/src/sgml. A user-visible change needs a doc change in the same patch. Build with \"make html\" or \"ninja docs\".",
+  "Patches go by email to pgsql-hackers and are tracked in a Commitfest. Only committers push to the main repo."
+ ],
+ "flow": [
+  {
+   "step": "Build",
+   "detail": "Run 'meson setup build' then ninja. Or run ./configure then make. Use cassert and tap tests on while developing.",
+   "where": "meson.build, configure.ac, doc/src/sgml/installation.sgml"
+  },
+  {
+   "step": "Change code",
+   "detail": "Follow the 4-column tab style and ereport rules for messages.",
+   "where": "doc/src/sgml/sources.sgml (Reporting Errors); .editorconfig (tab style only)"
+  },
+  {
+   "step": "Add a test",
+   "detail": "Add SQL in sql/, the expected result in expected/, and list it in parallel_schedule. Concurrency tests become specs.",
+   "where": "src/test/regress/parallel_schedule, src/test/isolation/specs"
+  },
+  {
+   "step": "Run tests",
+   "detail": "make check, make check-world, or meson test. pg_regress writes regression.diffs on failure.",
+   "where": "src/test/regress/pg_regress.c, GNUmakefile.in"
+  },
+  {
+   "step": "Format",
+   "detail": "Run pgindent on your changed C files. Add new typedef names to typedefs.list first.",
+   "where": "src/tools/pgindent/pgindent, src/tools/pgindent/typedefs.list"
+  },
+  {
+   "step": "Update docs",
+   "detail": "Edit the matching SGML file and check it builds with 'make html' in doc/src/sgml.",
+   "where": "doc/src/sgml/docguide.sgml, doc/src/sgml/Makefile"
+  },
+  {
+   "step": "Make the patch",
+   "detail": "git format-patch gives a mailable patch. Send it to pgsql-hackers.",
+   "where": "postgresql.org/developer and the wiki page \"Submitting a Patch\""
+  },
+  {
+   "step": "Review and commit",
+   "detail": "Register it in a Commitfest. A committer pushes it, and may backpatch fixes to stable branches.",
+   "where": "commitfest.postgresql.org and the wiki page \"CommitFest\""
+  }
+ ],
+ "diagram": {
+  "claim": "A change moves from your editor through build, tests and formatting, then by email to a committer.",
+  "nodes": [
+   {
+    "id": "src",
+    "label": "Your code change",
+    "group": "Local"
+   },
+   {
+    "id": "build",
+    "label": "meson / configure",
+    "group": "Local"
+   },
+   {
+    "id": "tests",
+    "label": "regress, isolation, TAP",
+    "group": "Local"
+   },
+   {
+    "id": "diffs",
+    "label": "expected .out files",
+    "group": "Local"
+   },
+   {
+    "id": "indent",
+    "label": "pgindent",
+    "group": "Local"
+   },
+   {
+    "id": "docs",
+    "label": "doc/src/sgml",
+    "group": "Local"
+   },
+   {
+    "id": "patch",
+    "label": "git format-patch",
+    "group": "Review"
+   },
+   {
+    "id": "list",
+    "label": "pgsql-hackers",
+    "group": "Review"
+   },
+   {
+    "id": "cf",
+    "label": "Commitfest",
+    "group": "Review"
+   },
+   {
+    "id": "committer",
+    "label": "Committer",
+    "group": "Review"
+   }
+  ],
+  "edges": [
+   {
+    "from": "src",
+    "to": "build",
+    "label": "compiles"
+   },
+   {
+    "from": "build",
+    "to": "tests",
+    "label": "installs temp"
+   },
+   {
+    "from": "tests",
+    "to": "diffs",
+    "label": "compares"
+   },
+   {
+    "from": "diffs",
+    "to": "indent",
+    "label": "passes"
+   },
+   {
+    "from": "indent",
+    "to": "docs",
+    "label": "formats"
+   },
+   {
+    "from": "docs",
+    "to": "patch",
+    "label": "bundles"
+   },
+   {
+    "from": "patch",
+    "to": "list",
+    "label": "emails"
+   },
+   {
+    "from": "list",
+    "to": "cf",
+    "label": "registers"
+   },
+   {
+    "from": "cf",
+    "to": "committer",
+    "label": "assigns"
+   },
+   {
+    "from": "tests",
+    "to": "src",
+    "label": "fix on fail"
+   }
+  ]
+ },
+ "key_files": [
+  {
+   "path": "meson.build",
+   "what": "Top-level meson build; defines how test suites are registered and run"
+  },
+  {
+   "path": "configure.ac",
+   "what": "Autoconf source that generates the ./configure script"
+  },
+  {
+   "path": "src/test/regress/pg_regress.c",
+   "what": "Test driver that runs SQL files and diffs against expected output"
+  },
+  {
+   "path": "src/test/regress/parallel_schedule",
+   "what": "List of regression tests and which run in parallel groups"
+  },
+  {
+   "path": "src/test/isolation/README",
+   "what": "Explains spec files for multi-session concurrency tests"
+  },
+  {
+   "path": "src/tools/pgindent/README",
+   "what": "Step-by-step guide to running pgindent and typedefs.list"
+  },
+  {
+   "path": "doc/src/sgml/sources.sgml",
+   "what": "Official coding conventions: style, ereport, error message rules"
+  },
+  {
+   "path": "doc/src/sgml/regress.sgml",
+   "what": "Docs for running tests, PG_TEST_EXTRA and TAP options"
+  }
+ ],
+ "interview": [
+  {
+   "q": "What are the two ways to build PostgreSQL from this tree?",
+   "answer": [
+    "Autoconf: ./configure then make, driven by configure.ac and GNUmakefile.in.",
+    "Meson: 'meson setup build' then ninja, driven by meson.build.",
+    "Both build the same source and run the same tests."
+   ],
+   "trap": "Meson is not a wrapper around configure. They are separate build systems that you must keep in sync."
+  },
+  {
+   "q": "Which configure options help a developer?",
+   "answer": [
+    "--enable-cassert turns on internal sanity checks (Assert).",
+    "--enable-tap-tests lets the Perl t/ tests run.",
+    "Meson equivalents are options like cassert and tap_tests in meson_options.txt."
+   ],
+   "trap": "Benchmarking with cassert on gives misleading, slow numbers."
+  },
+  {
+   "q": "How does 'make check' differ from 'make installcheck'?",
+   "answer": [
+    "check builds a temporary install and starts a throwaway server.",
+    "installcheck tests an already running installed server.",
+    "check-world runs every suite including contrib and src/bin."
+   ]
+  },
+  {
+   "q": "How does a regress test actually pass or fail?",
+   "answer": [
+    "pg_regress runs each file in sql/ and writes results.",
+    "It diffs results against the file in expected/.",
+    "Any difference fails and is saved in regression.diffs."
+   ],
+   "trap": "A passing test does not mean correct output, only output that matches the saved file."
+  },
+  {
+   "q": "I added a regress test. What files must I touch?",
+   "answer": [
+    "Add sql/mytest.sql and expected/mytest.out.",
+    "List mytest in src/test/regress/parallel_schedule.",
+    "Check the .out is correct by reading it, not just copying it."
+   ]
+  },
+  {
+   "q": "When do you use isolation tests or TAP tests instead?",
+   "answer": [
+    "Isolation specs in src/test/isolation/specs test several sessions interleaving.",
+    "TAP tests are Perl scripts in t/ directories, such as src/test/recovery/t.",
+    "They start whole servers, so use them for replication, recovery and command-line tools."
+   ],
+   "trap": "Plain regress cannot test concurrency, because it runs one session per file."
+  },
+  {
+   "q": "What does pgindent do and what is typedefs.list for?",
+   "answer": [
+    "pgindent reformats C code using pg_bsd_indent.",
+    "It needs to know type names, kept in src/tools/pgindent/typedefs.list.",
+    "Add your new typedefs there or spacing around them will be odd."
+   ],
+   "trap": "Do not reindent whole files you did not change; it makes the patch noisy."
+  },
+  {
+   "q": "How does a patch travel from your laptop to the main repo?",
+   "answer": [
+    "Make it with git format-patch and email it to pgsql-hackers.",
+    "Add it to a Commitfest so reviewers do not lose it.",
+    "Reviewers comment, you send a new version, then a committer pushes it.",
+    "Bug fixes may be backpatched to older stable branches."
+   ],
+   "trap": "Opening a GitHub pull request does nothing here. The project works by mailing list."
+  },
+  {
+   "q": "What makes a good first patch?",
+   "answer": [
+    "Small and focused: a doc fix, a clearer error message or a missing test.",
+    "Include tests and doc changes, and pass check-world.",
+    "Follow sources.sgml style and keep the diff clean.",
+    "Review someone else's patch in the Commitfest to learn the process."
+   ]
+  }
+ ],
+ "contributor_tips": [
+  "Start by reading doc/src/sgml/sources.sgml and src/tools/pgindent/README before touching C code.",
+  "Build with cassert and tap tests on, and run 'make check' often while you work.",
+  "A doc typo or missing test is a safe first patch; review a Commitfest patch to learn the review style.",
+  "Never reindent code you did not change, and never hand-edit expected .out files without understanding the diff."
+ ],
+ "glossary": [
+  {
+   "term": "pg_regress",
+   "meaning": "Test driver that runs SQL and diffs output against expected files"
+  },
+  {
+   "term": "TAP test",
+   "meaning": "Perl script test in a t/ directory that starts real servers"
+  },
+  {
+   "term": "isolation spec",
+   "meaning": "A file describing steps of several sessions to test concurrency"
+  },
+  {
+   "term": "pgindent",
+   "meaning": "Tool that formats C code to the project style"
+  },
+  {
+   "term": "Commitfest",
+   "meaning": "Periodic review cycle that tracks submitted patches"
+  },
+  {
+   "term": "backpatch",
+   "meaning": "Applying a fix to older stable release branches too"
+  }
+ ],
+ "more": [
+  "GitHub is a read-only mirror. Pull requests are not used.",
+  "Alternative expected files (foo_1.out) cover platform-specific output.",
+  "Run one test: make check-tests TESTS=name, or meson test with a suite.",
+  "Changing a system catalog needs a catversion bump.",
+  "Bug fixes can be backpatched to stable branches. Features cannot.",
+  "pg_bsd_indent must be on your PATH before pgindent works."
+ ]
+}

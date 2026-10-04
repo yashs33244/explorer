@@ -1,0 +1,104 @@
+<svg class="hd" viewBox="0 0 800 500" role="img" aria-label="Whole server: client, postmaster, backend, query pipeline, storage, WAL and helper processes" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="overview-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-blob" x="160" y="30" width="170" height="215" rx="30"/>
+<text class="d-s" x="178" y="52">Processes</text>
+<rect class="d-blob" x="350" y="30" width="170" height="300" rx="30"/>
+<text class="d-s" x="368" y="52">Query pipeline</text>
+<rect class="d-blob" x="570" y="30" width="220" height="300" rx="30"/>
+<text class="d-s" x="588" y="52">Storage</text>
+<rect class="d-blob" x="150" y="350" width="640" height="130" rx="30"/>
+<text class="d-s" x="168" y="372">Safety and helpers</text>
+
+<rect class="d-box g0" x="8" y="95" width="92" height="95" rx="14"/>
+<g transform="translate(34,103)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="54" y="172" text-anchor="middle">Client</text>
+
+<rect class="d-box g1" x="175" y="64" width="140" height="50" rx="12"/>
+<g transform="translate(180,70) scale(0.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="260" y="86" text-anchor="middle">Postmaster</text>
+<text class="d-s" x="260" y="103" text-anchor="middle">starts backends</text>
+
+<rect class="d-box g1" x="175" y="160" width="140" height="50" rx="12"/>
+<g transform="translate(180,166) scale(0.8)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="260" y="182" text-anchor="middle">Backend</text>
+<text class="d-s" x="260" y="199" text-anchor="middle">one per client</text>
+
+<rect class="d-box g2" x="365" y="64" width="140" height="44" rx="12"/>
+<text class="d-t" x="435" y="91" text-anchor="middle">Parser</text>
+<rect class="d-box g2" x="365" y="128" width="140" height="44" rx="12"/>
+<text class="d-t" x="435" y="155" text-anchor="middle">Rewriter</text>
+<rect class="d-box g2" x="365" y="192" width="140" height="44" rx="12"/>
+<text class="d-t" x="435" y="219" text-anchor="middle">Planner</text>
+<rect class="d-box g2" x="365" y="256" width="140" height="44" rx="12"/>
+<text class="d-t" x="435" y="283" text-anchor="middle">Executor</text>
+
+<rect class="d-box g3" x="585" y="64" width="170" height="44" rx="12"/>
+<g transform="translate(591,70) scale(0.8)"><path class="d-fillpaper" d="M5,9 V31 C5,36 35,36 35,31 V9"/><ellipse class="d-fillpaper" cx="20" cy="9" rx="15" ry="5"/><path class="d-lineacc" d="M5,20 C5,25 35,25 35,20"/></g>
+<text class="d-t" x="690" y="83" text-anchor="middle">Data files</text>
+<text class="d-s" x="690" y="99" text-anchor="middle">on disk</text>
+
+<rect class="d-box g3" x="585" y="150" width="170" height="44" rx="12"/>
+<g transform="translate(591,156) scale(0.8)"><rect class="d-fillpaper" x="5" y="4" width="30" height="32" rx="3"/><path class="d-lineacc" d="M5,12 H35"/><rect class="d-fillacc" x="10" y="17" width="20" height="4" rx="1"/><rect class="d-fillacc" x="10" y="24" width="14" height="4" rx="1"/></g>
+<text class="d-t" x="690" y="169" text-anchor="middle">Shared buffers</text>
+<text class="d-s" x="690" y="185" text-anchor="middle">in memory</text>
+
+<rect class="d-box g3" x="585" y="256" width="170" height="44" rx="12"/>
+<g transform="translate(591,262) scale(0.8)"><path class="d-fillpaper" d="M8,3 H25 L33,11 V37 H8 Z"/><path class="d-line" d="M25,3 V11 H33"/><path class="d-lineacc" d="M13,20 H28 M13,26 H28 M13,32 H22"/></g>
+<text class="d-t" x="690" y="275" text-anchor="middle">Access methods</text>
+<text class="d-s" x="690" y="291" text-anchor="middle">heap, btree</text>
+
+<rect class="d-box g4" x="165" y="385" width="120" height="72" rx="12"/>
+<g transform="translate(205,390) scale(0.6)"><rect class="d-fillpaper" x="6" y="4" width="28" height="32" rx="3"/><path class="d-line" d="M12,4 V36"/><path class="d-lineacc" d="M17,12 H29 M17,19 H29 M17,26 H25"/></g>
+<text class="d-t" x="225" y="432" text-anchor="middle">WAL</text>
+<text class="d-s" x="225" y="448" text-anchor="middle">log on disk</text>
+
+<rect class="d-box g4" x="330" y="385" width="120" height="72" rx="12"/>
+<g transform="translate(370,390) scale(0.6)"><rect class="d-fillpaper" x="4" y="4" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="16" width="32" height="10" rx="3"/><rect class="d-fillpaper" x="4" y="28" width="32" height="9" rx="3"/><circle class="d-fillacc" cx="10" cy="9" r="1.8"/><circle class="d-fillacc" cx="10" cy="21" r="1.8"/><circle class="d-fillacc" cx="10" cy="32.5" r="1.8"/></g>
+<text class="d-t" x="390" y="432" text-anchor="middle">Replicas</text>
+<text class="d-s" x="390" y="448" text-anchor="middle">other servers</text>
+
+<rect class="d-box g5" x="495" y="385" width="120" height="72" rx="12"/>
+<g transform="translate(535,390) scale(0.6)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+<text class="d-t" x="555" y="432" text-anchor="middle">Autovacuum</text>
+<text class="d-s" x="555" y="448" text-anchor="middle">cleans old rows</text>
+
+<rect class="d-box g5" x="660" y="385" width="120" height="72" rx="12"/>
+<g transform="translate(700,390) scale(0.6)"><circle class="d-fillpaper" cx="20" cy="20" r="15"/><path class="d-lineacc" d="M20,10 V20 L27,24"/></g>
+<text class="d-t" x="720" y="432" text-anchor="middle">Checkpointer</text>
+<text class="d-s" x="720" y="448" text-anchor="middle">flushes pages</text>
+
+<path class="d-edge acc" d="M100,115 C130,115 145,89 175,89" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="132" y="100" text-anchor="middle">connects</text>
+<path class="d-edge" d="M245,114 V160" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="253" y="142">forks</text>
+<path class="d-edge acc" d="M100,168 C130,168 145,185 175,185" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="132" y="163" text-anchor="middle">SQL</text>
+<path class="d-edge acc" d="M315,185 C340,185 345,86 365,86" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="340" y="140" text-anchor="middle">query</text>
+<path class="d-edge" d="M435,108 V128" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="443" y="122">tree</text>
+<path class="d-edge" d="M435,172 V192" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="443" y="186">rewritten</text>
+<path class="d-edge" d="M435,236 V256" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="443" y="250">plan</text>
+<path class="d-edge acc" d="M505,278 H585" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="545" y="270" text-anchor="middle">calls</text>
+<path class="d-edge acc" d="M670,256 V194" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="678" y="230">get page</text>
+<path class="d-edge acc" d="M670,150 V108" marker-start="url(#overview-d1-ah)" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="678" y="134">read, write</text>
+<path class="d-edge dash" d="M225,210 V385" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="225" y="300" text-anchor="middle">writes WAL</text>
+<path class="d-edge" d="M285,421 H330" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="307" y="413" text-anchor="middle">sends</text>
+<path class="d-edge dash" d="M765,385 V172 H755" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="765" y="342" text-anchor="middle">flushes</text>
+<path class="d-edge dash" d="M600,385 V300" marker-end="url(#overview-d1-ah)"/>
+<text class="d-lab" x="600" y="342" text-anchor="middle">cleans</text>
+
+<circle class="d-badge" cx="175" cy="64" r="11"/><text class="d-bt" x="175" y="68">1</text>
+<circle class="d-badge" cx="365" cy="64" r="11"/><text class="d-bt" x="365" y="68">2</text>
+<circle class="d-badge" cx="585" cy="256" r="11"/><text class="d-bt" x="585" y="260">3</text>
+<circle class="d-badge" cx="165" cy="385" r="11"/><text class="d-bt" x="165" y="389">4</text>
+<circle class="d-badge" cx="660" cy="385" r="11"/><text class="d-bt" x="660" y="389">5</text>
+</svg>
