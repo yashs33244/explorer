@@ -1,0 +1,84 @@
+<svg class="hd" viewBox="0 0 800 770" role="img" aria-label="To do list on a clipboard: the payments-api v4.2.0 release checklist, grouped into P0 blockers, P1 should-do and P2 nice-to-have tasks, each with a checkbox, owner and due day, with 6 of 11 done" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="todo-list-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box g2" x="90" y="40" width="620" height="712" rx="22"/>
+<rect class="d-fillpaper" x="116" y="72" width="568" height="660" rx="6"/>
+<path class="d-box g4" d="M326,88 V62 C326,54 332,48 340,48 H372 C372,26 428,26 428,48 H460 C468,48 474,54 474,62 V88 Z"/>
+<circle class="d-fillpaper" cx="400" cy="44" r="8"/>
+<text class="d-k" x="140" y="116">Release checklist</text>
+<text class="d-h" x="140" y="140">payments-api v4.2.0</text>
+<text class="d-s" x="660" y="118" text-anchor="end">ship window</text>
+<text class="d-m" x="660" y="140" text-anchor="end">Thu 14:00 UTC</text>
+<text class="d-s" x="178" y="172">Task</text>
+<text class="d-s" x="500" y="172">Owner</text>
+<text class="d-s" x="660" y="172" text-anchor="end">Due</text>
+<path class="d-grid" d="M140,182 H660"/>
+<rect class="d-tag acc" x="140" y="196" width="40" height="22" rx="11"/>
+<text class="d-t" x="160" y="212" text-anchor="middle">P0</text>
+<text class="d-s" x="192" y="212">blockers, must ship</text>
+<rect class="d-fill g3" x="140" y="226" width="5" height="114" rx="2"/>
+<rect class="d-fill g1" x="154" y="228" width="16" height="16" rx="4"/>
+<path class="d-line" d="M157.5,236 L161,240 L167,232"/>
+<text class="d-s" x="178" y="241">Cut branch release/4.2</text>
+<text class="d-m" x="500" y="241">@maya</text>
+<text class="d-s" x="660" y="241" text-anchor="end">Mon</text>
+<rect class="d-fill g1" x="154" y="258" width="16" height="16" rx="4"/>
+<path class="d-line" d="M157.5,266 L161,270 L167,262"/>
+<text class="d-s" x="178" y="271">Dry-run DB migration on staging</text>
+<text class="d-m" x="500" y="271">@arjun</text>
+<text class="d-s" x="660" y="271" text-anchor="end">Tue</text>
+<rect class="d-fill g1" x="154" y="288" width="16" height="16" rx="4"/>
+<path class="d-line" d="M157.5,296 L161,300 L167,292"/>
+<text class="d-s" x="178" y="301">Contract tests vs ledger-svc</text>
+<text class="d-m" x="500" y="301">@li</text>
+<text class="d-s" x="660" y="301" text-anchor="end">Tue</text>
+<rect class="d-fillpaper" x="154" y="318" width="16" height="16" rx="4"/>
+<text class="d-tn" x="178" y="331">Rotate Stripe webhook secret</text>
+<text class="d-m" x="500" y="331">@sam</text>
+<text class="d-s" x="660" y="331" text-anchor="end">Wed</text>
+<rect class="d-tag" x="140" y="356" width="40" height="22" rx="11"/>
+<text class="d-t" x="160" y="372" text-anchor="middle">P1</text>
+<text class="d-s" x="192" y="372">should ship</text>
+<rect class="d-fill g5" x="140" y="386" width="5" height="114" rx="2"/>
+<rect class="d-fill g1" x="154" y="388" width="16" height="16" rx="4"/>
+<path class="d-line" d="M157.5,396 L161,400 L167,392"/>
+<text class="d-s" x="178" y="401">Regenerate OpenAPI SDKs</text>
+<text class="d-m" x="500" y="401">@li</text>
+<text class="d-s" x="660" y="401" text-anchor="end">Wed</text>
+<rect class="d-fill g1" x="154" y="418" width="16" height="16" rx="4"/>
+<path class="d-line" d="M157.5,426 L161,430 L167,422"/>
+<text class="d-s" x="178" y="431">Canary at 5% for 2 hours</text>
+<text class="d-m" x="500" y="431">@maya</text>
+<text class="d-s" x="660" y="431" text-anchor="end">Thu</text>
+<rect class="d-fillpaper" x="154" y="448" width="16" height="16" rx="4"/>
+<text class="d-tn" x="178" y="461">Alert on p99 latency over 400 ms</text>
+<text class="d-m" x="500" y="461">@arjun</text>
+<text class="d-s" x="660" y="461" text-anchor="end">Thu</text>
+<rect class="d-fillpaper" x="154" y="478" width="16" height="16" rx="4"/>
+<text class="d-tn" x="178" y="491">Write rollback runbook</text>
+<text class="d-m" x="500" y="491">@sam</text>
+<text class="d-s" x="660" y="491" text-anchor="end">Thu</text>
+<rect class="d-tag" x="140" y="516" width="40" height="22" rx="11"/>
+<text class="d-t" x="160" y="532" text-anchor="middle">P2</text>
+<text class="d-s" x="192" y="532">nice to have</text>
+<rect class="d-fill g4" x="140" y="546" width="5" height="84" rx="2"/>
+<rect class="d-fill g1" x="154" y="548" width="16" height="16" rx="4"/>
+<path class="d-line" d="M157.5,556 L161,560 L167,552"/>
+<text class="d-s" x="178" y="561">Changelog entry</text>
+<text class="d-m" x="500" y="561">@li</text>
+<text class="d-s" x="660" y="561" text-anchor="end">Thu</text>
+<rect class="d-fillpaper" x="154" y="578" width="16" height="16" rx="4"/>
+<text class="d-tn" x="178" y="591">Announce in #eng-releases</text>
+<text class="d-m" x="500" y="591">@maya</text>
+<text class="d-s" x="660" y="591" text-anchor="end">Fri</text>
+<rect class="d-fillpaper" x="154" y="608" width="16" height="16" rx="4"/>
+<text class="d-tn" x="178" y="621">Remove flag old_refunds</text>
+<text class="d-m" x="500" y="621">@arjun</text>
+<text class="d-s" x="660" y="621" text-anchor="end">Sprint 19</text>
+<path class="d-grid" d="M140,648 H660"/>
+<text class="d-k" x="140" y="668">Progress</text>
+<rect class="d-fillpaper" x="140" y="678" width="420" height="14" rx="7"/>
+<rect class="d-fill g1" x="140" y="678" width="229" height="14" rx="7"/>
+<text class="d-s" x="140" y="712">6 of 11 done, open P0 blocks the tag</text>
+<circle class="d-fill g1" cx="618" cy="686" r="32"/>
+<path class="d-fillpaper" d="M601,687 L609,679 L615,685 L629,671 L637,679 L615,701 Z"/>
+</svg>

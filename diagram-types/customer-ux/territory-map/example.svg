@@ -1,0 +1,93 @@
+<svg class="hd" viewBox="0 0 800 640" role="img" aria-label="On-call territory map: four SRE teams each own the cloud regions in their timezone band, hand off every six hours, and together cover 24 hours UTC" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="territory-map-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-band g0" x="20" y="20" width="760" height="376" rx="14"/>
+<text class="d-k" x="36" y="46">UTC-8 to -3</text>
+<path class="d-edge dash" d="M210,34 V352"/>
+<text class="d-k" x="226" y="46">UTC+0 to +3</text>
+<path class="d-edge dash" d="M400,34 V352"/>
+<text class="d-k" x="416" y="46">UTC+5:30</text>
+<path class="d-edge dash" d="M590,34 V352"/>
+<text class="d-k" x="606" y="46">UTC+8 to +10</text>
+<path class="d-soft g1" d="M40,90 C54,65 92,70 118,70 C144,70 182,72 196,92 C210,112 203,164 200,190 C197,216 178,228 176,250 C174,272 199,304 190,320 C181,336 143,346 120,346 C97,346 64,341 50,320 C36,299 38,258 36,220 C34,182 26,115 40,90 Z"/>
+<text class="d-t" x="48" y="130">Platform SRE</text>
+<text class="d-s" x="48" y="148">Seattle</text>
+<path class="d-fill g1" d="M56,186 C47,176 47,165 56,165 C65,165 65,176 56,186 Z"/>
+<circle class="d-fillpaper" cx="56" cy="173" r="3.2"/>
+<text class="d-m" x="70" y="178">us-west-2</text>
+<path class="d-fill g1" d="M56,224 C47,214 47,203 56,203 C65,203 65,214 56,224 Z"/>
+<circle class="d-fillpaper" cx="56" cy="211" r="3.2"/>
+<text class="d-m" x="70" y="216">us-east-1</text>
+<path class="d-fill g1" d="M80,304 C71,294 71,283 80,283 C89,283 89,294 80,304 Z"/>
+<circle class="d-fillpaper" cx="80" cy="291" r="3.2"/>
+<text class="d-m" x="94" y="296">sa-east-1</text>
+<path class="d-soft g2" d="M230,90 C242,65 274,70 300,70 C326,70 371,70 386,92 C401,114 392,165 390,200 C388,235 385,276 372,300 C359,324 332,341 310,346 C288,351 254,351 240,330 C226,309 228,260 226,220 C224,180 218,115 230,90 Z"/>
+<text class="d-t" x="238" y="130">Infra EMEA</text>
+<text class="d-s" x="238" y="148">Dublin</text>
+<path class="d-fill g2" d="M246,186 C237,176 237,165 246,165 C255,165 255,176 246,186 Z"/>
+<circle class="d-fillpaper" cx="246" cy="173" r="3.2"/>
+<text class="d-m" x="260" y="178">eu-west-1</text>
+<path class="d-fill g2" d="M246,224 C237,214 237,203 246,203 C255,203 255,214 246,224 Z"/>
+<circle class="d-fillpaper" cx="246" cy="211" r="3.2"/>
+<text class="d-m" x="260" y="216">eu-central-1</text>
+<path class="d-fill g2" d="M270,304 C261,294 261,283 270,283 C279,283 279,294 270,304 Z"/>
+<circle class="d-fillpaper" cx="270" cy="291" r="3.2"/>
+<text class="d-m" x="284" y="296">me-south-1</text>
+<path class="d-soft g3" d="M420,110 C434,97 474,91 500,92 C526,93 566,95 578,116 C590,137 582,186 574,220 C566,254 546,302 530,320 C514,338 496,342 480,330 C464,318 443,277 432,250 C421,223 418,193 416,170 C414,147 406,123 420,110 Z"/>
+<text class="d-t" x="428" y="150">Core SRE</text>
+<text class="d-s" x="428" y="168">Bengaluru</text>
+<path class="d-fill g3" d="M442,208 C433,198 433,187 442,187 C451,187 451,198 442,208 Z"/>
+<circle class="d-fillpaper" cx="442" cy="195" r="3.2"/>
+<text class="d-m" x="456" y="200">ap-south-1</text>
+<path class="d-fill g3" d="M458,262 C449,252 449,241 458,241 C467,241 467,252 458,262 Z"/>
+<circle class="d-fillpaper" cx="458" cy="249" r="3.2"/>
+<text class="d-m" x="472" y="254">ap-south-2</text>
+<path class="d-soft g4" d="M610,90 C626,68 673,67 700,68 C727,69 758,72 770,96 C782,120 776,173 774,210 C772,247 772,297 756,320 C740,343 703,348 680,348 C657,348 629,345 616,320 C603,295 605,238 604,200 C603,162 594,112 610,90 Z"/>
+<text class="d-t" x="618" y="130">APAC SRE</text>
+<text class="d-s" x="618" y="148">Tokyo</text>
+<path class="d-fill g4" d="M624,186 C615,176 615,165 624,165 C633,165 633,176 624,186 Z"/>
+<circle class="d-fillpaper" cx="624" cy="173" r="3.2"/>
+<text class="d-m" x="638" y="178">ap-northeast-1</text>
+<path class="d-fill g4" d="M624,224 C615,214 615,203 624,203 C633,203 633,214 624,224 Z"/>
+<circle class="d-fillpaper" cx="624" cy="211" r="3.2"/>
+<text class="d-m" x="638" y="216">ap-southeast-1</text>
+<path class="d-fill g4" d="M648,304 C639,294 639,283 648,283 C657,283 657,294 648,304 Z"/>
+<circle class="d-fillpaper" cx="648" cy="291" r="3.2"/>
+<text class="d-m" x="662" y="296">ap-southeast-2</text>
+<path class="d-edge acc" d="M626,378 H554" marker-end="url(#territory-map-d1-ah)"/>
+<text class="d-lab" x="590" y="368" text-anchor="middle">handoff 06:00</text>
+<path class="d-edge acc" d="M436,378 H364" marker-end="url(#territory-map-d1-ah)"/>
+<text class="d-lab" x="400" y="368" text-anchor="middle">handoff 12:00</text>
+<path class="d-edge acc" d="M246,378 H174" marker-end="url(#territory-map-d1-ah)"/>
+<text class="d-lab" x="210" y="368" text-anchor="middle">handoff 18:00</text>
+<text class="d-k" x="20" y="430">24h coverage, UTC</text>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="560" y="412" width="22" height="22"/>
+<text class="d-s" x="590" y="428">schedule: sre-follow-sun</text>
+<text class="d-s" x="20" y="460">APAC SRE</text>
+<rect class="d-fill g4 o1" x="180" y="446" width="590" height="20" rx="4"/>
+<rect class="d-fill g4" x="180" y="446" width="148" height="20" rx="4"/>
+<text class="d-tw" x="188" y="460">primary</text>
+<text class="d-s" x="20" y="490">Core SRE</text>
+<rect class="d-fill g3 o1" x="180" y="476" width="590" height="20" rx="4"/>
+<rect class="d-fill g3" x="328" y="476" width="148" height="20" rx="4"/>
+<text class="d-tw" x="336" y="490">primary</text>
+<text class="d-s" x="20" y="520">Infra EMEA</text>
+<rect class="d-fill g2 o1" x="180" y="506" width="590" height="20" rx="4"/>
+<rect class="d-fill g2" x="475" y="506" width="148" height="20" rx="4"/>
+<text class="d-tw" x="483" y="520">primary</text>
+<text class="d-s" x="20" y="550">Platform SRE</text>
+<rect class="d-fill g1 o1" x="180" y="536" width="590" height="20" rx="4"/>
+<rect class="d-fill g1" x="622" y="536" width="148" height="20" rx="4"/>
+<text class="d-tw" x="630" y="550">primary</text>
+<path class="d-axis" d="M180,568 H770"/>
+<path class="d-edge dash" d="M180,442 V568"/>
+<text class="d-s" x="180" y="586" text-anchor="middle">00:00</text>
+<path class="d-edge dash" d="M328,442 V568"/>
+<text class="d-s" x="328" y="586" text-anchor="middle">06:00</text>
+<path class="d-edge dash" d="M475,442 V568"/>
+<text class="d-s" x="475" y="586" text-anchor="middle">12:00</text>
+<path class="d-edge dash" d="M622,442 V568"/>
+<text class="d-s" x="622" y="586" text-anchor="middle">18:00</text>
+<path class="d-edge dash" d="M770,442 V568"/>
+<text class="d-s" x="770" y="586" text-anchor="middle">24:00</text>
+<text class="d-s" x="20" y="626">Primary takes every page; the owning team is the escalation for its regions. 00:00 wraps back to Tokyo.</text>
+</svg>

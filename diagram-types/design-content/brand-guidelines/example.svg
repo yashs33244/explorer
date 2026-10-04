@@ -1,0 +1,105 @@
+<svg class="hd" viewBox="0 0 800 560" role="img" aria-label="Brand guidelines for the Beacon design system as four stacked pages: logo clear space and minimum size, color tokens, the type scale with token names, and a do and don't page for buttons and raw hex values" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="24" y="34">BEACON DESIGN SYSTEM V3</text>
+<text class="d-h" x="24" y="56">Tokens page for the web app</text>
+<image class="d-logo" data-logo="figma.com" data-name="Figma" x="560" y="30" width="22" height="22"/>
+<text class="d-s" x="588" y="46">library</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="650" y="30" width="22" height="22"/>
+<text class="d-m" x="678" y="46">tokens.json</text>
+
+<!-- back sheets -->
+<rect class="d-lane" x="30" y="82" width="366" height="220"/>
+<rect class="d-lane" x="410" y="82" width="366" height="220"/>
+<rect class="d-lane" x="30" y="322" width="366" height="220"/>
+<rect class="d-lane" x="410" y="322" width="366" height="220"/>
+<!-- pages -->
+<rect class="d-lane" x="24" y="76" width="366" height="220"/>
+<rect class="d-lanehead" x="24" y="76" width="120" height="220"/>
+<rect class="d-lane" x="404" y="76" width="366" height="220"/>
+<rect class="d-lanehead" x="404" y="76" width="120" height="220"/>
+<rect class="d-lane" x="24" y="316" width="366" height="220"/>
+<rect class="d-lanehead" x="24" y="316" width="120" height="220"/>
+<rect class="d-lane" x="404" y="316" width="366" height="220"/>
+<rect class="d-lanehead" x="404" y="316" width="120" height="220"/>
+
+<!-- 01 logo -->
+<text class="d-k" x="36" y="102">01</text>
+<text class="d-t" x="36" y="124">Logo</text>
+<text class="d-s" x="36" y="150">Keep clear space</text>
+<text class="d-s" x="36" y="168">equal to the</text>
+<text class="d-s" x="36" y="186">mark on all sides</text>
+<rect class="d-blob2" x="156" y="112" width="152" height="96" rx="4"/>
+<circle class="d-fill g0" cx="194" cy="160" r="26"/>
+<path class="d-fillpaper" d="M194,140 C202,150 202,162 194,172 C186,162 186,150 194,140 Z"/>
+<path class="d-fillpaper" d="M174,156 C186,156 192,164 192,176 C180,176 174,168 174,156 Z"/>
+<path class="d-fillpaper" d="M214,156 C202,156 196,164 196,176 C208,176 214,168 214,156 Z"/>
+<text class="d-h" x="230" y="166">beacon</text>
+<circle class="d-fill g0" cx="350" cy="152" r="12"/>
+<text class="d-s" x="350" y="186" text-anchor="middle">min 24px</text>
+<text class="d-s" x="156" y="234">Clear space = 1x mark</text>
+<text class="d-m" x="156" y="258">logo/beacon.svg</text>
+<text class="d-m" x="156" y="278">logo/mark-mono.svg</text>
+
+<!-- 02 color -->
+<text class="d-k" x="416" y="102">02</text>
+<text class="d-t" x="416" y="124">Color</text>
+<text class="d-s" x="416" y="150">Use tokens,</text>
+<text class="d-s" x="416" y="168">never raw hex</text>
+<text class="d-s" x="416" y="186">in components</text>
+<rect class="d-fill g0" x="540" y="94" width="24" height="22" rx="5"/>
+<text class="d-m" x="574" y="110">--brand</text>
+<rect class="d-fill g4" x="540" y="126" width="24" height="22" rx="5"/>
+<text class="d-m" x="574" y="142">--info</text>
+<rect class="d-fill g1" x="540" y="158" width="24" height="22" rx="5"/>
+<text class="d-m" x="574" y="174">--success</text>
+<rect class="d-fill g2" x="540" y="190" width="24" height="22" rx="5"/>
+<text class="d-m" x="574" y="206">--warning</text>
+<rect class="d-fill g3" x="540" y="222" width="24" height="22" rx="5"/>
+<text class="d-m" x="574" y="238">--danger</text>
+<rect class="d-fill g5" x="540" y="254" width="24" height="22" rx="5"/>
+<text class="d-m" x="574" y="270">--accent</text>
+
+<!-- 03 type -->
+<text class="d-k" x="36" y="342">03</text>
+<text class="d-t" x="36" y="364">Type scale</text>
+<text class="d-s" x="36" y="390">Four steps only,</text>
+<text class="d-s" x="36" y="408">size over line</text>
+<text class="d-s" x="36" y="426">height in px</text>
+<text class="d-h" x="156" y="366">Heading</text>
+<text class="d-m" x="378" y="366" text-anchor="end">--font-xl 24/32</text>
+<path class="d-grid" d="M156,384 H378"/>
+<text class="d-t" x="156" y="414">Title</text>
+<text class="d-m" x="378" y="414" text-anchor="end">--font-md 16/24</text>
+<path class="d-grid" d="M156,432 H378"/>
+<text class="d-s" x="156" y="462">Body text</text>
+<text class="d-m" x="378" y="462" text-anchor="end">--font-sm 14/20</text>
+<path class="d-grid" d="M156,480 H378"/>
+<text class="d-m" x="156" y="510">code()</text>
+<text class="d-m" x="378" y="510" text-anchor="end">--font-mono 12/16</text>
+
+<!-- 04 do and don't -->
+<text class="d-k" x="416" y="342">04</text>
+<text class="d-t" x="416" y="364">Do and don't</text>
+<text class="d-s" x="416" y="390">One primary</text>
+<text class="d-s" x="416" y="408">action per view,</text>
+<text class="d-s" x="416" y="426">styled by token</text>
+<rect class="d-fill g1" x="536" y="330" width="106" height="24" rx="5"/>
+<text class="d-tw" x="548" y="347">Do</text>
+<rect class="d-fill g3" x="652" y="330" width="106" height="24" rx="5"/>
+<text class="d-tw" x="664" y="347">Don't</text>
+<rect class="d-box g0" x="536" y="368" width="106" height="32" rx="8"/>
+<text class="d-t" x="589" y="389" text-anchor="middle">Deploy</text>
+<rect class="d-tag" x="536" y="408" width="106" height="28" rx="8"/>
+<text class="d-s" x="589" y="427" text-anchor="middle">Cancel</text>
+<rect class="d-box g0" x="652" y="368" width="106" height="32" rx="8"/>
+<text class="d-t" x="705" y="389" text-anchor="middle">Deploy</text>
+<rect class="d-box g0" x="652" y="406" width="106" height="32" rx="8"/>
+<text class="d-t" x="705" y="427" text-anchor="middle">Rollback</text>
+<text class="d-s" x="536" y="460">one primary</text>
+<text class="d-s" x="652" y="460">two compete</text>
+<rect class="d-tag" x="536" y="476" width="106" height="26" rx="13"/>
+<text class="d-m" x="589" y="494" text-anchor="middle">var(--brand)</text>
+<rect class="d-tag acc" x="652" y="476" width="106" height="26" rx="13"/>
+<text class="d-m" x="705" y="494" text-anchor="middle">#6E56CF</text>
+<text class="d-s" x="536" y="522">token</text>
+<text class="d-s" x="652" y="522">hardcoded hex</text>
+</svg>

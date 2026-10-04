@@ -1,0 +1,124 @@
+<svg class="hd" viewBox="0 0 800 716" role="img" aria-label="Customer journey map of a backend developer adopting the Acme Payments API across five stages, discover, sign up, first call, integrate and scale, with actions, touchpoints, an emotion curve that dips at email verification and webhook signing, pain points, fixes and a metric per stage" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="customer-journey-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<g transform="translate(20,14)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="68" y="32">Priya, backend engineer at a fintech</text>
+<text class="d-s" x="68" y="50">goal: live payouts on the Acme Payments API in 2 weeks</text>
+<text class="d-k" x="768" y="32" text-anchor="end">Customer journey map</text>
+<text class="d-m" x="768" y="50" text-anchor="end">api.acme.dev/v1</text>
+<rect class="d-lane" x="20" y="126" width="756" height="88" rx="8"/>
+<rect class="d-lanehead" x="20" y="126" width="112" height="88" rx="8"/>
+<text class="d-t" x="32" y="175">Doing</text>
+<rect class="d-lane alt" x="20" y="222" width="756" height="64" rx="8"/>
+<rect class="d-lanehead" x="20" y="222" width="112" height="64" rx="8"/>
+<text class="d-t" x="32" y="259">Touchpoints</text>
+<rect class="d-lane" x="20" y="294" width="756" height="170" rx="8"/>
+<rect class="d-lanehead" x="20" y="294" width="112" height="170" rx="8"/>
+<rect class="d-lane alt" x="20" y="472" width="756" height="84" rx="8"/>
+<rect class="d-lanehead" x="20" y="472" width="112" height="84" rx="8"/>
+<text class="d-t" x="32" y="519">Pain points</text>
+<rect class="d-lane" x="20" y="564" width="756" height="84" rx="8"/>
+<rect class="d-lanehead" x="20" y="564" width="112" height="84" rx="8"/>
+<text class="d-t" x="32" y="611">Opportunities</text>
+<rect class="d-lane alt" x="20" y="656" width="756" height="44" rx="8"/>
+<rect class="d-lanehead" x="20" y="656" width="112" height="44" rx="8"/>
+<text class="d-t" x="32" y="683">Metric</text>
+<text class="d-t" x="32" y="384">Feeling</text>
+<text class="d-s" x="32" y="316">delighted</text>
+<text class="d-s" x="32" y="452">frustrated</text>
+<rect class="d-box g1" x="140" y="72" width="116" height="44" rx="10"/>
+<text class="d-k" x="152" y="89">Stage 1</text>
+<text class="d-t" x="152" y="107">Discover</text>
+<path class="d-edge" d="M257,94 H267" marker-end="url(#customer-journey-d1-ah)"/>
+<rect class="d-box g2" x="268" y="72" width="116" height="44" rx="10"/>
+<text class="d-k" x="280" y="89">Stage 2</text>
+<text class="d-t" x="280" y="107">Sign up</text>
+<path class="d-edge" d="M385,94 H395" marker-end="url(#customer-journey-d1-ah)"/>
+<rect class="d-box g3" x="396" y="72" width="116" height="44" rx="10"/>
+<text class="d-k" x="408" y="89">Stage 3</text>
+<text class="d-t" x="408" y="107">First call</text>
+<path class="d-edge" d="M513,94 H523" marker-end="url(#customer-journey-d1-ah)"/>
+<rect class="d-box g4" x="524" y="72" width="116" height="44" rx="10"/>
+<text class="d-k" x="536" y="89">Stage 4</text>
+<text class="d-t" x="536" y="107">Integrate</text>
+<path class="d-edge" d="M641,94 H651" marker-end="url(#customer-journey-d1-ah)"/>
+<rect class="d-box g5" x="652" y="72" width="116" height="44" rx="10"/>
+<text class="d-k" x="664" y="89">Stage 5</text>
+<text class="d-t" x="664" y="107">Scale</text>
+<text class="d-s" x="150" y="150">Reads quickstart</text>
+<text class="d-s" x="150" y="172">Compares pricing</text>
+<text class="d-s" x="150" y="194">Checks limits</text>
+<text class="d-s" x="278" y="150">Creates account</text>
+<text class="d-s" x="278" y="172">Verifies email</text>
+<text class="d-s" x="278" y="194">Copies test key</text>
+<text class="d-s" x="406" y="150">Pastes curl</text>
+<text class="d-m" x="406" y="172">POST /charges</text>
+<text class="d-s" x="406" y="194">Gets 200 OK</text>
+<text class="d-s" x="534" y="150">Installs SDK</text>
+<text class="d-s" x="534" y="172">Adds webhooks</text>
+<text class="d-s" x="534" y="194">Debugs 401s</text>
+<text class="d-s" x="662" y="150">Goes live</text>
+<text class="d-s" x="662" y="172">Raises limits</text>
+<text class="d-s" x="662" y="194">Adds 2nd team</text>
+<image class="d-logo" data-logo="google.com" data-name="Google" x="150" y="230" width="24" height="24"/>
+<text class="d-t" x="182" y="247">Google</text>
+<text class="d-s" x="150" y="274">search, docs</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="278" y="230" width="24" height="24"/>
+<text class="d-t" x="310" y="247">GitHub</text>
+<text class="d-s" x="278" y="274">OAuth sign-in</text>
+<image class="d-logo" data-logo="postman.com" data-name="Postman" x="406" y="230" width="24" height="24"/>
+<text class="d-t" x="438" y="247">Postman</text>
+<text class="d-s" x="406" y="274">run collection</text>
+<image class="d-logo" data-logo="npmjs.com" data-name="npm" x="534" y="230" width="24" height="24"/>
+<text class="d-t" x="566" y="247">npm</text>
+<text class="d-s" x="534" y="274">@acme/node SDK</text>
+<image class="d-logo" data-logo="grafana.com" data-name="Grafana" x="662" y="230" width="24" height="24"/>
+<text class="d-t" x="694" y="247">Grafana</text>
+<text class="d-s" x="662" y="274">usage dashboard</text>
+<path class="d-grid" d="M140,379 H776"/>
+<path class="d-edge acc thick" d="M198,346 C262.0,346 262.0,412 326,412 C390.0,412 390.0,322 454,322 C518.0,322 518.0,426 582,426 C646.0,426 646.0,334 710,334"/>
+<circle class="d-fill g1" cx="198" cy="346" r="9"/>
+<text class="d-lab" x="198" y="328" text-anchor="middle">Docs look clear</text>
+<circle class="d-fill g3" cx="326" cy="412" r="9"/>
+<text class="d-lab" x="326" y="442" text-anchor="middle">Email in spam</text>
+<circle class="d-fill g1" cx="454" cy="322" r="9"/>
+<text class="d-lab" x="440" y="314" text-anchor="end">200 OK in 4 min</text>
+<circle class="d-fill g3" cx="582" cy="426" r="9"/>
+<text class="d-lab" x="582" y="452" text-anchor="middle">Webhook sig fails</text>
+<circle class="d-fill g1" cx="710" cy="334" r="9"/>
+<text class="d-lab" x="710" y="316" text-anchor="middle">Usage grows</text>
+<rect class="d-note g4" x="140" y="480" width="116" height="68" rx="4"/>
+<text class="d-tn" x="150" y="508">Per-call price</text>
+<text class="d-tn" x="150" y="528">unclear</text>
+<rect class="d-note g2" x="140" y="572" width="116" height="68" rx="4"/>
+<text class="d-tn" x="150" y="600">Add a cost</text>
+<text class="d-tn" x="150" y="620">calculator</text>
+<rect class="d-note g4" x="268" y="480" width="116" height="68" rx="4"/>
+<text class="d-tn" x="278" y="508">Verify mail</text>
+<text class="d-tn" x="278" y="528">lands in spam</text>
+<rect class="d-note g2" x="268" y="572" width="116" height="68" rx="4"/>
+<text class="d-tn" x="278" y="600">Magic link,</text>
+<text class="d-tn" x="278" y="620">skip verify</text>
+<rect class="d-note g4" x="396" y="480" width="116" height="68" rx="4"/>
+<text class="d-tn" x="406" y="508">Test vs live</text>
+<text class="d-tn" x="406" y="528">keys confuse</text>
+<rect class="d-note g2" x="396" y="572" width="116" height="68" rx="4"/>
+<text class="d-tn" x="406" y="600">Prefix keys</text>
+<text class="d-m" x="406" y="620">sk_test_</text>
+<rect class="d-note g4" x="524" y="480" width="116" height="68" rx="4"/>
+<text class="d-tn" x="534" y="508">Signing docs</text>
+<text class="d-tn" x="534" y="528">out of date</text>
+<rect class="d-note g2" x="524" y="572" width="116" height="68" rx="4"/>
+<text class="d-tn" x="534" y="600">Verify sig</text>
+<text class="d-tn" x="534" y="620">inside SDK</text>
+<rect class="d-note g4" x="652" y="480" width="116" height="68" rx="4"/>
+<text class="d-tn" x="662" y="508">429s with no</text>
+<text class="d-tn" x="662" y="528">retry hint</text>
+<rect class="d-note g2" x="652" y="572" width="116" height="68" rx="4"/>
+<text class="d-tn" x="662" y="600">Retry-After</text>
+<text class="d-tn" x="662" y="620">+ quota alert</text>
+<text class="d-m" x="198" y="683" text-anchor="middle">signup 6%</text>
+<text class="d-m" x="326" y="683" text-anchor="middle">verified 71%</text>
+<text class="d-m" x="454" y="683" text-anchor="middle">TTFC 4 min</text>
+<text class="d-m" x="582" y="683" text-anchor="middle">live in 9 days</text>
+<text class="d-m" x="710" y="683" text-anchor="middle">NRR 118%</text>
+</svg>

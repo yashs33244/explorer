@@ -1,0 +1,69 @@
+<svg class="hd" viewBox="0 0 800 760" role="img" aria-label="Vertical timeline of incident INC-2291, checkout-api 5xx errors: alert at 14:02 UTC, incident channel at 14:06, suspect deploy at 14:15, rollback at 14:21, recovery at 14:38, resolved at 15:10 and a postmortem two days later, grouped into detect, respond, mitigate, resolve and learn phases" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="32">INC-2291 · SEV-1</text>
+<text class="d-s" x="20" y="52">checkout-api 5xx after deploy v4.18.2, all times UTC, 2 Oct</text>
+<rect class="d-box g3" x="360" y="76" width="80" height="74" rx="4"/>
+<text class="d-t" x="400" y="118" text-anchor="middle">Detect</text>
+<rect class="d-box g5" x="360" y="150" width="80" height="140" rx="4"/>
+<text class="d-t" x="400" y="224" text-anchor="middle">Respond</text>
+<rect class="d-box g2" x="360" y="290" width="80" height="80" rx="4"/>
+<text class="d-t" x="400" y="335" text-anchor="middle">Mitigate</text>
+<rect class="d-box g1" x="360" y="370" width="80" height="180" rx="4"/>
+<text class="d-t" x="400" y="464" text-anchor="middle">Resolve</text>
+<path class="d-box g4" d="M360,550 H440 V650 H480 L400,738 L320,650 H360 Z"/>
+<text class="d-t" x="400" y="620" text-anchor="middle">Learn</text>
+<path class="d-edge" d="M330,112 H360"/><circle class="d-fillink" cx="360" cy="112" r="4"/>
+<rect class="d-box" x="60" y="78" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="72" y="88" width="74" height="20" rx="10"/>
+<text class="d-m" x="109" y="102" text-anchor="middle">14:02</text>
+<text class="d-t" x="72" y="126">5xx rate alert fires</text>
+<text class="d-s" x="72" y="140">checkout-api 5xx &gt; 2% for 3 min</text>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="292" y="86" width="26" height="26"/>
+<path class="d-edge" d="M440,176 H470"/><circle class="d-fillink" cx="440" cy="176" r="4"/>
+<rect class="d-box" x="470" y="142" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="482" y="152" width="74" height="20" rx="10"/>
+<text class="d-m" x="519" y="166" text-anchor="middle">14:06</text>
+<text class="d-t" x="482" y="190">IC paged, #inc-2291 open</text>
+<text class="d-s" x="482" y="204">on-call SRE takes command</text>
+<image class="d-logo" data-logo="slack.com" data-name="Slack" x="702" y="150" width="26" height="26"/>
+<path class="d-edge" d="M330,254 H360"/><circle class="d-fillink" cx="360" cy="254" r="4"/>
+<rect class="d-box" x="60" y="220" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="72" y="230" width="74" height="20" rx="10"/>
+<text class="d-m" x="109" y="244" text-anchor="middle">14:15</text>
+<text class="d-t" x="72" y="268">Suspect: DB pool exhausted</text>
+<text class="d-s" x="72" y="282">v4.18.2 opened 4x connections</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="292" y="228" width="26" height="26"/>
+<path class="d-edge" d="M440,336 H470"/><circle class="d-fillink" cx="440" cy="336" r="4"/>
+<rect class="d-box" x="470" y="302" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="482" y="312" width="74" height="20" rx="10"/>
+<text class="d-m" x="519" y="326" text-anchor="middle">14:21</text>
+<text class="d-t" x="482" y="350">Roll back to v4.18.1</text>
+<text class="d-s" x="482" y="364">Argo CD sync, canary skipped</text>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="702" y="310" width="26" height="26"/>
+<path class="d-edge" d="M330,410 H360"/><circle class="d-fillink" cx="360" cy="410" r="4"/>
+<rect class="d-box" x="60" y="376" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="72" y="386" width="74" height="20" rx="10"/>
+<text class="d-m" x="109" y="400" text-anchor="middle">14:38</text>
+<text class="d-t" x="72" y="424">Error rate back to 0.08%</text>
+<text class="d-s" x="72" y="438">SLO burn stops, 36 min impact</text>
+<image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="292" y="384" width="26" height="26"/>
+<path class="d-edge" d="M440,500 H470"/><circle class="d-fillink" cx="440" cy="500" r="4"/>
+<rect class="d-box" x="470" y="466" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="482" y="476" width="74" height="20" rx="10"/>
+<text class="d-m" x="519" y="490" text-anchor="middle">15:10</text>
+<text class="d-t" x="482" y="514">Resolved, status page green</text>
+<text class="d-s" x="482" y="528">monitoring for 30 min first</text>
+<image class="d-logo" data-logo="atlassian.com" data-name="Statuspage" x="702" y="474" width="26" height="26"/>
+<path class="d-edge" d="M330,604 H360"/><circle class="d-fillink" cx="360" cy="604" r="4"/>
+<rect class="d-box" x="60" y="570" width="270" height="68" rx="10"/>
+<rect class="d-tag acc" x="72" y="580" width="96" height="20" rx="10"/>
+<text class="d-m" x="120" y="594" text-anchor="middle">4 Oct 10:00</text>
+<text class="d-t" x="72" y="618">Blameless postmortem</text>
+<text class="d-s" x="72" y="632">3 action items, see notes</text>
+<image class="d-logo" data-logo="atlassian.net" data-name="Confluence" x="292" y="578" width="26" height="26"/>
+<path class="d-edge dash" d="M440,624 H520"/>
+<rect class="d-note g2" x="520" y="572" width="220" height="104" rx="4"/>
+<text class="d-tn" x="534" y="598">Pool size alert at 80%</text>
+<text class="d-tn" x="534" y="622">Canary gate on DB conns</text>
+<text class="d-tn" x="534" y="646">Load test pool changes</text>
+<text class="d-s" x="534" y="666">owners: SRE, payments</text>
+</svg>

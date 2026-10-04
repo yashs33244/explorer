@@ -1,0 +1,93 @@
+<svg class="hd" viewBox="0 0 800 560" role="img" aria-label="User experience workflow for the acme CLI device-code login: the terminal prints a code, the developer enters it in the browser, a decision checks the code, the consent screen issues a token and the terminal shows signed in, with an expired-code branch" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ux-workflow-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="24">Device code flow</text>
+<text class="d-h" x="20" y="44">acme login, terminal to browser and back</text>
+<rect class="d-box g5" x="20" y="120" width="100" height="140" rx="40"/>
+<text class="d-t" x="70" y="176" text-anchor="middle">Start</text>
+<text class="d-m" x="70" y="198" text-anchor="middle">acme login</text>
+<text class="d-s" x="70" y="218" text-anchor="middle">no token found</text>
+<circle class="d-badge" cx="161" cy="66" r="11"/><text class="d-bt" x="161" y="70">1</text>
+<text class="d-k" x="178" y="70">CLI prompt</text>
+<rect class="d-box g0" x="150" y="84" width="140" height="216" rx="10"/>
+<path class="d-line" d="M150,108 H290"/>
+<circle class="d-fill g3" cx="163" cy="96" r="4"/><circle class="d-fill g2" cx="176" cy="96" r="4"/><circle class="d-fill g5" cx="189" cy="96" r="4"/>
+<text class="d-m" x="162" y="132">$ acme login</text>
+<text class="d-s" x="162" y="156">open in browser</text>
+<text class="d-m" x="162" y="174">acme.dev/device</text>
+<text class="d-s" x="162" y="200">and enter code</text>
+<rect class="d-tag acc" x="162" y="210" width="96" height="24" rx="12"/>
+<text class="d-m" x="172" y="227">WDJB-MJHT</text>
+<text class="d-s" x="162" y="280">waiting for approval</text>
+<circle class="d-badge" cx="331" cy="66" r="11"/><text class="d-bt" x="331" y="70">2</text>
+<text class="d-k" x="348" y="70">Enter code</text>
+<rect class="d-box g4" x="320" y="84" width="140" height="216" rx="10"/>
+<path class="d-line" d="M320,108 H460"/>
+<rect class="d-fillpaper" x="342" y="98" width="110" height="7" rx="3"/>
+<circle class="d-fill g4" cx="331" cy="96" r="4"/>
+<text class="d-t" x="332" y="134">Activate device</text>
+<rect class="d-box g0" x="332" y="148" width="116" height="28" rx="6"/>
+<text class="d-m" x="344" y="167">WDJB-MJHT</text>
+<rect class="d-fill g4" x="332" y="188" width="116" height="28" rx="14"/>
+<text class="d-tw" x="390" y="206" text-anchor="middle">Continue</text>
+<image class="d-logo" data-logo="okta.com" data-name="Okta" x="332" y="234" width="20" height="20"/>
+<text class="d-s" x="360" y="249">SSO via Okta</text>
+<text class="d-s" x="332" y="280">dana@acme.dev</text>
+<path class="d-edge" d="M122,190 H147" marker-end="url(#ux-workflow-d1-ah)"/>
+<path class="d-edge" d="M292,190 H317" marker-end="url(#ux-workflow-d1-ah)"/>
+<path class="d-edge" d="M462,190 H487" marker-end="url(#ux-workflow-d1-ah)"/>
+<path class="d-box g3" d="M540,140 L590,190 L540,240 L490,190 Z"/>
+<text class="d-t" x="540" y="186" text-anchor="middle">Code</text>
+<text class="d-t" x="540" y="203" text-anchor="middle">valid?</text>
+<path class="d-edge acc" d="M592,190 H637" marker-end="url(#ux-workflow-d1-ah)"/>
+<text class="d-lab" x="602" y="181">yes</text>
+<circle class="d-badge" cx="651" cy="66" r="11"/><text class="d-bt" x="651" y="70">3</text>
+<text class="d-k" x="668" y="70">Consent</text>
+<rect class="d-box g4" x="640" y="84" width="140" height="216" rx="10"/>
+<path class="d-line" d="M640,108 H780"/>
+<rect class="d-fillpaper" x="662" y="98" width="110" height="7" rx="3"/>
+<circle class="d-fill g4" cx="651" cy="96" r="4"/>
+<text class="d-t" x="652" y="134">Authorize</text>
+<text class="d-t" x="652" y="152">acme CLI?</text>
+<text class="d-s" x="652" y="178">requested scopes</text>
+<text class="d-m" x="652" y="198">repo:read</text>
+<text class="d-m" x="652" y="216">deploy:write</text>
+<rect class="d-fill g5" x="652" y="240" width="56" height="26" rx="13"/>
+<text class="d-tw" x="680" y="257" text-anchor="middle">Allow</text>
+<rect class="d-box g0" x="716" y="240" width="52" height="26" rx="13"/>
+<text class="d-s" x="742" y="257" text-anchor="middle">Deny</text>
+<path class="d-edge" d="M540,242 V337" marker-end="url(#ux-workflow-d1-ah)"/>
+<text class="d-lab" x="548" y="300">no, expired</text>
+<rect class="d-box g3" x="470" y="340" width="140" height="110" rx="10"/>
+<path class="d-line" d="M470,364 H610"/>
+<circle class="d-fill g3" cx="481" cy="352" r="4"/>
+<text class="d-t" x="482" y="390">Code expired</text>
+<text class="d-s" x="482" y="410">valid for 15 min</text>
+<text class="d-s" x="482" y="430">re-run acme login</text>
+<path class="d-edge acc" d="M710,302 V337" marker-end="url(#ux-workflow-d1-ah)"/>
+<text class="d-lab" x="718" y="324">Allow</text>
+<rect class="d-box g1" x="640" y="340" width="140" height="82" rx="10"/>
+<image class="d-logo" data-logo="auth0.com" data-name="Auth0" x="652" y="352" width="22" height="22"/>
+<text class="d-t" x="682" y="368">auth-api</text>
+<text class="d-m" x="652" y="394">/oauth/token</text>
+<text class="d-s" x="652" y="412">issues JWT, 1h</text>
+<circle class="d-badge" cx="161" cy="326" r="11"/><text class="d-bt" x="161" y="330">4</text>
+<text class="d-k" x="178" y="330">Signed in</text>
+<rect class="d-box g0" x="150" y="340" width="140" height="160" rx="10"/>
+<path class="d-line" d="M150,364 H290"/>
+<circle class="d-fill g3" cx="163" cy="352" r="4"/><circle class="d-fill g2" cx="176" cy="352" r="4"/><circle class="d-fill g5" cx="189" cy="352" r="4"/>
+<text class="d-s" x="162" y="388">Logged in as</text>
+<text class="d-m" x="162" y="406">dana@acme.dev</text>
+<text class="d-s" x="162" y="432">token saved to</text>
+<text class="d-m" x="162" y="450">~/.acme/creds</text>
+<text class="d-m" x="162" y="480">exit 0</text>
+<path class="d-edge dash" d="M272,302 V337" marker-end="url(#ux-workflow-d1-ah)"/>
+<text class="d-lab" x="280" y="324">polls every 5s</text>
+<path class="d-edge acc" d="M710,424 V530 H220 V503" marker-end="url(#ux-workflow-d1-ah)"/>
+<text class="d-lab" x="420" y="534">access token on next poll</text>
+<rect class="d-note" x="320" y="340" width="134" height="128" rx="4"/>
+<text class="d-tn" x="332" y="362">Edge cases</text>
+<text class="d-s" x="332" y="384">denied: exit 1</text>
+<text class="d-s" x="332" y="404">slow_down: +5s</text>
+<text class="d-s" x="332" y="424">no browser: QR</text>
+<text class="d-s" x="332" y="444">CI: use API key</text>
+</svg>

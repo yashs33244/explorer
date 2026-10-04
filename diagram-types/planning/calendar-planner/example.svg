@@ -1,0 +1,153 @@
+<svg class="hd" viewBox="0 0 800 640" role="img" aria-label="Online calendar planner for October 2026 of the payments-platform team: sprint 41 and 42 ceremonies, three releases with code freezes, weekly on-call handoffs, a database upgrade window and incident drills, one chip per event colour-coded by kind" xmlns="http://www.w3.org/2000/svg">
+<rect class="d-band g1" x="20" y="20" width="760" height="600" rx="12"/>
+<rect class="d-box g1" x="43" y="34" width="330" height="44" rx="8"/>
+<text class="d-k" x="57" y="51">payments-platform</text>
+<text class="d-h" x="57" y="70">October 2026: Sprints 41 and 42</text>
+<text class="d-s" x="448" y="61">synced from</text>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="526" y="44" width="22" height="22"/>
+<text class="d-s" x="553" y="61">PagerDuty</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="618.8" y="44" width="22" height="22"/>
+<text class="d-s" x="645.8" y="61">GitHub</text>
+<image class="d-logo" data-logo="linear.app" data-name="Linear" x="693.0" y="44" width="22" height="22"/>
+<text class="d-s" x="720.0" y="61">Linear</text>
+<rect class="d-lanehead" x="43" y="90" width="102" height="24"/>
+<text class="d-t" x="94.0" y="107" text-anchor="middle">Mon</text>
+<rect class="d-lanehead" x="145" y="90" width="102" height="24"/>
+<text class="d-t" x="196.0" y="107" text-anchor="middle">Tue</text>
+<rect class="d-lanehead" x="247" y="90" width="102" height="24"/>
+<text class="d-t" x="298.0" y="107" text-anchor="middle">Wed</text>
+<rect class="d-lanehead" x="349" y="90" width="102" height="24"/>
+<text class="d-t" x="400.0" y="107" text-anchor="middle">Thu</text>
+<rect class="d-lanehead" x="451" y="90" width="102" height="24"/>
+<text class="d-t" x="502.0" y="107" text-anchor="middle">Fri</text>
+<rect class="d-lanehead" x="553" y="90" width="102" height="24"/>
+<text class="d-t" x="604.0" y="107" text-anchor="middle">Sat</text>
+<rect class="d-lanehead" x="655" y="90" width="102" height="24"/>
+<text class="d-t" x="706.0" y="107" text-anchor="middle">Sun</text>
+<rect class="d-box g0" x="43" y="114" width="306" height="96" rx="4"/>
+<text class="d-k" x="55" y="134">Legend</text>
+<rect class="d-fill g1" x="55" y="146" width="14" height="14"/>
+<text class="d-s" x="75" y="157">Sprint ceremony</text>
+<rect class="d-fill g3" x="55" y="166" width="14" height="14"/>
+<text class="d-s" x="75" y="177">Release</text>
+<rect class="d-fill g4" x="55" y="186" width="14" height="14"/>
+<text class="d-s" x="75" y="197">On-call handoff</text>
+<rect class="d-fill g2" x="205" y="146" width="14" height="14"/>
+<text class="d-s" x="225" y="157">Freeze, infra change</text>
+<rect class="d-fill g5" x="205" y="166" width="14" height="14"/>
+<text class="d-s" x="225" y="177">Drill, postmortem</text>
+<rect class="d-lane alt" x="205" y="186" width="14" height="14"/>
+<text class="d-s" x="225" y="197">Weekend</text>
+<rect class="d-box" x="349" y="114" width="102" height="96" rx="4"/>
+<text class="d-t" x="357" y="132">1</text>
+<rect class="d-fill g2" x="354" y="142" width="92" height="20"/>
+<text class="d-tw" x="360" y="156">v4.11 freeze</text>
+<rect class="d-box" x="451" y="114" width="102" height="96" rx="4"/>
+<text class="d-t" x="459" y="132">2</text>
+<rect class="d-fill g3" x="456" y="142" width="92" height="20"/>
+<text class="d-tw" x="462" y="156">v4.11 release</text>
+<rect class="d-fill g1" x="456" y="166" width="92" height="20"/>
+<text class="d-tw" x="462" y="180">S40 retro</text>
+<rect class="d-lane alt" x="553" y="114" width="102" height="96"/>
+<text class="d-t" x="561" y="132">3</text>
+<rect class="d-lane alt" x="655" y="114" width="102" height="96"/>
+<text class="d-t" x="663" y="132">4</text>
+<rect class="d-box" x="43" y="210" width="102" height="96" rx="4"/>
+<text class="d-t" x="51" y="228">5</text>
+<rect class="d-fill g1" x="48" y="238" width="92" height="20"/>
+<text class="d-tw" x="54" y="252">S41 planning</text>
+<rect class="d-fill g4" x="48" y="262" width="92" height="20"/>
+<text class="d-tw" x="54" y="276">On-call: Priya</text>
+<rect class="d-box" x="145" y="210" width="102" height="96" rx="4"/>
+<text class="d-t" x="153" y="228">6</text>
+<rect class="d-box" x="247" y="210" width="102" height="96" rx="4"/>
+<text class="d-t" x="255" y="228">7</text>
+<rect class="d-fill g5" x="252" y="238" width="92" height="20"/>
+<text class="d-tw" x="258" y="252">Failover drill</text>
+<rect class="d-box" x="349" y="210" width="102" height="96" rx="4"/>
+<text class="d-t" x="357" y="228">8</text>
+<rect class="d-fill g3" x="354" y="238" width="92" height="20"/>
+<text class="d-tw" x="360" y="252">v4.12 RC cut</text>
+<rect class="d-box" x="451" y="210" width="102" height="96" rx="4"/>
+<text class="d-t" x="459" y="228">9</text>
+<rect class="d-fill g3" x="456" y="238" width="92" height="20"/>
+<text class="d-tw" x="462" y="252">v4.12 release</text>
+<rect class="d-lane alt" x="553" y="210" width="102" height="96"/>
+<text class="d-t" x="561" y="228">10</text>
+<rect class="d-lane alt" x="655" y="210" width="102" height="96"/>
+<text class="d-t" x="663" y="228">11</text>
+<rect class="d-box" x="43" y="306" width="102" height="96" rx="4"/>
+<text class="d-t" x="51" y="324">12</text>
+<rect class="d-fill g4" x="48" y="334" width="92" height="20"/>
+<text class="d-tw" x="54" y="348">On-call: Marco</text>
+<rect class="d-box" x="145" y="306" width="102" height="96" rx="4"/>
+<text class="d-t" x="153" y="324">13</text>
+<rect class="d-box" x="247" y="306" width="102" height="96" rx="4"/>
+<text class="d-t" x="255" y="324">14</text>
+<rect class="d-fill g1" x="252" y="334" width="92" height="20"/>
+<text class="d-tw" x="258" y="348">Sprint sync</text>
+<rect class="d-box" x="349" y="306" width="102" height="96" rx="4"/>
+<text class="d-t" x="357" y="324">15</text>
+<rect class="d-fill g2" x="354" y="334" width="92" height="20"/>
+<text class="d-tw" x="360" y="348">PG 16 upgrade</text>
+<rect class="d-fill g2" x="354" y="358" width="92" height="20"/>
+<text class="d-tw" x="360" y="372">02:00 window</text>
+<rect class="d-box" x="451" y="306" width="102" height="96" rx="4"/>
+<text class="d-t" x="459" y="324">16</text>
+<rect class="d-fill g1" x="456" y="334" width="92" height="20"/>
+<text class="d-tw" x="462" y="348">S41 review</text>
+<rect class="d-fill g1" x="456" y="358" width="92" height="20"/>
+<text class="d-tw" x="462" y="372">S41 retro</text>
+<rect class="d-lane alt" x="553" y="306" width="102" height="96"/>
+<text class="d-t" x="561" y="324">17</text>
+<rect class="d-lane alt" x="655" y="306" width="102" height="96"/>
+<text class="d-t" x="663" y="324">18</text>
+<rect class="d-box" x="43" y="402" width="102" height="96" rx="4"/>
+<text class="d-t" x="51" y="420">19</text>
+<rect class="d-fill g1" x="48" y="430" width="92" height="20"/>
+<text class="d-tw" x="54" y="444">S42 planning</text>
+<rect class="d-fill g4" x="48" y="454" width="92" height="20"/>
+<text class="d-tw" x="54" y="468">On-call: Aisha</text>
+<rect class="d-box" x="145" y="402" width="102" height="96" rx="4"/>
+<text class="d-t" x="153" y="420">20</text>
+<rect class="d-fill g3" x="150" y="430" width="92" height="20"/>
+<text class="d-tw" x="156" y="444">Hotfix 4.12.1</text>
+<rect class="d-box" x="247" y="402" width="102" height="96" rx="4"/>
+<text class="d-t" x="255" y="420">21</text>
+<rect class="d-box" x="349" y="402" width="102" height="96" rx="4"/>
+<text class="d-t" x="357" y="420">22</text>
+<rect class="d-fill g2" x="354" y="430" width="92" height="20"/>
+<text class="d-tw" x="360" y="444">v4.13 freeze</text>
+<rect class="d-box" x="451" y="402" width="102" height="96" rx="4"/>
+<text class="d-t" x="459" y="420">23</text>
+<rect class="d-fill g3" x="456" y="430" width="92" height="20"/>
+<text class="d-tw" x="462" y="444">v4.13 release</text>
+<rect class="d-lane alt" x="553" y="402" width="102" height="96"/>
+<text class="d-t" x="561" y="420">24</text>
+<rect class="d-lane alt" x="655" y="402" width="102" height="96"/>
+<text class="d-t" x="663" y="420">25</text>
+<rect class="d-box" x="43" y="498" width="102" height="96" rx="4"/>
+<text class="d-t" x="51" y="516">26</text>
+<rect class="d-fill g4" x="48" y="526" width="92" height="20"/>
+<text class="d-tw" x="54" y="540">On-call: Dev</text>
+<rect class="d-box" x="145" y="498" width="102" height="96" rx="4"/>
+<text class="d-t" x="153" y="516">27</text>
+<rect class="d-box" x="247" y="498" width="102" height="96" rx="4"/>
+<text class="d-t" x="255" y="516">28</text>
+<rect class="d-fill g5" x="252" y="526" width="92" height="20"/>
+<text class="d-tw" x="258" y="540">INC-2231 PM</text>
+<rect class="d-box" x="349" y="498" width="102" height="96" rx="4"/>
+<text class="d-t" x="357" y="516">29</text>
+<rect class="d-fill g5" x="354" y="526" width="92" height="20"/>
+<text class="d-tw" x="360" y="540">Q4 game day</text>
+<rect class="d-box" x="451" y="498" width="102" height="96" rx="4"/>
+<text class="d-t" x="459" y="516">30</text>
+<rect class="d-fill g1" x="456" y="526" width="92" height="20"/>
+<text class="d-tw" x="462" y="540">S42 review</text>
+<rect class="d-fill g1" x="456" y="550" width="92" height="20"/>
+<text class="d-tw" x="462" y="564">S42 retro</text>
+<rect class="d-lane alt" x="553" y="498" width="102" height="96"/>
+<text class="d-t" x="561" y="516">31</text>
+<rect class="d-lane alt" x="655" y="498" width="102" height="96"/>
+<text class="d-s" x="663" y="516">Nov 1</text>
+</svg>

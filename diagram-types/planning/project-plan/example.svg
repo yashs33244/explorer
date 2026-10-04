@@ -1,0 +1,120 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Project plan for splitting the orders monolith into services: six phases with deliverable, owner, due date and status, from domain mapping through monolith retirement" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="32">PROJECT PLAN · FY26</text>
+<text class="d-s" x="20" y="52">shop-monolith (Rails) to services on Kubernetes, strangler fig pattern</text>
+<rect class="d-fill g0" x="20" y="74" width="130" height="40" rx="4"/>
+<text class="d-tw" x="34" y="99">PROJECT</text>
+<rect class="d-box" x="156" y="74" width="260" height="40" rx="4"/>
+<text class="d-t" x="170" y="99">Orders monolith split</text>
+<rect class="d-fill g0" x="422" y="74" width="130" height="40" rx="4"/>
+<text class="d-tw" x="436" y="99">TARGET</text>
+<rect class="d-box" x="558" y="74" width="222" height="40" rx="4"/>
+<text class="d-t" x="572" y="99">Monolith off by 30 Sep</text>
+<rect class="d-fill g0" x="20" y="134" width="130" height="40" rx="4"/>
+<text class="d-tw" x="34" y="159">PHASE</text>
+<rect class="d-fill g0" x="156" y="134" width="260" height="40" rx="4"/>
+<text class="d-tw" x="170" y="159">DELIVERABLE</text>
+<rect class="d-fill g0" x="422" y="134" width="130" height="40" rx="4"/>
+<text class="d-tw" x="436" y="159">OWNER</text>
+<rect class="d-fill g0" x="558" y="134" width="100" height="40" rx="4"/>
+<text class="d-tw" x="572" y="159">DUE</text>
+<rect class="d-fill g0" x="664" y="134" width="116" height="40" rx="4"/>
+<text class="d-tw" x="678" y="159">STATUS</text>
+<rect class="d-box" x="20" y="180" width="130" height="56" rx="4"/>
+<rect class="d-box" x="156" y="180" width="260" height="56" rx="4"/>
+<rect class="d-box" x="422" y="180" width="130" height="56" rx="4"/>
+<rect class="d-box" x="558" y="180" width="100" height="56" rx="4"/>
+<rect class="d-box g1" x="664" y="180" width="116" height="56" rx="4"/>
+<circle class="d-badge" cx="44" cy="208" r="11"/><text class="d-bt" x="44" y="212">1</text>
+<text class="d-t" x="64" y="213">Discover</text>
+<text class="d-t" x="170" y="205">Domain map + seams</text>
+<text class="d-s" x="170" y="223">bounded contexts doc</text>
+<text class="d-t" x="436" y="205">Priya R.</text>
+<text class="d-s" x="436" y="223">Architecture</text>
+<text class="d-m" x="572" y="213">31 Jan</text>
+<text class="d-t" x="678" y="205">Done</text>
+<text class="d-s" x="678" y="223">signed off</text>
+<rect class="d-box" x="20" y="242" width="130" height="56" rx="4"/>
+<rect class="d-box" x="156" y="242" width="260" height="56" rx="4"/>
+<rect class="d-box" x="422" y="242" width="130" height="56" rx="4"/>
+<rect class="d-box" x="558" y="242" width="100" height="56" rx="4"/>
+<rect class="d-box g1" x="664" y="242" width="116" height="56" rx="4"/>
+<circle class="d-badge" cx="44" cy="270" r="11"/><text class="d-bt" x="44" y="274">2</text>
+<text class="d-t" x="64" y="275">Platform</text>
+<text class="d-t" x="170" y="267">EKS + Istio baseline</text>
+<text class="d-s" x="170" y="285">2 clusters, mTLS on</text>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="380" y="257" width="26" height="26"/>
+<text class="d-t" x="436" y="267">Platform</text>
+<text class="d-s" x="436" y="285">4 engineers</text>
+<text class="d-m" x="572" y="275">14 Mar</text>
+<text class="d-t" x="678" y="267">Done</text>
+<text class="d-s" x="678" y="285">in prod</text>
+<rect class="d-box" x="20" y="304" width="130" height="56" rx="4"/>
+<rect class="d-box" x="156" y="304" width="260" height="56" rx="4"/>
+<rect class="d-box" x="422" y="304" width="130" height="56" rx="4"/>
+<rect class="d-box" x="558" y="304" width="100" height="56" rx="4"/>
+<rect class="d-box g2" x="664" y="304" width="116" height="56" rx="4"/>
+<circle class="d-badge" cx="44" cy="332" r="11"/><text class="d-bt" x="44" y="336">3</text>
+<text class="d-t" x="64" y="337">Extract</text>
+<text class="d-t" x="170" y="329">orders-svc in Go</text>
+<text class="d-s" x="170" y="347">routed via Kong /orders</text>
+<image class="d-logo" data-logo="konghq.com" data-name="Kong" x="380" y="319" width="26" height="26"/>
+<text class="d-t" x="436" y="329">Orders squad</text>
+<text class="d-s" x="436" y="347">Lead: Sam K.</text>
+<text class="d-m" x="572" y="337">9 May</text>
+<text class="d-t" x="678" y="329">In progress</text>
+<text class="d-s" x="678" y="347">20% of traffic</text>
+<rect class="d-box" x="20" y="366" width="130" height="56" rx="4"/>
+<rect class="d-box" x="156" y="366" width="260" height="56" rx="4"/>
+<rect class="d-box" x="422" y="366" width="130" height="56" rx="4"/>
+<rect class="d-box" x="558" y="366" width="100" height="56" rx="4"/>
+<rect class="d-box g3" x="664" y="366" width="116" height="56" rx="4"/>
+<circle class="d-badge" cx="44" cy="394" r="11"/><text class="d-bt" x="44" y="398">4</text>
+<text class="d-t" x="64" y="399">Data</text>
+<text class="d-t" x="170" y="391">Split orders DB</text>
+<text class="d-s" x="170" y="409">Postgres CDC via Debezium</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="380" y="381" width="26" height="26"/>
+<text class="d-t" x="436" y="391">Data infra</text>
+<text class="d-s" x="436" y="409">Lead: Ana M.</text>
+<text class="d-m" x="572" y="399">20 Jun</text>
+<text class="d-t" x="678" y="391">At risk</text>
+<text class="d-s" x="678" y="409">lag spikes 40s</text>
+<rect class="d-box" x="20" y="428" width="130" height="56" rx="4"/>
+<rect class="d-box" x="156" y="428" width="260" height="56" rx="4"/>
+<rect class="d-box" x="422" y="428" width="130" height="56" rx="4"/>
+<rect class="d-box" x="558" y="428" width="100" height="56" rx="4"/>
+<rect class="d-box" x="664" y="428" width="116" height="56" rx="4"/>
+<circle class="d-badge" cx="44" cy="456" r="11"/><text class="d-bt" x="44" y="460">5</text>
+<text class="d-t" x="64" y="461">Extract</text>
+<text class="d-t" x="170" y="453">payments-svc</text>
+<text class="d-s" x="170" y="471">Stripe client moved out</text>
+<image class="d-logo" data-logo="stripe.com" data-name="Stripe" x="380" y="443" width="26" height="26"/>
+<text class="d-t" x="436" y="453">Payments</text>
+<text class="d-s" x="436" y="471">Lead: Dev P.</text>
+<text class="d-m" x="572" y="461">25 Jul</text>
+<text class="d-t" x="678" y="453">Not started</text>
+<text class="d-s" x="678" y="471">blocked on 4</text>
+<rect class="d-box" x="20" y="490" width="130" height="56" rx="4"/>
+<rect class="d-box" x="156" y="490" width="260" height="56" rx="4"/>
+<rect class="d-box" x="422" y="490" width="130" height="56" rx="4"/>
+<rect class="d-box" x="558" y="490" width="100" height="56" rx="4"/>
+<rect class="d-box" x="664" y="490" width="116" height="56" rx="4"/>
+<circle class="d-badge" cx="44" cy="518" r="11"/><text class="d-bt" x="44" y="522">6</text>
+<text class="d-t" x="64" y="523">Cutover</text>
+<text class="d-t" x="170" y="515">Retire monolith routes</text>
+<text class="d-s" x="170" y="533">delete 38k LOC</text>
+<image class="d-logo" data-logo="rubyonrails.org" data-name="Ruby on Rails" x="380" y="505" width="26" height="26"/>
+<text class="d-t" x="436" y="515">SRE</text>
+<text class="d-s" x="436" y="533">On-call rota</text>
+<text class="d-m" x="572" y="523">12 Sep</text>
+<text class="d-t" x="678" y="515">Not started</text>
+<text class="d-s" x="678" y="533">game day 1 Sep</text>
+<text class="d-k" x="20" y="579">STATUS</text>
+<rect class="d-box g1" x="100" y="566" width="18" height="18" rx="3"/>
+<text class="d-s" x="126" y="580">Done</text>
+<rect class="d-box g2" x="179.6" y="566" width="18" height="18" rx="3"/>
+<text class="d-s" x="205.6" y="580">In progress</text>
+<rect class="d-box g3" x="304.0" y="566" width="18" height="18" rx="3"/>
+<text class="d-s" x="330.0" y="580">At risk</text>
+<rect class="d-box" x="402.8" y="566" width="18" height="18" rx="3"/>
+<text class="d-s" x="428.8" y="580">Not started</text>
+</svg>

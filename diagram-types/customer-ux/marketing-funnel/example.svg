@@ -1,0 +1,59 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Developer tool funnel: docs visits, signups, first API call, team plan and enterprise contract, with the tracked event for each stage on the left and monthly counts and stage conversion on the right" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="28">tracked event</text>
+<text class="d-k" x="620" y="28">per month</text>
+<path class="d-fill g1" d="M190,40 H590 L556,128 H224 Z"/>
+<text class="d-tw" x="390" y="88" text-anchor="middle">Docs visit</text>
+<path class="d-edge dash" d="M579,84 H606"/>
+<path class="d-edge dash" d="M174,84 H201"/>
+<text class="d-m" x="168" y="88" text-anchor="end">page_view /docs</text>
+<text class="d-h" x="620" y="82">48,000</text>
+<text class="d-s" x="620" y="100">from search, GitHub</text>
+<path class="d-fill g2" d="M224,128 H556 L524,212 H256 Z"/>
+<text class="d-tw" x="390" y="174" text-anchor="middle">Signup</text>
+<path class="d-edge dash" d="M546,170 H606"/>
+<path class="d-edge dash" d="M174,170 H234"/>
+<text class="d-m" x="168" y="174" text-anchor="end">user.signed_up</text>
+<text class="d-h" x="620" y="168">4,320</text>
+<text class="d-s" x="620" y="186">9.0% of visits</text>
+<path class="d-fill g3" d="M256,212 H524 L493,292 H287 Z"/>
+<text class="d-tw" x="390" y="256" text-anchor="middle">First API call</text>
+<path class="d-edge dash" d="M514,252 H606"/>
+<path class="d-edge dash" d="M174,252 H266"/>
+<text class="d-m" x="168" y="256" text-anchor="end">api.first_call</text>
+<text class="d-h" x="620" y="250">1,730</text>
+<text class="d-s" x="620" y="268">40% of signups</text>
+<path class="d-fill g4" d="M287,292 H493 L462,372 H318 Z"/>
+<text class="d-tw" x="390" y="336" text-anchor="middle">Team plan</text>
+<path class="d-edge dash" d="M483,332 H606"/>
+<path class="d-edge dash" d="M174,332 H297"/>
+<text class="d-m" x="168" y="336" text-anchor="end">billing.upgraded</text>
+<text class="d-h" x="620" y="330">260</text>
+<text class="d-s" x="620" y="348">15% of activated</text>
+<path class="d-fill g5" d="M318,372 H462 L420,480 H360 Z"/>
+<text class="d-tw" x="390" y="420" text-anchor="middle">Enterprise</text>
+<path class="d-edge dash" d="M451,416 H606"/>
+<path class="d-edge dash" d="M174,416 H329"/>
+<text class="d-m" x="168" y="420" text-anchor="end">contract.signed</text>
+<text class="d-h" x="620" y="414">18</text>
+<text class="d-s" x="620" y="432">6.9% of teams</text>
+<rect class="d-tag acc" x="676" y="230" width="104" height="22" rx="11"/>
+<text class="d-s" x="728" y="245" text-anchor="middle">60% never call</text>
+<defs><marker id="marketing-funnel-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box g0" x="20" y="512" width="760" height="64" rx="12"/>
+<text class="d-k" x="36" y="550">pipeline</text>
+<image class="d-logo" data-logo="posthog.com" data-name="PostHog" x="130" y="532" width="24" height="24"/>
+<text class="d-t" x="162" y="542">PostHog</text>
+<text class="d-m" x="162" y="560">events</text>
+<path class="d-edge" d="M254,544 H280" marker-end="url(#marketing-funnel-d1-ah)"/>
+<image class="d-logo" data-logo="snowflake.com" data-name="Snowflake" x="292" y="532" width="24" height="24"/>
+<text class="d-t" x="324" y="542">Snowflake</text>
+<text class="d-m" x="324" y="560">raw.events</text>
+<path class="d-edge" d="M416,544 H442" marker-end="url(#marketing-funnel-d1-ah)"/>
+<image class="d-logo" data-logo="getdbt.com" data-name="dbt" x="454" y="532" width="24" height="24"/>
+<text class="d-t" x="486" y="542">dbt</text>
+<text class="d-m" x="486" y="560">funnel_daily</text>
+<path class="d-edge" d="M578,544 H604" marker-end="url(#marketing-funnel-d1-ah)"/>
+<image class="d-logo" data-logo="grafana.com" data-name="Grafana" x="616" y="532" width="24" height="24"/>
+<text class="d-t" x="648" y="542">Grafana</text>
+<text class="d-m" x="648" y="560">growth board</text>
+</svg>

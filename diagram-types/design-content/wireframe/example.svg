@@ -1,0 +1,95 @@
+<svg class="hd" viewBox="0 0 800 700" role="img" aria-label="Low-fidelity wireframe of a developer docs landing page for the Relay payments API: browser frame, nav with search, hero with quickstart button and curl snippet, three integration cards, status strip and footer, annotated with design notes" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="wireframe-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-fillpaper" x="130" y="20" width="540" height="660" rx="12"/>
+<circle class="d-fill g2" cx="148" cy="35" r="5"/><circle class="d-fill g4" cx="164" cy="35" r="5"/>
+<rect class="d-tag" x="250" y="25" width="300" height="20" rx="10"/>
+<text class="d-m" x="400" y="40" text-anchor="middle">https://docs.relay.dev</text>
+<path class="d-line" d="M130,50 H670"/>
+<rect class="d-fill g0" x="154" y="62" width="22" height="22" rx="5"/>
+<text class="d-t" x="184" y="78">relay docs</text>
+<text class="d-s" x="290" y="78">Guides</text>
+<text class="d-s" x="344" y="78">API</text>
+<text class="d-s" x="378" y="78">SDKs</text>
+<text class="d-s" x="420" y="78">Changelog</text>
+<rect class="d-tag" x="500" y="61" width="146" height="24" rx="12"/>
+<text class="d-s" x="514" y="77">Search docs</text>
+<text class="d-m" x="626" y="77">/</text>
+<path class="d-line" d="M130,96 H670"/>
+<rect class="d-band g2" x="131" y="97" width="538" height="203" rx="0"/>
+<text class="d-k" x="154" y="130">Relay API v3</text>
+<text class="d-h" x="154" y="156">Ship payments in</text>
+<text class="d-h" x="154" y="178">five minutes</text>
+<text class="d-s" x="154" y="202">REST, webhooks and SDKs</text>
+<rect class="d-fill g4" x="154" y="222" width="100" height="32" rx="16"/>
+<text class="d-tw" x="204" y="242" text-anchor="middle">Quickstart</text>
+<rect class="d-box g0" x="262" y="222" width="104" height="32" rx="16"/>
+<text class="d-s" x="314" y="242" text-anchor="middle">API reference</text>
+<rect class="d-fillpaper" x="378" y="114" width="268" height="166" rx="8"/>
+<text class="d-k" x="392" y="134">curl</text>
+<rect class="d-tag acc" x="590" y="121" width="46" height="20" rx="10"/>
+<text class="d-s" x="613" y="135" text-anchor="middle">Copy</text>
+<path class="d-line" d="M378,148 H646"/>
+<text class="d-m" x="392" y="172">curl -u sk_test_: \</text>
+<text class="d-m" x="399" y="192">-d amount=2000 \</text>
+<text class="d-m" x="399" y="212">-d currency=usd \</text>
+<text class="d-m" x="399" y="232">https://api.relay.dev/v3/payments</text>
+<text class="d-s" x="392" y="262">POST, returns a payment id</text>
+<text class="d-k" x="154" y="328">Start here</text>
+<text class="d-t" x="154" y="348">Pick your integration</text>
+<rect class="d-box g4" x="154" y="362" width="148" height="168" rx="10"/>
+<rect class="d-fillpaper" x="168" y="376" width="120" height="64" rx="4"/>
+<path class="d-line" d="M168,376 L288,440 M288,376 L168,440"/>
+<text class="d-t" x="168" y="464">REST API</text>
+<text class="d-s" x="168" y="484">120 endpoints</text>
+<path class="d-line" d="M168,502 H286 M168,514 H250"/>
+<rect class="d-box g4" x="326" y="362" width="148" height="168" rx="10"/>
+<rect class="d-fillpaper" x="340" y="376" width="120" height="64" rx="4"/>
+<path class="d-line" d="M340,376 L460,440 M460,376 L340,440"/>
+<text class="d-t" x="340" y="464">Webhooks</text>
+<text class="d-s" x="340" y="484">34 event types</text>
+<path class="d-line" d="M340,502 H458 M340,514 H410"/>
+<rect class="d-box g4" x="498" y="362" width="148" height="168" rx="10"/>
+<rect class="d-fillpaper" x="512" y="376" width="120" height="64" rx="4"/>
+<path class="d-line" d="M512,376 L632,440 M632,376 L512,440"/>
+<text class="d-t" x="512" y="464">SDKs</text>
+<text class="d-s" x="512" y="484">typed clients</text>
+<image class="d-logo" data-logo="python.org" data-name="Python" x="512" y="496" width="20" height="20"/>
+<image class="d-logo" data-logo="nodejs.org" data-name="Node.js" x="540" y="496" width="20" height="20"/>
+<image class="d-logo" data-logo="go.dev" data-name="Go" x="568" y="496" width="20" height="20"/>
+<rect class="d-box g1" x="154" y="552" width="492" height="40" rx="8"/>
+<circle class="d-fill g1" cx="174" cy="572" r="5"/>
+<text class="d-s" x="188" y="576">All systems operational</text>
+<text class="d-m" x="520" y="576">status.relay.dev</text>
+<path class="d-line" d="M130,616 H670"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="154" y="636" width="20" height="20"/>
+<text class="d-s" x="182" y="651">GitHub</text>
+<text class="d-s" x="250" y="651">Discord</text>
+<text class="d-s" x="320" y="651">Changelog RSS</text>
+<text class="d-s" x="430" y="651">Terms</text>
+<text class="d-m" x="590" y="651">v3.14.0</text>
+<rect class="d-note g4" x="684" y="56" width="108" height="78" rx="4"/>
+<text class="d-tn" x="694" y="78">Search first</text>
+<text class="d-s" x="694" y="98">41% of sessions</text>
+<text class="d-s" x="694" y="116">start with /</text>
+<path class="d-edge dash" d="M682,86 L650,76" marker-end="url(#wireframe-d1-ah)"/>
+<rect class="d-note g1" x="684" y="150" width="108" height="78" rx="4"/>
+<text class="d-tn" x="694" y="172">Copy button</text>
+<text class="d-s" x="694" y="192">test key filled</text>
+<text class="d-s" x="694" y="210">when signed in</text>
+<path class="d-edge dash" d="M682,166 L640,140" marker-end="url(#wireframe-d1-ah)"/>
+<rect class="d-note" x="8" y="168" width="108" height="78" rx="4"/>
+<text class="d-tn" x="18" y="190">One main CTA</text>
+<text class="d-s" x="18" y="210">Quickstart gets</text>
+<text class="d-s" x="18" y="228">60% of clicks</text>
+<path class="d-edge dash" d="M118,220 L150,234" marker-end="url(#wireframe-d1-ah)"/>
+<rect class="d-note g2" x="8" y="400" width="108" height="78" rx="4"/>
+<text class="d-tn" x="18" y="422">Top journeys</text>
+<text class="d-s" x="18" y="442">picked from</text>
+<text class="d-s" x="18" y="460">search logs</text>
+<path class="d-edge dash" d="M118,440 L150,440" marker-end="url(#wireframe-d1-ah)"/>
+<rect class="d-note g3" x="684" y="530" width="108" height="78" rx="4"/>
+<text class="d-tn" x="694" y="552">Live status</text>
+<text class="d-s" x="694" y="572">from the</text>
+<text class="d-s" x="694" y="590">Statuspage API</text>
+<path class="d-edge dash" d="M682,572 L650,572" marker-end="url(#wireframe-d1-ah)"/>
+</svg>

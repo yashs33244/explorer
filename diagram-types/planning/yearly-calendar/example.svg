@@ -1,0 +1,167 @@
+<svg class="hd" viewBox="0 0 800 630" role="img" aria-label="Yearly calendar of the 2026 release train: one row per month with a day scale, release dates every four weeks on Tuesdays, the v7.0 major release in September, and code freezes for quarter close, Black Friday and the holidays" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="32">RELEASE TRAIN 2026</text>
+<text class="d-s" x="20" y="52">web + mobile, cut Thursday, ship Tuesday, 4-week cadence</text>
+<rect class="d-box g4" x="20" y="78" width="56" height="74" rx="4"/>
+<text class="d-t" x="48" y="120" text-anchor="middle">Jan</text>
+<rect class="d-box" x="76" y="78" width="312" height="74" rx="4"/>
+<rect class="d-soft g3" x="88.0" y="112" width="36.0" height="24" rx="3"/>
+<text class="d-s" x="114.8" y="100" text-anchor="middle">NY freeze</text>
+<path class="d-axis" d="M92,124 H372"/>
+<path class="d-grid" d="M92.0,120 V128"/>
+<path class="d-grid" d="M157.3,120 V128"/>
+<path class="d-grid" d="M222.7,120 V128"/>
+<path class="d-grid" d="M288.0,120 V128"/>
+<path class="d-grid" d="M353.3,120 V128"/>
+<circle class="d-fill g4" cx="204.0" cy="124" r="6"/>
+<text class="d-t" x="204.0" y="100" text-anchor="middle">v6.0</text>
+<text class="d-m" x="204.0" y="146" text-anchor="middle">13</text>
+<rect class="d-box g1" x="20" y="162" width="56" height="74" rx="4"/>
+<text class="d-t" x="48" y="204" text-anchor="middle">Feb</text>
+<rect class="d-box" x="76" y="162" width="312" height="74" rx="4"/>
+<path class="d-axis" d="M92,208 H372"/>
+<path class="d-grid" d="M92.0,204 V212"/>
+<path class="d-grid" d="M157.3,204 V212"/>
+<path class="d-grid" d="M222.7,204 V212"/>
+<path class="d-grid" d="M288.0,204 V212"/>
+<path class="d-grid" d="M353.3,204 V212"/>
+<circle class="d-fill g4" cx="176.0" cy="208" r="6"/>
+<text class="d-t" x="176.0" y="184" text-anchor="middle">v6.1</text>
+<text class="d-m" x="176.0" y="230" text-anchor="middle">10</text>
+<rect class="d-box g2" x="20" y="246" width="56" height="74" rx="4"/>
+<text class="d-t" x="48" y="288" text-anchor="middle">Mar</text>
+<rect class="d-box" x="76" y="246" width="312" height="74" rx="4"/>
+<rect class="d-soft g3" x="321.3" y="280" width="54.7" height="24" rx="3"/>
+<text class="d-s" x="348.7" y="268" text-anchor="middle">Q1 close</text>
+<path class="d-axis" d="M92,292 H372"/>
+<path class="d-grid" d="M92.0,288 V296"/>
+<path class="d-grid" d="M157.3,288 V296"/>
+<path class="d-grid" d="M222.7,288 V296"/>
+<path class="d-grid" d="M288.0,288 V296"/>
+<path class="d-grid" d="M353.3,288 V296"/>
+<circle class="d-fill g4" cx="176.0" cy="292" r="6"/>
+<text class="d-t" x="176.0" y="268" text-anchor="middle">v6.2</text>
+<text class="d-m" x="176.0" y="314" text-anchor="middle">10</text>
+<rect class="d-box g5" x="20" y="330" width="56" height="74" rx="4"/>
+<text class="d-t" x="48" y="372" text-anchor="middle">Apr</text>
+<rect class="d-box" x="76" y="330" width="312" height="74" rx="4"/>
+<path class="d-axis" d="M92,376 H372"/>
+<path class="d-grid" d="M92.0,372 V380"/>
+<path class="d-grid" d="M157.3,372 V380"/>
+<path class="d-grid" d="M222.7,372 V380"/>
+<path class="d-grid" d="M288.0,372 V380"/>
+<path class="d-grid" d="M353.3,372 V380"/>
+<circle class="d-fill g4" cx="148.0" cy="376" r="6"/>
+<text class="d-t" x="148.0" y="352" text-anchor="middle">v6.3</text>
+<text class="d-m" x="148.0" y="398" text-anchor="middle">7</text>
+<rect class="d-box g3" x="20" y="414" width="56" height="74" rx="4"/>
+<text class="d-t" x="48" y="456" text-anchor="middle">May</text>
+<rect class="d-box" x="76" y="414" width="312" height="74" rx="4"/>
+<path class="d-axis" d="M92,460 H372"/>
+<path class="d-grid" d="M92.0,456 V464"/>
+<path class="d-grid" d="M157.3,456 V464"/>
+<path class="d-grid" d="M222.7,456 V464"/>
+<path class="d-grid" d="M288.0,456 V464"/>
+<path class="d-grid" d="M353.3,456 V464"/>
+<circle class="d-fill g4" cx="129.3" cy="460" r="6"/>
+<text class="d-t" x="129.3" y="436" text-anchor="middle">v6.4</text>
+<text class="d-m" x="129.3" y="482" text-anchor="middle">5</text>
+<rect class="d-box g0" x="20" y="498" width="56" height="74" rx="4"/>
+<text class="d-t" x="48" y="540" text-anchor="middle">Jun</text>
+<rect class="d-box" x="76" y="498" width="312" height="74" rx="4"/>
+<path class="d-axis" d="M92,544 H372"/>
+<path class="d-grid" d="M92.0,540 V548"/>
+<path class="d-grid" d="M157.3,540 V548"/>
+<path class="d-grid" d="M222.7,540 V548"/>
+<path class="d-grid" d="M288.0,540 V548"/>
+<path class="d-grid" d="M353.3,540 V548"/>
+<circle class="d-fill g4" cx="101.3" cy="544" r="6"/>
+<text class="d-t" x="101.3" y="520" text-anchor="middle">v6.5</text>
+<text class="d-m" x="101.3" y="566" text-anchor="middle">2</text>
+<circle class="d-fill g4" cx="362.7" cy="544" r="6"/>
+<text class="d-t" x="362.7" y="520" text-anchor="middle">v6.6</text>
+<text class="d-m" x="362.7" y="566" text-anchor="middle">30</text>
+<rect class="d-box g4" x="412" y="78" width="56" height="74" rx="4"/>
+<text class="d-t" x="440" y="120" text-anchor="middle">Jul</text>
+<rect class="d-box" x="468" y="78" width="312" height="74" rx="4"/>
+<rect class="d-soft g3" x="526.7" y="112" width="45.3" height="24" rx="3"/>
+<text class="d-s" x="549.3" y="100" text-anchor="middle">SOC 2 audit</text>
+<path class="d-axis" d="M484,124 H764"/>
+<path class="d-grid" d="M484.0,120 V128"/>
+<path class="d-grid" d="M549.3,120 V128"/>
+<path class="d-grid" d="M614.7,120 V128"/>
+<path class="d-grid" d="M680.0,120 V128"/>
+<path class="d-grid" d="M745.3,120 V128"/>
+<circle class="d-fill g4" cx="736.0" cy="124" r="6"/>
+<text class="d-t" x="736.0" y="100" text-anchor="middle">v6.7</text>
+<text class="d-m" x="736.0" y="146" text-anchor="middle">28</text>
+<rect class="d-box g1" x="412" y="162" width="56" height="74" rx="4"/>
+<text class="d-t" x="440" y="204" text-anchor="middle">Aug</text>
+<rect class="d-box" x="468" y="162" width="312" height="74" rx="4"/>
+<path class="d-axis" d="M484,208 H764"/>
+<path class="d-grid" d="M484.0,204 V212"/>
+<path class="d-grid" d="M549.3,204 V212"/>
+<path class="d-grid" d="M614.7,204 V212"/>
+<path class="d-grid" d="M680.0,204 V212"/>
+<path class="d-grid" d="M745.3,204 V212"/>
+<circle class="d-fill g4" cx="708.0" cy="208" r="6"/>
+<text class="d-t" x="708.0" y="184" text-anchor="middle">v6.8</text>
+<text class="d-m" x="708.0" y="230" text-anchor="middle">25</text>
+<rect class="d-box g2" x="412" y="246" width="56" height="74" rx="4"/>
+<text class="d-t" x="440" y="288" text-anchor="middle">Sep</text>
+<rect class="d-box" x="468" y="246" width="312" height="74" rx="4"/>
+<rect class="d-soft g3" x="732.0" y="280" width="26.7" height="24" rx="3"/>
+<text class="d-s" x="744.4" y="268" text-anchor="middle">Q3 close</text>
+<path class="d-axis" d="M484,292 H764"/>
+<path class="d-grid" d="M484.0,288 V296"/>
+<path class="d-grid" d="M549.3,288 V296"/>
+<path class="d-grid" d="M614.7,288 V296"/>
+<path class="d-grid" d="M680.0,288 V296"/>
+<path class="d-grid" d="M745.3,288 V296"/>
+<circle class="d-fill g0" cx="680.0" cy="292" r="8"/>
+<text class="d-t" x="680.0" y="268" text-anchor="middle">v7.0</text>
+<text class="d-m" x="680.0" y="314" text-anchor="middle">22</text>
+<rect class="d-box g5" x="412" y="330" width="56" height="74" rx="4"/>
+<text class="d-t" x="440" y="372" text-anchor="middle">Oct</text>
+<rect class="d-box" x="468" y="330" width="312" height="74" rx="4"/>
+<path class="d-axis" d="M484,376 H764"/>
+<path class="d-grid" d="M484.0,372 V380"/>
+<path class="d-grid" d="M549.3,372 V380"/>
+<path class="d-grid" d="M614.7,372 V380"/>
+<path class="d-grid" d="M680.0,372 V380"/>
+<path class="d-grid" d="M745.3,372 V380"/>
+<circle class="d-fill g4" cx="661.3" cy="376" r="6"/>
+<text class="d-t" x="661.3" y="352" text-anchor="middle">v7.1</text>
+<text class="d-m" x="661.3" y="398" text-anchor="middle">20</text>
+<rect class="d-box g3" x="412" y="414" width="56" height="74" rx="4"/>
+<text class="d-t" x="440" y="456" text-anchor="middle">Nov</text>
+<rect class="d-box" x="468" y="414" width="312" height="74" rx="4"/>
+<rect class="d-soft g3" x="657.3" y="448" width="101.3" height="24" rx="3"/>
+<text class="d-s" x="708.0" y="436" text-anchor="middle">BFCM freeze</text>
+<path class="d-axis" d="M484,460 H764"/>
+<path class="d-grid" d="M484.0,456 V464"/>
+<path class="d-grid" d="M549.3,456 V464"/>
+<path class="d-grid" d="M614.7,456 V464"/>
+<path class="d-grid" d="M680.0,456 V464"/>
+<path class="d-grid" d="M745.3,456 V464"/>
+<circle class="d-fill g4" cx="633.3" cy="460" r="6"/>
+<text class="d-t" x="633.3" y="436" text-anchor="middle">v7.2</text>
+<text class="d-m" x="633.3" y="482" text-anchor="middle">17</text>
+<rect class="d-box g0" x="412" y="498" width="56" height="74" rx="4"/>
+<text class="d-t" x="440" y="540" text-anchor="middle">Dec</text>
+<rect class="d-box" x="468" y="498" width="312" height="74" rx="4"/>
+<rect class="d-soft g3" x="638.7" y="532" width="129.3" height="24" rx="3"/>
+<text class="d-s" x="703.3" y="520" text-anchor="middle">holiday freeze</text>
+<path class="d-axis" d="M484,544 H764"/>
+<path class="d-grid" d="M484.0,540 V548"/>
+<path class="d-grid" d="M549.3,540 V548"/>
+<path class="d-grid" d="M614.7,540 V548"/>
+<path class="d-grid" d="M680.0,540 V548"/>
+<path class="d-grid" d="M745.3,540 V548"/>
+<circle class="d-fill g4" cx="614.7" cy="544" r="6"/>
+<text class="d-t" x="614.7" y="520" text-anchor="middle">v7.3</text>
+<text class="d-m" x="614.7" y="566" text-anchor="middle">15</text>
+<text class="d-k" x="20" y="609">KEY</text>
+<circle class="d-fill g4" cx="83" cy="604" r="6"/><text class="d-s" x="96" y="609">release (day of month below)</text>
+<circle class="d-fill g0" cx="294" cy="604" r="8"/><text class="d-s" x="308" y="609">major, API change</text>
+<rect class="d-soft g3" x="436" y="596" width="26" height="16" rx="3"/><text class="d-s" x="470" y="609">code freeze, hotfix only</text>
+</svg>

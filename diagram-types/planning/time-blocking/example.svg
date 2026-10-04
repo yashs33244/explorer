@@ -1,0 +1,132 @@
+<svg class="hd" viewBox="0 0 800 610" role="img" aria-label="Time blocking calendar for a backend engineer on the payments-platform team: a week from 09:00 to 18:00 in half-hour rows, with daily standup, protected deep-work blocks on the ledger service, code review slots, meetings and on-call shifts covering the weekend" xmlns="http://www.w3.org/2000/svg">
+<rect class="d-lanehead" x="34" y="22" width="732" height="38"/>
+<text class="d-t" x="48" y="46">Priya, payments-platform: Sprint 41, week 1 (5 to 11 Oct)</text>
+<image class="d-logo" data-logo="calendar.google.com" data-name="Google Calendar" x="736" y="29" width="24" height="24"/>
+<text class="d-s" x="726" y="45" text-anchor="end">rule: 2h focus daily</text>
+<rect class="d-lanehead" x="34" y="76" width="60" height="30"/>
+<text class="d-k" x="64.0" y="95" text-anchor="middle">time</text>
+<rect class="d-lanehead" x="94" y="76" width="96" height="30"/>
+<text class="d-t" x="142.0" y="96" text-anchor="middle">Mon 5</text>
+<rect class="d-lanehead" x="190" y="76" width="96" height="30"/>
+<text class="d-t" x="238.0" y="96" text-anchor="middle">Tue 6</text>
+<rect class="d-lanehead" x="286" y="76" width="96" height="30"/>
+<text class="d-t" x="334.0" y="96" text-anchor="middle">Wed 7</text>
+<rect class="d-lanehead" x="382" y="76" width="96" height="30"/>
+<text class="d-t" x="430.0" y="96" text-anchor="middle">Thu 8</text>
+<rect class="d-lanehead" x="478" y="76" width="96" height="30"/>
+<text class="d-t" x="526.0" y="96" text-anchor="middle">Fri 9</text>
+<rect class="d-lanehead" x="574" y="76" width="96" height="30"/>
+<text class="d-t" x="622.0" y="96" text-anchor="middle">Sat 10</text>
+<rect class="d-lanehead" x="670" y="76" width="96" height="30"/>
+<text class="d-t" x="718.0" y="96" text-anchor="middle">Sun 11</text>
+<rect class="d-lane" x="34" y="106" width="732" height="25"/>
+<text class="d-s" x="86" y="123" text-anchor="end">09:00</text>
+<rect class="d-lane alt" x="34" y="131" width="732" height="25"/>
+<rect class="d-lane" x="34" y="156" width="732" height="25"/>
+<text class="d-s" x="86" y="173" text-anchor="end">10:00</text>
+<rect class="d-lane alt" x="34" y="181" width="732" height="25"/>
+<rect class="d-lane" x="34" y="206" width="732" height="25"/>
+<text class="d-s" x="86" y="223" text-anchor="end">11:00</text>
+<rect class="d-lane alt" x="34" y="231" width="732" height="25"/>
+<rect class="d-lane" x="34" y="256" width="732" height="25"/>
+<text class="d-s" x="86" y="273" text-anchor="end">12:00</text>
+<rect class="d-lane alt" x="34" y="281" width="732" height="25"/>
+<rect class="d-lane" x="34" y="306" width="732" height="25"/>
+<text class="d-s" x="86" y="323" text-anchor="end">13:00</text>
+<rect class="d-lane alt" x="34" y="331" width="732" height="25"/>
+<rect class="d-lane" x="34" y="356" width="732" height="25"/>
+<text class="d-s" x="86" y="373" text-anchor="end">14:00</text>
+<rect class="d-lane alt" x="34" y="381" width="732" height="25"/>
+<rect class="d-lane" x="34" y="406" width="732" height="25"/>
+<text class="d-s" x="86" y="423" text-anchor="end">15:00</text>
+<rect class="d-lane alt" x="34" y="431" width="732" height="25"/>
+<rect class="d-lane" x="34" y="456" width="732" height="25"/>
+<text class="d-s" x="86" y="473" text-anchor="end">16:00</text>
+<rect class="d-lane alt" x="34" y="481" width="732" height="25"/>
+<rect class="d-lane" x="34" y="506" width="732" height="25"/>
+<text class="d-s" x="86" y="523" text-anchor="end">17:00</text>
+<rect class="d-lane alt" x="34" y="531" width="732" height="25"/>
+<path class="d-grid" d="M94,106 V556"/>
+<path class="d-grid" d="M190,106 V556"/>
+<path class="d-grid" d="M286,106 V556"/>
+<path class="d-grid" d="M382,106 V556"/>
+<path class="d-grid" d="M478,106 V556"/>
+<path class="d-grid" d="M574,106 V556"/>
+<path class="d-grid" d="M670,106 V556"/>
+<path class="d-grid" d="M766,106 V556"/>
+<rect class="d-fill g4" x="97" y="108" width="90" height="21"/>
+<text class="d-tw" x="104" y="123">Triage alerts</text>
+<rect class="d-fill g2" x="97" y="133" width="90" height="21"/>
+<text class="d-tw" x="104" y="148">Standup</text>
+<rect class="d-fill g2" x="97" y="158" width="90" height="71"/>
+<text class="d-tw" x="104" y="173">S41 planning</text>
+<text class="d-tw" x="104" y="189">Linear board</text>
+<rect class="d-fill g1" x="97" y="308" width="90" height="146"/>
+<text class="d-tw" x="104" y="323">Deep work</text>
+<text class="d-tw" x="104" y="339">ledger-svc</text>
+<rect class="d-fill g3" x="97" y="458" width="90" height="46"/>
+<text class="d-tw" x="104" y="473">Code review</text>
+<text class="d-tw" x="104" y="489">2 PRs</text>
+<rect class="d-fill g2" x="193" y="133" width="90" height="21"/>
+<text class="d-tw" x="200" y="148">Standup</text>
+<rect class="d-fill g1" x="193" y="158" width="90" height="96"/>
+<text class="d-tw" x="200" y="173">Deep work</text>
+<text class="d-tw" x="200" y="189">idempotency</text>
+<rect class="d-fill g3" x="193" y="358" width="90" height="46"/>
+<text class="d-tw" x="200" y="373">Review #4812</text>
+<rect class="d-fill g1" x="193" y="408" width="90" height="121"/>
+<text class="d-tw" x="200" y="423">Deep work</text>
+<text class="d-tw" x="200" y="439">write tests</text>
+<rect class="d-fill g2" x="289" y="133" width="90" height="21"/>
+<text class="d-tw" x="296" y="148">Standup</text>
+<rect class="d-fill g5" x="289" y="158" width="90" height="46"/>
+<text class="d-tw" x="296" y="173">RFC review</text>
+<rect class="d-fill g3" x="289" y="208" width="90" height="46"/>
+<text class="d-tw" x="296" y="223">Code review</text>
+<rect class="d-fill g5" x="289" y="308" width="90" height="46"/>
+<text class="d-tw" x="296" y="323">1:1 w/ lead</text>
+<rect class="d-fill g1" x="289" y="358" width="90" height="146"/>
+<text class="d-tw" x="296" y="373">Deep work</text>
+<text class="d-tw" x="296" y="389">Kafka retries</text>
+<rect class="d-fill g2" x="385" y="133" width="90" height="21"/>
+<text class="d-tw" x="392" y="148">Standup</text>
+<rect class="d-fill g1" x="385" y="158" width="90" height="121"/>
+<text class="d-tw" x="392" y="173">Deep work</text>
+<text class="d-tw" x="392" y="189">PG migration</text>
+<rect class="d-fill g2" x="385" y="358" width="90" height="46"/>
+<text class="d-tw" x="392" y="373">Deploy v4.12</text>
+<text class="d-tw" x="392" y="389">canary 5%</text>
+<rect class="d-fill g3" x="385" y="408" width="90" height="46"/>
+<text class="d-tw" x="392" y="423">Code review</text>
+<rect class="d-fill g5" x="385" y="458" width="90" height="46"/>
+<text class="d-tw" x="392" y="473">Postmortem</text>
+<rect class="d-fill g2" x="481" y="133" width="90" height="21"/>
+<text class="d-tw" x="488" y="148">Standup</text>
+<rect class="d-fill g1" x="481" y="158" width="90" height="96"/>
+<text class="d-tw" x="488" y="173">Deep work</text>
+<text class="d-tw" x="488" y="189">flag cleanup</text>
+<rect class="d-fill g3" x="481" y="308" width="90" height="46"/>
+<text class="d-tw" x="488" y="323">Code review</text>
+<rect class="d-fill g2" x="481" y="358" width="90" height="46"/>
+<text class="d-tw" x="488" y="373">Demo prep</text>
+<rect class="d-fill g4" x="481" y="408" width="90" height="46"/>
+<text class="d-tw" x="488" y="423">Alert review</text>
+<rect class="d-fill g5" x="481" y="458" width="90" height="46"/>
+<text class="d-tw" x="488" y="473">Write ADR-31</text>
+<rect class="d-fill g4" x="577" y="108" width="90" height="446"/>
+<text class="d-tw" x="584" y="123">On-call</text>
+<text class="d-tw" x="584" y="139">primary pager</text>
+<rect class="d-fill g4" x="673" y="108" width="90" height="446"/>
+<text class="d-tw" x="680" y="123">On-call</text>
+<text class="d-tw" x="680" y="139">primary pager</text>
+<rect class="d-fill g1" x="34" y="576" width="14" height="14"/>
+<text class="d-s" x="54" y="587">Deep work</text>
+<rect class="d-fill g2" x="136" y="576" width="14" height="14"/>
+<text class="d-s" x="156" y="587">Meeting, ceremony</text>
+<rect class="d-fill g3" x="281" y="576" width="14" height="14"/>
+<text class="d-s" x="301" y="587">Code review</text>
+<rect class="d-fill g4" x="392" y="576" width="14" height="14"/>
+<text class="d-s" x="412" y="587">On-call, interrupts</text>
+<rect class="d-fill g5" x="531" y="576" width="14" height="14"/>
+<text class="d-s" x="551" y="587">Design, 1:1, docs</text>
+</svg>

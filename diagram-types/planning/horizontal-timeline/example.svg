@@ -1,0 +1,59 @@
+<svg class="hd" viewBox="0 0 800 484" role="img" aria-label="Horizontal timeline of Kubernetes major releases from v1.0 in 2015 to v1.33 in 2025: Deployments beta, RBAC GA, CRDs GA, dockershim deprecated then removed, PodSecurityPolicy removed, sidecar containers GA" xmlns="http://www.w3.org/2000/svg">
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="20" y="22" width="28" height="28"/>
+<text class="d-k" x="58" y="32">kubernetes/kubernetes</text>
+<text class="d-h" x="58" y="52">Major releases, 2015 to 2025</text>
+<text class="d-s" x="780" y="52" text-anchor="end">spaced by release, not to scale</text>
+<path class="d-box g0" d="M20,250 H744 V230 L786,270 L744,310 V290 H20 Z"/>
+<path class="d-edge" d="M56,150 V250"/>
+<circle class="d-fill g0" cx="56" cy="250" r="5"/>
+<rect class="d-box g4" x="32" y="80" width="156" height="70" rx="10"/>
+<text class="d-m" x="44" y="100">v1.0, Jul 2015</text>
+<text class="d-t" x="44" y="121">First GA release</text>
+<text class="d-s" x="44" y="138">donated to CNCF</text>
+<path class="d-edge" d="M142,290 V390"/>
+<circle class="d-fill g0" cx="142" cy="290" r="5"/>
+<rect class="d-box g4" x="118" y="390" width="156" height="70" rx="10"/>
+<text class="d-m" x="130" y="410">v1.2, Mar 2016</text>
+<text class="d-t" x="130" y="431">Deployments beta</text>
+<text class="d-s" x="130" y="448">rolling updates</text>
+<path class="d-edge" d="M228,150 V250"/>
+<circle class="d-fill g0" cx="228" cy="250" r="5"/>
+<rect class="d-box g4" x="204" y="80" width="156" height="70" rx="10"/>
+<text class="d-m" x="216" y="100">v1.8, Sep 2017</text>
+<text class="d-t" x="216" y="121">RBAC goes GA</text>
+<text class="d-s" x="216" y="138">least-privilege auth</text>
+<path class="d-edge" d="M314,290 V390"/>
+<circle class="d-fill g0" cx="314" cy="290" r="5"/>
+<rect class="d-box g1" x="290" y="390" width="156" height="70" rx="10"/>
+<text class="d-m" x="302" y="410">v1.16, Sep 2019</text>
+<text class="d-t" x="302" y="431">CRDs go GA</text>
+<text class="d-s" x="302" y="448">operators everywhere</text>
+<path class="d-edge" d="M400,150 V250"/>
+<circle class="d-fill g0" cx="400" cy="250" r="5"/>
+<rect class="d-box g3" x="376" y="80" width="156" height="70" rx="10"/>
+<text class="d-m" x="388" y="100">v1.20, Dec 2020</text>
+<text class="d-t" x="388" y="121">Shim deprecated</text>
+<text class="d-s" x="388" y="138">dockershim, use CRI</text>
+<path class="d-edge" d="M486,290 V390"/>
+<circle class="d-fill g0" cx="486" cy="290" r="5"/>
+<rect class="d-box g3" x="462" y="390" width="156" height="70" rx="10"/>
+<text class="d-m" x="474" y="410">v1.24, May 2022</text>
+<text class="d-t" x="474" y="431">Dockershim removed</text>
+<text class="d-s" x="474" y="448">containerd, CRI-O</text>
+<path class="d-edge" d="M572,150 V250"/>
+<circle class="d-fill g0" cx="572" cy="250" r="5"/>
+<rect class="d-box g3" x="548" y="80" width="156" height="70" rx="10"/>
+<text class="d-m" x="560" y="100">v1.25, Aug 2022</text>
+<text class="d-t" x="560" y="121">PSP removed</text>
+<text class="d-s" x="560" y="138">Pod Security admission</text>
+<path class="d-edge" d="M658,290 V390"/>
+<circle class="d-fill g0" cx="658" cy="290" r="5"/>
+<rect class="d-box g5" x="634" y="390" width="156" height="70" rx="10"/>
+<text class="d-m" x="646" y="410">v1.33, Apr 2025</text>
+<text class="d-t" x="646" y="431">Sidecars GA</text>
+<text class="d-s" x="646" y="448">native init sidecars</text>
+<text class="d-t" x="99" y="275" text-anchor="middle">core APIs</text>
+<text class="d-t" x="271" y="275" text-anchor="middle">extensibility</text>
+<text class="d-t" x="529" y="275" text-anchor="middle">runtime cleanup</text>
+<text class="d-t" x="701" y="275" text-anchor="middle">maturity</text>
+</svg>

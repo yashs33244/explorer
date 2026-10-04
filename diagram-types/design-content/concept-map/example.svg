@@ -1,0 +1,79 @@
+<svg class="hd" viewBox="0 0 800 568" role="img" aria-label="Concept map of TLS 1.3: the handshake verifies an X.509 certificate, exchanges an ECDHE key share and derives session keys, which are keyed into the cipher suite the record layer uses to encrypt with AES-GCM and authenticate with an AEAD tag" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="concept-map-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">HOW HTTPS STAYS PRIVATE</text>
+<text class="d-h" x="24" y="56">TLS 1.3 in propositions</text>
+
+<!-- root and branches -->
+<rect class="d-box g0" x="290" y="72" width="220" height="56" rx="14"/>
+<text class="d-t" x="400" y="97" text-anchor="middle">TLS 1.3</text>
+<text class="d-s" x="400" y="115" text-anchor="middle">secures HTTPS traffic</text>
+<path class="d-edge" d="M400,128 V160 H200 V194" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M400,160 H600 V194" marker-end="url(#concept-map-d1-ah)"/>
+<text class="d-lab" x="300" y="164" text-anchor="middle">starts with</text>
+<text class="d-lab" x="500" y="164" text-anchor="middle">then runs</text>
+
+<rect class="d-box g2" x="90" y="196" width="220" height="56" rx="14"/>
+<text class="d-t" x="200" y="221" text-anchor="middle">Handshake</text>
+<text class="d-s" x="200" y="239" text-anchor="middle">1 round trip</text>
+<rect class="d-box g2" x="490" y="196" width="220" height="56" rx="14"/>
+<text class="d-t" x="600" y="221" text-anchor="middle">Record layer</text>
+<text class="d-s" x="600" y="239" text-anchor="middle">every app byte</text>
+
+<!-- handshake children -->
+<path class="d-edge" d="M140,252 L88,350" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M200,252 L188,348" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M260,252 L294,372" marker-end="url(#concept-map-d1-ah)"/>
+<text class="d-lab" x="110" y="306" text-anchor="middle">verifies</text>
+<text class="d-lab" x="193" y="300" text-anchor="middle">exchanges</text>
+<text class="d-lab" x="281" y="318" text-anchor="middle">derives</text>
+<circle class="d-box g1" cx="84" cy="400" r="46"/>
+<text class="d-t" x="84" y="398" text-anchor="middle">X.509</text>
+<text class="d-s" x="84" y="415" text-anchor="middle">certificate</text>
+<circle class="d-box g1" cx="186" cy="400" r="46"/>
+<text class="d-t" x="186" y="398" text-anchor="middle">ECDHE</text>
+<text class="d-s" x="186" y="415" text-anchor="middle">key share</text>
+<rect class="d-box g3" x="236" y="376" width="120" height="48" rx="24"/>
+<text class="d-t" x="296" y="405" text-anchor="middle">Session keys</text>
+
+<!-- record layer children -->
+<path class="d-edge" d="M540,252 L506,372" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M600,252 L614,348" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M660,252 L714,350" marker-end="url(#concept-map-d1-ah)"/>
+<text class="d-lab" x="519" y="318" text-anchor="middle">is set by</text>
+<text class="d-lab" x="606" y="290" text-anchor="middle">encrypts with</text>
+<text class="d-lab" x="700" y="320" text-anchor="middle">checks</text>
+<rect class="d-box g3" x="444" y="376" width="120" height="48" rx="24"/>
+<text class="d-t" x="504" y="405" text-anchor="middle">Cipher suite</text>
+<circle class="d-box g1" cx="618" cy="400" r="46"/>
+<text class="d-t" x="618" y="398" text-anchor="middle">AES-GCM</text>
+<text class="d-s" x="618" y="415" text-anchor="middle">cipher</text>
+<circle class="d-box g1" cx="720" cy="400" r="46"/>
+<text class="d-t" x="720" y="398" text-anchor="middle">AEAD tag</text>
+<text class="d-s" x="720" y="415" text-anchor="middle">integrity</text>
+
+<!-- cross link -->
+<path class="d-edge dash acc" d="M356,400 H442" marker-end="url(#concept-map-d1-ah)"/>
+<text class="d-lab" x="400" y="390" text-anchor="middle">keyed into</text>
+
+<!-- deeper concepts -->
+<path class="d-edge" d="M84,446 V488" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M186,446 V488" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M296,424 V488" marker-end="url(#concept-map-d1-ah)"/>
+<path class="d-edge" d="M504,424 V488" marker-end="url(#concept-map-d1-ah)"/>
+<text class="d-lab" x="84" y="472" text-anchor="middle">signed by</text>
+<text class="d-lab" x="186" y="472" text-anchor="middle">runs on</text>
+<text class="d-lab" x="296" y="460" text-anchor="middle">via</text>
+<text class="d-lab" x="504" y="460" text-anchor="middle">e.g.</text>
+<rect class="d-box g4" x="39" y="490" width="90" height="36" rx="10"/>
+<text class="d-t" x="84" y="513" text-anchor="middle">CA chain</text>
+<rect class="d-box g4" x="141" y="490" width="90" height="36" rx="10"/>
+<text class="d-t" x="186" y="513" text-anchor="middle">X25519</text>
+<rect class="d-box g4" x="251" y="490" width="90" height="36" rx="10"/>
+<text class="d-t" x="296" y="513" text-anchor="middle">HKDF</text>
+<rect class="d-tag" x="414" y="494" width="180" height="28" rx="14"/>
+<text class="d-m" x="504" y="513" text-anchor="middle">TLS_AES_128_GCM_SHA256</text>
+
+<rect class="d-note" x="616" y="478" width="160" height="66" rx="4"/>
+<text class="d-tn" x="628" y="502">Read each arrow</text>
+<text class="d-tn" x="628" y="522">as one sentence</text>
+</svg>

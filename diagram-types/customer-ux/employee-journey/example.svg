@@ -1,0 +1,113 @@
+<svg class="hd" viewBox="0 0 800 644" role="img" aria-label="Employee journey map of a new backend engineer from day one to their first on-call shift in week eight, in four phases, each with the person who guides it, what the engineer does, the tools used, a mood curve, and the main pain with its fix" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="employee-journey-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="26">Employee journey map</text>
+<text class="d-h" x="20" y="48">New backend engineer: laptop to first on-call</text>
+<text class="d-m" x="780" y="48" text-anchor="end">team: payments-platform</text>
+<rect class="d-box" x="20" y="64" width="172" height="100" rx="10"/>
+<circle class="d-soft g1" cx="56" cy="114" r="24"/>
+<g transform="translate(36,94)"><circle class="d-line" cx="20" cy="13" r="7"/><path class="d-line" d="M8,36 C8,26 32,26 32,36"/></g>
+<text class="d-k" x="92" y="96">Guide</text>
+<text class="d-t" x="92" y="118">Maya</text>
+<text class="d-s" x="92" y="138">Buddy, platform</text>
+<path class="d-edge dash" d="M106,166 V184" marker-end="url(#employee-journey-d1-ah)"/>
+<rect class="d-box" x="20" y="188" width="172" height="228" rx="10"/>
+<rect class="d-box g1" x="20" y="188" width="172" height="52" rx="10"/>
+<text class="d-k" x="32" y="208">Day 1</text>
+<text class="d-t" x="32" y="229">Get set up</text>
+<path class="d-edge" d="M194,214 H214" marker-end="url(#employee-journey-d1-ah)"/>
+<text class="d-k" x="32" y="264">Doing</text>
+<text class="d-s" x="32" y="286">Laptop, SSO, VPN</text>
+<text class="d-s" x="32" y="307">Clone the monorepo</text>
+<text class="d-m" x="32" y="328">make dev runs green</text>
+<text class="d-k" x="32" y="362">Tools</text>
+<image class="d-logo" data-logo="okta.com" data-name="Okta" x="32" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="66" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="docker.com" data-name="Docker" x="100" y="374" width="26" height="26"/>
+<rect class="d-box" x="216" y="64" width="172" height="100" rx="10"/>
+<circle class="d-soft g2" cx="252" cy="114" r="24"/>
+<g transform="translate(232,94)"><circle class="d-line" cx="20" cy="13" r="7"/><path class="d-line" d="M8,36 C8,26 32,26 32,36"/></g>
+<text class="d-k" x="288" y="96">Guide</text>
+<text class="d-t" x="288" y="118">Ravi</text>
+<text class="d-s" x="288" y="138">PR reviewer</text>
+<path class="d-edge dash" d="M302,166 V184" marker-end="url(#employee-journey-d1-ah)"/>
+<rect class="d-box" x="216" y="188" width="172" height="228" rx="10"/>
+<rect class="d-box g2" x="216" y="188" width="172" height="52" rx="10"/>
+<text class="d-k" x="228" y="208">Week 1</text>
+<text class="d-t" x="228" y="229">First PR</text>
+<path class="d-edge" d="M390,214 H410" marker-end="url(#employee-journey-d1-ah)"/>
+<text class="d-k" x="228" y="264">Doing</text>
+<text class="d-m" x="228" y="286">good-first-issue</text>
+<text class="d-s" x="228" y="307">Pass CI and review</text>
+<text class="d-s" x="228" y="328">Deploy to staging</text>
+<text class="d-k" x="228" y="362">Tools</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="228" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="circleci.com" data-name="CircleCI" x="262" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="296" y="374" width="26" height="26"/>
+<rect class="d-box" x="412" y="64" width="172" height="100" rx="10"/>
+<circle class="d-soft g3" cx="448" cy="114" r="24"/>
+<g transform="translate(428,94)"><circle class="d-line" cx="20" cy="13" r="7"/><path class="d-line" d="M8,36 C8,26 32,26 32,36"/></g>
+<text class="d-k" x="484" y="96">Guide</text>
+<text class="d-t" x="484" y="118">Lena</text>
+<text class="d-s" x="484" y="138">Tech lead</text>
+<path class="d-edge dash" d="M498,166 V184" marker-end="url(#employee-journey-d1-ah)"/>
+<rect class="d-box" x="412" y="188" width="172" height="228" rx="10"/>
+<rect class="d-box g3" x="412" y="188" width="172" height="52" rx="10"/>
+<text class="d-k" x="424" y="208">Weeks 2 to 6</text>
+<text class="d-t" x="424" y="229">Own a feature</text>
+<path class="d-edge" d="M586,214 H606" marker-end="url(#employee-journey-d1-ah)"/>
+<text class="d-k" x="424" y="264">Doing</text>
+<text class="d-s" x="424" y="286">Ship rate-limit change</text>
+<text class="d-s" x="424" y="307">Write a design doc</text>
+<text class="d-s" x="424" y="328">Add SLO dashboards</text>
+<text class="d-k" x="424" y="362">Tools</text>
+<image class="d-logo" data-logo="grafana.com" data-name="Grafana" x="424" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="458" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="notion.so" data-name="Notion" x="492" y="374" width="26" height="26"/>
+<rect class="d-box" x="608" y="64" width="172" height="100" rx="10"/>
+<circle class="d-soft g4" cx="644" cy="114" r="24"/>
+<g transform="translate(624,94)"><circle class="d-line" cx="20" cy="13" r="7"/><path class="d-line" d="M8,36 C8,26 32,26 32,36"/></g>
+<text class="d-k" x="680" y="96">Guide</text>
+<text class="d-t" x="680" y="118">Omar</text>
+<text class="d-s" x="680" y="138">On-call lead</text>
+<path class="d-edge dash" d="M694,166 V184" marker-end="url(#employee-journey-d1-ah)"/>
+<rect class="d-box" x="608" y="188" width="172" height="228" rx="10"/>
+<rect class="d-box g4" x="608" y="188" width="172" height="52" rx="10"/>
+<text class="d-k" x="620" y="208">Week 8</text>
+<text class="d-t" x="620" y="229">First on-call</text>
+<text class="d-k" x="620" y="264">Doing</text>
+<text class="d-s" x="620" y="286">Shadow one rotation</text>
+<text class="d-s" x="620" y="307">Run incident drill</text>
+<text class="d-s" x="620" y="328">Primary, paged once</text>
+<text class="d-k" x="620" y="362">Tools</text>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="620" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="slack.com" data-name="Slack" x="654" y="374" width="26" height="26"/>
+<image class="d-logo" data-logo="sentry.io" data-name="Sentry" x="688" y="374" width="26" height="26"/>
+<rect class="d-lane" x="20" y="432" width="760" height="100" rx="10"/>
+<text class="d-k" x="32" y="452">Mood</text>
+<path class="d-grid" d="M32,478 H768"/>
+<path class="d-edge acc thick" d="M106,500 C204.0,500 204.0,468 302,468 C400.0,468 400.0,480 498,480 C596.0,480 596.0,500 694,500"/>
+<circle class="d-fill g3" cx="106" cy="500" r="9"/>
+<text class="d-lab" x="106" y="524" text-anchor="middle">Waiting on access</text>
+<circle class="d-fill g1" cx="302" cy="468" r="9"/>
+<text class="d-lab" x="302" y="452" text-anchor="middle">First merge</text>
+<circle class="d-fill g2" cx="498" cy="480" r="9"/>
+<text class="d-lab" x="498" y="504" text-anchor="middle">Context heavy</text>
+<circle class="d-fill g3" cx="694" cy="500" r="9"/>
+<text class="d-lab" x="694" y="524" text-anchor="middle">Paged at 3 am</text>
+<rect class="d-note g4" x="20" y="548" width="172" height="76" rx="4"/>
+<text class="d-k" x="32" y="568">Pain</text>
+<text class="d-tn" x="32" y="589">Access took 2 days</text>
+<text class="d-s" x="32" y="610">fix: pre-provision</text>
+<rect class="d-note g4" x="216" y="548" width="172" height="76" rx="4"/>
+<text class="d-k" x="228" y="568">Pain</text>
+<text class="d-tn" x="228" y="589">Flaky e2e suite</text>
+<text class="d-s" x="228" y="610">fix: quarantine list</text>
+<rect class="d-note g4" x="412" y="548" width="172" height="76" rx="4"/>
+<text class="d-k" x="424" y="568">Pain</text>
+<text class="d-tn" x="424" y="589">Tribal knowledge</text>
+<text class="d-s" x="424" y="610">fix: service READMEs</text>
+<rect class="d-note g4" x="608" y="548" width="172" height="76" rx="4"/>
+<text class="d-k" x="620" y="568">Pain</text>
+<text class="d-tn" x="620" y="589">Stale runbooks</text>
+<text class="d-s" x="620" y="610">fix: drill each quarter</text>
+</svg>

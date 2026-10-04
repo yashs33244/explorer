@@ -1,0 +1,75 @@
+<svg class="hd" viewBox="0 0 800 580" role="img" aria-label="Culture design canvas for an engineering org: discover, define, design and embed phases fill seven blocks around a shared purpose, covering blameless postmortems and code review norms" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="culture-design-process-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box" x="20" y="20" width="176" height="64" rx="10"/>
+<circle class="d-badge" cx="44" cy="52" r="11"/><text class="d-bt" x="44" y="56" text-anchor="middle">1</text>
+<text class="d-t" x="64" y="47">Discover</text>
+<text class="d-s" x="64" y="66">survey, incident data</text>
+<path class="d-edge acc" d="M198,52 H212" marker-end="url(#culture-design-process-d1-ah)"/>
+<rect class="d-box" x="214" y="20" width="176" height="64" rx="10"/>
+<circle class="d-badge" cx="238" cy="52" r="11"/><text class="d-bt" x="238" y="56" text-anchor="middle">2</text>
+<text class="d-t" x="258" y="47">Define</text>
+<text class="d-s" x="258" y="66">purpose, values</text>
+<path class="d-edge acc" d="M392,52 H406" marker-end="url(#culture-design-process-d1-ah)"/>
+<rect class="d-box" x="408" y="20" width="176" height="64" rx="10"/>
+<circle class="d-badge" cx="432" cy="52" r="11"/><text class="d-bt" x="432" y="56" text-anchor="middle">3</text>
+<text class="d-t" x="452" y="47">Design</text>
+<text class="d-s" x="452" y="66">rituals, norms</text>
+<path class="d-edge acc" d="M586,52 H600" marker-end="url(#culture-design-process-d1-ah)"/>
+<rect class="d-box" x="602" y="20" width="176" height="64" rx="10"/>
+<circle class="d-badge" cx="626" cy="52" r="11"/><text class="d-bt" x="626" y="56" text-anchor="middle">4</text>
+<text class="d-t" x="646" y="47">Embed</text>
+<text class="d-s" x="646" y="66">CI checks, onboarding</text>
+<text class="d-s" x="400" y="108" text-anchor="middle">badge in each block = the phase that fills it</text>
+<rect class="d-box g1" x="20" y="120" width="248" height="140" rx="8"/>
+<circle class="d-badge" cx="47" cy="150" r="11"/><text class="d-bt" x="47" y="154" text-anchor="middle">2</text>
+<text class="d-k" x="66" y="154">Values</text>
+<text class="d-t" x="36" y="178">Blameless by default</text>
+<text class="d-s" x="36" y="200">fix systems, not people</text>
+<text class="d-s" x="36" y="219">name the gap, not the person</text>
+<rect class="d-box g2" x="276" y="120" width="248" height="140" rx="8"/>
+<circle class="d-badge" cx="303" cy="150" r="11"/><text class="d-bt" x="303" y="154" text-anchor="middle">2</text>
+<text class="d-k" x="322" y="154">Priorities</text>
+<text class="d-t" x="292" y="178">Reliability over speed</text>
+<text class="d-s" x="292" y="200">error budget gates deploys</text>
+<text class="d-s" x="292" y="219">checkout SLO 99.9%</text>
+<rect class="d-box g3" x="532" y="120" width="248" height="140" rx="8"/>
+<circle class="d-badge" cx="559" cy="150" r="11"/><text class="d-bt" x="559" y="154" text-anchor="middle">3</text>
+<text class="d-k" x="578" y="154">Behaviors</text>
+<text class="d-t" x="548" y="178">Review within 1 day</text>
+<text class="d-s" x="548" y="200">tag nit: or blocking:</text>
+<text class="d-s" x="548" y="219">approve code, not author</text>
+<image class="d-logo" data-logo="github.com" data-name="github" x="710" y="133" width="22" height="22"/>
+<rect class="d-box g4" x="20" y="268" width="376" height="140" rx="8"/>
+<circle class="d-badge" cx="47" cy="298" r="11"/><text class="d-bt" x="47" y="302" text-anchor="middle">3</text>
+<text class="d-k" x="66" y="302">Rituals</text>
+<text class="d-t" x="36" y="326">Weekly incident review</text>
+<text class="d-s" x="36" y="348">Thu, 30 min, open invite</text>
+<text class="d-s" x="36" y="367">5 whys on every SEV1-2</text>
+<image class="d-logo" data-logo="pagerduty.com" data-name="pagerduty" x="266" y="281" width="22" height="22"/>
+<rect class="d-box g5" x="404" y="268" width="376" height="140" rx="8"/>
+<circle class="d-badge" cx="527" cy="298" r="11"/><text class="d-bt" x="527" y="302" text-anchor="middle">4</text>
+<text class="d-k" x="546" y="302">Feedback</text>
+<text class="d-t" x="516" y="326">Actions tracked to done</text>
+<text class="d-s" x="516" y="348">label pm-action, 30 day SLA</text>
+<text class="d-s" x="516" y="367">DORA report each month</text>
+<image class="d-logo" data-logo="atlassian.com" data-name="atlassian" x="710" y="281" width="22" height="22"/>
+<rect class="d-box g0" x="20" y="416" width="376" height="140" rx="8"/>
+<circle class="d-badge" cx="47" cy="446" r="11"/><text class="d-bt" x="47" y="450" text-anchor="middle">3</text>
+<text class="d-k" x="66" y="450">Decision making</text>
+<text class="d-t" x="36" y="474">RFC, then ADR</text>
+<text class="d-m" x="36" y="496">docs/adr/0042-*.md</text>
+<text class="d-s" x="36" y="515">signed off in arch sync</text>
+<rect class="d-box g3" x="404" y="416" width="376" height="140" rx="8"/>
+<circle class="d-badge" cx="487" cy="456" r="11"/><text class="d-bt" x="487" y="460" text-anchor="middle">4</text>
+<text class="d-k" x="506" y="460">Norms and rules</text>
+<text class="d-t" x="476" y="484">Enforced in CI</text>
+<text class="d-s" x="476" y="506">CODEOWNERS, 2 approvals</text>
+<text class="d-s" x="476" y="525">PR template links the RCA</text>
+<image class="d-logo" data-logo="github.com" data-name="github" x="710" y="429" width="22" height="22"/>
+<circle class="d-box" cx="400" cy="338" r="100"/>
+<text class="d-k" x="400" y="308" text-anchor="middle">Purpose</text>
+<text class="d-h" x="400" y="332" text-anchor="middle">Ship safely,</text>
+<text class="d-h" x="400" y="352" text-anchor="middle">learn in public</text>
+<text class="d-s" x="400" y="376" text-anchor="middle">120 engineers</text>
+<circle class="d-badge" cx="400" cy="402" r="11"/><text class="d-bt" x="400" y="406" text-anchor="middle">2</text>
+</svg>
