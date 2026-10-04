@@ -1,0 +1,80 @@
+<svg class="hd" viewBox="0 0 800 660" role="img" aria-label="Frayer model for idempotency: a definition, its characteristics, real examples such as Stripe idempotency keys and Postgres upserts, and non-examples such as a retried payment without a key" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="frayer-model-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-band g1" x="30" y="30" width="366" height="296" rx="14"/>
+<rect class="d-band g2" x="404" y="30" width="366" height="296" rx="14"/>
+<rect class="d-band g3" x="30" y="334" width="366" height="296" rx="14"/>
+<rect class="d-band g4" x="404" y="334" width="366" height="296" rx="14"/>
+<text class="d-k" x="50" y="58">What it is</text>
+<text class="d-h" x="50" y="80">Definition</text>
+<text class="d-t" x="50" y="112">Repeating a request has the</text>
+<text class="d-t" x="50" y="132">same effect as sending it once.</text>
+<rect class="d-box" x="50" y="150" width="326" height="56" rx="10"/>
+<text class="d-m" x="66" y="174">f(f(x)) = f(x)</text>
+<text class="d-s" x="66" y="194">retried 3 times, still 1 order</text>
+<rect class="d-tag" x="50" y="224" width="66" height="24" rx="12"/>
+<text class="d-s" x="83" y="240" text-anchor="middle">try 1</text>
+<rect class="d-tag" x="122" y="224" width="66" height="24" rx="12"/>
+<text class="d-s" x="155" y="240" text-anchor="middle">try 2</text>
+<rect class="d-tag" x="194" y="224" width="66" height="24" rx="12"/>
+<text class="d-s" x="227" y="240" text-anchor="middle">try 3</text>
+<path class="d-edge acc" d="M266,236 H296" marker-end="url(#frayer-model-d1-ah)"/>
+<rect class="d-tag acc" x="302" y="224" width="74" height="24" rx="12"/>
+<text class="d-s" x="339" y="240" text-anchor="middle">1 row</text>
+<text class="d-k" x="750" y="58" text-anchor="end">How to spot it</text>
+<text class="d-h" x="750" y="80" text-anchor="end">Characteristics</text>
+<circle class="d-fillacc" cx="430" cy="106" r="4"/>
+<text class="d-t" x="444" y="111">Client sends an Idempotency-Key</text>
+<circle class="d-fillacc" cx="430" cy="136" r="4"/>
+<text class="d-t" x="444" y="141">Server stores key and response</text>
+<circle class="d-fillacc" cx="430" cy="166" r="4"/>
+<text class="d-t" x="444" y="171">Retry replays the stored result</text>
+<circle class="d-fillacc" cx="430" cy="196" r="4"/>
+<text class="d-t" x="444" y="201">Keys expire after a TTL (24h)</text>
+<circle class="d-fillacc" cx="430" cy="226" r="4"/>
+<text class="d-t" x="444" y="231">Safe under at-least-once delivery</text>
+<text class="d-m" x="444" y="260">same key, new body: 422</text>
+<path class="d-box g0" d="M315,295 H485 A35,35 0 0 1 485,365 H315 A35,35 0 0 1 315,295 Z"/>
+<text class="d-k" x="400" y="317" text-anchor="middle">Concept</text>
+<text class="d-h" x="400" y="339" text-anchor="middle">Idempotency</text>
+<text class="d-s" x="400" y="356" text-anchor="middle">safe to retry</text>
+<text class="d-k" x="50" y="362">It is</text>
+<text class="d-h" x="50" y="384">Examples</text>
+<rect class="d-box" x="50" y="400" width="326" height="48" rx="10"/>
+<image class="d-logo" data-logo="stripe.com" data-name="Stripe" x="62" y="412" width="24" height="24"/>
+<text class="d-t" x="96" y="420">Stripe charges</text>
+<text class="d-m" x="96" y="438">Idempotency-Key: ord_42</text>
+<path class="d-lineacc" d="M348,424 L354,430 L364,418"/>
+<rect class="d-box" x="50" y="456" width="326" height="48" rx="10"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="62" y="468" width="24" height="24"/>
+<text class="d-t" x="96" y="476">Postgres upsert</text>
+<text class="d-m" x="96" y="494">ON CONFLICT DO NOTHING</text>
+<path class="d-lineacc" d="M348,480 L354,486 L364,474"/>
+<rect class="d-box" x="50" y="512" width="326" height="48" rx="10"/>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="62" y="524" width="24" height="24"/>
+<text class="d-t" x="96" y="532">Kafka producer</text>
+<text class="d-m" x="96" y="550">enable.idempotence=true</text>
+<path class="d-lineacc" d="M348,536 L354,542 L364,530"/>
+<rect class="d-box" x="50" y="568" width="326" height="48" rx="10"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="62" y="580" width="24" height="24"/>
+<text class="d-t" x="96" y="588">kubectl apply</text>
+<text class="d-m" x="96" y="606">converges to desired state</text>
+<path class="d-lineacc" d="M348,592 L354,598 L364,586"/>
+<text class="d-k" x="750" y="362" text-anchor="end">It is not</text>
+<text class="d-h" x="750" y="384" text-anchor="end">Non-examples</text>
+<rect class="d-box" x="424" y="400" width="326" height="48" rx="10"/>
+<text class="d-t" x="440" y="420">POST /payments retry</text>
+<text class="d-m" x="440" y="438">no key: double charge</text>
+<path class="d-lineacc" d="M718,418 L730,430 M730,418 L718,430"/>
+<rect class="d-box" x="424" y="456" width="326" height="48" rx="10"/>
+<text class="d-t" x="440" y="476">Stock decrement</text>
+<text class="d-m" x="440" y="494">SET qty = qty - 1</text>
+<path class="d-lineacc" d="M718,474 L730,486 M730,474 L718,486"/>
+<rect class="d-box" x="424" y="512" width="326" height="48" rx="10"/>
+<text class="d-t" x="440" y="532">Welcome email job</text>
+<text class="d-m" x="440" y="550">sends again on every retry</text>
+<path class="d-lineacc" d="M718,530 L730,542 M730,530 L718,542"/>
+<rect class="d-box" x="424" y="568" width="326" height="48" rx="10"/>
+<text class="d-t" x="440" y="588">Audit log append</text>
+<text class="d-m" x="440" y="606">no dedupe id: duplicate rows</text>
+<path class="d-lineacc" d="M718,586 L730,598 M730,586 L718,598"/>
+</svg>

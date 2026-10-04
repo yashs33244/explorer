@@ -1,0 +1,119 @@
+<svg class="hd" viewBox="0 0 800 668" role="img" aria-label="Geographic engineering organization: a CTO over four regional hubs in Bangalore, Berlin, Toronto and San Francisco, each with a site lead and the product and platform teams based there, plus the follow-the-sun on-call handoff between hubs" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="geographic-org-structure-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box" x="300" y="16" width="200" height="106" rx="12"/>
+<path class="d-box g4" d="M300,74 V28 Q300,16 312,16 H488 Q500,16 500,28 V74 Z"/>
+<circle class="d-fillpaper" cx="326" cy="45.0" r="17"/>
+<g transform="translate(312,31.0) scale(0.7)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="350" y="42.0">Lena Ortiz</text>
+<text class="d-s" x="350" y="59.0">CTO, global</text>
+<text class="d-t" x="400.0" y="96" text-anchor="middle">182 engineers</text>
+<text class="d-s" x="400.0" y="113" text-anchor="middle">4 hubs, 4 time zones</text>
+<path class="d-edge" d="M400,122 V146"/>
+<path class="d-edge" d="M100,170 V146 H700 V170 M300,146 V170 M500,146 V170"/>
+<rect class="d-box" x="20" y="170" width="160" height="110" rx="12"/>
+<path class="d-box g3" d="M20,228 V182 Q20,170 32,170 H168 Q180,170 180,182 V228 Z"/>
+<circle class="d-fillpaper" cx="46" cy="199.0" r="17"/>
+<g transform="translate(32,185.0) scale(0.7)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="70" y="196.0">Bangalore</text>
+<text class="d-s" x="70" y="213.0">IST, UTC+5:30</text>
+<text class="d-t" x="100.0" y="250" text-anchor="middle">Arjun Rao</text>
+<text class="d-s" x="100.0" y="267" text-anchor="middle">site lead, 64 eng</text>
+<path class="d-edge" d="M100,280 V300"/>
+<rect class="d-blob2" x="20" y="300" width="160" height="226" rx="14"/>
+<rect class="d-box g3" x="30" y="314" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="go.dev" data-name="Payments API" x="40" y="324" width="22" height="22"/>
+<text class="d-t" x="70" y="340">Payments API</text>
+<text class="d-s" x="40" y="362">Go, 22 eng</text>
+<rect class="d-box g3" x="30" y="382" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="flutter.dev" data-name="Mobile Apps" x="40" y="392" width="22" height="22"/>
+<text class="d-t" x="70" y="408">Mobile Apps</text>
+<text class="d-s" x="40" y="430">Flutter, 18 eng</text>
+<rect class="d-box g3" x="30" y="450" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Data Platform" x="40" y="460" width="22" height="22"/>
+<text class="d-t" x="70" y="476">Data Platform</text>
+<text class="d-s" x="40" y="498">Kafka, 16 eng</text>
+<rect class="d-box" x="220" y="170" width="160" height="110" rx="12"/>
+<path class="d-box g4" d="M220,228 V182 Q220,170 232,170 H368 Q380,170 380,182 V228 Z"/>
+<circle class="d-fillpaper" cx="246" cy="199.0" r="17"/>
+<g transform="translate(232,185.0) scale(0.7)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="270" y="196.0">Berlin</text>
+<text class="d-s" x="270" y="213.0">CET, UTC+1</text>
+<text class="d-t" x="300.0" y="250" text-anchor="middle">Jonas Weber</text>
+<text class="d-s" x="300.0" y="267" text-anchor="middle">site lead, 42 eng</text>
+<path class="d-edge" d="M300,280 V300"/>
+<rect class="d-blob2" x="220" y="300" width="160" height="226" rx="14"/>
+<rect class="d-box g4" x="230" y="314" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Platform" x="240" y="324" width="22" height="22"/>
+<text class="d-t" x="270" y="340">Platform</text>
+<text class="d-s" x="240" y="362">EKS, 16 eng</text>
+<rect class="d-box g4" x="230" y="382" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="hashicorp.com" data-name="Security" x="240" y="392" width="22" height="22"/>
+<text class="d-t" x="270" y="408">Security</text>
+<text class="d-s" x="240" y="430">Vault, 12 eng</text>
+<rect class="d-box g4" x="230" y="450" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="grafana.com" data-name="Observability" x="240" y="460" width="22" height="22"/>
+<text class="d-t" x="270" y="476">Observability</text>
+<text class="d-s" x="240" y="498">Grafana, 10 eng</text>
+<rect class="d-box" x="420" y="170" width="160" height="110" rx="12"/>
+<path class="d-box g2" d="M420,228 V182 Q420,170 432,170 H568 Q580,170 580,182 V228 Z"/>
+<circle class="d-fillpaper" cx="446" cy="199.0" r="17"/>
+<g transform="translate(432,185.0) scale(0.7)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="470" y="196.0">Toronto</text>
+<text class="d-s" x="470" y="213.0">ET, UTC-5</text>
+<text class="d-t" x="500.0" y="250" text-anchor="middle">Grace Liu</text>
+<text class="d-s" x="500.0" y="267" text-anchor="middle">site lead, 34 eng</text>
+<path class="d-edge" d="M500,280 V300"/>
+<rect class="d-blob2" x="420" y="300" width="160" height="226" rx="14"/>
+<rect class="d-box g2" x="430" y="314" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="elastic.co" data-name="Search" x="440" y="324" width="22" height="22"/>
+<text class="d-t" x="470" y="340">Search</text>
+<text class="d-s" x="440" y="362">Elastic, 12 eng</text>
+<rect class="d-box g2" x="430" y="382" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="getdbt.com" data-name="Analytics Eng" x="440" y="392" width="22" height="22"/>
+<text class="d-t" x="470" y="408">Analytics Eng</text>
+<text class="d-s" x="440" y="430">dbt, 10 eng</text>
+<rect class="d-box g2" x="430" y="450" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="pagerduty.com" data-name="SRE" x="440" y="460" width="22" height="22"/>
+<text class="d-t" x="470" y="476">SRE</text>
+<text class="d-s" x="440" y="498">PagerDuty, 8 eng</text>
+<rect class="d-box" x="620" y="170" width="160" height="110" rx="12"/>
+<path class="d-box g5" d="M620,228 V182 Q620,170 632,170 H768 Q780,170 780,182 V228 Z"/>
+<circle class="d-fillpaper" cx="646" cy="199.0" r="17"/>
+<g transform="translate(632,185.0) scale(0.7)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="670" y="196.0">San Francisco</text>
+<text class="d-s" x="670" y="213.0">PT, UTC-8</text>
+<text class="d-t" x="700.0" y="250" text-anchor="middle">Marcus Hill</text>
+<text class="d-s" x="700.0" y="267" text-anchor="middle">site lead, 42 eng</text>
+<path class="d-edge" d="M700,280 V300"/>
+<rect class="d-blob2" x="620" y="300" width="160" height="226" rx="14"/>
+<rect class="d-box g5" x="630" y="314" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="nextjs.org" data-name="Web App" x="640" y="324" width="22" height="22"/>
+<text class="d-t" x="670" y="340">Web App</text>
+<text class="d-s" x="640" y="362">Next.js, 20 eng</text>
+<rect class="d-box g5" x="630" y="382" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="pytorch.org" data-name="ML Platform" x="640" y="392" width="22" height="22"/>
+<text class="d-t" x="670" y="408">ML Platform</text>
+<text class="d-s" x="640" y="430">PyTorch, 12 eng</text>
+<rect class="d-box g5" x="630" y="450" width="140" height="58" rx="10"/>
+<image class="d-logo" data-logo="amplitude.com" data-name="Growth" x="640" y="460" width="22" height="22"/>
+<text class="d-t" x="670" y="476">Growth</text>
+<text class="d-s" x="640" y="498">Amplitude, 8 eng</text>
+<rect class="d-band" x="20" y="546" width="760" height="110" rx="14"/>
+<text class="d-k" x="36" y="568">FOLLOW-THE-SUN ON-CALL</text>
+<rect class="d-tag" x="34" y="580" width="132" height="24" rx="12"/>
+<text class="d-s" x="100" y="596" text-anchor="middle">03:00 to 11:00 UTC</text>
+<path class="d-edge" d="M170,592 H228" marker-end="url(#geographic-org-structure-d1-ah)"/>
+<text class="d-lab" x="200" y="584" text-anchor="middle">handoff</text>
+<rect class="d-tag" x="234" y="580" width="132" height="24" rx="12"/>
+<text class="d-s" x="300" y="596" text-anchor="middle">11:00 to 17:00 UTC</text>
+<path class="d-edge" d="M370,592 H428" marker-end="url(#geographic-org-structure-d1-ah)"/>
+<text class="d-lab" x="400" y="584" text-anchor="middle">handoff</text>
+<rect class="d-tag" x="434" y="580" width="132" height="24" rx="12"/>
+<text class="d-s" x="500" y="596" text-anchor="middle">17:00 to 21:00 UTC</text>
+<path class="d-edge" d="M570,592 H628" marker-end="url(#geographic-org-structure-d1-ah)"/>
+<text class="d-lab" x="600" y="584" text-anchor="middle">handoff</text>
+<rect class="d-tag" x="634" y="580" width="132" height="24" rx="12"/>
+<text class="d-s" x="700" y="596" text-anchor="middle">21:00 to 03:00 UTC</text>
+<path class="d-edge dash" d="M700,606 C700,646 100,646 100,610" marker-end="url(#geographic-org-structure-d1-ah)"/>
+<text class="d-lab" x="400" y="640" text-anchor="middle">pager rolls back to Bangalore</text>
+</svg>

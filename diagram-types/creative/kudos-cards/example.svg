@@ -1,0 +1,69 @@
+<svg class="hd" viewBox="0 0 800 560" role="img" aria-label="Kudos cards after incident INC-2291, checkout 502s on 18 Sep: a fanned stack of three thank-you cards, to the support lead who kept merchants updated, the on-call SRE who traced the bad Envoy route, and the incident commander who called the rollback at minute 6" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="34">Kudos after the incident review</text>
+<text class="d-h" x="40" y="58">INC-2291: checkout 502s, 18 Sep, 23 min</text>
+
+<rect class="d-box g2" x="40" y="160" width="300" height="380" rx="18"/>
+<circle class="d-fillpaper" cx="80" cy="210" r="24"/>
+<g transform="translate(60,190)"><circle class="d-line" cx="20" cy="15" r="6"/><path class="d-line" d="M9,33 C9,24 31,24 31,33"/></g>
+<text class="d-k" x="58" y="262">To</text>
+<text class="d-t" x="58" y="282">Aisha K.</text>
+<text class="d-s" x="58" y="300">Support lead</text>
+<text class="d-s" x="58" y="336">Posted an update</text>
+<text class="d-s" x="58" y="354">every 10 minutes</text>
+<text class="d-s" x="58" y="372">to 140 merchants</text>
+<image class="d-logo" data-logo="statuspage.io" data-name="Statuspage" x="58" y="398" width="24" height="24"/>
+<text class="d-m" x="90" y="415">status page</text>
+<rect class="d-tag" x="58" y="440" width="104" height="24" rx="12"/>
+<text class="d-s" x="110" y="456" text-anchor="middle">0 escalations</text>
+<text class="d-s" x="58" y="498">from: Support</text>
+
+<rect class="d-box g1" x="200" y="120" width="300" height="380" rx="18"/>
+<circle class="d-fillpaper" cx="240" cy="170" r="24"/>
+<g transform="translate(220,150)"><circle class="d-line" cx="20" cy="15" r="6"/><path class="d-line" d="M9,33 C9,24 31,24 31,33"/></g>
+<text class="d-k" x="218" y="222">To</text>
+<text class="d-t" x="218" y="242">Marco D.</text>
+<text class="d-s" x="218" y="260">SRE on-call</text>
+<text class="d-s" x="218" y="296">Traced the 502s to</text>
+<text class="d-s" x="218" y="314">a bad Envoy route</text>
+<text class="d-s" x="218" y="332">in 4 minutes</text>
+<image class="d-logo" data-logo="envoyproxy.io" data-name="Envoy" x="218" y="358" width="24" height="24"/>
+<text class="d-m" x="250" y="375">route v412</text>
+<rect class="d-tag" x="218" y="400" width="104" height="24" rx="12"/>
+<text class="d-s" x="270" y="416" text-anchor="middle">root cause</text>
+<text class="d-s" x="218" y="458">from: Payments</text>
+
+<rect class="d-box g0" x="360" y="80" width="340" height="420" rx="18"/>
+<path class="d-fillpaper" d="M640,96 C644,120 646,122 670,126 C646,130 644,132 640,156 C636,132 634,130 610,126 C634,122 636,120 640,96 Z"/>
+<circle class="d-fillpaper" cx="432" cy="150" r="44"/>
+<ellipse class="d-fillink" cx="418" cy="140" rx="4" ry="7"/>
+<ellipse class="d-fillink" cx="446" cy="140" rx="4" ry="7"/>
+<path class="d-line" d="M414,162 C424,176 442,176 452,160"/>
+<text class="d-k" x="492" y="136">To</text>
+<text class="d-h" x="492" y="160">Priya N.</text>
+<text class="d-s" x="492" y="180">Incident commander</text>
+<path class="d-fillpaper" d="M394,214 C396,224 397,225 406,227 C397,229 396,230 394,240 C392,230 391,229 382,227 C391,225 392,224 394,214 Z"/>
+<text class="d-t" x="420" y="232">Called the rollback at</text>
+<text class="d-t" x="420" y="252">minute 6 and kept the</text>
+<text class="d-t" x="420" y="272">bridge calm. Thank you!</text>
+<path class="d-grid" d="M396,330 H664"/>
+<circle class="d-fill g3" cx="410" cy="330" r="7"/>
+<circle class="d-fill g2" cx="530" cy="330" r="7"/>
+<circle class="d-fill g1" cx="650" cy="330" r="7"/>
+<text class="d-m" x="410" y="312" text-anchor="middle">14:02</text>
+<text class="d-m" x="530" y="312" text-anchor="middle">14:08</text>
+<text class="d-m" x="650" y="312" text-anchor="middle">14:25</text>
+<text class="d-s" x="410" y="356" text-anchor="middle">alert</text>
+<text class="d-s" x="530" y="356" text-anchor="middle">rollback</text>
+<text class="d-s" x="650" y="356" text-anchor="middle">resolved</text>
+<rect class="d-tag acc" x="380" y="384" width="112" height="24" rx="12"/>
+<text class="d-s" x="436" y="400" text-anchor="middle">MTTR 23 min</text>
+<rect class="d-tag" x="502" y="384" width="128" height="24" rx="12"/>
+<text class="d-s" x="566" y="400" text-anchor="middle">no data loss</text>
+<image class="d-logo" data-logo="slack.com" data-name="Slack" x="380" y="440" width="24" height="24"/>
+<text class="d-m" x="412" y="457">#inc-2291</text>
+<text class="d-s" x="412" y="476">from: Payments team</text>
+<circle class="d-fillpaper" cx="672" cy="470" r="9"/>
+
+<path class="d-fillpaper" d="M748,250 C751,266 752,267 768,270 C752,273 751,274 748,290 C745,274 744,273 728,270 C744,267 745,266 748,250 Z"/>
+<path class="d-fillpaper" d="M736,170 C738,178 739,179 746,180 C739,181 738,182 736,190 C734,182 733,181 726,180 C733,179 734,178 736,170 Z"/>
+</svg>

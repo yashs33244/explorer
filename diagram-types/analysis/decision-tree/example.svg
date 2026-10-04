@@ -1,0 +1,67 @@
+<svg class="hd" viewBox="0 0 800 540" role="img" aria-label="Decision tree for choosing a queue or a stream for order events: replay needed and no self-hosted brokers leads to Amazon Kinesis; the other leaves are Apache Kafka, RabbitMQ and Amazon SQS" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="decision-tree-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">ARCHITECTURE DECISION ADR-017</text>
+<text class="d-h" x="24" y="56">Queue or stream for order-events?</text>
+
+<!-- root -->
+<rect class="d-box" x="270" y="80" width="260" height="52" rx="12"/>
+<text class="d-t" x="400" y="102" text-anchor="middle">Must consumers replay history?</text>
+<text class="d-s" x="400" y="121" text-anchor="middle">e.g. backfill a new consumer</text>
+
+<!-- root split -->
+<path class="d-edge acc thick" d="M400,132 V156 H190 V186" marker-end="url(#decision-tree-d1-ah)"/>
+<path class="d-edge" d="M400,156 H610 V186" marker-end="url(#decision-tree-d1-ah)"/>
+<text class="d-lab" x="204" y="176">Yes</text>
+<text class="d-lab" x="624" y="176">No</text>
+
+<!-- level 2 -->
+<rect class="d-box" x="80" y="188" width="220" height="52" rx="12"/>
+<text class="d-t" x="190" y="210" text-anchor="middle">Run your own brokers?</text>
+<text class="d-s" x="190" y="229" text-anchor="middle">a team owns Kafka on-call</text>
+<rect class="d-box" x="500" y="188" width="220" height="52" rx="12"/>
+<text class="d-t" x="610" y="210" text-anchor="middle">Route per message type?</text>
+<text class="d-s" x="610" y="229" text-anchor="middle">fan-out by header or key</text>
+
+<!-- level 2 splits -->
+<path class="d-edge" d="M190,240 V262 H104 V294" marker-end="url(#decision-tree-d1-ah)"/>
+<path class="d-edge acc thick" d="M190,240 V262 H276 V294" marker-end="url(#decision-tree-d1-ah)"/>
+<path class="d-edge" d="M610,240 V262 H524 V294" marker-end="url(#decision-tree-d1-ah)"/>
+<path class="d-edge" d="M610,262 H696 V294" marker-end="url(#decision-tree-d1-ah)"/>
+<text class="d-lab" x="118" y="282">Yes</text>
+<text class="d-lab" x="290" y="282">No</text>
+<text class="d-lab" x="538" y="282">Yes</text>
+<text class="d-lab" x="710" y="282">No</text>
+
+<!-- leaves -->
+<rect class="d-box" x="30" y="296" width="148" height="124" rx="12"/>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Apache Kafka" x="91" y="308" width="26" height="26"/>
+<text class="d-t" x="104" y="358" text-anchor="middle">Apache Kafka</text>
+<text class="d-s" x="104" y="380" text-anchor="middle">replay by offset</text>
+<text class="d-s" x="104" y="398" text-anchor="middle">you run brokers</text>
+
+<rect class="d-box g1" x="202" y="296" width="148" height="124" rx="12"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="Amazon Kinesis" x="263" y="308" width="26" height="26"/>
+<text class="d-t" x="276" y="358" text-anchor="middle">Amazon Kinesis</text>
+<text class="d-s" x="276" y="380" text-anchor="middle">managed shards</text>
+<text class="d-s" x="276" y="398" text-anchor="middle">replay up to 365d</text>
+
+<rect class="d-box" x="450" y="296" width="148" height="124" rx="12"/>
+<image class="d-logo" data-logo="rabbitmq.com" data-name="RabbitMQ" x="511" y="308" width="26" height="26"/>
+<text class="d-t" x="524" y="358" text-anchor="middle">RabbitMQ</text>
+<text class="d-s" x="524" y="380" text-anchor="middle">exchanges route</text>
+<text class="d-s" x="524" y="398" text-anchor="middle">ack, then deleted</text>
+
+<rect class="d-box" x="622" y="296" width="148" height="124" rx="12"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="Amazon SQS" x="683" y="308" width="26" height="26"/>
+<text class="d-t" x="696" y="358" text-anchor="middle">Amazon SQS</text>
+<text class="d-s" x="696" y="380" text-anchor="middle">managed queue</text>
+<text class="d-s" x="696" y="398" text-anchor="middle">no replay, DLQ</text>
+
+<rect class="d-tag acc" x="236" y="430" width="80" height="24" rx="12"/>
+<text class="d-s" x="276" y="447" text-anchor="middle">chosen</text>
+
+<!-- our case -->
+<rect class="d-band g1" x="24" y="470" width="752" height="54" rx="12"/>
+<text class="d-k" x="44" y="492">OUR CASE</text>
+<text class="d-s" x="44" y="512">Analytics backfills need replay, and no team wants to run Kafka brokers, so order-events goes to Kinesis.</text>
+</svg>

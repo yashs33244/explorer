@@ -1,0 +1,81 @@
+<svg class="hd" viewBox="0 0 800 500" role="img" aria-label="Succession plan for a payments engineering org: the director, the engineering manager and the staff engineer who owns the ledger, each linked by dashed lines to a ready-now and a ready-later successor, showing that promoting the staff engineer leaves the ledger with no ready-now cover" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="30">ROLE HOLDER</text>
+<text class="d-k" x="470" y="30">READY NOW</text>
+<text class="d-k" x="630" y="30">READY IN 1-2 YRS</text>
+<rect class="d-box" x="20" y="64" width="124" height="72" rx="10"/>
+<path class="d-box g4" d="M20,90 V74 Q20,64 30,64 H134 Q144,64 144,74 V90 Z"/>
+<text class="d-t" x="32" y="82">Eng Director</text>
+<text class="d-t" x="32" y="110">Maya Chen</text>
+<text class="d-s" x="32" y="128">Payments org</text>
+<rect class="d-box" x="20" y="184" width="124" height="72" rx="10"/>
+<path class="d-box g4" d="M20,210 V194 Q20,184 30,184 H134 Q144,184 144,194 V210 Z"/>
+<text class="d-t" x="32" y="202">EM, Payments</text>
+<text class="d-t" x="32" y="230">Ravi Menon</text>
+<text class="d-s" x="32" y="248">ledger + API</text>
+<rect class="d-box" x="20" y="304" width="124" height="72" rx="10"/>
+<path class="d-box g4" d="M20,330 V314 Q20,304 30,304 H134 Q144,304 144,314 V330 Z"/>
+<text class="d-t" x="32" y="322">Senior Eng</text>
+<text class="d-t" x="32" y="350">Leo Park</text>
+<text class="d-s" x="32" y="368">API gateway</text>
+<rect class="d-box" x="154" y="304" width="124" height="72" rx="10"/>
+<path class="d-box g4" d="M154,330 V314 Q154,304 164,304 H268 Q278,304 278,314 V330 Z"/>
+<text class="d-t" x="166" y="322">Senior SRE</text>
+<text class="d-t" x="166" y="350">Ana Silva</text>
+<text class="d-s" x="166" y="368">on-call lead</text>
+<rect class="d-box" x="288" y="304" width="124" height="72" rx="10"/>
+<path class="d-box g4" d="M288,330 V314 Q288,304 298,304 H402 Q412,304 412,314 V330 Z"/>
+<text class="d-t" x="300" y="322">Staff Eng</text>
+<text class="d-t" x="300" y="350">Kai Wong</text>
+<text class="d-s" x="300" y="368">ledger owner</text>
+<path class="d-edge" d="M82,136 V184"/>
+<path class="d-edge" d="M82,256 V304 M82,268 Q82,280 94,280 H338 Q350,280 350,292 V304 M216,280 V304"/>
+<path class="d-edge dash" d="M144,100 H470"/>
+<path class="d-edge dash" d="M610,100 H630"/>
+<rect class="d-box" x="470" y="64" width="140" height="72" rx="10"/>
+<path class="d-box g1" d="M470,90 V74 Q470,64 480,64 H600 Q610,64 610,74 V90 Z"/>
+<text class="d-t" x="482" y="82">Ready now</text>
+<text class="d-t" x="482" y="110">Ravi Menon</text>
+<text class="d-s" x="482" y="128">EM, Payments</text>
+<rect class="d-box" x="630" y="64" width="140" height="72" rx="10"/>
+<path class="d-box g2" d="M630,90 V74 Q630,64 640,64 H760 Q770,64 770,74 V90 Z"/>
+<text class="d-t" x="642" y="82">Needs org scope</text>
+<text class="d-t" x="642" y="110">Sara Kim</text>
+<text class="d-s" x="642" y="128">EM, Checkout</text>
+<path class="d-edge dash" d="M144,220 H470"/>
+<path class="d-edge dash" d="M610,220 H630"/>
+<rect class="d-box" x="470" y="184" width="140" height="72" rx="10"/>
+<path class="d-box g1" d="M470,210 V194 Q470,184 480,184 H600 Q610,184 610,194 V210 Z"/>
+<text class="d-t" x="482" y="202">Ready now</text>
+<text class="d-t" x="482" y="230">Kai Wong</text>
+<text class="d-s" x="482" y="248">Staff Eng, ledger</text>
+<rect class="d-box" x="630" y="184" width="140" height="72" rx="10"/>
+<path class="d-box g2" d="M630,210 V194 Q630,184 640,184 H760 Q770,184 770,194 V210 Z"/>
+<text class="d-t" x="642" y="202">Needs mentoring</text>
+<text class="d-t" x="642" y="230">Ana Silva</text>
+<text class="d-s" x="642" y="248">Senior SRE</text>
+<path class="d-edge dash" d="M412,340 H470"/>
+<path class="d-edge dash" d="M610,340 H630"/>
+<rect class="d-box" x="470" y="304" width="140" height="72" rx="10"/>
+<path class="d-box g3" d="M470,330 V314 Q470,304 480,304 H600 Q610,304 610,314 V330 Z"/>
+<text class="d-t" x="482" y="322">No backup</text>
+<text class="d-t" x="482" y="350">Gap: hire</text>
+<text class="d-s" x="482" y="368">bus factor 1</text>
+<rect class="d-box" x="630" y="304" width="140" height="72" rx="10"/>
+<path class="d-box g2" d="M630,330 V314 Q630,304 640,304 H760 Q770,304 770,314 V330 Z"/>
+<text class="d-t" x="642" y="322">Shadow ledger</text>
+<text class="d-t" x="642" y="350">Leo Park</text>
+<text class="d-s" x="642" y="368">Senior Eng, API</text>
+<text class="d-k" x="20" y="414">READINESS</text>
+<rect class="d-fill g1" x="20" y="428" width="16" height="16" rx="4"/>
+<text class="d-s" x="44" y="441">ready now</text>
+<rect class="d-fill g2" x="20" y="450" width="16" height="16" rx="4"/>
+<text class="d-s" x="44" y="463">ready in 1-2 years</text>
+<rect class="d-fill g3" x="20" y="472" width="16" height="16" rx="4"/>
+<text class="d-s" x="44" y="485">no successor, risk</text>
+<text class="d-s" x="220" y="441">dashed line: named successor</text>
+<text class="d-s" x="220" y="463">blue: current role holder</text>
+<rect class="d-note" x="470" y="400" width="300" height="76"/>
+<text class="d-tn" x="486" y="426">Promoting Kai to EM leaves the</text>
+<text class="d-tn" x="486" y="446">ledger with no ready-now owner:</text>
+<text class="d-tn" x="486" y="466">pair Leo on reconciliation in Q3</text>
+</svg>

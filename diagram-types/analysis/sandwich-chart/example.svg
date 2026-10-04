@@ -1,0 +1,58 @@
+<svg class="hd" viewBox="0 0 800 524" role="img" aria-label="Sandwich chart of a pull request description: a top bun stating why the change exists, two fillings for what changed and how it was tested, and a bottom bun for rollout and rollback, with the rule for each layer on the left and who reads it on the right" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="sandwich-chart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">PULL REQUEST TEMPLATE</text>
+<text class="d-h" x="24" y="56">A PR description reviewers can act on</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="500" y="34" width="22" height="22"/>
+<text class="d-m" x="528" y="50">.github/pull_request_template.md</text>
+
+<!-- layers -->
+<path class="d-box g2" d="M230,180 V128 A44,44 0 0 1 274,84 H526 A44,44 0 0 1 570,128 V180 Z"/>
+<text class="d-t" x="400" y="128" text-anchor="middle">Why: stop duplicate charges</text>
+<text class="d-m" x="400" y="152" text-anchor="middle">Closes PAY-1142</text>
+
+<rect class="d-box g1" x="230" y="194" width="340" height="80"/>
+<text class="d-t" x="400" y="228" text-anchor="middle">What changed</text>
+<text class="d-m" x="400" y="252" text-anchor="middle">retry.go adds idempotency key</text>
+
+<rect class="d-box g3" x="230" y="288" width="340" height="80"/>
+<text class="d-t" x="400" y="322" text-anchor="middle">How it was tested</text>
+<text class="d-m" x="400" y="346" text-anchor="middle">go test ./payments/... 42 pass</text>
+
+<path class="d-box g2" d="M230,382 H570 V434 A44,44 0 0 1 526,478 H274 A44,44 0 0 1 230,434 Z"/>
+<text class="d-t" x="400" y="420" text-anchor="middle">Rollout and rollback</text>
+<text class="d-m" x="400" y="444" text-anchor="middle">flag pay_idem_key at 10%</text>
+
+<!-- left: the rule for each layer -->
+<text class="d-k" x="24" y="128">TOP BUN</text>
+<text class="d-s" x="24" y="148">lead with the why</text>
+<path class="d-edge dash" d="M160,136 H224"/>
+<text class="d-k" x="24" y="228">FILLING 1</text>
+<text class="d-s" x="24" y="248">the diff in words</text>
+<path class="d-edge dash" d="M160,234 H224"/>
+<text class="d-k" x="24" y="322">FILLING 2</text>
+<text class="d-s" x="24" y="342">proof it works</text>
+<path class="d-edge dash" d="M160,328 H224"/>
+<text class="d-k" x="24" y="422">BOTTOM BUN</text>
+<text class="d-s" x="24" y="442">how to ship and undo</text>
+<path class="d-edge dash" d="M160,430 H224"/>
+
+<!-- right: who reads it -->
+<path class="d-edge dash" d="M576,132 H600"/>
+<rect class="d-tag" x="604" y="114" width="164" height="26" rx="13"/>
+<text class="d-s" x="686" y="132" text-anchor="middle">PM, every reviewer</text>
+<text class="d-s" x="612" y="160">read in 10 seconds</text>
+<path class="d-edge dash" d="M576,230 H600"/>
+<rect class="d-tag" x="604" y="212" width="164" height="26" rx="13"/>
+<text class="d-s" x="686" y="230" text-anchor="middle">code reviewers</text>
+<text class="d-s" x="612" y="258">maps to the diff</text>
+<path class="d-edge dash" d="M576,324 H600"/>
+<rect class="d-tag" x="604" y="306" width="164" height="26" rx="13"/>
+<text class="d-s" x="686" y="324" text-anchor="middle">reviewers, QA</text>
+<text class="d-s" x="612" y="352">commands to rerun</text>
+<path class="d-edge dash" d="M576,426 H600"/>
+<rect class="d-tag acc" x="604" y="408" width="164" height="26" rx="13"/>
+<text class="d-s" x="686" y="426" text-anchor="middle">on-call, release lead</text>
+<text class="d-s" x="612" y="454">read before merge</text>
+
+<text class="d-s" x="400" y="508" text-anchor="middle">Order matters: a reviewer who stops after the top bun still knows why.</text>
+</svg>

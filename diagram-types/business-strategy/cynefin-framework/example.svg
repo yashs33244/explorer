@@ -1,0 +1,78 @@
+<svg class="hd" viewBox="0 0 800 660" role="img" aria-label="Cynefin framework applied to production incidents: complex incidents such as Kafka lag spikes need probing with flags and canaries, complicated ones such as a Postgres plan regression need expert analysis, chaotic ones such as a region outage or leaked key need action first, clear ones such as an expiring certificate follow a runbook, with confusion in the middle and a complacency cliff from clear to chaotic" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="cynefin-framework-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="40" y="34">Incident response by domain</text>
+<text class="d-h" x="40" y="56">Pick the playbook by how knowable the cause is</text>
+<rect class="d-box g0" x="40" y="72" width="360" height="260" rx="0"/>
+<text class="d-h" x="64" y="110">Complex</text>
+<text class="d-k" x="64" y="130">probe, sense, respond</text>
+<text class="d-s" x="64" y="148">cause clear only in hindsight</text>
+<g transform="translate(340,90)"><path class="d-fillpaper" d="M3,4 H26 V20 H13 L7,26 V20 H3 Z"/><path class="d-fillpaper" d="M15,15 H37 V31 H34 V37 L28,31 H15 Z"/></g>
+<rect class="d-fillpaper" x="64" y="164" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="74" y="174" width="20" height="20"/>
+<text class="d-t" x="102" y="189">Kafka</text>
+<text class="d-s" x="74" y="214">consumer lag spikes</text>
+<text class="d-s" x="74" y="232">no single cause</text>
+<rect class="d-fillpaper" x="216" y="164" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="226" y="174" width="20" height="20"/>
+<text class="d-t" x="254" y="189">k8s</text>
+<text class="d-s" x="226" y="214">pods OOM, flapping</text>
+<text class="d-s" x="226" y="232">load, GC, limits</text>
+<text class="d-k" x="64" y="272">Playbook</text>
+<text class="d-m" x="64" y="292">flag off, canary, watch SLO</text>
+<rect class="d-box g4" x="400" y="72" width="360" height="260" rx="0"/>
+<text class="d-h" x="448" y="110">Complicated</text>
+<text class="d-k" x="448" y="130">sense, analyze, respond</text>
+<text class="d-s" x="448" y="148">experts can find the cause</text>
+<g transform="translate(700,90)"><rect class="d-fillpaper" x="3" y="17" width="8" height="19" rx="1.5"/><path class="d-fillpaper" d="M13,18 L19,6 C21,2 26,3 26,8 L25,15 H34 C37,15 38,18 37,20 L34,34 C33.5,35.5 32.5,36 31,36 H13 Z"/><path class="d-line" d="M30,21 H36.5 M30,26.5 H35.5 M30,31.5 H34.5"/></g>
+<rect class="d-fillpaper" x="448" y="164" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="458" y="174" width="20" height="20"/>
+<text class="d-t" x="486" y="189">Postgres</text>
+<text class="d-s" x="458" y="214">slow query plan</text>
+<text class="d-s" x="458" y="232">EXPLAIN, add index</text>
+<rect class="d-fillpaper" x="600" y="164" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="610" y="174" width="20" height="20"/>
+<text class="d-t" x="638" y="189">Datadog</text>
+<text class="d-s" x="610" y="214">p99 regression</text>
+<text class="d-s" x="610" y="232">profile, git bisect</text>
+<text class="d-k" x="448" y="272">Playbook</text>
+<text class="d-m" x="448" y="292">page owning team, write RCA</text>
+<rect class="d-box g3" x="40" y="332" width="360" height="260" rx="0"/>
+<text class="d-h" x="64" y="370">Chaotic</text>
+<text class="d-k" x="64" y="390">act, sense, respond</text>
+<text class="d-s" x="64" y="408">no time to analyze</text>
+<g transform="translate(290,350)"><path class="d-fillpaper" d="M20,3 C24,12 32,16 32,26 C32,33 26,37 20,37 C14,37 8,33 8,26 C8,19 14,17 14,10 C17,13 18,15 18,19 C21,14 22,9 20,3 Z"/></g>
+<rect class="d-fillpaper" x="64" y="424" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="74" y="434" width="20" height="20"/>
+<text class="d-t" x="102" y="449">AWS</text>
+<text class="d-s" x="74" y="474">us-east-1 outage</text>
+<text class="d-s" x="74" y="492">fail over first</text>
+<rect class="d-fillpaper" x="216" y="424" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="226" y="434" width="20" height="20"/>
+<text class="d-t" x="254" y="449">GitHub</text>
+<text class="d-s" x="226" y="474">leaked API key</text>
+<text class="d-s" x="226" y="492">revoke, rotate now</text>
+<text class="d-k" x="64" y="532">Playbook</text>
+<text class="d-m" x="64" y="552">stop the bleeding, then look</text>
+<rect class="d-box g5" x="400" y="332" width="360" height="260" rx="0"/>
+<text class="d-h" x="448" y="370">Clear</text>
+<text class="d-k" x="448" y="390">sense, categorize, respond</text>
+<text class="d-s" x="448" y="408">known fix, known owner</text>
+<g transform="translate(700,350)"><path class="d-fillpaper" d="M17,4 L32,30 H2 Z"/><rect class="d-fillpaper" x="24" y="22" width="14" height="14" rx="2"/></g>
+<rect class="d-fillpaper" x="448" y="424" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="letsencrypt.org" data-name="Let's Encrypt" x="458" y="434" width="20" height="20"/>
+<text class="d-t" x="486" y="449">certbot</text>
+<text class="d-s" x="458" y="474">TLS cert expiring</text>
+<text class="d-s" x="458" y="492">renew via cron</text>
+<rect class="d-fillpaper" x="600" y="424" width="144" height="80" rx="8"/>
+<image class="d-logo" data-logo="grafana.com" data-name="Grafana" x="610" y="434" width="20" height="20"/>
+<text class="d-t" x="638" y="449">Grafana</text>
+<text class="d-s" x="610" y="474">disk 90% full</text>
+<text class="d-s" x="610" y="492">run cleanup job</text>
+<text class="d-k" x="448" y="532">Playbook</text>
+<text class="d-m" x="448" y="552">runbook or auto-remediate</text>
+<circle class="d-fillpaper" cx="400" cy="332" r="46"/>
+<text class="d-t" x="400" y="330" text-anchor="middle">Confusion</text>
+<text class="d-s" x="400" y="348" text-anchor="middle">triage first</text>
+<path class="d-edge dash acc" d="M600,596 C580,630 240,630 220,598" marker-end="url(#cynefin-framework-d1-ah)"/>
+<text class="d-lab" x="400" y="648" text-anchor="middle">complacency cliff: skipped runbook becomes an outage</text>
+</svg>

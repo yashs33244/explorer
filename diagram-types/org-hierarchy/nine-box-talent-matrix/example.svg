@@ -1,0 +1,96 @@
+<svg class="hd" viewBox="0 0 800 602" role="img" aria-label="Nine box talent matrix for a payments engineering org calibration: performance on the x axis and potential on the y axis, each of the nine boxes named, with an action and the engineers placed in it by level and area" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="nine-box-talent-matrix-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box g2" x="140" y="16" width="206" height="170" rx="0"/>
+<text class="d-k" x="154" y="40">BOX 3</text>
+<text class="d-h" x="154" y="62">Enigma</text>
+<text class="d-s" x="154" y="80">new team, new mentor</text>
+<rect class="d-tag" x="154" y="92" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="167" cy="103" r="4"/>
+<text class="d-s" x="178" y="107">Sam R., L4 data</text>
+<rect class="d-box g2" x="346" y="16" width="206" height="170" rx="0"/>
+<rect class="d-fill g1 o1" x="346" y="16" width="206" height="170"/>
+<text class="d-k" x="360" y="40">BOX 6</text>
+<text class="d-h" x="360" y="62">Growth</text>
+<text class="d-s" x="360" y="80">lead a launch</text>
+<rect class="d-tag" x="360" y="92" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="103" r="4"/>
+<text class="d-s" x="384" y="107">Aisha O., L4 mobile</text>
+<rect class="d-tag" x="360" y="120" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="131" r="4"/>
+<text class="d-s" x="384" y="135">Jun L., L5 search</text>
+<rect class="d-box g1" x="552" y="16" width="206" height="170" rx="0"/>
+<text class="d-k" x="566" y="40">BOX 9</text>
+<text class="d-h" x="566" y="62">Star</text>
+<text class="d-s" x="566" y="80">promote, staff track</text>
+<rect class="d-tag" x="566" y="92" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="579" cy="103" r="4"/>
+<text class="d-s" x="590" y="107">Priya N., L5 ledger</text>
+<rect class="d-tag" x="566" y="120" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="579" cy="131" r="4"/>
+<text class="d-s" x="590" y="135">Marco D., L6 infra</text>
+<rect class="d-box g5" x="140" y="186" width="206" height="170" rx="0"/>
+<text class="d-k" x="154" y="210">BOX 2</text>
+<text class="d-h" x="154" y="232">Dilemma</text>
+<text class="d-s" x="154" y="250">coach, 90 day goals</text>
+<rect class="d-tag" x="154" y="262" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="167" cy="273" r="4"/>
+<text class="d-s" x="178" y="277">Nate P., L4 backend</text>
+<rect class="d-box g2" x="346" y="186" width="206" height="170" rx="0"/>
+<text class="d-k" x="360" y="210">BOX 5</text>
+<text class="d-h" x="360" y="232">Core player</text>
+<text class="d-s" x="360" y="250">grow in role</text>
+<rect class="d-tag" x="360" y="262" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="273" r="4"/>
+<text class="d-s" x="384" y="277">Ben T., L4 web</text>
+<rect class="d-tag" x="360" y="290" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="301" r="4"/>
+<text class="d-s" x="384" y="305">Hana S., L4 QA</text>
+<rect class="d-tag" x="360" y="318" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="329" r="4"/>
+<text class="d-s" x="384" y="333">Ravi M., L5 API</text>
+<rect class="d-box g2" x="552" y="186" width="206" height="170" rx="0"/>
+<rect class="d-fill g1 o1" x="552" y="186" width="206" height="170"/>
+<text class="d-k" x="566" y="210">BOX 8</text>
+<text class="d-h" x="566" y="232">High performer</text>
+<text class="d-s" x="566" y="250">widen scope</text>
+<rect class="d-tag" x="566" y="262" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="579" cy="273" r="4"/>
+<text class="d-s" x="590" y="277">Elena V., L5 SRE</text>
+<rect class="d-tag" x="566" y="290" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="579" cy="301" r="4"/>
+<text class="d-s" x="590" y="305">Omar K., L5 API</text>
+<rect class="d-box g3" x="140" y="356" width="206" height="170" rx="0"/>
+<text class="d-k" x="154" y="380">BOX 1</text>
+<text class="d-h" x="154" y="402">Underperformer</text>
+<text class="d-s" x="154" y="420">PIP or role change</text>
+<rect class="d-tag" x="154" y="432" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="167" cy="443" r="4"/>
+<text class="d-s" x="178" y="447">Tim B., L4 backend</text>
+<rect class="d-box g5" x="346" y="356" width="206" height="170" rx="0"/>
+<text class="d-k" x="360" y="380">BOX 4</text>
+<text class="d-h" x="360" y="402">Effective</text>
+<text class="d-s" x="360" y="420">keep in role</text>
+<rect class="d-tag" x="360" y="432" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="443" r="4"/>
+<text class="d-s" x="384" y="447">Lucy W., L3 frontend</text>
+<rect class="d-tag" x="360" y="460" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="373" cy="471" r="4"/>
+<text class="d-s" x="384" y="475">Dev K., L4 infra</text>
+<rect class="d-box g2" x="552" y="356" width="206" height="170" rx="0"/>
+<text class="d-k" x="566" y="380">BOX 7</text>
+<text class="d-h" x="566" y="402">Trusted pro</text>
+<text class="d-s" x="566" y="420">retain, own runbooks</text>
+<rect class="d-tag" x="566" y="432" width="178" height="22" rx="11"/>
+<circle class="d-fillacc" cx="579" cy="443" r="4"/>
+<text class="d-s" x="590" y="447">Gil A., L6 database</text>
+<text class="d-s" x="130" y="445.0" text-anchor="end">Low</text>
+<text class="d-s" x="130" y="275.0" text-anchor="end">Moderate</text>
+<text class="d-s" x="130" y="105.0" text-anchor="end">High</text>
+<path class="d-axis" d="M64,526 V20" marker-end="url(#nine-box-talent-matrix-d1-ah)"/>
+<text class="d-k" x="48" y="271.0" text-anchor="middle" transform="rotate(-90 48 271.0)">POTENTIAL</text>
+<text class="d-s" x="243.0" y="548" text-anchor="middle">Below bar</text>
+<text class="d-s" x="449.0" y="548" text-anchor="middle">Meets bar</text>
+<text class="d-s" x="655.0" y="548" text-anchor="middle">Exceeds bar</text>
+<path class="d-axis" d="M140,566 H754" marker-end="url(#nine-box-talent-matrix-d1-ah)"/>
+<text class="d-k" x="449.0" y="588" text-anchor="middle">PERFORMANCE, LAST TWO HALVES</text>
+</svg>

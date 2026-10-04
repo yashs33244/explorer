@@ -1,0 +1,103 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="REAN model for growing tracekit, an open source tracing CLI: Reach through Show HN, GitHub and dev.to; Engage through Homebrew, docs and a browser playground; Activate through a GitHub Action, the npm SDK and OpenTelemetry export; Nurture through Discord, first issues and releases; with the monthly funnel from 48k visits to 85 contributors" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="rean-model-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="40" y="34">Open source growth, last 30 days</text>
+<text class="d-h" x="40" y="56">tracekit: from first visit to contributor</text>
+<rect class="d-box g0" x="40" y="76" width="360" height="220" rx="0"/>
+<text class="d-h" transform="translate(62,142) scale(3.2)">R</text>
+<text class="d-h" x="124" y="114">Reach</text>
+<text class="d-s" x="124" y="134">people who hear of it</text>
+<rect class="d-tag" x="290" y="98" width="92" height="24" rx="12"/>
+<text class="d-m" x="300" y="114">48k visits</text>
+<rect class="d-fillpaper" x="58" y="164" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="news.ycombinator.com" data-name="Hacker News" x="67" y="173" width="20" height="20"/>
+<text class="d-t" x="93" y="188">Show HN</text>
+<text class="d-s" x="67" y="214">launch post</text>
+<rect class="d-fillpaper" x="170" y="164" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="179" y="173" width="20" height="20"/>
+<text class="d-t" x="205" y="188">GitHub</text>
+<text class="d-s" x="179" y="214">README SEO</text>
+<rect class="d-fillpaper" x="282" y="164" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="dev.to" data-name="dev.to" x="291" y="173" width="20" height="20"/>
+<text class="d-t" x="317" y="188">dev.to</text>
+<text class="d-s" x="291" y="214">tutorials</text>
+<text class="d-k" x="58" y="262">Measure</text>
+<text class="d-m" x="58" y="280">utm=hn, github referrals</text>
+<rect class="d-box g3" x="400" y="76" width="360" height="220" rx="0"/>
+<text class="d-h" transform="translate(422,142) scale(3.2)">E</text>
+<text class="d-h" x="484" y="114">Engage</text>
+<text class="d-s" x="484" y="134">they try it once</text>
+<rect class="d-tag" x="628" y="98" width="114" height="24" rx="12"/>
+<text class="d-m" x="638" y="114">6.1k installs</text>
+<rect class="d-fillpaper" x="418" y="164" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="brew.sh" data-name="Homebrew" x="427" y="173" width="20" height="20"/>
+<text class="d-t" x="453" y="188">brew</text>
+<text class="d-s" x="427" y="214">one-line install</text>
+<rect class="d-fillpaper" x="530" y="164" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="docusaurus.io" data-name="Docusaurus" x="539" y="173" width="20" height="20"/>
+<text class="d-t" x="565" y="188">Docs</text>
+<text class="d-s" x="539" y="214">quickstart</text>
+<rect class="d-fillpaper" x="642" y="164" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="stackblitz.com" data-name="StackBlitz" x="651" y="173" width="20" height="20"/>
+<text class="d-t" x="677" y="188">Sandbox</text>
+<text class="d-s" x="651" y="214">browser demo</text>
+<text class="d-k" x="418" y="262">Measure</text>
+<text class="d-m" x="418" y="280">first trace in under 5 min</text>
+<rect class="d-box g4" x="40" y="296" width="360" height="220" rx="0"/>
+<text class="d-h" transform="translate(62,362) scale(3.2)">A</text>
+<text class="d-h" x="124" y="334">Activate</text>
+<text class="d-s" x="124" y="354">real use in a project</text>
+<rect class="d-tag" x="283" y="318" width="99" height="24" rx="12"/>
+<text class="d-m" x="293" y="334">1.4k weekly</text>
+<rect class="d-fillpaper" x="58" y="384" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub Actions" x="67" y="393" width="20" height="20"/>
+<text class="d-t" x="93" y="408">Action</text>
+<text class="d-s" x="67" y="434">runs in CI</text>
+<rect class="d-fillpaper" x="170" y="384" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="npmjs.com" data-name="npm" x="179" y="393" width="20" height="20"/>
+<text class="d-t" x="205" y="408">npm SDK</text>
+<text class="d-s" x="179" y="434">auto spans</text>
+<rect class="d-fillpaper" x="282" y="384" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="opentelemetry.io" data-name="OpenTelemetry" x="291" y="393" width="20" height="20"/>
+<text class="d-t" x="317" y="408">OTel</text>
+<text class="d-s" x="291" y="434">trace export</text>
+<text class="d-k" x="58" y="482">Measure</text>
+<text class="d-m" x="58" y="500">repos tracing 7 days in a row</text>
+<rect class="d-box g1" x="400" y="296" width="360" height="220" rx="0"/>
+<text class="d-h" transform="translate(422,362) scale(3.2)">N</text>
+<text class="d-h" x="484" y="334">Nurture</text>
+<text class="d-s" x="484" y="354">users become contributors</text>
+<rect class="d-tag" x="614" y="318" width="128" height="24" rx="12"/>
+<text class="d-m" x="624" y="334">85 contributors</text>
+<rect class="d-fillpaper" x="418" y="384" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="discord.com" data-name="Discord" x="427" y="393" width="20" height="20"/>
+<text class="d-t" x="453" y="408">Discord</text>
+<text class="d-s" x="427" y="434">office hours</text>
+<rect class="d-fillpaper" x="530" y="384" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="539" y="393" width="20" height="20"/>
+<text class="d-t" x="565" y="408">Issues</text>
+<text class="d-s" x="539" y="434">first issues</text>
+<rect class="d-fillpaper" x="642" y="384" width="102" height="66" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="651" y="393" width="20" height="20"/>
+<text class="d-t" x="677" y="408">Releases</text>
+<text class="d-s" x="651" y="434">monthly notes</text>
+<text class="d-k" x="418" y="482">Measure</text>
+<text class="d-m" x="418" y="500">outside PRs merged per month</text>
+<rect class="d-tag acc" x="40" y="548" width="150" height="32" rx="16"/>
+<text class="d-t" x="56" y="569">48k</text>
+<text class="d-s" x="102" y="569">visit</text>
+<path class="d-edge acc" d="M194,564 H226" marker-end="url(#rean-model-d1-ah)"/>
+<text class="d-lab" x="198" y="554">13%</text>
+<rect class="d-tag acc" x="230" y="548" width="150" height="32" rx="16"/>
+<text class="d-t" x="246" y="569">6.1k</text>
+<text class="d-s" x="292" y="569">install</text>
+<path class="d-edge acc" d="M384,564 H416" marker-end="url(#rean-model-d1-ah)"/>
+<text class="d-lab" x="388" y="554">23%</text>
+<rect class="d-tag acc" x="420" y="548" width="150" height="32" rx="16"/>
+<text class="d-t" x="436" y="569">1.4k</text>
+<text class="d-s" x="482" y="569">use weekly</text>
+<path class="d-edge acc" d="M574,564 H606" marker-end="url(#rean-model-d1-ah)"/>
+<text class="d-lab" x="578" y="554">6%</text>
+<rect class="d-tag acc" x="610" y="548" width="150" height="32" rx="16"/>
+<text class="d-t" x="626" y="569">85</text>
+<text class="d-s" x="672" y="569">contribute</text>
+</svg>

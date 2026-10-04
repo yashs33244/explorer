@@ -1,0 +1,127 @@
+<svg class="hd" viewBox="0 0 800 552" role="img" aria-label="SIPOC of a CI pipeline: suppliers developers, GitHub, npm registry and Vault provide a commit, webhook, locked dependencies and secrets to five pipeline steps, which produce a commit status, JUnit report, SBOM and container image for branch protection, PR reviewers, the security team and Argo CD" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="sipoc-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">ci.yml: pull request pipeline</text>
+<text class="d-s" x="780" y="30" text-anchor="end">web-app monorepo, median run 11 min</text>
+<rect class="d-box g1" x="20" y="46" width="152" height="80" rx="4"/>
+<text class="d-h" transform="translate(96.0,88) scale(2)" text-anchor="middle">S</text>
+<text class="d-t" x="96.0" y="112" text-anchor="middle">Suppliers</text>
+<rect class="d-box" x="20" y="126" width="152" height="340" rx="4"/>
+<rect class="d-box g5" x="172" y="46" width="152" height="80" rx="4"/>
+<text class="d-h" transform="translate(248.0,88) scale(2)" text-anchor="middle">I</text>
+<text class="d-t" x="248.0" y="112" text-anchor="middle">Inputs</text>
+<rect class="d-box" x="172" y="126" width="152" height="340" rx="4"/>
+<rect class="d-box g0" x="324" y="46" width="152" height="80" rx="4"/>
+<text class="d-h" transform="translate(400.0,88) scale(2)" text-anchor="middle">P</text>
+<text class="d-t" x="400.0" y="112" text-anchor="middle">Process</text>
+<rect class="d-box" x="324" y="126" width="152" height="340" rx="4"/>
+<rect class="d-box g4" x="476" y="46" width="152" height="80" rx="4"/>
+<text class="d-h" transform="translate(552.0,88) scale(2)" text-anchor="middle">O</text>
+<text class="d-t" x="552.0" y="112" text-anchor="middle">Outputs</text>
+<rect class="d-box" x="476" y="126" width="152" height="340" rx="4"/>
+<rect class="d-box g3" x="628" y="46" width="152" height="80" rx="4"/>
+<text class="d-h" transform="translate(704.0,88) scale(2)" text-anchor="middle">C</text>
+<text class="d-t" x="704.0" y="112" text-anchor="middle">Customers</text>
+<rect class="d-box" x="628" y="126" width="152" height="340" rx="4"/>
+<rect class="d-note" x="32" y="146" width="128" height="50" rx="3"/>
+<text class="d-tn" x="42" y="167">Developers</text>
+<text class="d-s" x="42" y="185">open a PR</text>
+<rect class="d-note" x="32" y="210" width="128" height="50" rx="3"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="134" y="218" width="18" height="18"/>
+<text class="d-tn" x="42" y="231">GitHub</text>
+<text class="d-s" x="42" y="249">webhooks</text>
+<rect class="d-note" x="32" y="274" width="128" height="50" rx="3"/>
+<image class="d-logo" data-logo="npmjs.com" data-name="npm registry" x="134" y="282" width="18" height="18"/>
+<text class="d-tn" x="42" y="295">npm registry</text>
+<text class="d-s" x="42" y="313">packages</text>
+<rect class="d-note" x="32" y="402" width="128" height="50" rx="3"/>
+<image class="d-logo" data-logo="hashicorp.com" data-name="Vault" x="134" y="410" width="18" height="18"/>
+<text class="d-tn" x="42" y="423">Vault</text>
+<text class="d-s" x="42" y="441">CI secrets</text>
+<rect class="d-note" x="184" y="146" width="128" height="50" rx="3"/>
+<text class="d-tn" x="194" y="167">Commit SHA</text>
+<text class="d-s" x="194" y="185">PR diff</text>
+<rect class="d-note" x="184" y="210" width="128" height="50" rx="3"/>
+<text class="d-tn" x="194" y="231">push event</text>
+<text class="d-s" x="194" y="249">pull_request</text>
+<rect class="d-note" x="184" y="274" width="128" height="50" rx="3"/>
+<text class="d-tn" x="194" y="295">Locked deps</text>
+<text class="d-s" x="194" y="313">pnpm-lock</text>
+<rect class="d-note" x="184" y="402" width="128" height="50" rx="3"/>
+<text class="d-tn" x="194" y="423">Registry creds</text>
+<text class="d-s" x="194" y="441">short-lived, 15m</text>
+<rect class="d-note g5" x="336" y="146" width="128" height="50" rx="3"/>
+<circle class="d-badge" cx="354" cy="171" r="11"/><text class="d-bt" x="354" y="175">1</text>
+<text class="d-tn" x="372" y="167">Checkout</text>
+<text class="d-s" x="372" y="185">fetch-depth 1</text>
+<path class="d-edge" d="M400.0,198 V207" marker-end="url(#sipoc-d1-ah)"/>
+<rect class="d-note g5" x="336" y="210" width="128" height="50" rx="3"/>
+<circle class="d-badge" cx="354" cy="235" r="11"/><text class="d-bt" x="354" y="239">2</text>
+<text class="d-tn" x="372" y="231">Build</text>
+<text class="d-s" x="372" y="249">pnpm, turbo</text>
+<path class="d-edge" d="M400.0,262 V271" marker-end="url(#sipoc-d1-ah)"/>
+<rect class="d-note g5" x="336" y="274" width="128" height="50" rx="3"/>
+<circle class="d-badge" cx="354" cy="299" r="11"/><text class="d-bt" x="354" y="303">3</text>
+<text class="d-tn" x="372" y="295">Test + lint</text>
+<text class="d-s" x="372" y="313">jest, eslint</text>
+<path class="d-edge" d="M400.0,326 V335" marker-end="url(#sipoc-d1-ah)"/>
+<rect class="d-note g5" x="336" y="338" width="128" height="50" rx="3"/>
+<circle class="d-badge" cx="354" cy="363" r="11"/><text class="d-bt" x="354" y="367">4</text>
+<text class="d-tn" x="372" y="359">Scan</text>
+<text class="d-s" x="372" y="377">Trivy, SBOM</text>
+<path class="d-edge" d="M400.0,390 V399" marker-end="url(#sipoc-d1-ah)"/>
+<rect class="d-note g5" x="336" y="402" width="128" height="50" rx="3"/>
+<circle class="d-badge" cx="354" cy="427" r="11"/><text class="d-bt" x="354" y="431">5</text>
+<text class="d-tn" x="372" y="423">Push image</text>
+<text class="d-s" x="372" y="441">tag :sha</text>
+<rect class="d-note" x="488" y="210" width="128" height="50" rx="3"/>
+<text class="d-tn" x="498" y="231">Check status</text>
+<text class="d-s" x="498" y="249">pass or fail</text>
+<rect class="d-note" x="488" y="274" width="128" height="50" rx="3"/>
+<text class="d-tn" x="498" y="295">JUnit report</text>
+<text class="d-s" x="498" y="313">1,412 tests</text>
+<rect class="d-note" x="488" y="338" width="128" height="50" rx="3"/>
+<text class="d-tn" x="498" y="359">SBOM</text>
+<text class="d-s" x="498" y="377">CycloneDX</text>
+<rect class="d-note" x="488" y="402" width="128" height="50" rx="3"/>
+<image class="d-logo" data-logo="docker.com" data-name="Image" x="590" y="410" width="18" height="18"/>
+<text class="d-tn" x="498" y="423">Image</text>
+<text class="d-s" x="498" y="441">ghcr.io/web</text>
+<rect class="d-note" x="640" y="210" width="128" height="50" rx="3"/>
+<text class="d-tn" x="650" y="231">Branch rules</text>
+<text class="d-s" x="650" y="249">block merge</text>
+<rect class="d-note" x="640" y="274" width="128" height="50" rx="3"/>
+<text class="d-tn" x="650" y="295">PR reviewers</text>
+<text class="d-s" x="650" y="313">read results</text>
+<rect class="d-note" x="640" y="338" width="128" height="50" rx="3"/>
+<text class="d-tn" x="650" y="359">Security team</text>
+<text class="d-s" x="650" y="377">CVE triage</text>
+<rect class="d-note" x="640" y="402" width="128" height="50" rx="3"/>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="742" y="410" width="18" height="18"/>
+<text class="d-tn" x="650" y="423">Argo CD</text>
+<text class="d-s" x="650" y="441">deploys :sha</text>
+<path class="d-edge" d="M162,171.0 H181" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M162,235.0 H181" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M162,299.0 H181" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M162,427.0 H181" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M314,171.0 H333" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M314,225.0 L333,183.0" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M314,289.0 L333,245.0" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M314,427.0 H333" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M466,287.0 L485,245.0" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M466,303.0 H485" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M466,363.0 H485" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M466,427.0 H485" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M618,235.0 H637" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M618,299.0 H637" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M618,363.0 H637" marker-end="url(#sipoc-d1-ah)"/>
+<path class="d-edge" d="M618,427.0 H637" marker-end="url(#sipoc-d1-ah)"/>
+<rect class="d-band g2" x="20" y="482" width="760" height="56" rx="6"/>
+<text class="d-k" x="36" y="504">Trigger</text>
+<text class="d-t" x="36" y="524">pull_request</text>
+<text class="d-k" x="224" y="504">Boundary</text>
+<text class="d-t" x="224" y="524">PR opened to image</text>
+<text class="d-k" x="412" y="504">Owner</text>
+<text class="d-t" x="412" y="524">platform-eng</text>
+<text class="d-k" x="600" y="504">SLO</text>
+<text class="d-t" x="600" y="524">p50 under 12 min</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg class="hd" viewBox="0 0 800 620" role="img" aria-label="PEST analysis for launching a managed vector database: political, economic, social and technological factors in four circles, with the launch decisions they lead to" xmlns="http://www.w3.org/2000/svg">
+<rect class="d-tag acc" x="24" y="40" width="118" height="26" rx="6"/>
+<text class="d-k" x="83" y="58" text-anchor="middle">PEST ANALYSIS</text>
+<text class="d-h" x="24" y="98">Managed vector DB</text>
+<text class="d-s" x="24" y="118">GA on AWS and GCP, Q2</text>
+<text class="d-s" x="24" y="136">owner: data-platform team</text>
+<rect class="d-box g0" x="24" y="170" width="236" height="214" rx="12"/>
+<text class="d-t" x="40" y="196">What we decided</text>
+<circle class="d-badge" cx="51" cy="226" r="11"/><text class="d-bt" x="51" y="230">1</text>
+<text class="d-s" x="70" y="230">eu-west-1 region at GA</text>
+<circle class="d-badge" cx="51" cy="266" r="11"/><text class="d-bt" x="51" y="270">2</text>
+<text class="d-s" x="70" y="270">price per GB stored</text>
+<circle class="d-badge" cx="51" cy="306" r="11"/><text class="d-bt" x="51" y="310">3</text>
+<text class="d-s" x="70" y="310">pgvector-compatible API</text>
+<circle class="d-badge" cx="51" cy="346" r="11"/><text class="d-bt" x="51" y="350">4</text>
+<text class="d-s" x="70" y="350">HNSW tier sized by RAM</text>
+<rect class="d-tag acc" x="24" y="410" width="88" height="20" rx="10"/>
+<text class="d-s" x="68" y="424" text-anchor="middle">high impact</text>
+<rect class="d-tag" x="122" y="410" width="88" height="20" rx="10"/>
+<text class="d-s" x="166" y="424" text-anchor="middle">watch</text>
+<text class="d-s" x="24" y="456">numbers trace each factor</text>
+<text class="d-s" x="24" y="474">to the decision it drove</text>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="24" y="500" width="26" height="26"/>
+<image class="d-logo" data-logo="cloud.google.com" data-name="Google Cloud" x="58" y="500" width="26" height="26"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="92" y="500" width="26" height="26"/>
+<text class="d-s" x="24" y="546">runs on Postgres 16 + pgvector</text>
+<circle class="d-soft g4" cx="412" cy="178" r="126"/>
+<g transform="translate(392,70)"><g><path class="d-fillpaper" d="M4,14 L20,4 L36,14 Z"/><path class="d-line" d="M8,17 V32 M15,17 V32 M25,17 V32 M32,17 V32"/><path class="d-lineacc" d="M4,35 H36"/></g></g>
+<text class="d-h" x="412" y="138" text-anchor="middle">P Political</text>
+<text class="d-s" x="412" y="166" text-anchor="middle">EU AI Act duties</text>
+<text class="d-s" x="412" y="186" text-anchor="middle">GDPR: EU data residency</text>
+<text class="d-s" x="412" y="206" text-anchor="middle">US GPU export limits</text>
+<rect class="d-tag acc" x="372" y="236" width="80" height="22" rx="11"/>
+<text class="d-s" x="412" y="251" text-anchor="middle">drives 1</text>
+<circle class="d-soft g5" cx="660" cy="178" r="126"/>
+<g transform="translate(640,70)"><g><rect class="d-fillpaper" x="3" y="5" width="34" height="28" rx="3"/><path class="d-lineacc" d="M8,27 L16,19 L22,23 L32,11"/><path class="d-line" d="M27,11 H32 V16"/></g></g>
+<text class="d-h" x="660" y="138" text-anchor="middle">E Economic</text>
+<text class="d-s" x="660" y="166" text-anchor="middle">RAM and GPU costs rising</text>
+<text class="d-s" x="660" y="186" text-anchor="middle">price war: Pinecone, Weaviate</text>
+<text class="d-s" x="660" y="206" text-anchor="middle">buyers want usage pricing</text>
+<rect class="d-tag acc" x="610" y="236" width="101" height="22" rx="11"/>
+<text class="d-s" x="660" y="251" text-anchor="middle">drives 2, 4</text>
+<circle class="d-soft g1" cx="412" cy="434" r="126"/>
+<g transform="translate(392,326)"><g><circle class="d-line" cx="12" cy="13" r="5"/><circle class="d-line" cx="28" cy="13" r="5"/><circle class="d-fillpaper" cx="20" cy="18" r="6"/><path class="d-fillpaper" d="M8,37 C8,26 32,26 32,37 Z"/></g></g>
+<text class="d-h" x="412" y="394" text-anchor="middle">S Social</text>
+<text class="d-s" x="412" y="422" text-anchor="middle">RAG is every team's demo</text>
+<text class="d-s" x="412" y="442" text-anchor="middle">devs expect a free tier</text>
+<text class="d-s" x="412" y="462" text-anchor="middle">trust open source first</text>
+<rect class="d-tag" x="362" y="492" width="101" height="22" rx="11"/>
+<text class="d-s" x="412" y="507" text-anchor="middle">drives 2, 3</text>
+<circle class="d-soft g3" cx="660" cy="434" r="126"/>
+<g transform="translate(640,326)"><g><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g></g>
+<text class="d-h" x="660" y="394" text-anchor="middle">T Technological</text>
+<text class="d-s" x="660" y="422" text-anchor="middle">pgvector rivals vector DBs</text>
+<text class="d-s" x="660" y="442" text-anchor="middle">HNSW indexes are RAM-heavy</text>
+<text class="d-s" x="660" y="462" text-anchor="middle">embedding models churn</text>
+<rect class="d-tag acc" x="610" y="492" width="101" height="22" rx="11"/>
+<text class="d-s" x="660" y="507" text-anchor="middle">drives 3, 4</text>
+<text class="d-s" x="536" y="596" text-anchor="middle">outside forces we cannot change, only plan the launch around</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg class="hd" viewBox="0 0 800 660" role="img" aria-label="Work anniversary certificate for Ravi Menon, 3 years on the platform team: avatar between two stars over a name ribbon, a timeline of shipped milestones from Terraform modules in 2023 through an EKS upgrade, an Argo CD rollout and a Backstage golden path in 2026, and three stats" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="work-anniversary-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box g2" x="30" y="16" width="740" height="628" rx="6"/>
+<rect class="d-box g2" x="52" y="38" width="696" height="584" rx="4"/>
+<text class="d-k" x="76" y="68">Happy work anniversary</text>
+<text class="d-k" x="724" y="68" text-anchor="end">Oct 2026</text>
+
+<path class="d-fill g2" d="M220.0,94.0 L231.8,123.8 L263.7,125.8 L239.0,146.2 L247.0,177.2 L220.0,160.0 L193.0,177.2 L201.0,146.2 L176.3,125.8 L208.2,123.8 Z"/>
+<path class="d-fill g2" d="M580.0,94.0 L591.8,123.8 L623.7,125.8 L599.0,146.2 L607.0,177.2 L580.0,160.0 L553.0,177.2 L561.0,146.2 L536.3,125.8 L568.2,123.8 Z"/>
+<circle class="d-box g4" cx="400" cy="128" r="58"/>
+<circle class="d-fill g4" cx="400" cy="112" r="19"/>
+<path class="d-fill g4" d="M364,170 C366,138 434,138 436,170 Z"/>
+
+<path class="d-box" d="M150,198 H290 V262 H150 L172,230 Z"/>
+<path class="d-box" d="M650,198 H510 V262 H650 L628,230 Z"/>
+<path class="d-box" d="M250,240 L290,262 L290,240 Z"/>
+<path class="d-box" d="M550,240 L510,262 L510,240 Z"/>
+<rect class="d-box" x="250" y="176" width="300" height="64" rx="2"/>
+<text class="d-h" x="400" y="204" text-anchor="middle">Ravi Menon</text>
+<text class="d-s" x="400" y="226" text-anchor="middle">3 years on Platform, Oct 2023 to Oct 2026</text>
+
+<text class="d-k" x="76" y="296">Shipped milestones</text>
+<path class="d-edge acc" d="M92,352 H716" marker-end="url(#work-anniversary-d1-ah)"/>
+<rect class="d-tag" x="110" y="310" width="60" height="22" rx="11"/>
+<text class="d-m" x="140" y="325" text-anchor="middle">2023</text>
+<rect class="d-tag" x="283" y="310" width="60" height="22" rx="11"/>
+<text class="d-m" x="313" y="325" text-anchor="middle">2024</text>
+<rect class="d-tag" x="457" y="310" width="60" height="22" rx="11"/>
+<text class="d-m" x="487" y="325" text-anchor="middle">2025</text>
+<rect class="d-tag acc" x="630" y="310" width="60" height="22" rx="11"/>
+<text class="d-m" x="660" y="325" text-anchor="middle">2026</text>
+<circle class="d-fill g4" cx="140" cy="352" r="7"/>
+<circle class="d-fill g4" cx="313" cy="352" r="7"/>
+<circle class="d-fill g4" cx="487" cy="352" r="7"/>
+<circle class="d-fill g3" cx="660" cy="352" r="7"/>
+<image class="d-logo" data-logo="terraform.io" data-name="Terraform" x="126" y="370" width="28" height="28"/>
+<text class="d-t" x="140" y="420" text-anchor="middle">Terraform modules</text>
+<text class="d-s" x="140" y="438" text-anchor="middle">first PR: VPC module</text>
+<text class="d-s" x="140" y="454" text-anchor="middle">used by 60 repos</text>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="299" y="370" width="28" height="28"/>
+<text class="d-t" x="313" y="420" text-anchor="middle">EKS 1.24 to 1.29</text>
+<text class="d-s" x="313" y="438" text-anchor="middle">40 clusters upgraded</text>
+<text class="d-s" x="313" y="454" text-anchor="middle">zero downtime</text>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="473" y="370" width="28" height="28"/>
+<text class="d-t" x="487" y="420" text-anchor="middle">Argo CD rollout</text>
+<text class="d-s" x="487" y="438" text-anchor="middle">300 services on GitOps</text>
+<text class="d-s" x="487" y="454" text-anchor="middle">no more kubectl apply</text>
+<image class="d-logo" data-logo="backstage.io" data-name="Backstage" x="646" y="370" width="28" height="28"/>
+<text class="d-t" x="660" y="420" text-anchor="middle">Golden path</text>
+<text class="d-s" x="660" y="438" text-anchor="middle">Backstage templates</text>
+<text class="d-s" x="660" y="454" text-anchor="middle">new service in 1 hr</text>
+
+<rect class="d-box g1" x="76" y="486" width="200" height="78" rx="10"/>
+<text class="d-h" x="176" y="518" text-anchor="middle">1,240</text>
+<text class="d-s" x="176" y="540" text-anchor="middle">PRs merged</text>
+<rect class="d-box g3" x="300" y="486" width="200" height="78" rx="10"/>
+<text class="d-h" x="400" y="518" text-anchor="middle">38</text>
+<text class="d-s" x="400" y="540" text-anchor="middle">incidents led as IC</text>
+<rect class="d-box g0" x="524" y="486" width="200" height="78" rx="10"/>
+<text class="d-h" x="624" y="518" text-anchor="middle">4</text>
+<text class="d-s" x="624" y="540" text-anchor="middle">engineers mentored</text>
+<path class="d-grid" d="M260,590 H540"/>
+<text class="d-s" x="400" y="606" text-anchor="middle">signed by 18 teammates in #platform</text>
+</svg>

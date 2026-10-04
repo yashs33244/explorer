@@ -1,0 +1,79 @@
+<svg class="hd" viewBox="0 0 800 566" role="img" aria-label="Outcome map for a developer education program: three activities, codebase tours, pairing on a first PR and incident game days, each lead to a countable output and a behavior outcome, which add up to the impact of new engineers shipping safely in their first week" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="outcome-mapping-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">PLATFORM ENGINEERING ENABLEMENT, Q3</text>
+<text class="d-h" x="24" y="56">Outcome map: developer education program</text>
+
+<!-- column headers -->
+<text class="d-k" x="196" y="94">ACTIVITIES</text>
+<text class="d-s" x="196" y="112">what we run</text>
+<text class="d-k" x="396" y="94">OUTPUTS</text>
+<text class="d-s" x="396" y="112">what we can count</text>
+<text class="d-k" x="596" y="94">OUTCOMES</text>
+<text class="d-s" x="596" y="112">what changes in behavior</text>
+
+<!-- program -->
+<rect class="d-box g0" x="24" y="222" width="136" height="68" rx="12"/>
+<text class="d-t" x="92" y="246" text-anchor="middle">Dev education</text>
+<text class="d-t" x="92" y="263" text-anchor="middle">program</text>
+<text class="d-s" x="92" y="281" text-anchor="middle">40 new hires</text>
+<path class="d-edge" d="M160,256 C178,256 176,166 194,166" marker-end="url(#outcome-mapping-d1-ah)"/>
+<path class="d-edge" d="M160,256 H194" marker-end="url(#outcome-mapping-d1-ah)"/>
+<path class="d-edge" d="M160,256 C178,256 176,346 194,346" marker-end="url(#outcome-mapping-d1-ah)"/>
+
+<!-- row 1 -->
+<rect class="d-box g3" x="196" y="132" width="170" height="68" rx="12"/>
+<text class="d-t" x="281" y="161" text-anchor="middle">Codebase tours</text>
+<text class="d-s" x="281" y="181" text-anchor="middle">weekly, 45 min</text>
+<path class="d-edge" d="M366,166 H394" marker-end="url(#outcome-mapping-d1-ah)"/>
+<rect class="d-box g3" x="396" y="132" width="170" height="68" rx="12"/>
+<image class="d-logo" data-logo="loom.com" data-name="Loom" x="408" y="156" width="20" height="20"/>
+<text class="d-t" x="436" y="161">12 tour videos</text>
+<text class="d-s" x="436" y="181">recorded in Loom</text>
+<path class="d-edge" d="M566,166 H594" marker-end="url(#outcome-mapping-d1-ah)"/>
+<rect class="d-box g3" x="596" y="132" width="164" height="68" rx="12"/>
+<text class="d-t" x="678" y="161" text-anchor="middle">Self-serve answers</text>
+<text class="d-s" x="678" y="181" text-anchor="middle">#help-eng asks -40%</text>
+
+<!-- row 2 -->
+<rect class="d-box g4" x="196" y="222" width="170" height="68" rx="12"/>
+<text class="d-t" x="281" y="251" text-anchor="middle">Pair on first PR</text>
+<text class="d-s" x="281" y="271" text-anchor="middle">senior + new hire</text>
+<path class="d-edge" d="M366,256 H394" marker-end="url(#outcome-mapping-d1-ah)"/>
+<rect class="d-box g4" x="396" y="222" width="170" height="68" rx="12"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="408" y="246" width="20" height="20"/>
+<text class="d-t" x="436" y="251">38 PRs merged</text>
+<text class="d-s" x="436" y="271">first PRs, week 1</text>
+<path class="d-edge" d="M566,256 H594" marker-end="url(#outcome-mapping-d1-ah)"/>
+<rect class="d-box g4" x="596" y="222" width="164" height="68" rx="12"/>
+<text class="d-t" x="678" y="251" text-anchor="middle">First PR in 3 days</text>
+<text class="d-s" x="678" y="271" text-anchor="middle">median was 11 days</text>
+
+<!-- row 3 -->
+<rect class="d-box g2" x="196" y="312" width="170" height="68" rx="12"/>
+<text class="d-t" x="281" y="341" text-anchor="middle">Incident game days</text>
+<text class="d-s" x="281" y="361" text-anchor="middle">monthly, in staging</text>
+<path class="d-edge" d="M366,346 H394" marker-end="url(#outcome-mapping-d1-ah)"/>
+<rect class="d-box g2" x="396" y="312" width="170" height="68" rx="12"/>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="408" y="336" width="20" height="20"/>
+<text class="d-t" x="436" y="341">6 drills run</text>
+<text class="d-s" x="436" y="361">runbooks updated</text>
+<path class="d-edge" d="M566,346 H594" marker-end="url(#outcome-mapping-d1-ah)"/>
+<rect class="d-box g2" x="596" y="312" width="164" height="68" rx="12"/>
+<text class="d-t" x="678" y="341" text-anchor="middle">On-call by week 4</text>
+<text class="d-s" x="678" y="361" text-anchor="middle">was week 8</text>
+
+<!-- outcomes add up to impact -->
+<path class="d-edge" d="M760,166 H772 V346 H760 M760,256 H772"/>
+<path class="d-edge acc thick" d="M772,346 V400 H678 V422" marker-end="url(#outcome-mapping-d1-ah)"/>
+<text class="d-lab" x="668" y="416" text-anchor="end">adds up to</text>
+
+<rect class="d-band g0" x="24" y="424" width="752" height="122" rx="14"/>
+<text class="d-k" x="44" y="452">IMPACT</text>
+<text class="d-h" x="44" y="476">New engineers ship safely in their first week</text>
+<rect class="d-tag" x="44" y="494" width="230" height="30" rx="15"/>
+<text class="d-s" x="159" y="514" text-anchor="middle">time to 10th PR: 41d to 19d</text>
+<rect class="d-tag" x="290" y="494" width="230" height="30" rx="15"/>
+<text class="d-s" x="405" y="514" text-anchor="middle">change failure rate: 18% to 9%</text>
+<rect class="d-tag" x="536" y="494" width="224" height="30" rx="15"/>
+<text class="d-s" x="648" y="514" text-anchor="middle">onboarding NPS: 31 to 62</text>
+</svg>

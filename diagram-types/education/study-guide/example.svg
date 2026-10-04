@@ -1,0 +1,104 @@
+<svg class="hd" viewBox="0 0 800 660" role="img" aria-label="Study guide for a system design interview: a spiral notebook page with four cards for key concepts, practice prompts, latency numbers and building blocks, over a second page with a mock interview log and weak spots" xmlns="http://www.w3.org/2000/svg">
+<g transform="rotate(10 535 340)">
+<rect class="d-box" x="340" y="70" width="390" height="540" rx="6"/>
+<rect class="d-box g2" x="575" y="110" width="140" height="210" rx="8"/>
+<text class="d-k" x="589" y="134">Mocks</text>
+<text class="d-t" x="589" y="160">Mock 1</text>
+<text class="d-s" x="589" y="177">rate limiter 3/4</text>
+<text class="d-t" x="589" y="205">Mock 2</text>
+<text class="d-s" x="589" y="222">news feed 2/4</text>
+<text class="d-t" x="589" y="250">Mock 3</text>
+<text class="d-s" x="589" y="267">chat, booked Fri</text>
+<text class="d-m" x="589" y="300">goal: 3/4+</text>
+<rect class="d-box g4" x="575" y="340" width="140" height="196" rx="8"/>
+<text class="d-k" x="589" y="364">Weak spots</text>
+<text class="d-s" x="589" y="392">picking shard keys</text>
+<text class="d-s" x="589" y="418">cache stampede</text>
+<text class="d-s" x="589" y="444">hot partitions</text>
+<text class="d-s" x="589" y="470">exactly-once claims</text>
+<text class="d-m" x="589" y="510">reread DDIA ch 6</text>
+</g>
+<rect class="d-box" x="60" y="30" width="470" height="600" rx="6"/>
+<rect class="d-line" x="51" y="56" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="86" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="116" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="146" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="176" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="206" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="236" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="266" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="296" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="326" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="356" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="386" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="416" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="446" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="476" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="506" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="536" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="566" width="18" height="9" rx="4.5"/>
+<rect class="d-line" x="51" y="596" width="18" height="9" rx="4.5"/>
+<text class="d-k" x="90" y="58">Week 3 of 4</text>
+<text class="d-h" x="90" y="80">System design interview</text>
+<text class="d-s" x="90" y="98">study guide for the backend onsite</text>
+<rect class="d-tag acc" x="406" y="48" width="104" height="24" rx="12"/>
+<text class="d-s" x="458" y="64" text-anchor="middle">onsite Oct 21</text>
+<rect class="d-box g1" x="90" y="116" width="200" height="240" rx="8"/>
+<text class="d-k" x="104" y="140">01</text>
+<text class="d-h" x="104" y="162">Key concepts</text>
+<text class="d-t" x="104" y="192">CAP theorem</text>
+<text class="d-s" x="104" y="208">pick C or A in a partition</text>
+<text class="d-t" x="104" y="236">Consistent hashing</text>
+<text class="d-s" x="104" y="252">add a node, move 1/N keys</text>
+<text class="d-t" x="104" y="280">Quorum R + W &gt; N</text>
+<text class="d-s" x="104" y="296">reads see the last write</text>
+<text class="d-t" x="104" y="324">Back-pressure</text>
+<text class="d-s" x="104" y="340">slow producers, shed load</text>
+<rect class="d-box g2" x="310" y="116" width="200" height="240" rx="8"/>
+<text class="d-k" x="324" y="140">02</text>
+<text class="d-h" x="324" y="162">Practice prompts</text>
+<rect class="d-line" x="324" y="182" width="13" height="13" rx="3"/>
+<rect class="d-fillacc" x="327" y="185" width="7" height="7" rx="1.5"/>
+<text class="d-t" x="346" y="194">URL shortener</text>
+<rect class="d-line" x="324" y="212" width="13" height="13" rx="3"/>
+<rect class="d-fillacc" x="327" y="215" width="7" height="7" rx="1.5"/>
+<text class="d-t" x="346" y="224">Rate limiter</text>
+<rect class="d-line" x="324" y="242" width="13" height="13" rx="3"/>
+<rect class="d-fillacc" x="327" y="245" width="7" height="7" rx="1.5"/>
+<text class="d-t" x="346" y="254">News feed fan-out</text>
+<rect class="d-line" x="324" y="272" width="13" height="13" rx="3"/>
+<text class="d-t" x="346" y="284">Chat with presence</text>
+<rect class="d-line" x="324" y="302" width="13" height="13" rx="3"/>
+<text class="d-t" x="346" y="314">Distributed cron</text>
+<text class="d-m" x="324" y="342">45 min each, timed</text>
+<rect class="d-box g3" x="90" y="372" width="200" height="240" rx="8"/>
+<text class="d-k" x="104" y="396">03</text>
+<text class="d-h" x="104" y="418">Numbers to know</text>
+<text class="d-s" x="104" y="448">L1 cache hit</text>
+<text class="d-m" x="276" y="448" text-anchor="end">1 ns</text>
+<text class="d-s" x="104" y="474">RAM read</text>
+<text class="d-m" x="276" y="474" text-anchor="end">100 ns</text>
+<text class="d-s" x="104" y="500">SSD random read</text>
+<text class="d-m" x="276" y="500" text-anchor="end">100 us</text>
+<text class="d-s" x="104" y="526">Same-DC round trip</text>
+<text class="d-m" x="276" y="526" text-anchor="end">0.5 ms</text>
+<text class="d-s" x="104" y="552">Cross-region trip</text>
+<text class="d-m" x="276" y="552" text-anchor="end">150 ms</text>
+<text class="d-s" x="104" y="578">1M requests/day</text>
+<text class="d-m" x="276" y="578" text-anchor="end">12 rps</text>
+<rect class="d-box g4" x="310" y="372" width="200" height="240" rx="8"/>
+<text class="d-k" x="324" y="396">04</text>
+<text class="d-h" x="324" y="418">Building blocks</text>
+<image class="d-logo" data-logo="redis.io" data-name="Redis" x="324" y="436" width="24" height="24"/>
+<text class="d-t" x="358" y="447">Redis</text>
+<text class="d-s" x="358" y="462">cache, rate counters</text>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="324" y="476" width="24" height="24"/>
+<text class="d-t" x="358" y="487">Kafka</text>
+<text class="d-s" x="358" y="502">log, fan-out queue</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="324" y="516" width="24" height="24"/>
+<text class="d-t" x="358" y="527">PostgreSQL</text>
+<text class="d-s" x="358" y="542">OLTP, strong reads</text>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="Amazon S3" x="324" y="556" width="24" height="24"/>
+<text class="d-t" x="358" y="567">Amazon S3</text>
+<text class="d-s" x="358" y="582">blobs, media, backups</text>
+</svg>

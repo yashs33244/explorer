@@ -1,0 +1,114 @@
+<svg class="hd" viewBox="0 0 800 630" role="img" aria-label="Balance wheel of engineering health for the payments-api team in Q3: tests 8, docs 4, on-call 5, deploy frequency 9, security 6 and onboarding 3 out of 10, with docs and onboarding flagged as the Q4 focus" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="34">Engineering health, payments team, Q3</text>
+<text class="d-h" x="40" y="56">Six areas scored 0 to 10, the lowest get Q4 time</text>
+<path class="d-edge" d="M400,336 L280,146"/>
+<path class="d-edge" d="M400,336 L520,146"/>
+<path class="d-edge" d="M400,336 L650,336"/>
+<path class="d-edge" d="M400,336 L520,526"/>
+<path class="d-edge" d="M400,336 L280,526"/>
+<path class="d-edge" d="M400,336 L150,336"/>
+<rect class="d-box g4" x="178" y="84" width="204" height="124" rx="10"/>
+<image class="d-logo" data-logo="pytest.org" data-name="pytest" x="192" y="96" width="18" height="18"/>
+<text class="d-t" x="218" y="110">Tests</text>
+<text class="d-h" x="366" y="111" text-anchor="end">8</text>
+<text class="d-s" x="194" y="136">84% branch coverage</text>
+<text class="d-m" x="194" y="156">pytest, 2.1k tests</text>
+<rect class="d-fill g4" x="194.0" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="211.4" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="228.8" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="246.2" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="263.6" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="281.0" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="298.4" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4" x="315.8" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4 o1" x="333.2" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g4 o1" x="350.6" y="174" width="14" height="14" rx="3"/>
+<rect class="d-box g0" x="418" y="84" width="204" height="124" rx="10"/>
+<image class="d-logo" data-logo="backstage.io" data-name="Backstage" x="432" y="96" width="18" height="18"/>
+<text class="d-t" x="458" y="110">Docs</text>
+<text class="d-h" x="606" y="111" text-anchor="end">4</text>
+<text class="d-s" x="434" y="136">40% of APIs documented</text>
+<text class="d-m" x="434" y="156">TechDocs, stale ADRs</text>
+<rect class="d-fill g0" x="434.0" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0" x="451.4" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0" x="468.8" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0" x="486.2" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0 o1" x="503.6" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0 o1" x="521.0" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0 o1" x="538.4" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0 o1" x="555.8" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0 o1" x="573.2" y="174" width="14" height="14" rx="3"/>
+<rect class="d-fill g0 o1" x="590.6" y="174" width="14" height="14" rx="3"/>
+<rect class="d-tag acc" x="506" y="72" width="98" height="24" rx="12"/>
+<text class="d-k" x="517" y="89">Q4 focus</text>
+<rect class="d-box g3" x="548" y="274" width="204" height="124" rx="10"/>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="562" y="286" width="18" height="18"/>
+<text class="d-t" x="588" y="300">On-call</text>
+<text class="d-h" x="736" y="301" text-anchor="end">5</text>
+<text class="d-s" x="564" y="326">11 pages a week</text>
+<text class="d-m" x="564" y="346">2 of 6 runbooks</text>
+<rect class="d-fill g3" x="564.0" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3" x="581.4" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3" x="598.8" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3" x="616.2" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3" x="633.6" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3 o1" x="651.0" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3 o1" x="668.4" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3 o1" x="685.8" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3 o1" x="703.2" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g3 o1" x="720.6" y="364" width="14" height="14" rx="3"/>
+<rect class="d-box g5" x="418" y="464" width="204" height="124" rx="10"/>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="432" y="476" width="18" height="18"/>
+<text class="d-t" x="458" y="490">Deploy frequency</text>
+<text class="d-h" x="606" y="491" text-anchor="end">9</text>
+<text class="d-s" x="434" y="516">14 deploys a day</text>
+<text class="d-m" x="434" y="536">9 min lead time</text>
+<rect class="d-fill g5" x="434.0" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="451.4" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="468.8" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="486.2" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="503.6" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="521.0" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="538.4" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="555.8" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5" x="573.2" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g5 o1" x="590.6" y="554" width="14" height="14" rx="3"/>
+<rect class="d-box g2" x="178" y="464" width="204" height="124" rx="10"/>
+<image class="d-logo" data-logo="snyk.io" data-name="Snyk" x="192" y="476" width="18" height="18"/>
+<text class="d-t" x="218" y="490">Security</text>
+<text class="d-h" x="366" y="491" text-anchor="end">6</text>
+<text class="d-s" x="194" y="516">3 high CVEs open</text>
+<text class="d-m" x="194" y="536">fix SLA 14 days</text>
+<rect class="d-fill g2" x="194.0" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2" x="211.4" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2" x="228.8" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2" x="246.2" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2" x="263.6" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2" x="281.0" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2 o1" x="298.4" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2 o1" x="315.8" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2 o1" x="333.2" y="554" width="14" height="14" rx="3"/>
+<rect class="d-fill g2 o1" x="350.6" y="554" width="14" height="14" rx="3"/>
+<rect class="d-box g1" x="48" y="274" width="204" height="124" rx="10"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub Codespaces" x="62" y="286" width="18" height="18"/>
+<text class="d-t" x="88" y="300">Onboarding</text>
+<text class="d-h" x="236" y="301" text-anchor="end">3</text>
+<text class="d-s" x="64" y="326">9 days to first PR</text>
+<text class="d-m" x="64" y="346">no dev container</text>
+<rect class="d-fill g1" x="64.0" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1" x="81.4" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1" x="98.8" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="116.2" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="133.6" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="151.0" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="168.4" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="185.8" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="203.2" y="364" width="14" height="14" rx="3"/>
+<rect class="d-fill g1 o1" x="220.6" y="364" width="14" height="14" rx="3"/>
+<rect class="d-tag acc" x="136" y="262" width="98" height="24" rx="12"/>
+<text class="d-k" x="147" y="279">Q4 focus</text>
+<circle class="d-fillpaper" cx="400" cy="336" r="56"/>
+<text class="d-t" x="400" y="332" text-anchor="middle">payments-api</text>
+<text class="d-s" x="400" y="352" text-anchor="middle">avg 5.8 / 10</text>
+<text class="d-s" x="400" y="618" text-anchor="middle">Each card is one area; filled cells show its score out of 10</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg class="hd" viewBox="0 0 800 620" role="img" aria-label="Bubble map describing the Redis cache in front of the orders database with eight adjectives: fast, volatile, stale-prone, bounded, shared, costly, key-addressed and read-heavy, each with the fact behind it" xmlns="http://www.w3.org/2000/svg">
+<path class="d-edge" d="M400,216 L400,152"/>
+<path class="d-edge" d="M467,249 L547,189"/>
+<path class="d-edge" d="M484,300 L616,300"/>
+<path class="d-edge" d="M467,351 L547,411"/>
+<path class="d-edge" d="M400,384 L400,448"/>
+<path class="d-edge" d="M333,351 L253,411"/>
+<path class="d-edge" d="M316,300 L184,300"/>
+<path class="d-edge" d="M333,249 L253,189"/>
+<circle class="d-soft g3" cx="400" cy="88" r="64"/>
+<text class="d-t" x="400" y="82" text-anchor="middle">fast</text>
+<text class="d-s" x="400" y="101" text-anchor="middle">0.3 ms reads</text>
+<text class="d-m" x="400" y="117" text-anchor="middle">vs 18 ms SQL</text>
+<circle class="d-soft g3" cx="598" cy="150" r="64"/>
+<text class="d-t" x="598" y="144" text-anchor="middle">bounded</text>
+<text class="d-s" x="598" y="163" text-anchor="middle">maxmemory 8gb</text>
+<text class="d-m" x="598" y="179" text-anchor="middle">allkeys-lru</text>
+<circle class="d-soft g3" cx="680" cy="300" r="64"/>
+<text class="d-t" x="680" y="294" text-anchor="middle">shared</text>
+<text class="d-s" x="680" y="313" text-anchor="middle">all 24 pods</text>
+<text class="d-m" x="680" y="329" text-anchor="middle">one keyspace</text>
+<circle class="d-soft g3" cx="598" cy="450" r="64"/>
+<text class="d-t" x="598" y="444" text-anchor="middle">volatile</text>
+<text class="d-s" x="598" y="463" text-anchor="middle">lost on restart</text>
+<text class="d-m" x="598" y="479" text-anchor="middle">AOF off</text>
+<circle class="d-soft g3" cx="400" cy="512" r="64"/>
+<text class="d-t" x="400" y="506" text-anchor="middle">stale-prone</text>
+<text class="d-s" x="400" y="525" text-anchor="middle">TTL 300 s</text>
+<text class="d-m" x="400" y="541" text-anchor="middle">no invalidate</text>
+<circle class="d-soft g3" cx="202" cy="450" r="64"/>
+<text class="d-t" x="202" y="444" text-anchor="middle">key-addressed</text>
+<text class="d-s" x="202" y="463" text-anchor="middle">order:{id}</text>
+<text class="d-m" x="202" y="479" text-anchor="middle">no joins</text>
+<circle class="d-soft g3" cx="120" cy="300" r="64"/>
+<text class="d-t" x="120" y="294" text-anchor="middle">read-heavy</text>
+<text class="d-s" x="120" y="313" text-anchor="middle">reads per write</text>
+<text class="d-m" x="120" y="329" text-anchor="middle">40:1 GET:SET</text>
+<circle class="d-soft g3" cx="202" cy="150" r="64"/>
+<text class="d-t" x="202" y="144" text-anchor="middle">costly</text>
+<text class="d-s" x="202" y="163" text-anchor="middle">RAM, not disk</text>
+<text class="d-m" x="202" y="179" text-anchor="middle">$0.22 / GB-h</text>
+<circle class="d-box g3" cx="400" cy="300" r="84"/>
+<image class="d-logo" data-logo="redis.io" data-name="Redis" x="385" y="242" width="30" height="30"/>
+<text class="d-h" x="400" y="306" text-anchor="middle">orders cache</text>
+<text class="d-m" x="400" y="328" text-anchor="middle">redis:6379</text>
+<text class="d-s" x="400" y="346" text-anchor="middle">Redis 7</text>
+<text class="d-s" x="20" y="608">Each bubble is one adjective the on-call team uses for the cache, with the number that backs it.</text>
+</svg>

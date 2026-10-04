@@ -1,0 +1,68 @@
+<svg class="hd" viewBox="0 0 800 572" role="img" aria-label="Quad chart of the payments team tech debt backlog plotted on impact against effort: quick wins, big bets, fill-ins and money pits, three items each with the evidence behind them" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="quad-chart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-box g1" x="95" y="20" width="335" height="226" rx="14"/>
+<text class="d-k" x="113" y="48">High impact, low effort</text>
+<text class="d-h" x="113" y="72">Quick wins</text>
+<rect class="d-tag" x="302" y="56" width="110" height="22" rx="11"/>
+<text class="d-s" x="357" y="71" text-anchor="middle">do this sprint</text>
+<rect class="d-box" x="111" y="90" width="303" height="40" rx="8"/>
+<text class="d-t" x="125" y="115">Quarantine flaky e2e tests</text>
+<text class="d-m" x="400" y="115" text-anchor="end">14% reruns</text>
+<rect class="d-box" x="111" y="140" width="303" height="40" rx="8"/>
+<text class="d-t" x="125" y="165">Index orders.user_id</text>
+<text class="d-m" x="400" y="165" text-anchor="end">p95 1.8s</text>
+<rect class="d-box" x="111" y="190" width="303" height="40" rx="8"/>
+<text class="d-t" x="125" y="215">Delete stale feature flags</text>
+<text class="d-m" x="400" y="215" text-anchor="end">90 flags</text>
+<rect class="d-box g0" x="445" y="20" width="335" height="226" rx="14"/>
+<text class="d-k" x="463" y="48">High impact, high effort</text>
+<text class="d-h" x="463" y="72">Big bets</text>
+<rect class="d-tag" x="652" y="56" width="110" height="22" rx="11"/>
+<text class="d-s" x="707" y="71" text-anchor="middle">plan a quarter</text>
+<rect class="d-box" x="461" y="90" width="303" height="40" rx="8"/>
+<text class="d-t" x="475" y="115">Upgrade Postgres 11 to 16</text>
+<text class="d-m" x="750" y="115" text-anchor="end">EOL Nov</text>
+<rect class="d-box" x="461" y="140" width="303" height="40" rx="8"/>
+<text class="d-t" x="475" y="165">Split billing from monolith</text>
+<text class="d-m" x="750" y="165" text-anchor="end">48k LOC</text>
+<rect class="d-box" x="461" y="190" width="303" height="40" rx="8"/>
+<text class="d-t" x="475" y="215">Move auth to OIDC</text>
+<text class="d-m" x="750" y="215" text-anchor="end">3 IdPs</text>
+<rect class="d-box g4" x="95" y="262" width="335" height="226" rx="14"/>
+<text class="d-k" x="113" y="290">Low impact, low effort</text>
+<text class="d-h" x="113" y="314">Fill-ins</text>
+<rect class="d-tag" x="328" y="298" width="84" height="22" rx="11"/>
+<text class="d-s" x="370" y="313" text-anchor="middle">slack time</text>
+<rect class="d-box" x="111" y="332" width="303" height="40" rx="8"/>
+<text class="d-t" x="125" y="357">Rename utils2.py</text>
+<text class="d-m" x="400" y="357" text-anchor="end">142 imports</text>
+<rect class="d-box" x="111" y="382" width="303" height="40" rx="8"/>
+<text class="d-t" x="125" y="407">Bump eslint 8 to 9</text>
+<text class="d-m" x="400" y="407" text-anchor="end">2 rules</text>
+<rect class="d-box" x="111" y="432" width="303" height="40" rx="8"/>
+<text class="d-t" x="125" y="457">Fix README setup</text>
+<text class="d-m" x="400" y="457" text-anchor="end">3 steps</text>
+<rect class="d-box g3" x="445" y="262" width="335" height="226" rx="14"/>
+<text class="d-k" x="463" y="290">Low impact, high effort</text>
+<text class="d-h" x="463" y="314">Money pits</text>
+<rect class="d-tag" x="652" y="298" width="110" height="22" rx="11"/>
+<text class="d-s" x="707" y="313" text-anchor="middle">say no for now</text>
+<rect class="d-box" x="461" y="332" width="303" height="40" rx="8"/>
+<text class="d-t" x="475" y="357">Rewrite ingest in Rust</text>
+<text class="d-m" x="750" y="357" text-anchor="end">CPU 12%</text>
+<rect class="d-box" x="461" y="382" width="303" height="40" rx="8"/>
+<text class="d-t" x="475" y="407">Port admin UI to React</text>
+<text class="d-m" x="750" y="407" text-anchor="end">6 users</text>
+<rect class="d-box" x="461" y="432" width="303" height="40" rx="8"/>
+<text class="d-t" x="475" y="457">Custom ORM to Prisma</text>
+<text class="d-m" x="750" y="457" text-anchor="end">92 models</text>
+<path class="d-axis" d="M62,488 V24" marker-end="url(#quad-chart-d1-ah)"/>
+<text class="d-t" x="40" y="254" text-anchor="middle" transform="rotate(-90 40 254)">Impact</text>
+<text class="d-s" x="76" y="60" text-anchor="middle" transform="rotate(-90 76 60)">high</text>
+<text class="d-s" x="76" y="468" text-anchor="middle" transform="rotate(-90 76 468)">low</text>
+<path class="d-axis" d="M95,510 H776" marker-end="url(#quad-chart-d1-ah)"/>
+<text class="d-s" x="99" y="528">low</text>
+<text class="d-s" x="770" y="528" text-anchor="end">high</text>
+<text class="d-t" x="437" y="529" text-anchor="middle">Effort (eng weeks)</text>
+<text class="d-s" x="20" y="556">Payments team debt backlog, Q4. Evidence sits right of each item. Ship Quick wins first, then fund one Big bet.</text>
+</svg>

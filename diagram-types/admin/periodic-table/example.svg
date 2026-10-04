@@ -1,0 +1,277 @@
+<svg class="hd" viewBox="0 0 800 612" role="img" aria-label="Periodic table of DevOps tools used by a platform team: source control, CI, build deploy and IaC, observability and security in the main table, cloud and collaboration in the strip below, each cell with a number, symbol, logo and name" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="20" y="30">platform-eng / tooling radar 2026</text>
+<text class="d-h" x="20" y="54">Periodic table of DevOps tools</text>
+<text class="d-s" x="20" y="74">Columns group tools by job, read left to right as code moves from commit to production.</text>
+<rect class="d-box g1" x="13" y="92" width="75" height="64" rx="6"/>
+<text class="d-s" x="20" y="109">1</text>
+<image class="d-logo" data-logo="git-scm.com" data-name="Git" x="62" y="97" width="20" height="20"/>
+<text class="d-h" x="20" y="132">Gt</text>
+<text class="d-s" x="18" y="149">Git</text>
+<rect class="d-box g5" x="706" y="92" width="75" height="64" rx="6"/>
+<text class="d-s" x="713" y="109">2</text>
+<image class="d-logo" data-logo="vaultproject.io" data-name="Vault" x="755" y="97" width="20" height="20"/>
+<text class="d-h" x="713" y="132">Vt</text>
+<text class="d-s" x="711" y="149">Vault</text>
+<rect class="d-box g1" x="13" y="158" width="75" height="64" rx="6"/>
+<text class="d-s" x="20" y="175">3</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="62" y="163" width="20" height="20"/>
+<text class="d-h" x="20" y="198">Gh</text>
+<text class="d-s" x="18" y="215">GitHub</text>
+<rect class="d-box g2" x="90" y="158" width="75" height="64" rx="6"/>
+<text class="d-s" x="97" y="175">4</text>
+<image class="d-logo" data-logo="jenkins.io" data-name="Jenkins" x="139" y="163" width="20" height="20"/>
+<text class="d-h" x="97" y="198">Je</text>
+<text class="d-s" x="95" y="215">Jenkins</text>
+<rect class="d-box g4" x="475" y="158" width="75" height="64" rx="6"/>
+<text class="d-s" x="482" y="175">5</text>
+<image class="d-logo" data-logo="prometheus.io" data-name="Prometheus" x="524" y="163" width="20" height="20"/>
+<text class="d-h" x="482" y="198">Pr</text>
+<text class="d-s" x="480" y="215">Prom</text>
+<rect class="d-box g4" x="552" y="158" width="75" height="64" rx="6"/>
+<text class="d-s" x="559" y="175">6</text>
+<image class="d-logo" data-logo="grafana.com" data-name="Grafana" x="601" y="163" width="20" height="20"/>
+<text class="d-h" x="559" y="198">Gf</text>
+<text class="d-s" x="557" y="215">Grafana</text>
+<rect class="d-box g4" x="629" y="158" width="75" height="64" rx="6"/>
+<text class="d-s" x="636" y="175">7</text>
+<image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="678" y="163" width="20" height="20"/>
+<text class="d-h" x="636" y="198">Dd</text>
+<text class="d-s" x="634" y="215">Datadog</text>
+<rect class="d-box g5" x="706" y="158" width="75" height="64" rx="6"/>
+<text class="d-s" x="713" y="175">8</text>
+<image class="d-logo" data-logo="snyk.io" data-name="Snyk" x="755" y="163" width="20" height="20"/>
+<text class="d-h" x="713" y="198">Sn</text>
+<text class="d-s" x="711" y="215">Snyk</text>
+<rect class="d-box g1" x="13" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="20" y="241">9</text>
+<image class="d-logo" data-logo="gitlab.com" data-name="GitLab" x="62" y="229" width="20" height="20"/>
+<text class="d-h" x="20" y="264">Gl</text>
+<text class="d-s" x="18" y="281">GitLab</text>
+<rect class="d-box g2" x="90" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="97" y="241">10</text>
+<image class="d-logo" data-logo="circleci.com" data-name="CircleCI" x="139" y="229" width="20" height="20"/>
+<text class="d-h" x="97" y="264">Cc</text>
+<text class="d-s" x="95" y="281">CircleCI</text>
+<rect class="d-box g3" x="167" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="174" y="241">11</text>
+<image class="d-logo" data-logo="maven.apache.org" data-name="Maven" x="216" y="229" width="20" height="20"/>
+<text class="d-h" x="174" y="264">Mv</text>
+<text class="d-s" x="172" y="281">Maven</text>
+<rect class="d-box g3" x="244" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="251" y="241">12</text>
+<image class="d-logo" data-logo="gradle.org" data-name="Gradle" x="293" y="229" width="20" height="20"/>
+<text class="d-h" x="251" y="264">Gr</text>
+<text class="d-s" x="249" y="281">Gradle</text>
+<rect class="d-box g3" x="321" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="328" y="241">13</text>
+<image class="d-logo" data-logo="npmjs.com" data-name="npm" x="370" y="229" width="20" height="20"/>
+<text class="d-h" x="328" y="264">Np</text>
+<text class="d-s" x="326" y="281">npm</text>
+<rect class="d-box g3" x="398" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="405" y="241">14</text>
+<image class="d-logo" data-logo="jfrog.com" data-name="JFrog" x="447" y="229" width="20" height="20"/>
+<text class="d-h" x="405" y="264">Jf</text>
+<text class="d-s" x="403" y="281">JFrog</text>
+<rect class="d-box g4" x="475" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="482" y="241">15</text>
+<image class="d-logo" data-logo="newrelic.com" data-name="New Relic" x="524" y="229" width="20" height="20"/>
+<text class="d-h" x="482" y="264">Nr</text>
+<text class="d-s" x="480" y="281">New Relic</text>
+<rect class="d-box g4" x="552" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="559" y="241">16</text>
+<image class="d-logo" data-logo="elastic.co" data-name="Elastic" x="601" y="229" width="20" height="20"/>
+<text class="d-h" x="559" y="264">El</text>
+<text class="d-s" x="557" y="281">Elastic</text>
+<rect class="d-box g4" x="629" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="636" y="241">17</text>
+<image class="d-logo" data-logo="splunk.com" data-name="Splunk" x="678" y="229" width="20" height="20"/>
+<text class="d-h" x="636" y="264">Sp</text>
+<text class="d-s" x="634" y="281">Splunk</text>
+<rect class="d-box g5" x="706" y="224" width="75" height="64" rx="6"/>
+<text class="d-s" x="713" y="241">18</text>
+<image class="d-logo" data-logo="sonarsource.com" data-name="SonarQube" x="755" y="229" width="20" height="20"/>
+<text class="d-h" x="713" y="264">Sq</text>
+<text class="d-s" x="711" y="281">SonarQube</text>
+<rect class="d-box g1" x="13" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="20" y="307">19</text>
+<image class="d-logo" data-logo="bitbucket.org" data-name="Bitbucket" x="62" y="295" width="20" height="20"/>
+<text class="d-h" x="20" y="330">Bb</text>
+<text class="d-s" x="18" y="347">Bitbucket</text>
+<rect class="d-box g2" x="90" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="97" y="307">20</text>
+<image class="d-logo" data-logo="buildkite.com" data-name="Buildkite" x="139" y="295" width="20" height="20"/>
+<text class="d-h" x="97" y="330">Bk</text>
+<text class="d-s" x="95" y="347">Buildkite</text>
+<rect class="d-box g3" x="167" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="174" y="307">21</text>
+<image class="d-logo" data-logo="docker.com" data-name="Docker" x="216" y="295" width="20" height="20"/>
+<text class="d-h" x="174" y="330">Dk</text>
+<text class="d-s" x="172" y="347">Docker</text>
+<rect class="d-box g3" x="244" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="251" y="307">22</text>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="293" y="295" width="20" height="20"/>
+<text class="d-h" x="251" y="330">K8</text>
+<text class="d-s" x="249" y="347">K8s</text>
+<rect class="d-box g3" x="321" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="328" y="307">23</text>
+<image class="d-logo" data-logo="helm.sh" data-name="Helm" x="370" y="295" width="20" height="20"/>
+<text class="d-h" x="328" y="330">Hm</text>
+<text class="d-s" x="326" y="347">Helm</text>
+<rect class="d-box g3" x="398" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="405" y="307">24</text>
+<image class="d-logo" data-logo="argoproj.io" data-name="Argo CD" x="447" y="295" width="20" height="20"/>
+<text class="d-h" x="405" y="330">Ar</text>
+<text class="d-s" x="403" y="347">Argo CD</text>
+<rect class="d-box g4" x="475" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="482" y="307">25</text>
+<image class="d-logo" data-logo="jaegertracing.io" data-name="Jaeger" x="524" y="295" width="20" height="20"/>
+<text class="d-h" x="482" y="330">Jg</text>
+<text class="d-s" x="480" y="347">Jaeger</text>
+<rect class="d-box g4" x="552" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="559" y="307">26</text>
+<image class="d-logo" data-logo="opentelemetry.io" data-name="OTel" x="601" y="295" width="20" height="20"/>
+<text class="d-h" x="559" y="330">Ot</text>
+<text class="d-s" x="557" y="347">OTel</text>
+<rect class="d-box g4" x="629" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="636" y="307">27</text>
+<image class="d-logo" data-logo="sentry.io" data-name="Sentry" x="678" y="295" width="20" height="20"/>
+<text class="d-h" x="636" y="330">Se</text>
+<text class="d-s" x="634" y="347">Sentry</text>
+<rect class="d-box g5" x="706" y="290" width="75" height="64" rx="6"/>
+<text class="d-s" x="713" y="307">28</text>
+<image class="d-logo" data-logo="aquasec.com" data-name="Trivy" x="755" y="295" width="20" height="20"/>
+<text class="d-h" x="713" y="330">Tv</text>
+<text class="d-s" x="711" y="347">Trivy</text>
+<rect class="d-box g1" x="13" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="20" y="373">29</text>
+<image class="d-logo" data-logo="gerritcodereview.com" data-name="Gerrit" x="62" y="361" width="20" height="20"/>
+<text class="d-h" x="20" y="396">Ge</text>
+<text class="d-s" x="18" y="413">Gerrit</text>
+<rect class="d-box g2" x="90" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="97" y="373">30</text>
+<image class="d-logo" data-logo="travis-ci.com" data-name="Travis CI" x="139" y="361" width="20" height="20"/>
+<text class="d-h" x="97" y="396">Tr</text>
+<text class="d-s" x="95" y="413">Travis CI</text>
+<rect class="d-box g3" x="167" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="174" y="373">31</text>
+<image class="d-logo" data-logo="terraform.io" data-name="Terraform" x="216" y="361" width="20" height="20"/>
+<text class="d-h" x="174" y="396">Tf</text>
+<text class="d-s" x="172" y="413">Terraform</text>
+<rect class="d-box g3" x="244" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="251" y="373">32</text>
+<image class="d-logo" data-logo="pulumi.com" data-name="Pulumi" x="293" y="361" width="20" height="20"/>
+<text class="d-h" x="251" y="396">Pu</text>
+<text class="d-s" x="249" y="413">Pulumi</text>
+<rect class="d-box g3" x="321" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="328" y="373">33</text>
+<image class="d-logo" data-logo="ansible.com" data-name="Ansible" x="370" y="361" width="20" height="20"/>
+<text class="d-h" x="328" y="396">An</text>
+<text class="d-s" x="326" y="413">Ansible</text>
+<rect class="d-box g3" x="398" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="405" y="373">34</text>
+<image class="d-logo" data-logo="packer.io" data-name="Packer" x="447" y="361" width="20" height="20"/>
+<text class="d-h" x="405" y="396">Pk</text>
+<text class="d-s" x="403" y="413">Packer</text>
+<rect class="d-box g4" x="475" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="482" y="373">35</text>
+<image class="d-logo" data-logo="thanos.io" data-name="Thanos" x="524" y="361" width="20" height="20"/>
+<text class="d-h" x="482" y="396">Th</text>
+<text class="d-s" x="480" y="413">Thanos</text>
+<rect class="d-box g4" x="552" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="559" y="373">36</text>
+<image class="d-logo" data-logo="dynatrace.com" data-name="Dynatrace" x="601" y="361" width="20" height="20"/>
+<text class="d-h" x="559" y="396">Dt</text>
+<text class="d-s" x="557" y="413">Dynatrace</text>
+<rect class="d-box g4" x="629" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="636" y="373">37</text>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="678" y="361" width="20" height="20"/>
+<text class="d-h" x="636" y="396">Pd</text>
+<text class="d-s" x="634" y="413">PagerDuty</text>
+<rect class="d-box g5" x="706" y="356" width="75" height="64" rx="6"/>
+<text class="d-s" x="713" y="373">38</text>
+<image class="d-logo" data-logo="okta.com" data-name="Okta" x="755" y="361" width="20" height="20"/>
+<text class="d-h" x="713" y="396">Ok</text>
+<text class="d-s" x="711" y="413">Okta</text>
+<text class="d-k" x="153" y="477" text-anchor="end">Cloud</text>
+<rect class="d-box g0" x="167" y="440" width="75" height="64" rx="6"/>
+<text class="d-s" x="174" y="457">39</text>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="216" y="445" width="20" height="20"/>
+<text class="d-h" x="174" y="480">Aw</text>
+<text class="d-s" x="172" y="497">AWS</text>
+<rect class="d-box g0" x="244" y="440" width="75" height="64" rx="6"/>
+<text class="d-s" x="251" y="457">40</text>
+<image class="d-logo" data-logo="cloud.google.com" data-name="GCP" x="293" y="445" width="20" height="20"/>
+<text class="d-h" x="251" y="480">Gc</text>
+<text class="d-s" x="249" y="497">GCP</text>
+<rect class="d-box g0" x="321" y="440" width="75" height="64" rx="6"/>
+<text class="d-s" x="328" y="457">41</text>
+<image class="d-logo" data-logo="azure.microsoft.com" data-name="Azure" x="370" y="445" width="20" height="20"/>
+<text class="d-h" x="328" y="480">Az</text>
+<text class="d-s" x="326" y="497">Azure</text>
+<rect class="d-box g0" x="398" y="440" width="75" height="64" rx="6"/>
+<text class="d-s" x="405" y="457">42</text>
+<image class="d-logo" data-logo="cloudflare.com" data-name="Cloudflare" x="447" y="445" width="20" height="20"/>
+<text class="d-h" x="405" y="480">Cf</text>
+<text class="d-s" x="403" y="497">Cloudflare</text>
+<rect class="d-box g0" x="475" y="440" width="75" height="64" rx="6"/>
+<text class="d-s" x="482" y="457">43</text>
+<image class="d-logo" data-logo="vercel.com" data-name="Vercel" x="524" y="445" width="20" height="20"/>
+<text class="d-h" x="482" y="480">Vc</text>
+<text class="d-s" x="480" y="497">Vercel</text>
+<rect class="d-box g0" x="552" y="440" width="75" height="64" rx="6"/>
+<text class="d-s" x="559" y="457">44</text>
+<image class="d-logo" data-logo="fly.io" data-name="Fly.io" x="601" y="445" width="20" height="20"/>
+<text class="d-h" x="559" y="480">Fl</text>
+<text class="d-s" x="557" y="497">Fly.io</text>
+<text class="d-k" x="153" y="543" text-anchor="end">Collab</text>
+<rect class="d-box g0" x="167" y="506" width="75" height="64" rx="6"/>
+<text class="d-s" x="174" y="523">45</text>
+<image class="d-logo" data-logo="slack.com" data-name="Slack" x="216" y="511" width="20" height="20"/>
+<text class="d-h" x="174" y="546">Sl</text>
+<text class="d-s" x="172" y="563">Slack</text>
+<rect class="d-box g0" x="244" y="506" width="75" height="64" rx="6"/>
+<text class="d-s" x="251" y="523">46</text>
+<image class="d-logo" data-logo="atlassian.com" data-name="Jira" x="293" y="511" width="20" height="20"/>
+<text class="d-h" x="251" y="546">Ji</text>
+<text class="d-s" x="249" y="563">Jira</text>
+<rect class="d-box g0" x="321" y="506" width="75" height="64" rx="6"/>
+<text class="d-s" x="328" y="523">47</text>
+<image class="d-logo" data-logo="linear.app" data-name="Linear" x="370" y="511" width="20" height="20"/>
+<text class="d-h" x="328" y="546">Ln</text>
+<text class="d-s" x="326" y="563">Linear</text>
+<rect class="d-box g0" x="398" y="506" width="75" height="64" rx="6"/>
+<text class="d-s" x="405" y="523">48</text>
+<image class="d-logo" data-logo="notion.so" data-name="Notion" x="447" y="511" width="20" height="20"/>
+<text class="d-h" x="405" y="546">No</text>
+<text class="d-s" x="403" y="563">Notion</text>
+<rect class="d-box g0" x="475" y="506" width="75" height="64" rx="6"/>
+<text class="d-s" x="482" y="523">49</text>
+<image class="d-logo" data-logo="backstage.io" data-name="Backstage" x="524" y="511" width="20" height="20"/>
+<text class="d-h" x="482" y="546">Bs</text>
+<text class="d-s" x="480" y="563">Backstage</text>
+<rect class="d-box g0" x="552" y="506" width="75" height="64" rx="6"/>
+<text class="d-s" x="559" y="523">50</text>
+<image class="d-logo" data-logo="zoom.us" data-name="Zoom" x="601" y="511" width="20" height="20"/>
+<text class="d-h" x="559" y="546">Zm</text>
+<text class="d-s" x="557" y="563">Zoom</text>
+<rect class="d-blob2" x="169" y="92" width="302" height="128" rx="10"/>
+<text class="d-k" x="181" y="112">Key</text>
+<rect class="d-box g3" x="181" y="122" width="75" height="64" rx="6"/>
+<text class="d-s" x="188" y="139">22</text>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="230" y="127" width="20" height="20"/>
+<text class="d-h" x="188" y="162">K8</text>
+<text class="d-s" x="188" y="179">K8s</text>
+<rect class="d-box g1" x="273" y="102" width="14" height="14" rx="3"/>
+<text class="d-s" x="293" y="114">Source control</text>
+<rect class="d-box g2" x="273" y="122" width="14" height="14" rx="3"/>
+<text class="d-s" x="293" y="134">CI runners</text>
+<rect class="d-box g3" x="273" y="142" width="14" height="14" rx="3"/>
+<text class="d-s" x="293" y="154">Build, deploy, IaC</text>
+<rect class="d-box g4" x="273" y="162" width="14" height="14" rx="3"/>
+<text class="d-s" x="293" y="174">Observability</text>
+<rect class="d-box g5" x="273" y="182" width="14" height="14" rx="3"/>
+<text class="d-s" x="293" y="194">Security</text>
+<rect class="d-box g0" x="273" y="202" width="14" height="14" rx="3"/>
+<text class="d-s" x="293" y="214">Cloud and collab</text>
+<text class="d-s" x="20" y="592">Middle block rows: build and artifacts, containers and delivery, infrastructure as code.</text>
+</svg>

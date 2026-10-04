@@ -1,0 +1,101 @@
+<svg class="hd" viewBox="0 0 800 724" role="img" aria-label="Quick reference card for on-call engineers: four panels of git and kubectl commands for undoing commits, syncing branches, inspecting pods and rolling back deploys, with history-rewriting and production-changing commands flagged" xmlns="http://www.w3.org/2000/svg">
+<rect class="d-box g2" x="42" y="54" width="716" height="654" rx="14"/>
+<rect class="d-box g2" x="62" y="30" width="716" height="654" rx="14"/>
+<rect class="d-tag" x="86" y="50" width="196" height="26" rx="6"/>
+<text class="d-k" x="184" y="68" text-anchor="middle">QUICK REFERENCE v2.3</text>
+<text class="d-h" x="86" y="104">On-call cheat sheet: git + kubectl</text>
+<text class="d-s" x="86" y="124">checkout team, pinned in #checkout-oncall</text>
+<circle class="d-fillpaper" cx="726" cy="84" r="34"/>
+<image class="d-logo" data-logo="git-scm.com" data-name="git" x="700" y="72" width="24" height="24"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="728" y="72" width="24" height="24"/>
+<rect class="d-box g0" x="86" y="146" width="330" height="240" rx="10"/>
+<image class="d-logo" data-logo="git-scm.com" data-name="git" x="100" y="158" width="22" height="22"/>
+<text class="d-t" x="130" y="174">Undo safely</text>
+<path class="d-grid" d="M100,188 H402"/>
+<text class="d-m" x="100" y="204">git restore --staged app.py</text>
+<text class="d-s" x="100" y="219">unstage, keep edits</text>
+<path class="d-grid" d="M100,226 H402"/>
+<text class="d-m" x="100" y="242">git commit --amend --no-edit</text>
+<text class="d-s" x="100" y="257">fold fix into last commit</text>
+<rect class="d-tag acc" x="328" y="244" width="74" height="16" rx="8"/>
+<text class="d-s" x="365" y="256" text-anchor="middle">rewrites</text>
+<path class="d-grid" d="M100,264 H402"/>
+<text class="d-m" x="100" y="280">git revert 3f9c2e1</text>
+<text class="d-s" x="100" y="295">undo a pushed commit</text>
+<path class="d-grid" d="M100,302 H402"/>
+<text class="d-m" x="100" y="318">git reset --soft HEAD~1</text>
+<text class="d-s" x="100" y="333">uncommit, keep changes</text>
+<rect class="d-tag acc" x="328" y="320" width="74" height="16" rx="8"/>
+<text class="d-s" x="365" y="332" text-anchor="middle">rewrites</text>
+<path class="d-grid" d="M100,340 H402"/>
+<text class="d-m" x="100" y="356">git reflog</text>
+<text class="d-s" x="100" y="371">find a lost commit</text>
+<rect class="d-box g0" x="430" y="146" width="330" height="240" rx="10"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="444" y="158" width="22" height="22"/>
+<text class="d-t" x="474" y="174">Branch and sync</text>
+<path class="d-grid" d="M444,188 H746"/>
+<text class="d-m" x="444" y="204">git switch -c fix/oom-1432</text>
+<text class="d-s" x="444" y="219">new branch for the fix</text>
+<path class="d-grid" d="M444,226 H746"/>
+<text class="d-m" x="444" y="242">git fetch --prune</text>
+<text class="d-s" x="444" y="257">drop deleted remote refs</text>
+<path class="d-grid" d="M444,264 H746"/>
+<text class="d-m" x="444" y="280">git rebase origin/main</text>
+<text class="d-s" x="444" y="295">replay on latest main</text>
+<rect class="d-tag acc" x="672" y="282" width="74" height="16" rx="8"/>
+<text class="d-s" x="709" y="294" text-anchor="middle">rewrites</text>
+<path class="d-grid" d="M444,302 H746"/>
+<text class="d-m" x="444" y="318">git push --force-with-lease</text>
+<text class="d-s" x="444" y="333">safe force push</text>
+<rect class="d-tag acc" x="672" y="320" width="74" height="16" rx="8"/>
+<text class="d-s" x="709" y="332" text-anchor="middle">rewrites</text>
+<path class="d-grid" d="M444,340 H746"/>
+<text class="d-m" x="444" y="356">git stash push -m wip</text>
+<text class="d-s" x="444" y="371">park half-done work</text>
+<rect class="d-box g0" x="86" y="402" width="330" height="240" rx="10"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="100" y="414" width="22" height="22"/>
+<text class="d-t" x="130" y="430">Inspect a pod</text>
+<path class="d-grid" d="M100,444 H402"/>
+<text class="d-m" x="100" y="460">kubectl get pods -n checkout</text>
+<text class="d-s" x="100" y="475">list pods and restarts</text>
+<path class="d-grid" d="M100,482 H402"/>
+<text class="d-m" x="100" y="498">kubectl describe pod api-7d9f</text>
+<text class="d-s" x="100" y="513">events, OOMKilled</text>
+<path class="d-grid" d="M100,520 H402"/>
+<text class="d-m" x="100" y="536">kubectl logs api-7d9f --previous</text>
+<text class="d-s" x="100" y="551">logs of crashed run</text>
+<path class="d-grid" d="M100,558 H402"/>
+<text class="d-m" x="100" y="574">kubectl top pod -n checkout</text>
+<text class="d-s" x="100" y="589">CPU and memory now</text>
+<path class="d-grid" d="M100,596 H402"/>
+<text class="d-m" x="100" y="612">kubectl exec -it api-7d9f -- sh</text>
+<text class="d-s" x="100" y="627">shell inside the pod</text>
+<rect class="d-box g0" x="430" y="402" width="330" height="240" rx="10"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="444" y="414" width="22" height="22"/>
+<text class="d-t" x="474" y="430">Ship and roll back</text>
+<path class="d-grid" d="M444,444 H746"/>
+<text class="d-m" x="444" y="460">kubectl rollout status deploy/api</text>
+<text class="d-s" x="444" y="475">wait for new pods</text>
+<path class="d-grid" d="M444,482 H746"/>
+<text class="d-m" x="444" y="498">kubectl rollout undo deploy/api</text>
+<text class="d-s" x="444" y="513">back to last revision</text>
+<rect class="d-tag acc" x="700" y="500" width="46" height="16" rx="8"/>
+<text class="d-s" x="723" y="512" text-anchor="middle">prod</text>
+<path class="d-grid" d="M444,520 H746"/>
+<text class="d-m" x="444" y="536">kubectl rollout history deploy/api</text>
+<text class="d-s" x="444" y="551">list revisions</text>
+<path class="d-grid" d="M444,558 H746"/>
+<text class="d-m" x="444" y="574">kubectl scale deploy/api --replicas=6</text>
+<text class="d-s" x="444" y="589">add capacity now</text>
+<rect class="d-tag acc" x="700" y="576" width="46" height="16" rx="8"/>
+<text class="d-s" x="723" y="588" text-anchor="middle">prod</text>
+<path class="d-grid" d="M444,596 H746"/>
+<text class="d-m" x="444" y="612">kubectl config current-context</text>
+<text class="d-s" x="444" y="627">check cluster first</text>
+<rect class="d-tag acc" x="86" y="652" width="74" height="18" rx="9"/>
+<text class="d-s" x="123" y="665" text-anchor="middle">rewrites</text>
+<text class="d-s" x="168" y="665">changes history, never on main</text>
+<rect class="d-tag acc" x="380" y="652" width="46" height="18" rx="9"/>
+<text class="d-s" x="403" y="665" text-anchor="middle">prod</text>
+<text class="d-s" x="434" y="665">changes live traffic, post in #incidents</text>
+</svg>

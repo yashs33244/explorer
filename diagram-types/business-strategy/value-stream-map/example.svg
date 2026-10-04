@@ -1,0 +1,111 @@
+<svg class="hd" viewBox="0 0 800 630" role="img" aria-label="Value stream map of payments-svc from commit to production: code review, CI build and test, staging and QA, production release, with queue wait and work time per stage, a timeline ladder, and a lead time of 33.5 hours of which 2 hours is work" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="value-stream-map-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">payments-svc: commit to production</text>
+<text class="d-s" x="780" y="30" text-anchor="end">median, last 30 days, 212 changes</text>
+<rect class="d-band g2" x="20" y="46" width="190" height="372" rx="2"/>
+<text class="d-h" transform="translate(34,92) scale(2)">1</text>
+<text class="d-t" x="68" y="84">Code review</text>
+<path class="d-fill g2" d="M54,116 L70,144 L38,144 Z"/>
+<text class="d-tw" x="54" y="140" text-anchor="middle">I</text>
+<text class="d-t" x="82" y="128">wait 18 h</text>
+<text class="d-s" x="82" y="145">6 PRs open</text>
+<rect class="d-box" x="40" y="168" width="150" height="128" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub PR" x="50" y="178" width="20" height="20"/>
+<text class="d-t" x="78" y="193">GitHub PR</text>
+<path class="d-grid" d="M40 208 H190"/>
+<text class="d-m" x="50" y="230">C/T</text>
+<text class="d-s" x="180" y="230" text-anchor="end">45 min</text>
+<text class="d-m" x="50" y="252">%C&amp;A</text>
+<text class="d-s" x="180" y="252" text-anchor="end">82%</text>
+<text class="d-m" x="50" y="274">who</text>
+<text class="d-s" x="180" y="274" text-anchor="end">2 reviewers</text>
+<text class="d-k" x="40" y="322">kaizen</text>
+<rect class="d-note g4" x="40" y="330" width="150" height="56" rx="3"/>
+<text class="d-tn" x="50" y="353">Auto-assign</text>
+<text class="d-tn" x="50" y="371">CODEOWNERS</text>
+<rect class="d-band g5" x="210" y="46" width="190" height="372" rx="2"/>
+<text class="d-h" transform="translate(224,92) scale(2)">2</text>
+<text class="d-t" x="258" y="84">CI build + test</text>
+<path class="d-fill g2" d="M244,116 L260,144 L228,144 Z"/>
+<text class="d-tw" x="244" y="140" text-anchor="middle">I</text>
+<text class="d-t" x="272" y="128">wait 25 min</text>
+<text class="d-s" x="272" y="145">runner queue</text>
+<rect class="d-box" x="230" y="168" width="150" height="128" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="Actions" x="240" y="178" width="20" height="20"/>
+<text class="d-t" x="268" y="193">Actions</text>
+<path class="d-grid" d="M230 208 H380"/>
+<text class="d-m" x="240" y="230">C/T</text>
+<text class="d-s" x="370" y="230" text-anchor="end">22 min</text>
+<text class="d-m" x="240" y="252">%C&amp;A</text>
+<text class="d-s" x="370" y="252" text-anchor="end">91%</text>
+<text class="d-m" x="240" y="274">who</text>
+<text class="d-s" x="370" y="274" text-anchor="end">flaky retries</text>
+<text class="d-k" x="230" y="322">kaizen</text>
+<rect class="d-note g4" x="230" y="330" width="150" height="56" rx="3"/>
+<text class="d-tn" x="240" y="353">Cache deps,</text>
+<text class="d-tn" x="240" y="371">split shards</text>
+<rect class="d-band g3" x="400" y="46" width="190" height="372" rx="2"/>
+<text class="d-h" transform="translate(414,92) scale(2)">3</text>
+<text class="d-t" x="448" y="84">Staging + QA</text>
+<path class="d-fill g2" d="M434,116 L450,144 L418,144 Z"/>
+<text class="d-tw" x="434" y="140" text-anchor="middle">I</text>
+<text class="d-t" x="462" y="128">wait 9 h</text>
+<text class="d-s" x="462" y="145">nightly batch</text>
+<rect class="d-box" x="420" y="168" width="150" height="128" rx="8"/>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="430" y="178" width="20" height="20"/>
+<text class="d-t" x="458" y="193">Argo CD</text>
+<path class="d-grid" d="M420 208 H570"/>
+<text class="d-m" x="430" y="230">C/T</text>
+<text class="d-s" x="560" y="230" text-anchor="end">40 min</text>
+<text class="d-m" x="430" y="252">%C&amp;A</text>
+<text class="d-s" x="560" y="252" text-anchor="end">88%</text>
+<text class="d-m" x="430" y="274">who</text>
+<text class="d-s" x="560" y="274" text-anchor="end">manual smoke</text>
+<text class="d-k" x="420" y="322">kaizen</text>
+<rect class="d-note g4" x="420" y="330" width="150" height="56" rx="3"/>
+<text class="d-tn" x="430" y="353">Deploy per</text>
+<text class="d-tn" x="430" y="371">merge</text>
+<rect class="d-band g0" x="590" y="46" width="190" height="372" rx="2"/>
+<text class="d-h" transform="translate(604,92) scale(2)">4</text>
+<text class="d-t" x="638" y="84">Prod release</text>
+<path class="d-fill g2" d="M624,116 L640,144 L608,144 Z"/>
+<text class="d-tw" x="624" y="140" text-anchor="middle">I</text>
+<text class="d-t" x="652" y="128">wait 4 h</text>
+<text class="d-s" x="652" y="145">change window</text>
+<rect class="d-box" x="610" y="168" width="150" height="128" rx="8"/>
+<image class="d-logo" data-logo="launchdarkly.com" data-name="LaunchDarkly" x="620" y="178" width="20" height="20"/>
+<text class="d-t" x="648" y="193">LaunchDarkly</text>
+<path class="d-grid" d="M610 208 H760"/>
+<text class="d-m" x="620" y="230">C/T</text>
+<text class="d-s" x="750" y="230" text-anchor="end">15 min</text>
+<text class="d-m" x="620" y="252">%C&amp;A</text>
+<text class="d-s" x="750" y="252" text-anchor="end">99%</text>
+<text class="d-m" x="620" y="274">who</text>
+<text class="d-s" x="750" y="274" text-anchor="end">flag rollout</text>
+<text class="d-k" x="610" y="322">kaizen</text>
+<rect class="d-note g4" x="610" y="330" width="150" height="56" rx="3"/>
+<text class="d-tn" x="620" y="353">Drop window,</text>
+<text class="d-tn" x="620" y="371">canary at 5%</text>
+<path class="d-edge thick" d="M192,232 H228" marker-end="url(#value-stream-map-d1-ah)"/>
+<path class="d-edge thick" d="M382,232 H418" marker-end="url(#value-stream-map-d1-ah)"/>
+<path class="d-edge thick" d="M572,232 H608" marker-end="url(#value-stream-map-d1-ah)"/>
+<text class="d-k" x="20" y="448">Timeline: wait above, work below</text>
+<path class="d-edge thick" d="M20,482 H140 V524 H210 V482 H330 V524 H400 V482 H520 V524 H590 V482 H710 V524 H780"/>
+<text class="d-lab" x="80" y="476" text-anchor="middle">18 h</text>
+<text class="d-lab" x="175" y="542" text-anchor="middle">45 min</text>
+<text class="d-lab" x="270" y="476" text-anchor="middle">25 min</text>
+<text class="d-lab" x="365" y="542" text-anchor="middle">22 min</text>
+<text class="d-lab" x="460" y="476" text-anchor="middle">9 h</text>
+<text class="d-lab" x="555" y="542" text-anchor="middle">40 min</text>
+<text class="d-lab" x="650" y="476" text-anchor="middle">4 h</text>
+<text class="d-lab" x="745" y="542" text-anchor="middle">15 min</text>
+<rect class="d-box g1" x="20" y="564" width="760" height="54" rx="6"/>
+<text class="d-k" x="36" y="586">Lead time</text>
+<text class="d-h" x="36" y="606">33.5 h</text>
+<text class="d-k" x="224" y="586">Work time</text>
+<text class="d-h" x="224" y="606">2.0 h</text>
+<text class="d-k" x="412" y="586">Flow efficiency</text>
+<text class="d-h" x="412" y="606">6%</text>
+<text class="d-k" x="600" y="586">Biggest wait</text>
+<text class="d-h" x="600" y="606">code review</text>
+</svg>

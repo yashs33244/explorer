@@ -1,0 +1,78 @@
+<svg class="hd" viewBox="0 0 800 610" role="img" aria-label="Reed-Kellogg sentence diagram of 'The scheduler quickly retries failed jobs': the word row colored by part of speech, a baseline with subject scheduler, verb retries and object jobs, modifiers The, quickly and failed on slanted lines, and the same sentence read as a code call scheduler.retry(jobs.where(status=failed), backoff=FAST)" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="30">Sentence diagram</text>
+<text class="d-h" x="40" y="52">"The scheduler quickly retries failed jobs."</text>
+<text class="d-m" x="760" y="30" text-anchor="end">Reed-Kellogg</text>
+<text class="d-s" x="760" y="52" text-anchor="end">runbook line, job-runner docs</text>
+<rect class="d-box g5" x="173" y="74" width="48" height="40" rx="10"/>
+<text class="d-t" x="197" y="99" text-anchor="middle">The</text>
+<rect class="d-box g1" x="229" y="74" width="90" height="40" rx="10"/>
+<text class="d-t" x="274" y="99" text-anchor="middle">scheduler</text>
+<rect class="d-box g2" x="327" y="74" width="76" height="40" rx="10"/>
+<text class="d-t" x="365" y="99" text-anchor="middle">quickly</text>
+<rect class="d-box g3" x="411" y="74" width="76" height="40" rx="10"/>
+<text class="d-t" x="449" y="99" text-anchor="middle">retries</text>
+<rect class="d-box g0" x="495" y="74" width="68" height="40" rx="10"/>
+<text class="d-t" x="529" y="99" text-anchor="middle">failed</text>
+<rect class="d-box g4" x="571" y="74" width="56" height="40" rx="10"/>
+<text class="d-t" x="599" y="99" text-anchor="middle">jobs</text>
+<text class="d-s" x="197" y="132" text-anchor="middle">article</text>
+<text class="d-s" x="274" y="132" text-anchor="middle">subject</text>
+<text class="d-s" x="365" y="132" text-anchor="middle">adverb</text>
+<text class="d-s" x="449" y="132" text-anchor="middle">verb</text>
+<text class="d-s" x="529" y="132" text-anchor="middle">adjective</text>
+<text class="d-s" x="599" y="132" text-anchor="middle">object</text>
+<rect class="d-blob2" x="40" y="150" width="720" height="262" rx="14"/>
+<path class="d-edge thick" d="M70,242 H730"/>
+<path class="d-edge thick" d="M290,198 V286"/>
+<path class="d-edge thick" d="M510,204 V242"/>
+<text class="d-k" x="175" y="208" text-anchor="middle">Subject</text>
+<text class="d-k" x="400" y="208" text-anchor="middle">Predicate</text>
+<text class="d-k" x="620" y="208" text-anchor="middle">Direct object</text>
+<rect class="d-box g1" x="110" y="220" width="130" height="44" rx="12"/>
+<text class="d-t" x="175" y="247" text-anchor="middle">scheduler</text>
+<rect class="d-box g3" x="340" y="220" width="120" height="44" rx="12"/>
+<text class="d-t" x="400" y="247" text-anchor="middle">retries</text>
+<rect class="d-box g4" x="560" y="220" width="120" height="44" rx="12"/>
+<text class="d-t" x="620" y="247" text-anchor="middle">jobs</text>
+<path class="d-edge" d="M150,264 L206,350 H232"/>
+<path class="d-edge" d="M380,264 L436,350 H462"/>
+<path class="d-edge" d="M600,264 L656,350 H682"/>
+<g transform="translate(178,307) rotate(57)"><rect class="d-box g5" x="-28" y="-14" width="56" height="28" rx="8"/><text class="d-t" x="0" y="5" text-anchor="middle">The</text></g>
+<g transform="translate(408,307) rotate(57)"><rect class="d-box g2" x="-40" y="-14" width="80" height="28" rx="8"/><text class="d-t" x="0" y="5" text-anchor="middle">quickly</text></g>
+<g transform="translate(628,307) rotate(57)"><rect class="d-box g0" x="-36" y="-14" width="72" height="28" rx="8"/><text class="d-t" x="0" y="5" text-anchor="middle">failed</text></g>
+<text class="d-lab" x="300" y="182">divider crosses: subject | verb</text>
+<text class="d-lab" x="522" y="182">stops at line: verb | object</text>
+<text class="d-s" x="150" y="382">which scheduler:</text>
+<text class="d-s" x="150" y="398">the one instance</text>
+<text class="d-s" x="380" y="382">how it retries:</text>
+<text class="d-s" x="380" y="398">the backoff policy</text>
+<text class="d-s" x="600" y="382">which jobs:</text>
+<text class="d-s" x="600" y="398">a status filter</text>
+<text class="d-k" x="40" y="440">Same sentence, read as a call</text>
+<rect class="d-lane" x="40" y="450" width="720" height="48" rx="12"/>
+<text class="d-m" x="60" y="479">scheduler.retry(jobs.where(status="failed"), backoff=FAST)</text>
+<text class="d-s" x="740" y="479" text-anchor="end">worker/scheduler.py</text>
+<rect class="d-fill g1" x="60" y="485" width="65" height="3" rx="1"/>
+<rect class="d-fill g3" x="132" y="485" width="36" height="3" rx="1"/>
+<rect class="d-fill g4" x="175" y="485" width="29" height="3" rx="1"/>
+<rect class="d-fill g0" x="312" y="485" width="43" height="3" rx="1"/>
+<rect class="d-fill g2" x="384" y="485" width="86" height="3" rx="1"/>
+<circle class="d-fill g1" cx="52" cy="530" r="7"/>
+<text class="d-t" x="66" y="535">Subject</text>
+<text class="d-s" x="130" y="535">receiver: the service</text>
+<circle class="d-fill g3" cx="292" cy="530" r="7"/>
+<text class="d-t" x="306" y="535">Verb</text>
+<text class="d-s" x="350" y="535">the method called</text>
+<circle class="d-fill g4" cx="532" cy="530" r="7"/>
+<text class="d-t" x="546" y="535">Object</text>
+<text class="d-s" x="604" y="535">the argument</text>
+<circle class="d-fill g5" cx="52" cy="570" r="7"/>
+<text class="d-t" x="66" y="575">Article</text>
+<text class="d-s" x="130" y="575">which instance</text>
+<circle class="d-fill g2" cx="292" cy="570" r="7"/>
+<text class="d-t" x="306" y="575">Adverb</text>
+<text class="d-s" x="364" y="575">a policy flag</text>
+<circle class="d-fill g0" cx="532" cy="570" r="7"/>
+<text class="d-t" x="546" y="575">Adjective</text>
+<text class="d-s" x="624" y="575">filter on the argument</text>
+</svg>

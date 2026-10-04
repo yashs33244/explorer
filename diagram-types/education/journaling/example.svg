@@ -1,0 +1,76 @@
+<svg class="hd" viewBox="0 0 800 640" role="img" aria-label="Engineering daily log as a stack of journal pages: Monday and Tuesday entries peek out behind Wednesday 1 October, which records what shipped (an idempotency PR, the payments-api v2.14 deploy, an incident postmortem), what is blocked (a staging Kafka quota), what was learned (an N+1 query found with pg_stat_statements) and ruled lines for tomorrow, energy, focus time and a note to self" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="30">Journaling template</text>
+<text class="d-h" x="40" y="52">Engineering daily log, payments on-call week</text>
+<text class="d-m" x="760" y="30" text-anchor="end">one page per day</text>
+<text class="d-s" x="760" y="52" text-anchor="end">5 minutes before logging off</text>
+<rect class="d-box g2" x="40" y="70" width="300" height="440" rx="6"/>
+<text class="d-t" x="56" y="94">Mon 29 Sep</text>
+<path class="d-grid" d="M56,104 H324"/>
+<rect class="d-lane" x="56" y="118" width="110" height="150" rx="8"/>
+<text class="d-k" x="66" y="138">Shipped</text>
+<text class="d-s" x="66" y="160">PR #4182</text>
+<text class="d-s" x="66" y="178">retry backoff</text>
+<text class="d-s" x="66" y="196">for webhooks</text>
+<text class="d-s" x="66" y="214">to staging</text>
+<text class="d-s" x="56" y="310">Energy 4/5</text>
+<path class="d-grid" d="M56,318 H166"/>
+<text class="d-s" x="56" y="340">Focus 4h 20m</text>
+<path class="d-grid" d="M56,348 H166"/>
+<text class="d-s" x="56" y="370">No pages</text>
+<path class="d-grid" d="M56,378 H166"/>
+<rect class="d-box g0" x="180" y="110" width="300" height="440" rx="6"/>
+<text class="d-t" x="196" y="134">Tue 30 Sep</text>
+<path class="d-grid" d="M196,144 H464"/>
+<rect class="d-lane" x="196" y="158" width="110" height="150" rx="8"/>
+<text class="d-k" x="206" y="178">Blocked</text>
+<text class="d-s" x="206" y="200">flaky e2e:</text>
+<text class="d-s" x="206" y="218">checkout spec</text>
+<text class="d-s" x="206" y="236">CI at 38 min</text>
+<text class="d-s" x="206" y="254">paired w/ QA</text>
+<text class="d-s" x="196" y="350">Energy 2/5</text>
+<path class="d-grid" d="M196,358 H306"/>
+<text class="d-s" x="196" y="380">Focus 1h 45m</text>
+<path class="d-grid" d="M196,388 H306"/>
+<text class="d-s" x="196" y="410">Paged 02:14</text>
+<path class="d-grid" d="M196,418 H306"/>
+<rect class="d-box g4" x="320" y="150" width="440" height="470" rx="6"/>
+<text class="d-t" x="336" y="176">Wed 1 Oct</text>
+<text class="d-s" x="744" y="176" text-anchor="end">on-call, day 7 of 7</text>
+<path class="d-grid" d="M336,188 H744"/>
+<rect class="d-lane" x="336" y="202" width="200" height="238" rx="8"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="348" y="214" width="22" height="22"/>
+<text class="d-k" x="378" y="230">Today I shipped</text>
+<circle class="d-fill g1" cx="354" cy="261" r="5"/>
+<text class="d-t" x="366" y="266">Merged PR #4190</text>
+<text class="d-s" x="366" y="284">idem keys on POST /charges</text>
+<circle class="d-fill g1" cx="354" cy="319" r="5"/>
+<text class="d-t" x="366" y="324">Deployed payments-api</text>
+<text class="d-s" x="366" y="342">v2.14 to prod, 0 rollbacks</text>
+<circle class="d-fill g1" cx="354" cy="377" r="5"/>
+<text class="d-t" x="366" y="382">Closed INC-311</text>
+<text class="d-s" x="366" y="400">postmortem, 3 action items</text>
+<rect class="d-lane" x="552" y="202" width="192" height="111" rx="8"/>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="564" y="214" width="22" height="22"/>
+<text class="d-k" x="594" y="230">Blocked on</text>
+<text class="d-t" x="564" y="262">Staging Kafka quota</text>
+<text class="d-s" x="564" y="282">waiting on infra team</text>
+<text class="d-m" x="564" y="300">#infra-req 88</text>
+<rect class="d-lane" x="552" y="329" width="192" height="111" rx="8"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="564" y="341" width="22" height="22"/>
+<text class="d-k" x="594" y="357">Learned</text>
+<text class="d-m" x="564" y="389">pg_stat_statements</text>
+<text class="d-s" x="564" y="409">found an N+1 query</text>
+<text class="d-s" x="564" y="427">in the ledger read path</text>
+<text class="d-k" x="336" y="478">Tomorrow</text>
+<text class="d-s" x="450" y="478">load test ledger at 5k TPS</text>
+<path class="d-grid" d="M336,488 H744"/>
+<text class="d-k" x="336" y="514">Energy</text>
+<text class="d-s" x="450" y="514">3/5, two pages overnight</text>
+<path class="d-grid" d="M336,524 H744"/>
+<text class="d-k" x="336" y="550">Focus time</text>
+<text class="d-s" x="450" y="550">3h 10m of a 6h day</text>
+<path class="d-grid" d="M336,560 H744"/>
+<text class="d-k" x="336" y="586">Note to self</text>
+<text class="d-s" x="450" y="586">ask SRE about pool size 40</text>
+<path class="d-grid" d="M336,596 H744"/>
+</svg>

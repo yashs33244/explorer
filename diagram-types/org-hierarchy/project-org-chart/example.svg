@@ -1,0 +1,64 @@
+<svg class="hd" viewBox="0 0 800 488" role="img" aria-label="Project organization chart for migrating the orders database from Postgres 11 to Aurora Postgres 15: a sponsor, a tech lead and a TPM, and three workstreams with owners and milestones" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="project-org-chart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">Project orders-db migration</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="20" y="42" width="22" height="22"/>
+<text class="d-m" x="50" y="58">PG 11 to Aurora 15</text>
+<text class="d-s" x="20" y="82">Q4, 12 weeks</text>
+<rect class="d-box g4" x="260" y="20" width="280" height="96" rx="12"/>
+<circle class="d-fillpaper" cx="294" cy="68.0" r="20"/>
+<g transform="translate(277.0,52.0) scale(0.850)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="328" y="50">Rahul Mehta</text>
+<text class="d-s" x="328" y="68">Director, Infrastructure</text>
+<rect class="d-fill g4" x="328" y="78" width="130" height="20" rx="10"/>
+<text class="d-tw" x="393.0" y="92" text-anchor="middle">sponsor, budget</text>
+<path class="d-edge" d="M400,116 V136 Q400,144 392,144 H268 Q260,144 260,152 V176" marker-end="url(#project-org-chart-d1-ah)"/>
+<path class="d-edge" d="M400,136 Q400,144 408,144 H532 Q540,144 540,152 V176" marker-end="url(#project-org-chart-d1-ah)"/>
+<text class="d-lab" x="410" y="134">appoints</text>
+<rect class="d-box g0" x="120" y="180" width="280" height="96" rx="12"/>
+<circle class="d-fillpaper" cx="154" cy="228.0" r="20"/>
+<g transform="translate(137.0,212.0) scale(0.850)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="188" y="210">Sara Lind</text>
+<text class="d-s" x="188" y="228">Staff Eng, tech lead</text>
+<rect class="d-fill g0" x="188" y="238" width="120" height="20" rx="10"/>
+<text class="d-tw" x="248.0" y="252" text-anchor="middle">go/no-go call</text>
+<rect class="d-box g2" x="420" y="180" width="260" height="96" rx="12"/>
+<circle class="d-fillpaper" cx="454" cy="228.0" r="20"/>
+<g transform="translate(437.0,212.0) scale(0.850)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="488" y="210">Ken Ito</text>
+<text class="d-s" x="488" y="228">Technical PM</text>
+<rect class="d-fill g2" x="488" y="238" width="124" height="20" rx="10"/>
+<text class="d-tw" x="550.0" y="252" text-anchor="middle">risk log, dates</text>
+<path class="d-edge" d="M260,276 V296 Q260,304 252,304 H148 Q140,304 140,312 V336" marker-end="url(#project-org-chart-d1-ah)"/>
+<path class="d-edge" d="M260,296 Q260,304 268,304 H392 Q400,304 400,312 V336" marker-end="url(#project-org-chart-d1-ah)"/>
+<path class="d-edge" d="M400,304 H652 Q660,304 660,312 V336" marker-end="url(#project-org-chart-d1-ah)"/>
+<text class="d-lab" x="270" y="294">owns design for</text>
+<path class="d-edge dash" d="M550,276 V304"/>
+<text class="d-lab" x="560" y="294">tracks weekly</text>
+<rect class="d-box g0" x="20" y="340" width="240" height="128" rx="12"/>
+<circle class="d-fillpaper" cx="52" cy="374" r="18"/>
+<g transform="translate(37.0,360.0) scale(0.750)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="80" y="370">Schema, dual-write</text>
+<text class="d-s" x="80" y="388">Lena Park, 3 eng</text>
+<image class="d-logo" data-logo="go.dev" data-name="Go" x="34" y="406" width="22" height="22"/>
+<text class="d-m" x="64" y="422">svc/orders/repo</text>
+<rect class="d-tag acc" x="34" y="436" width="166" height="22" rx="11"/>
+<text class="d-m" x="117.0" y="451" text-anchor="middle">M1 dual-write Nov 14</text>
+<rect class="d-box g0" x="280" y="340" width="240" height="128" rx="12"/>
+<circle class="d-fillpaper" cx="312" cy="374" r="18"/>
+<g transform="translate(297.0,360.0) scale(0.750)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="340" y="370">Backfill, CDC</text>
+<text class="d-s" x="340" y="388">Omar Haddad, 2 eng</text>
+<image class="d-logo" data-logo="confluent.io" data-name="Kafka" x="294" y="406" width="22" height="22"/>
+<text class="d-m" x="324" y="422">cdc.orders.v1</text>
+<rect class="d-tag acc" x="294" y="436" width="166" height="22" rx="11"/>
+<text class="d-m" x="377.0" y="451" text-anchor="middle">M2 100% parity Dec 2</text>
+<rect class="d-box g0" x="540" y="340" width="240" height="128" rx="12"/>
+<circle class="d-fillpaper" cx="572" cy="374" r="18"/>
+<g transform="translate(557.0,360.0) scale(0.750)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+<text class="d-t" x="600" y="370">Cutover, rollback</text>
+<text class="d-s" x="600" y="388">Ravi Iyer, SRE, 2 eng</text>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="554" y="406" width="22" height="22"/>
+<text class="d-m" x="584" y="422">runbooks/cutover</text>
+<rect class="d-tag acc" x="554" y="436" width="140" height="22" rx="11"/>
+<text class="d-m" x="624.0" y="451" text-anchor="middle">M3 cutover Dec 9</text>
+</svg>

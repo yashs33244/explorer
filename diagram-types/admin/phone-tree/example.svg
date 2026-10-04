@@ -1,0 +1,105 @@
+<svg class="hd" viewBox="0 0 800 690" role="img" aria-label="SEV1 escalation phone tree for a checkout outage: PagerDuty pages the incident commander, who calls the payments eng lead, comms lead and VP engineering, who each call their own people within five minutes" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="phone-tree-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">runbook / sev1-escalation.md</text>
+<text class="d-h" x="20" y="54">SEV1 call tree: checkout outage INC-2291</text>
+<text class="d-s" x="20" y="74">Each person calls the people below them, in badge order, then joins the bridge.</text>
+<rect class="d-tag acc" x="250" y="90" width="300" height="28" rx="14"/>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="258" y="94" width="20" height="20"/>
+<text class="d-t" x="414" y="109" text-anchor="middle">Page: checkout 5xx above 20%</text>
+<path class="d-edge" d="M400,118 V138" marker-end="url(#phone-tree-d1-ah)"/>
+<rect class="d-box g1" x="300" y="142" width="200" height="100" rx="12"/>
+<g transform="translate(462,150) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="312" y="168">Priya Nair</text>
+<text class="d-s" x="312" y="187">Incident commander</text>
+<text class="d-m" x="312" y="206">opens #inc-2291</text>
+<image class="d-logo" data-logo="slack.com" data-name="Slack" x="312" y="215" width="18" height="18"/>
+<rect class="d-tag" x="438" y="212" width="52" height="20" rx="10"/>
+<text class="d-s" x="464" y="226" text-anchor="middle">T+0</text>
+<rect class="d-box g2" x="69" y="300" width="200" height="100" rx="12"/>
+<g transform="translate(231,308) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="81" y="326">Ravi Kumar</text>
+<text class="d-s" x="81" y="345">Payments eng lead</text>
+<text class="d-m" x="81" y="364">triage + rollback</text>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="81" y="373" width="18" height="18"/>
+<rect class="d-tag" x="207" y="370" width="52" height="20" rx="10"/>
+<text class="d-s" x="233" y="384" text-anchor="middle">T+5m</text>
+<circle class="d-badge" cx="69" cy="300" r="11"/><text class="d-bt" x="69" y="304">1</text>
+<rect class="d-box g3" x="300" y="300" width="200" height="100" rx="12"/>
+<g transform="translate(462,308) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="312" y="326">Maya Chen</text>
+<text class="d-s" x="312" y="345">Comms lead</text>
+<text class="d-m" x="312" y="364">status page post</text>
+<image class="d-logo" data-logo="atlassian.com" data-name="Statuspage" x="312" y="373" width="18" height="18"/>
+<rect class="d-tag" x="438" y="370" width="52" height="20" rx="10"/>
+<text class="d-s" x="464" y="384" text-anchor="middle">T+5m</text>
+<circle class="d-badge" cx="300" cy="300" r="11"/><text class="d-bt" x="300" y="304">2</text>
+<rect class="d-box g4" x="531" y="300" width="200" height="100" rx="12"/>
+<g transform="translate(693,308) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="543" y="326">Dan Okafor</text>
+<text class="d-s" x="543" y="345">VP Engineering</text>
+<text class="d-m" x="543" y="364">brief CEO, legal</text>
+<image class="d-logo" data-logo="zoom.us" data-name="Zoom" x="543" y="373" width="18" height="18"/>
+<rect class="d-tag" x="669" y="370" width="52" height="20" rx="10"/>
+<text class="d-s" x="695" y="384" text-anchor="middle">T+5m</text>
+<circle class="d-badge" cx="531" cy="300" r="11"/><text class="d-bt" x="531" y="304">3</text>
+<path class="d-edge" d="M400,242 V270" />
+<path class="d-edge" d="M169,270 H631"/>
+<path class="d-edge" d="M169,270 V296" marker-end="url(#phone-tree-d1-ah)"/>
+<path class="d-edge" d="M400,270 V296" marker-end="url(#phone-tree-d1-ah)"/>
+<path class="d-edge" d="M631,270 V296" marker-end="url(#phone-tree-d1-ah)"/>
+<text class="d-lab" x="410" y="262">calls in order</text>
+<path class="d-edge" d="M169,400 V438 H90 V476" marker-end="url(#phone-tree-d1-ah)"/>
+<path class="d-edge" d="M169,400 V438 H245 V476" marker-end="url(#phone-tree-d1-ah)"/>
+<path class="d-edge" d="M400,400 V476" marker-end="url(#phone-tree-d1-ah)"/>
+<path class="d-edge" d="M631,400 V438 H555 V476" marker-end="url(#phone-tree-d1-ah)"/>
+<path class="d-edge" d="M631,400 V438 H710 V476" marker-end="url(#phone-tree-d1-ah)"/>
+<rect class="d-box g2" x="20" y="480" width="140" height="104" rx="12"/>
+<g transform="translate(122,488) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="32" y="506">Wei Zhang</text>
+<text class="d-s" x="32" y="525">DB on-call</text>
+<text class="d-m" x="32" y="544">PG failover</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="32" y="557" width="18" height="18"/>
+<rect class="d-tag" x="98" y="554" width="52" height="20" rx="10"/>
+<text class="d-s" x="124" y="568" text-anchor="middle">T+10m</text>
+<circle class="d-badge" cx="20" cy="480" r="11"/><text class="d-bt" x="20" y="484">1</text>
+<rect class="d-box g2" x="175" y="480" width="140" height="104" rx="12"/>
+<g transform="translate(277,488) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="187" y="506">Sara Lind</text>
+<text class="d-s" x="187" y="525">Platform on-call</text>
+<text class="d-m" x="187" y="544">scale pods</text>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="187" y="557" width="18" height="18"/>
+<rect class="d-tag" x="253" y="554" width="52" height="20" rx="10"/>
+<text class="d-s" x="279" y="568" text-anchor="middle">T+10m</text>
+<circle class="d-badge" cx="175" cy="480" r="11"/><text class="d-bt" x="175" y="484">2</text>
+<rect class="d-box g3" x="330" y="480" width="140" height="104" rx="12"/>
+<g transform="translate(432,488) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="342" y="506">Tom Reyes</text>
+<text class="d-s" x="342" y="525">Support duty mgr</text>
+<text class="d-m" x="342" y="544">macro to tickets</text>
+<image class="d-logo" data-logo="zendesk.com" data-name="Zendesk" x="342" y="557" width="18" height="18"/>
+<rect class="d-tag" x="408" y="554" width="52" height="20" rx="10"/>
+<text class="d-s" x="434" y="568" text-anchor="middle">T+10m</text>
+<circle class="d-badge" cx="330" cy="480" r="11"/><text class="d-bt" x="330" y="484">1</text>
+<rect class="d-box g4" x="485" y="480" width="140" height="104" rx="12"/>
+<g transform="translate(587,488) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="497" y="506">Lena Brandt</text>
+<text class="d-s" x="497" y="525">CTO</text>
+<text class="d-m" x="497" y="544">board heads-up</text>
+<image class="d-logo" data-logo="slack.com" data-name="Slack" x="497" y="557" width="18" height="18"/>
+<rect class="d-tag" x="563" y="554" width="52" height="20" rx="10"/>
+<text class="d-s" x="589" y="568" text-anchor="middle">T+10m</text>
+<circle class="d-badge" cx="485" cy="480" r="11"/><text class="d-bt" x="485" y="484">1</text>
+<rect class="d-box g4" x="640" y="480" width="140" height="104" rx="12"/>
+<g transform="translate(742,488) scale(0.62)"><circle class="d-fillpaper" cx="20" cy="20" r="21"/><circle class="d-line" cx="20" cy="14" r="6"/><path class="d-line" d="M8,32 C8,22 32,22 32,32 Z"/></g>
+<text class="d-t" x="652" y="506">Arjun Mehta</text>
+<text class="d-s" x="652" y="525">Head of CS</text>
+<text class="d-m" x="652" y="544">top 20 accounts</text>
+<image class="d-logo" data-logo="salesforce.com" data-name="Salesforce" x="652" y="557" width="18" height="18"/>
+<rect class="d-tag" x="718" y="554" width="52" height="20" rx="10"/>
+<text class="d-s" x="744" y="568" text-anchor="middle">T+10m</text>
+<circle class="d-badge" cx="640" cy="480" r="11"/><text class="d-bt" x="640" y="484">2</text>
+<path class="d-edge dash" d="M100,584 C100,606 235,606 235,590" marker-end="url(#phone-tree-d1-ah)"/>
+<text class="d-lab" x="168" y="624" text-anchor="middle">no answer: next</text>
+<text class="d-s" x="20" y="656">Dashed rule: no answer in 5 min, call the next person and say so in #inc-2291.</text>
+<text class="d-s" x="20" y="676">Every leaf joins the Zoom bridge once called; the IC tracks who is reached.</text>
+</svg>

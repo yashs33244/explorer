@@ -1,0 +1,58 @@
+<svg class="hd" viewBox="0 0 800 620" role="img" aria-label="Marketing mix for shipctl, a developer deploy CLI: four overlapping circles for product, price, place and promotion around the v1.0 launch, with the shared ground of each pair and a detail card per P" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="marketing-mix-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="400" y="34" text-anchor="middle">MARKETING MIX, 4Ps</text>
+<text class="d-h" x="400" y="58" text-anchor="middle">shipctl v1.0: a deploy CLI for platform teams</text>
+<circle class="d-soft g1" cx="334" cy="262" r="128"/>
+<circle class="d-soft g2" cx="466" cy="262" r="128"/>
+<circle class="d-soft g3" cx="334" cy="394" r="128"/>
+<circle class="d-soft g4" cx="466" cy="394" r="128"/>
+<text class="d-h" x="286" y="206" text-anchor="middle">Product</text>
+<text class="d-h" x="514" y="206" text-anchor="middle">Price</text>
+<text class="d-h" x="286" y="466" text-anchor="middle">Place</text>
+<text class="d-h" x="514" y="466" text-anchor="middle">Promotion</text>
+<text class="d-s" x="400" y="190" text-anchor="middle">free tier</text>
+<text class="d-s" x="400" y="207" text-anchor="middle">= full CLI</text>
+<text class="d-s" x="290" y="322" text-anchor="middle">one static</text>
+<text class="d-s" x="290" y="339" text-anchor="middle">binary</text>
+<text class="d-s" x="510" y="322" text-anchor="middle">trial to</text>
+<text class="d-s" x="510" y="339" text-anchor="middle">Team plan</text>
+<text class="d-s" x="400" y="446" text-anchor="middle">install line</text>
+<text class="d-s" x="400" y="463" text-anchor="middle">in posts</text>
+<circle class="d-fill g5" cx="400" cy="328" r="44"/>
+<text class="d-tw" x="400" y="326" text-anchor="middle">shipctl</text>
+<text class="d-tw" x="400" y="343" text-anchor="middle">v1.0</text>
+<rect class="d-box g1" x="16" y="100" width="178" height="150" rx="12"/>
+<image class="d-logo" data-logo="go.dev" data-name="Go" x="28" y="112" width="22" height="22"/>
+<text class="d-t" x="58" y="128">Product</text>
+<text class="d-s" x="28" y="156">single Go binary</text>
+<text class="d-s" x="28" y="176">plan, apply, rollback</text>
+<text class="d-s" x="28" y="196">k8s + ECS plugins</text>
+<text class="d-m" x="28" y="234">shipctl apply -e prod</text>
+<rect class="d-box g2" x="606" y="100" width="178" height="150" rx="12"/>
+<image class="d-logo" data-logo="stripe.com" data-name="Stripe" x="618" y="112" width="22" height="22"/>
+<text class="d-t" x="648" y="128">Price</text>
+<text class="d-s" x="618" y="156">OSS core: free</text>
+<text class="d-s" x="618" y="176">Team: $20 / seat / mo</text>
+<text class="d-s" x="618" y="196">Enterprise: SSO, audit</text>
+<text class="d-m" x="618" y="234">billed via Stripe</text>
+<rect class="d-box g3" x="16" y="370" width="178" height="150" rx="12"/>
+<image class="d-logo" data-logo="brew.sh" data-name="Homebrew" x="28" y="382" width="22" height="22"/>
+<text class="d-t" x="58" y="398">Place</text>
+<text class="d-s" x="28" y="426">Homebrew, apt, Releases</text>
+<text class="d-s" x="28" y="446">Docker image</text>
+<text class="d-s" x="28" y="466">GitHub Action</text>
+<text class="d-m" x="28" y="504">brew install shipctl</text>
+<rect class="d-box g4" x="606" y="370" width="178" height="150" rx="12"/>
+<image class="d-logo" data-logo="news.ycombinator.com" data-name="Hacker News" x="618" y="382" width="22" height="22"/>
+<text class="d-t" x="648" y="398">Promotion</text>
+<text class="d-s" x="618" y="426">5 minute quickstart</text>
+<text class="d-s" x="618" y="446">Show HN launch</text>
+<text class="d-s" x="618" y="466">KubeCon demo talk</text>
+<text class="d-m" x="618" y="504">docs.shipctl.dev</text>
+<path class="d-edge dash" d="M194,175 H240" marker-end="url(#marketing-mix-d1-ah)"/>
+<path class="d-edge dash" d="M606,175 H560" marker-end="url(#marketing-mix-d1-ah)"/>
+<path class="d-edge dash" d="M194,445 H240" marker-end="url(#marketing-mix-d1-ah)"/>
+<path class="d-edge dash" d="M606,445 H560" marker-end="url(#marketing-mix-d1-ah)"/>
+<rect class="d-tag" x="160" y="562" width="480" height="30" rx="15"/>
+<text class="d-s" x="400" y="582" text-anchor="middle">target: platform engineers who deploy 10+ services a week</text>
+</svg>

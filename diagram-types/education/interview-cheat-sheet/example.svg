@@ -1,0 +1,97 @@
+<svg class="hd" viewBox="0 0 800 724" role="img" aria-label="Interview cheat sheet for a senior backend engineer onsite loop on a payments team: a candidate brief with the Go, PostgreSQL, Kafka and AWS stack, questions to ask the interviewers, and four round cards for coding, system design, production debugging and behavioral, each with key questions and the signal interviewers look for" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="30">Interview cheat sheet</text>
+<text class="d-h" x="40" y="54">Backend onsite loop, Payments platform</text>
+<text class="d-m" x="760" y="30" text-anchor="end">4 rounds, 3h 30m</text>
+<text class="d-s" x="760" y="54" text-anchor="end">read the night before</text>
+<rect class="d-lane" x="40" y="72" width="350" height="150" rx="10"/>
+<rect class="d-lanehead" x="40" y="72" width="350" height="36" rx="10"/>
+<text class="d-t" x="54" y="95">Candidate brief</text>
+<text class="d-s" x="376" y="95" text-anchor="end">role and bar</text>
+<text class="d-t" x="54" y="132">Senior Backend Engineer, Payments</text>
+<text class="d-s" x="54" y="152">Bar: owns a service from design to on-call</text>
+<text class="d-k" x="54" y="178">Stack to revise</text>
+<image class="d-logo" data-logo="go.dev" data-name="Go" x="54" y="188" width="22" height="22"/>
+<text class="d-s" x="82" y="204">Go</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="110" y="188" width="22" height="22"/>
+<text class="d-s" x="138" y="204">PostgreSQL</text>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="216" y="188" width="22" height="22"/>
+<text class="d-s" x="244" y="204">Kafka</text>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="290" y="188" width="22" height="22"/>
+<text class="d-s" x="318" y="204">AWS</text>
+<text class="d-k" x="414" y="88">Questions to ask them</text>
+<rect class="d-note g2" x="414" y="100" width="106" height="110" rx="4"/>
+<text class="d-tn" x="467" y="141" text-anchor="middle">On-call load</text>
+<text class="d-tn" x="467" y="159" text-anchor="middle">per engineer?</text>
+<rect class="d-note g2" x="532" y="100" width="106" height="110" rx="4"/>
+<text class="d-tn" x="585" y="132" text-anchor="middle">How are</text>
+<text class="d-tn" x="585" y="150" text-anchor="middle">incidents</text>
+<text class="d-tn" x="585" y="168" text-anchor="middle">reviewed?</text>
+<rect class="d-note g2" x="650" y="100" width="106" height="110" rx="4"/>
+<text class="d-tn" x="703" y="132" text-anchor="middle">Deploys per</text>
+<text class="d-tn" x="703" y="150" text-anchor="middle">day, and who</text>
+<text class="d-tn" x="703" y="168" text-anchor="middle">can roll back?</text>
+<rect class="d-lane" x="40" y="244" width="350" height="220" rx="10"/>
+<rect class="d-band g0" x="40" y="244" width="350" height="36" rx="10"/>
+<text class="d-t" x="54" y="267">Coding</text>
+<text class="d-s" x="376" y="267" text-anchor="end">60 min, live in Go</text>
+<text class="d-k" x="54" y="304">Key questions</text>
+<circle class="d-fill g0" cx="59" cy="324" r="4"/>
+<text class="d-s" x="72" y="328">Rate limiter: token bucket, thread safe</text>
+<circle class="d-fill g0" cx="59" cy="348" r="4"/>
+<text class="d-s" x="72" y="352">LRU cache with O(1) get and put</text>
+<circle class="d-fill g0" cx="59" cy="372" r="4"/>
+<text class="d-s" x="72" y="376">Merge overlapping maintenance windows</text>
+<circle class="d-fill g0" cx="59" cy="396" r="4"/>
+<text class="d-s" x="72" y="400">Dedupe webhooks by idempotency key</text>
+<path class="d-grid" d="M54,424 H376"/>
+<text class="d-k" x="54" y="448">Signal</text>
+<text class="d-m" x="112" y="448">tests first, edge cases out loud</text>
+<rect class="d-lane" x="410" y="244" width="350" height="220" rx="10"/>
+<rect class="d-band g4" x="410" y="244" width="350" height="36" rx="10"/>
+<text class="d-t" x="424" y="267">System design</text>
+<text class="d-s" x="746" y="267" text-anchor="end">60 min, whiteboard</text>
+<text class="d-k" x="424" y="304">Key questions</text>
+<circle class="d-fill g4" cx="429" cy="324" r="4"/>
+<text class="d-s" x="442" y="328">Design a double-entry payments ledger</text>
+<circle class="d-fill g4" cx="429" cy="348" r="4"/>
+<text class="d-s" x="442" y="352">Outbox table plus idempotent consumer</text>
+<circle class="d-fill g4" cx="429" cy="372" r="4"/>
+<text class="d-s" x="442" y="376">Shard PostgreSQL by merchant_id</text>
+<circle class="d-fill g4" cx="429" cy="396" r="4"/>
+<text class="d-s" x="442" y="400">Safe retries on POST /charges</text>
+<path class="d-grid" d="M424,424 H746"/>
+<text class="d-k" x="424" y="448">Signal</text>
+<text class="d-m" x="482" y="448">numbers first: 5k TPS, p99 200ms</text>
+<rect class="d-lane" x="40" y="484" width="350" height="220" rx="10"/>
+<rect class="d-band g5" x="40" y="484" width="350" height="36" rx="10"/>
+<text class="d-t" x="54" y="507">Production debugging</text>
+<text class="d-s" x="376" y="507" text-anchor="end">45 min, live dashboards</text>
+<text class="d-k" x="54" y="544">Key questions</text>
+<circle class="d-fill g5" cx="59" cy="564" r="4"/>
+<text class="d-s" x="72" y="568">p99 doubles after a deploy: look where?</text>
+<circle class="d-fill g5" cx="59" cy="588" r="4"/>
+<text class="d-s" x="72" y="592">DB connection pool exhausted at peak</text>
+<circle class="d-fill g5" cx="59" cy="612" r="4"/>
+<text class="d-s" x="72" y="616">Consumer lag on one Kafka partition</text>
+<circle class="d-fill g5" cx="59" cy="636" r="4"/>
+<text class="d-s" x="72" y="640">Read a flame graph and a query plan</text>
+<path class="d-grid" d="M54,664 H376"/>
+<text class="d-k" x="54" y="688">Signal</text>
+<text class="d-m" x="112" y="688">hypothesis, evidence, then rollback</text>
+<rect class="d-lane" x="410" y="484" width="350" height="220" rx="10"/>
+<rect class="d-band g3" x="410" y="484" width="350" height="36" rx="10"/>
+<text class="d-t" x="424" y="507">Behavioral</text>
+<text class="d-s" x="746" y="507" text-anchor="end">45 min, hiring manager</text>
+<text class="d-k" x="424" y="544">Key questions</text>
+<circle class="d-fill g3" cx="429" cy="564" r="4"/>
+<text class="d-s" x="442" y="568">An incident you owned end to end</text>
+<circle class="d-fill g3" cx="429" cy="588" r="4"/>
+<text class="d-s" x="442" y="592">You disagreed with a design: then?</text>
+<circle class="d-fill g3" cx="429" cy="612" r="4"/>
+<text class="d-s" x="442" y="616">Cut scope to hit a launch date</text>
+<circle class="d-fill g3" cx="429" cy="636" r="4"/>
+<text class="d-s" x="442" y="640">Brought a new hire onto on-call</text>
+<path class="d-grid" d="M424,664 H746"/>
+<text class="d-k" x="424" y="688">Signal</text>
+<text class="d-m" x="482" y="688">owns outcome, quantifies impact</text>
+</svg>
