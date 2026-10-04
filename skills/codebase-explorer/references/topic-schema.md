@@ -27,9 +27,11 @@ Only `title`, `one_liner`, `big_picture` are required by the builder. Missing se
 ## `diagrams/<key>/meta.json`
 
 ```json
-[{ "file": "d1.svg", "role": "architecture", "title": "short heading", "caption": "one plain sentence",
+[{ "file": "d1.svg", "role": "architecture", "type": "layered-architecture", "title": "short heading", "caption": "one plain sentence",
    "badges": [{ "n": 1, "meaning": "what step 1 is" }] }]
 ```
+
+`type` is optional: the bare slug from `diagram-types/catalog.json`, such as `"layered-architecture"` (the first column of `references/diagram-types.md`). A folder path such as `"software/layered-architecture"` also works. The page shows the type's name as a small chip on the figure.
 
 Roles: `architecture`, `lifecycle`, `structure`.
 
@@ -48,5 +50,6 @@ Roles: `architecture`, `lifecycle`, `structure`.
 | `tryItNote` | caption under every try-it table |
 | `extraSections` | `[{id, navLabel, kicker, title, lede, table:{file, columns, tallAfter, caption}, htmlFile}]` |
 | `footer` | closing sentence |
+| `diagramStyle` | `"hand"` (default) or `"clean"`: the diagram style a viewer sees first, before they use the switch |
 
 Table columns: `{key, label, kind}` where kind is `text` (default), `num`, `pill`, `code`, `link`, `muted` or `nowrap`. Rows are an array of objects in the JSON file.
