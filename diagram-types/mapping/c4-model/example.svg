@@ -1,0 +1,112 @@
+<svg class="hd" viewBox="0 0 800 640" role="img" aria-label="C4 container diagram of a ride-hailing backend: riders and drivers use two mobile apps that call a Kong API gateway, which routes to trip, matching and payment services, each owning its data stores and external APIs" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="c4-model-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+
+  <!-- tier rail: every box here is a container, so the whole drawing is one C4 level -->
+  <path class="d-edge" d="M52,606 V36"/>
+  <text class="d-s" x="30" y="330" text-anchor="middle" transform="rotate(-90 30 330)">container view (C4 level 2), tiers top-down</text>
+  <path class="d-axis" d="M47,72 H57 M47,180 H57 M47,289 H57 M47,391 H57 M47,520 H57"/>
+  <text class="d-k" x="64" y="76">person</text>
+  <text class="d-k" x="64" y="184">apps</text>
+  <text class="d-k" x="64" y="293">gateway</text>
+  <text class="d-k" x="64" y="395">services</text>
+  <text class="d-k" x="64" y="524">stores</text>
+
+  <!-- system boundary -->
+  <rect class="d-blob" x="140" y="236" width="640" height="384" rx="18"/>
+  <text class="d-k" x="158" y="606">ride platform [software system]</text>
+
+  <!-- tier 1: person -->
+  <circle class="d-box g4" cx="462" cy="72" r="38"/>
+  <g transform="translate(442,50)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+  <text class="d-t" x="512" y="68">Riders, drivers</text>
+  <text class="d-s" x="512" y="86">[person] 3M weekly</text>
+
+  <!-- tier 2: apps -->
+  <rect class="d-box g1" x="232" y="150" width="210" height="60" rx="12"/>
+  <image class="d-logo" data-logo="reactnative.dev" data-name="React Native" x="245" y="167" width="26" height="26"/>
+  <text class="d-t" x="282" y="176">Rider app</text>
+  <text class="d-s" x="282" y="194">React Native, iOS</text>
+  <rect class="d-box g1" x="482" y="150" width="210" height="60" rx="12"/>
+  <image class="d-logo" data-logo="kotlinlang.org" data-name="Kotlin" x="495" y="167" width="26" height="26"/>
+  <text class="d-t" x="532" y="176">Driver app</text>
+  <text class="d-s" x="532" y="194">Kotlin, Android</text>
+  <path class="d-edge" d="M440,104 L345,148" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M484,104 L579,148" marker-end="url(#c4-model-d1-ah)"/>
+  <text class="d-lab" x="382" y="122" text-anchor="end">books ride</text>
+  <text class="d-lab" x="542" y="122">accepts jobs</text>
+
+  <!-- gateway -->
+  <rect class="d-band g3" x="160" y="268" width="604" height="42" rx="12"/>
+  <image class="d-logo" data-logo="konghq.com" data-name="Kong" x="174" y="276" width="26" height="26"/>
+  <text class="d-t" x="210" y="294">Kong API gateway</text>
+  <text class="d-s" x="612" y="294">JWT auth, rate limits</text>
+  <path class="d-edge" d="M337,210 V266" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M587,210 V266" marker-end="url(#c4-model-d1-ah)"/>
+  <text class="d-lab" x="345" y="228">HTTPS + JWT</text>
+  <text class="d-lab" x="595" y="228">WebSocket</text>
+
+  <!-- tier 3: services -->
+  <path class="d-edge" d="M252,310 V358" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M462,310 V358" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M672,310 V358" marker-end="url(#c4-model-d1-ah)"/>
+  <text class="d-lab" x="260" y="338">gRPC</text>
+  <text class="d-lab" x="470" y="338">gRPC</text>
+  <text class="d-lab" x="680" y="338">gRPC</text>
+
+  <rect class="d-box g2" x="162" y="360" width="180" height="60" rx="12"/>
+  <image class="d-logo" data-logo="go.dev" data-name="Go" x="174" y="377" width="26" height="26"/>
+  <text class="d-t" x="210" y="385">Trip service</text>
+  <text class="d-s" x="210" y="403">Go, trip lifecycle</text>
+  <rect class="d-box g2" x="372" y="360" width="180" height="60" rx="12"/>
+  <image class="d-logo" data-logo="go.dev" data-name="Go" x="384" y="377" width="26" height="26"/>
+  <text class="d-t" x="420" y="385">Matching service</text>
+  <text class="d-s" x="420" y="403">Go, nearest driver</text>
+  <rect class="d-box g2" x="582" y="360" width="180" height="60" rx="12"/>
+  <image class="d-logo" data-logo="java.com" data-name="Java" x="594" y="377" width="26" height="26"/>
+  <text class="d-t" x="630" y="385">Payment service</text>
+  <text class="d-s" x="630" y="403">Java, fares, payouts</text>
+
+  <!-- tier 4: stores, in pairs -->
+  <path class="d-edge" d="M244,420 L212,490" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M260,420 L292,490" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M454,420 L422,490" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M470,420 L502,490" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M664,420 L632,490" marker-end="url(#c4-model-d1-ah)"/>
+  <path class="d-edge" d="M680,420 L712,490" marker-end="url(#c4-model-d1-ah)"/>
+  <text class="d-lab" x="222" y="458" text-anchor="end">writes</text>
+  <text class="d-lab" x="282" y="458">publishes</text>
+  <text class="d-lab" x="432" y="458" text-anchor="end">geo query</text>
+  <text class="d-lab" x="492" y="458">ETA</text>
+  <text class="d-lab" x="642" y="458" text-anchor="end">ledger</text>
+  <text class="d-lab" x="702" y="458">charges</text>
+
+  <circle class="d-box g5" cx="202" cy="520" r="28"/>
+  <image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="189" y="507" width="26" height="26"/>
+  <circle class="d-box g5" cx="302" cy="520" r="28"/>
+  <image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="289" y="507" width="26" height="26"/>
+  <path class="d-edge dash" d="M232,520 H270" marker-end="url(#c4-model-d1-ah)"/>
+  <text class="d-lab" x="251" y="510" text-anchor="middle">CDC</text>
+
+  <circle class="d-box g5" cx="412" cy="520" r="28"/>
+  <image class="d-logo" data-logo="redis.io" data-name="Redis" x="399" y="507" width="26" height="26"/>
+  <circle class="d-box g0" cx="512" cy="520" r="28"/>
+  <image class="d-logo" data-logo="google.com" data-name="Google Maps" x="499" y="507" width="26" height="26"/>
+
+  <circle class="d-box g5" cx="622" cy="520" r="28"/>
+  <image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="609" y="507" width="26" height="26"/>
+  <circle class="d-box g0" cx="722" cy="520" r="28"/>
+  <image class="d-logo" data-logo="stripe.com" data-name="Stripe" x="709" y="507" width="26" height="26"/>
+
+  <text class="d-t" x="202" y="568" text-anchor="middle">Postgres</text>
+  <text class="d-m" x="202" y="585" text-anchor="middle">trips</text>
+  <text class="d-t" x="302" y="568" text-anchor="middle">Kafka</text>
+  <text class="d-m" x="302" y="585" text-anchor="middle">trip.events</text>
+  <text class="d-t" x="412" y="568" text-anchor="middle">Redis</text>
+  <text class="d-m" x="412" y="585" text-anchor="middle">driver geo</text>
+  <text class="d-t" x="512" y="568" text-anchor="middle">Google Maps</text>
+  <text class="d-s" x="512" y="585" text-anchor="middle">external</text>
+  <text class="d-t" x="622" y="568" text-anchor="middle">Postgres</text>
+  <text class="d-m" x="622" y="585" text-anchor="middle">ledger</text>
+  <text class="d-t" x="722" y="568" text-anchor="middle">Stripe</text>
+  <text class="d-s" x="722" y="585" text-anchor="middle">external</text>
+</svg>

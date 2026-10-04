@@ -1,0 +1,138 @@
+<svg class="hd" viewBox="0 0 800 670" role="img" aria-label="Entity relationship diagram of a deploy platform: users join orgs through memberships, orgs own projects, projects ship deployments that users trigger, drawn with crow's foot cardinality: a user may have no memberships or deployments yet, and a new project has no deployments" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="er-diagram-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">POSTGRES 16 / SCHEMA public</text>
+<text class="d-h" x="20" y="54">Deploy platform: tenancy and releases</text>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="744" y="22" width="36" height="36"/>
+<rect class="d-box g1" x="20" y="90" width="220" height="134" rx="10"/>
+<path class="d-line" d="M20,126 H240"/>
+<text class="d-t" x="34" y="113">users</text>
+<rect class="d-tag acc" x="30" y="134.0" width="26" height="16"/>
+<text class="d-k" x="43" y="146.0" text-anchor="middle">PK</text>
+<text class="d-m" x="64" y="146.0">id</text>
+<text class="d-s" x="228" y="146.0" text-anchor="end">uuid</text>
+<text class="d-m" x="64" y="168.0">email</text>
+<text class="d-s" x="228" y="168.0" text-anchor="end">citext</text>
+<text class="d-m" x="64" y="190.0">name</text>
+<text class="d-s" x="228" y="190.0" text-anchor="end">text</text>
+<text class="d-m" x="64" y="212.0">created_at</text>
+<text class="d-s" x="228" y="212.0" text-anchor="end">timestamptz</text>
+<rect class="d-box g2" x="300" y="90" width="200" height="134" rx="10"/>
+<path class="d-line" d="M300,126 H500"/>
+<text class="d-t" x="314" y="113">memberships</text>
+<rect class="d-tag acc" x="310" y="134.0" width="26" height="16"/>
+<text class="d-k" x="323" y="146.0" text-anchor="middle">PK</text>
+<text class="d-m" x="344" y="146.0">id</text>
+<text class="d-s" x="488" y="146.0" text-anchor="end">uuid</text>
+<rect class="d-tag" x="310" y="156.0" width="26" height="16"/>
+<text class="d-k" x="323" y="168.0" text-anchor="middle">FK</text>
+<text class="d-m" x="344" y="168.0">user_id</text>
+<text class="d-s" x="488" y="168.0" text-anchor="end">uuid</text>
+<rect class="d-tag" x="310" y="178.0" width="26" height="16"/>
+<text class="d-k" x="323" y="190.0" text-anchor="middle">FK</text>
+<text class="d-m" x="344" y="190.0">org_id</text>
+<text class="d-s" x="488" y="190.0" text-anchor="end">uuid</text>
+<text class="d-m" x="344" y="212.0">role</text>
+<text class="d-s" x="488" y="212.0" text-anchor="end">enum</text>
+<rect class="d-box g1" x="560" y="90" width="220" height="134" rx="10"/>
+<path class="d-line" d="M560,126 H780"/>
+<text class="d-t" x="574" y="113">orgs</text>
+<rect class="d-tag acc" x="570" y="134.0" width="26" height="16"/>
+<text class="d-k" x="583" y="146.0" text-anchor="middle">PK</text>
+<text class="d-m" x="604" y="146.0">id</text>
+<text class="d-s" x="768" y="146.0" text-anchor="end">uuid</text>
+<text class="d-m" x="604" y="168.0">slug</text>
+<text class="d-s" x="768" y="168.0" text-anchor="end">text</text>
+<text class="d-m" x="604" y="190.0">plan</text>
+<text class="d-s" x="768" y="190.0" text-anchor="end">enum</text>
+<text class="d-m" x="604" y="212.0">created_at</text>
+<text class="d-s" x="768" y="212.0" text-anchor="end">timestamptz</text>
+<rect class="d-box g4" x="20" y="410" width="200" height="156" rx="10"/>
+<path class="d-line" d="M20,446 H220"/>
+<text class="d-t" x="34" y="433">deployments</text>
+<rect class="d-tag acc" x="30" y="454.0" width="26" height="16"/>
+<text class="d-k" x="43" y="466.0" text-anchor="middle">PK</text>
+<text class="d-m" x="64" y="466.0">id</text>
+<text class="d-s" x="208" y="466.0" text-anchor="end">uuid</text>
+<rect class="d-tag" x="30" y="476.0" width="26" height="16"/>
+<text class="d-k" x="43" y="488.0" text-anchor="middle">FK</text>
+<text class="d-m" x="64" y="488.0">project_id</text>
+<text class="d-s" x="208" y="488.0" text-anchor="end">uuid</text>
+<rect class="d-tag" x="30" y="498.0" width="26" height="16"/>
+<text class="d-k" x="43" y="510.0" text-anchor="middle">FK</text>
+<text class="d-m" x="64" y="510.0">triggered_by</text>
+<text class="d-s" x="208" y="510.0" text-anchor="end">uuid</text>
+<text class="d-m" x="64" y="532.0">commit_sha</text>
+<text class="d-s" x="208" y="532.0" text-anchor="end">char(40)</text>
+<text class="d-m" x="64" y="554.0">status</text>
+<text class="d-s" x="208" y="554.0" text-anchor="end">enum</text>
+<rect class="d-box g5" x="580" y="410" width="200" height="134" rx="10"/>
+<path class="d-line" d="M580,446 H780"/>
+<text class="d-t" x="594" y="433">projects</text>
+<rect class="d-tag acc" x="590" y="454.0" width="26" height="16"/>
+<text class="d-k" x="603" y="466.0" text-anchor="middle">PK</text>
+<text class="d-m" x="624" y="466.0">id</text>
+<text class="d-s" x="768" y="466.0" text-anchor="end">uuid</text>
+<rect class="d-tag" x="590" y="476.0" width="26" height="16"/>
+<text class="d-k" x="603" y="488.0" text-anchor="middle">FK</text>
+<text class="d-m" x="624" y="488.0">org_id</text>
+<text class="d-s" x="768" y="488.0" text-anchor="end">uuid</text>
+<text class="d-m" x="624" y="510.0">name</text>
+<text class="d-s" x="768" y="510.0" text-anchor="end">text</text>
+<text class="d-m" x="624" y="532.0">repo_url</text>
+<text class="d-s" x="768" y="532.0" text-anchor="end">text</text>
+<path class="d-edge" d="M240,142.0 H262 V164.0 H300"/>
+<path class="d-edge" d="M247,149.0 L247,135.0"/>
+<path class="d-edge" d="M252,149.0 L252,135.0"/>
+<path class="d-edge" d="M286,164.0 L300,157.0 M286,164.0 L300,171.0 M286,164.0 L300,164.0"/>
+<circle class="d-fillpaper" cx="279" cy="164" r="5"/>
+<text class="d-lab" x="270" y="132.0" text-anchor="middle">joins</text>
+<path class="d-edge" d="M560,142.0 H538 V186.0 H500"/>
+<path class="d-edge" d="M553,135.0 L553,149.0"/>
+<path class="d-edge" d="M548,135.0 L548,149.0"/>
+<path class="d-edge" d="M514,186.0 L500,193.0 M514,186.0 L500,179.0 M514,186.0 L500,186.0"/>
+<path class="d-edge" d="M519,193.0 L519,179.0"/>
+<text class="d-lab" x="530" y="132.0" text-anchor="middle">has</text>
+<path class="d-edge" d="M680,224 V410"/>
+<path class="d-edge" d="M673,231 L687,231"/>
+<path class="d-edge" d="M673,236 L687,236"/>
+<path class="d-edge" d="M680,396 L687,410 M680,396 L673,410 M680,396 L680,410"/>
+<circle class="d-fillpaper" cx="680" cy="389" r="5"/>
+<path class="d-box g3" d="M644.0,317.0 L680,297.0 L716.0,317.0 L680,337.0 Z"/>
+<text class="d-t" x="680" y="322.0" text-anchor="middle">owns</text>
+<path class="d-edge" d="M120,224 V410"/>
+<path class="d-edge" d="M113,231 L127,231"/>
+<path class="d-edge" d="M113,236 L127,236"/>
+<path class="d-edge" d="M120,396 L127,410 M120,396 L113,410 M120,396 L120,410"/>
+<circle class="d-fillpaper" cx="120" cy="389" r="5"/>
+<path class="d-box g3" d="M78.0,317.0 L120,297.0 L162.0,317.0 L120,337.0 Z"/>
+<text class="d-t" x="120" y="322.0" text-anchor="middle">triggers</text>
+<path class="d-edge" d="M580,462.0 H480 V484.0 H220"/>
+<path class="d-edge" d="M573,455.0 L573,469.0"/>
+<path class="d-edge" d="M568,455.0 L568,469.0"/>
+<path class="d-edge" d="M234,484.0 L220,491.0 M234,484.0 L220,477.0 M234,484.0 L220,484.0"/>
+<circle class="d-fillpaper" cx="241" cy="484" r="5"/>
+<path class="d-box g3" d="M324.0,484.0 L360,464.0 L396.0,484.0 L360,504.0 Z"/>
+<text class="d-t" x="360" y="489.0" text-anchor="middle">ships</text>
+<rect class="d-note" x="275" y="262" width="250" height="74"/>
+<text class="d-tn" x="287" y="286">UNIQUE (user_id, org_id)</text>
+<text class="d-tn" x="287" y="306">one role per org</text>
+<text class="d-tn" x="287" y="326">both FKs ON DELETE CASCADE</text>
+<path class="d-line" d="M20,590 H780"/>
+<path class="d-edge" d="M30,612 H70"/>
+<path class="d-edge" d="M63,605 L63,619"/>
+<path class="d-edge" d="M58,605 L58,619"/>
+<text class="d-s" x="80" y="616">exactly one</text>
+<path class="d-edge" d="M190,612 H230"/>
+<path class="d-edge" d="M216,612 L230,605 M216,612 L230,619 M216,612 L230,612"/>
+<path class="d-edge" d="M211,605 L211,619"/>
+<text class="d-s" x="240" y="616">one or many</text>
+<path class="d-edge" d="M30,644 H70"/>
+<path class="d-edge" d="M56,644 L70,637 M56,644 L70,651 M56,644 L70,644"/>
+<circle class="d-fillpaper" cx="49" cy="644" r="5"/>
+<text class="d-s" x="80" y="648">zero or many</text>
+<rect class="d-tag acc" x="360" y="604" width="26" height="16"/><text class="d-k" x="373" y="616" text-anchor="middle">PK</text>
+<text class="d-s" x="394" y="616">primary key</text>
+<rect class="d-tag" x="490" y="604" width="26" height="16"/><text class="d-k" x="503" y="616" text-anchor="middle">FK</text>
+<text class="d-s" x="524" y="616">foreign key, indexed</text>
+<path class="d-box g3" d="M664,612 L678,603 L692,612 L678,621 Z"/><text class="d-s" x="700" y="616">relationship</text>
+</svg>

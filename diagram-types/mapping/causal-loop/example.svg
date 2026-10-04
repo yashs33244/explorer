@@ -1,0 +1,65 @@
+<svg class="hd" viewBox="0 0 800 650" role="img" aria-label="Causal loop diagram of a tech debt spiral: deadline pressure drives shortcuts, tech debt, prod bugs and on-call pages, which cut velocity and raise pressure again (reinforcing loop R1), checked by refactor time (balancing loop B1) and crunch hours (balancing loop B2)" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="causal-loop-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">PAYMENTS TEAM, Q3</text>
+<text class="d-h" x="24" y="56">Why we keep shipping slower</text>
+<path class="d-edge thick" d="M278.7,192.7 Q301.3,158.6 329.7,137.2" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M470.3,137.2 Q498.7,158.6 521.3,192.7" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M551.8,257.4 Q568.2,315.0 551.8,372.6" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M521.3,437.3 Q498.7,471.4 470.3,492.8" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M329.7,492.8 Q301.3,471.4 278.7,437.3" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M248.2,372.6 Q231.8,315.0 248.2,257.4" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M622.0,380.3 Q652.9,366.7 680.8,347.0" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M680.8,283.0 Q652.9,263.3 622.0,249.7" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M178.0,249.7 Q147.1,263.3 119.2,283.0" marker-end="url(#causal-loop-d1-ah)"/>
+<path class="d-edge thick" d="M119.2,347.0 Q147.1,366.7 178.0,380.3" marker-end="url(#causal-loop-d1-ah)"/>
+<rect class="d-box g4" x="185.0" y="200.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="260" y="222" text-anchor="middle">Deadline pressure</text>
+<text class="d-s" x="260" y="239" text-anchor="middle">Q3 launch date</text>
+<rect class="d-box g3" x="325.0" y="80.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="400" y="102" text-anchor="middle">Shortcuts taken</text>
+<text class="d-s" x="400" y="119" text-anchor="middle">skipped tests</text>
+<rect class="d-box g5" x="465.0" y="200.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="540" y="222" text-anchor="middle">Tech debt</text>
+<text class="d-s" x="540" y="239" text-anchor="middle">TODOs, hacks</text>
+<rect class="d-box g5" x="465.0" y="380.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="540" y="402" text-anchor="middle">Prod bugs</text>
+<text class="d-s" x="540" y="419" text-anchor="middle">Sentry issues</text>
+<rect class="d-box g4" x="325.0" y="500.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="400" y="522" text-anchor="middle">On-call pages</text>
+<text class="d-s" x="400" y="539" text-anchor="middle">PagerDuty alerts</text>
+<rect class="d-box g1" x="185.0" y="380.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="260" y="402" text-anchor="middle">Delivery velocity</text>
+<text class="d-s" x="260" y="419" text-anchor="middle">PRs merged/week</text>
+<rect class="d-box g3" x="5.0" y="290.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="80" y="312" text-anchor="middle">Crunch hours</text>
+<text class="d-s" x="80" y="329" text-anchor="middle">weekend deploys</text>
+<rect class="d-box g2" x="645.0" y="290.0" width="150" height="50" rx="14"/>
+<text class="d-t" x="720" y="312" text-anchor="middle">Refactor time</text>
+<text class="d-s" x="720" y="329" text-anchor="middle">20% sprint budget</text>
+<circle class="d-badge" cx="302.8" cy="161.8" r="11"/><text class="d-bt" x="302.8" y="166.3">+</text>
+<circle class="d-badge" cx="497.2" cy="161.8" r="11"/><text class="d-bt" x="497.2" y="166.3">+</text>
+<circle class="d-badge" cx="560.0" cy="315.0" r="11"/><text class="d-bt" x="560.0" y="319.5">+</text>
+<circle class="d-badge" cx="497.2" cy="468.2" r="11"/><text class="d-bt" x="497.2" y="472.7">+</text>
+<circle class="d-badge" cx="302.8" cy="468.2" r="11"/><text class="d-bt" x="302.8" y="472.7">−</text>
+<circle class="d-badge" cx="240.0" cy="315.0" r="11"/><text class="d-bt" x="240.0" y="319.5">−</text>
+<circle class="d-badge" cx="652.1" cy="365.2" r="11"/><text class="d-bt" x="652.1" y="369.7">+</text>
+<circle class="d-badge" cx="652.1" cy="264.8" r="11"/><text class="d-bt" x="652.1" y="269.3">−</text>
+<circle class="d-badge" cx="147.9" cy="264.8" r="11"/><text class="d-bt" x="147.9" y="269.3">+</text>
+<circle class="d-badge" cx="147.9" cy="365.2" r="11"/><text class="d-bt" x="147.9" y="369.7">+</text>
+<path class="d-edge" d="M413.0,292.5 A26,26 0 1 1 387.0,292.5" marker-end="url(#causal-loop-d1-ah)"/>
+<text class="d-h" x="400" y="321" text-anchor="middle">R1</text>
+<text class="d-lab" x="400" y="361" text-anchor="middle">Debt spiral</text>
+<path class="d-edge" d="M600.0,301.1 A16,16 0 1 0 616.0,301.1" marker-end="url(#causal-loop-d1-ah)"/>
+<text class="d-h" x="608" y="321" text-anchor="middle">B1</text>
+<path class="d-edge" d="M184.0,301.1 A16,16 0 1 0 200.0,301.1" marker-end="url(#causal-loop-d1-ah)"/>
+<text class="d-h" x="192" y="321" text-anchor="middle">B2</text>
+<text class="d-lab" x="608" y="355" text-anchor="middle">Payback</text>
+<text class="d-lab" x="192" y="355" text-anchor="middle">Crunch</text>
+<rect class="d-tag" x="24" y="588" width="752" height="40" rx="12"/>
+<circle class="d-badge" cx="46" cy="608" r="11"/><text class="d-bt" x="46" y="612.5">+</text>
+<text class="d-s" x="64" y="612">same direction</text>
+<circle class="d-badge" cx="196" cy="608" r="11"/><text class="d-bt" x="196" y="612.5">−</text>
+<text class="d-s" x="214" y="612">opposite direction</text>
+<text class="d-t" x="352" y="613">R</text><text class="d-s" x="368" y="612">reinforcing: even count of −</text>
+<text class="d-t" x="576" y="613">B</text><text class="d-s" x="592" y="612">balancing: odd count of −</text>
+</svg>

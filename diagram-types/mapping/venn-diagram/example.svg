@@ -1,0 +1,39 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Venn diagram comparing relational SQL, NoSQL and NewSQL databases: what each does alone, what each pair shares, and the indexes and replication all three provide" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="24" y="34">ORDERS SERVICE, STORE CHOICE</text>
+<text class="d-h" x="24" y="56">SQL vs NoSQL vs NewSQL</text>
+<circle class="d-soft g4" cx="400" cy="245" r="165"/>
+<circle class="d-soft g3" cx="305" cy="410" r="165"/>
+<circle class="d-soft g2" cx="495" cy="410" r="165"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="370" y="100" width="26" height="26"/>
+<image class="d-logo" data-logo="mysql.com" data-name="MySQL" x="404" y="100" width="26" height="26"/>
+<text class="d-t" x="400" y="148" text-anchor="middle">Relational SQL</text>
+<text class="d-s" x="400" y="167" text-anchor="middle">Single-node primary</text>
+<text class="d-s" x="400" y="184" text-anchor="middle">Vertical scaling</text>
+<text class="d-s" x="400" y="201" text-anchor="middle">Mature tooling</text>
+<image class="d-logo" data-logo="mongodb.com" data-name="MongoDB" x="200" y="396" width="26" height="26"/>
+<image class="d-logo" data-logo="cassandra.apache.org" data-name="Cassandra" x="234" y="396" width="26" height="26"/>
+<text class="d-t" x="230" y="444" text-anchor="middle">NoSQL</text>
+<text class="d-s" x="230" y="463" text-anchor="middle">Flexible schema</text>
+<text class="d-s" x="230" y="480" text-anchor="middle">Eventual reads</text>
+<text class="d-s" x="230" y="497" text-anchor="middle">Tunable replicas</text>
+<image class="d-logo" data-logo="cockroachlabs.com" data-name="CockroachDB" x="540" y="396" width="26" height="26"/>
+<image class="d-logo" data-logo="yugabyte.com" data-name="YugabyteDB" x="574" y="396" width="26" height="26"/>
+<text class="d-t" x="570" y="444" text-anchor="middle">NewSQL</text>
+<text class="d-s" x="570" y="463" text-anchor="middle">Raft consensus</text>
+<text class="d-s" x="570" y="480" text-anchor="middle">Geo-partitioning</text>
+<text class="d-s" x="570" y="497" text-anchor="middle">Global clock</text>
+<text class="d-s" x="298" y="290" text-anchor="middle">Low write</text>
+<text class="d-s" x="298" y="307" text-anchor="middle">latency</text>
+<text class="d-s" x="502" y="290" text-anchor="middle">SQL joins</text>
+<text class="d-s" x="502" y="307" text-anchor="middle">Serializable</text>
+<text class="d-s" x="400" y="478" text-anchor="middle">Horizontal</text>
+<text class="d-s" x="400" y="495" text-anchor="middle">scale-out</text>
+<text class="d-s" x="400" y="352" text-anchor="middle">Indexes,</text>
+<text class="d-s" x="400" y="369" text-anchor="middle">replication</text>
+<text class="d-k" x="400" y="335" text-anchor="middle">ALL THREE</text>
+<rect class="d-note g2" x="608" y="84" width="172" height="105" rx="6"/>
+<text class="d-tn" x="622" y="108">Orders needs joins,</text>
+<text class="d-tn" x="622" y="127">serializable txns</text>
+<text class="d-tn" x="622" y="146">and scale-out, so</text>
+<text class="d-tn" x="622" y="165">pick NewSQL</text>
+</svg>

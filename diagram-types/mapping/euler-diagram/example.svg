@@ -1,0 +1,42 @@
+<svg class="hd" viewBox="0 0 800 520" role="img" aria-label="Euler diagram of production services: every PII service needs backups, every backed-up service is stateful, every stateful one is a service; batch jobs sit apart" xmlns="http://www.w3.org/2000/svg">
+  <text class="d-k" x="20" y="30">Prod catalog, Oct 2026</text>
+  <circle id="euler-diagram-d1-all" class="d-soft g1" cx="300" cy="275" r="225"/>
+  <circle id="euler-diagram-d1-stateful" class="d-soft g2" cx="300" cy="330" r="170"/>
+  <circle id="euler-diagram-d1-backup" class="d-soft g3" cx="300" cy="380" r="120"/>
+  <circle id="euler-diagram-d1-pii" class="d-soft g4" cx="300" cy="428" r="72"/>
+
+  <text class="d-h" x="300" y="82" text-anchor="middle">All services</text>
+  <text class="d-s" x="300" y="100" text-anchor="middle">142 deployables, 108 stateless</text>
+  <rect class="d-tag" x="164" y="114" width="96.5" height="22" rx="11"/><text class="d-m" x="212.25" y="129" text-anchor="middle">api-gateway</text>
+  <rect class="d-tag" x="270.5" y="114" width="66.5" height="22" rx="11"/><text class="d-m" x="303.75" y="129" text-anchor="middle">web-bff</text>
+  <rect class="d-tag" x="347" y="114" width="89" height="22" rx="11"/><text class="d-m" x="391.5" y="129" text-anchor="middle">notify-svc</text>
+
+  <text class="d-h" x="300" y="190" text-anchor="middle">Stateful</text>
+  <text class="d-s" x="300" y="207" text-anchor="middle">34 own a volume or store</text>
+  <rect class="d-tag" x="187.25" y="219" width="111.5" height="22" rx="11"/><text class="d-m" x="243" y="234" text-anchor="middle">session-cache</text>
+  <rect class="d-tag" x="308.75" y="219" width="104" height="22" rx="11"/><text class="d-m" x="360.75" y="234" text-anchor="middle">search-index</text>
+
+  <text class="d-h" x="300" y="288" text-anchor="middle">Needs backups</text>
+  <text class="d-s" x="300" y="305" text-anchor="middle">21 with RPO under 1h</text>
+  <rect class="d-tag" x="213.5" y="317" width="81.5" height="22" rx="11"/><text class="d-m" x="254.25" y="332" text-anchor="middle">orders-db</text>
+  <rect class="d-tag" x="305" y="317" width="81.5" height="22" rx="11"/><text class="d-m" x="345.75" y="332" text-anchor="middle">audit-log</text>
+
+  <text class="d-h" x="300" y="392" text-anchor="middle">Holds PII</text>
+  <text class="d-s" x="300" y="409" text-anchor="middle">8 services</text>
+  <rect class="d-tag" x="259" y="418" width="82" height="22" rx="11"/><text class="d-m" x="300" y="433" text-anchor="middle">users-db</text>
+  <rect class="d-tag" x="251.75" y="446" width="96.5" height="22" rx="11"/><text class="d-m" x="300" y="461" text-anchor="middle">payments-db</text>
+
+  <circle id="euler-diagram-d1-batch" class="d-soft g5" cx="665" cy="215" r="100"/>
+  <text class="d-h" x="665" y="170" text-anchor="middle">Batch jobs</text>
+  <text class="d-s" x="665" y="188" text-anchor="middle">cron, not deployables</text>
+  <rect class="d-tag" x="616.5" y="202" width="97" height="22" rx="11"/><text class="d-m" x="665" y="217" text-anchor="middle">nightly-etl</text>
+  <rect class="d-tag" x="616.5" y="230" width="97" height="22" rx="11"/><text class="d-m" x="665" y="245" text-anchor="middle">invoice-run</text>
+  <rect class="d-tag" x="616.5" y="258" width="97" height="22" rx="11"/><text class="d-m" x="665" y="273" text-anchor="middle">sitemap-gen</text>
+
+  <rect class="d-note" x="560" y="360" width="215" height="118" rx="6"/>
+  <text class="d-tn" x="576" y="386">Read it inside out:</text>
+  <text class="d-tn" x="576" y="406">every PII service is</text>
+  <text class="d-tn" x="576" y="424">backed up, and every</text>
+  <text class="d-tn" x="576" y="442">backed-up one is stateful.</text>
+  <text class="d-tn" x="576" y="462">Batch jobs share nothing.</text>
+</svg>

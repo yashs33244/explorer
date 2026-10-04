@@ -1,0 +1,77 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="Kinship diagram of the Node.js runtime: Node.js 0.12 and the io.js fork merge into Node.js 4, which has maintained siblings, a hard fork in Electron, a vendored copy in NW.js and an archived fork, Ayo.js" xmlns="http://www.w3.org/2000/svg">
+  <text class="d-k" x="24" y="34">NODE.JS RUNTIME LINEAGE</text>
+  <text class="d-s" x="24" y="52">kinship notation for a package</text>
+
+  <!-- generation I: the union -->
+  <circle class="d-box g1" cx="300" cy="104" r="36"/>
+  <image class="d-logo" data-logo="nodejs.org" data-name="Node.js" x="287" y="91" width="26" height="26"/>
+  <text class="d-t" x="252" y="100" text-anchor="end">Node.js 0.12</text>
+  <text class="d-s" x="252" y="117" text-anchor="end">upstream, Joyent</text>
+  <path class="d-edge thick" d="M378,98 H402 M378,110 H402"/>
+  <polygon class="d-box g4" points="480,64 522,140 438,140"/>
+  <image class="d-logo" data-logo="iojs.org" data-name="io.js" x="468" y="104" width="24" height="24"/>
+  <text class="d-t" x="532" y="100">io.js 3.3</text>
+  <text class="d-s" x="532" y="117">community fork, 2014</text>
+
+  <!-- descent and sibship -->
+  <path class="d-edge thick" d="M390,118 V230"/>
+  <text class="d-lab" x="400" y="186">merged Sep 2015</text>
+  <path class="d-edge thick" d="M170,256 V244 Q170,230 184,230 H606 Q620,230 620,244 V264"/>
+  <path class="d-edge thick" d="M420,230 V256"/>
+
+  <!-- generation II -->
+  <circle class="d-box g1" cx="170" cy="300" r="34"/>
+  <image class="d-logo" data-logo="nodejs.org" data-name="Node.js" x="157" y="287" width="26" height="26"/>
+  <text class="d-t" x="216" y="296">Node.js 4 LTS</text>
+  <text class="d-s" x="216" y="313">maintained line</text>
+
+  <polygon class="d-box g4" points="420,256 462,334 378,334"/>
+  <image class="d-logo" data-logo="electronjs.org" data-name="Electron" x="408" y="298" width="24" height="24"/>
+  <text class="d-t" x="474" y="296">Electron node</text>
+  <text class="d-s" x="474" y="313">fork, 40+ patches</text>
+
+  <rect class="d-box g2" x="588" y="268" width="64" height="64" rx="10"/>
+  <image class="d-logo" data-logo="nwjs.io" data-name="NW.js" x="607" y="287" width="26" height="26"/>
+  <text class="d-t" x="664" y="296">NW.js</text>
+  <text class="d-m" x="664" y="313">deps/node</text>
+
+  <!-- generation III under Node.js 4 -->
+  <path class="d-edge thick" d="M170,334 V412"/>
+  <path class="d-edge thick" d="M60,440 V426 Q60,412 74,412 H266 Q280,412 280,426 V440"/>
+  <path class="d-edge thick" d="M170,412 V440"/>
+  <circle class="d-box g1" cx="60" cy="470" r="30"/>
+  <image class="d-logo" data-logo="nodejs.org" data-name="Node.js" x="48" y="458" width="24" height="24"/>
+  <text class="d-t" x="60" y="524" text-anchor="middle">Node.js 8</text>
+  <text class="d-s" x="60" y="541" text-anchor="middle">EOL Dec 2019</text>
+
+  <polygon class="d-box g4" points="170,440 206,504 134,504"/>
+  <path class="d-edge thick" d="M142,506 L200,436"/>
+  <text class="d-t" x="170" y="524" text-anchor="middle">Ayo.js</text>
+  <text class="d-s" x="170" y="541" text-anchor="middle">archived 2018</text>
+
+  <circle class="d-box g1" cx="280" cy="470" r="30"/>
+  <image class="d-logo" data-logo="nodejs.org" data-name="Node.js" x="268" y="458" width="24" height="24"/>
+  <text class="d-t" x="280" y="524" text-anchor="middle">Node.js 22 LTS</text>
+  <text class="d-s" x="280" y="541" text-anchor="middle">maintenance LTS</text>
+
+  <!-- generation III under Electron -->
+  <path class="d-edge thick" d="M420,334 V442"/>
+  <rect class="d-box g2" x="392" y="442" width="56" height="56" rx="10"/>
+  <image class="d-logo" data-logo="code.visualstudio.com" data-name="VS Code" x="408" y="458" width="24" height="24"/>
+  <text class="d-t" x="420" y="524" text-anchor="middle">VS Code</text>
+  <text class="d-s" x="420" y="541" text-anchor="middle">bundles Electron node</text>
+
+  <!-- legend -->
+  <rect class="d-blob2" x="548" y="384" width="232" height="190" rx="14"/>
+  <text class="d-k" x="566" y="410">LEGEND</text>
+  <circle class="d-box g1" cx="580" cy="432" r="11"/>
+  <text class="d-s" x="602" y="436">maintained upstream line</text>
+  <polygon class="d-box g4" points="580,452 593,476 567,476"/>
+  <text class="d-s" x="602" y="470">hard fork, own releases</text>
+  <rect class="d-box g2" x="569" y="490" width="22" height="22" rx="4"/>
+  <text class="d-s" x="602" y="505">vendored copy in a repo</text>
+  <path class="d-edge thick" d="M569,526 H591 M569,534 H591"/>
+  <text class="d-s" x="602" y="534">lines merged</text>
+  <path class="d-edge thick" d="M570,560 L590,544"/>
+  <text class="d-s" x="602" y="557">archived, no releases</text>
+</svg>

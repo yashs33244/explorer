@@ -1,0 +1,79 @@
+<svg class="hd" viewBox="0 0 800 680" role="img" aria-label="Tech stack mapping for a platform migration: current versus target tool per concern, Heroku to AWS ECS, MySQL to PostgreSQL, Jenkins to GitHub Actions, New Relic to Datadog, Redis re-hosted with compute, Cloudflare edge kept" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="tech-stack-mapping-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="32" y="46">Concern</text><text class="d-k" x="200" y="46">Current stack</text><text class="d-k" x="472" y="46" text-anchor="middle">Move</text><text class="d-k" x="540" y="46">Target stack</text>
+<rect class="d-lane" x="20" y="62" width="760" height="88" rx="10"/>
+<rect class="d-lanehead" x="20" y="62" width="160" height="88" rx="10"/>
+<text class="d-t" x="32" y="102">Compute</text><text class="d-s" x="32" y="120">where code runs</text>
+<rect class="d-box g0" x="196" y="74" width="210" height="64" rx="12"/>
+<image class="d-logo" data-logo="heroku.com" data-name="Heroku" x="208" y="90" width="32" height="32"/>
+<text class="d-t" x="252" y="102">Heroku</text><text class="d-s" x="252" y="121">12 Standard-2X dynos</text>
+<rect class="d-box g2" x="540" y="74" width="224" height="64" rx="12"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS ECS Fargate" x="552" y="90" width="32" height="32"/>
+<text class="d-t" x="596" y="102">AWS ECS Fargate</text><text class="d-s" x="596" y="121">3 services, autoscaled</text>
+<path class="d-edge acc thick" d="M408,106 H536" marker-end="url(#tech-stack-mapping-d1-ah)"/>
+<text class="d-lab" x="472" y="96" text-anchor="middle">move</text>
+<rect class="d-tag" x="428" y="114" width="89" height="20" rx="10"/><text class="d-s" x="472" y="128" text-anchor="middle">cutover Nov</text>
+<rect class="d-lane alt" x="20" y="160" width="760" height="88" rx="10"/>
+<rect class="d-lanehead" x="20" y="160" width="160" height="88" rx="10"/>
+<text class="d-t" x="32" y="200">Database</text><text class="d-s" x="32" y="218">system of record</text>
+<rect class="d-box g0" x="196" y="172" width="210" height="64" rx="12"/>
+<image class="d-logo" data-logo="mysql.com" data-name="MySQL 5.7" x="208" y="188" width="32" height="32"/>
+<text class="d-t" x="252" y="200">MySQL 5.7</text><text class="d-s" x="252" y="219">RDS, 420 GB</text>
+<rect class="d-box g2" x="540" y="172" width="224" height="64" rx="12"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL 16" x="552" y="188" width="32" height="32"/>
+<text class="d-t" x="596" y="200">PostgreSQL 16</text><text class="d-s" x="596" y="219">Aurora, via AWS DMS</text>
+<path class="d-edge acc thick" d="M408,204 H536" marker-end="url(#tech-stack-mapping-d1-ah)"/>
+<text class="d-lab" x="472" y="194" text-anchor="middle">replicate</text>
+<rect class="d-tag" x="431" y="212" width="82" height="20" rx="10"/><text class="d-s" x="472" y="226" text-anchor="middle">CDC sync</text>
+<rect class="d-lane" x="20" y="258" width="760" height="88" rx="10"/>
+<rect class="d-lanehead" x="20" y="258" width="160" height="88" rx="10"/>
+<text class="d-t" x="32" y="298">CI/CD</text><text class="d-s" x="32" y="316">build and deploy</text>
+<rect class="d-box g0" x="196" y="270" width="210" height="64" rx="12"/>
+<image class="d-logo" data-logo="jenkins.io" data-name="Jenkins" x="208" y="286" width="32" height="32"/>
+<text class="d-t" x="252" y="298">Jenkins</text><text class="d-s" x="252" y="317">self-hosted, 2 agents</text>
+<rect class="d-box g2" x="540" y="270" width="224" height="64" rx="12"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub Actions" x="552" y="286" width="32" height="32"/>
+<text class="d-t" x="596" y="298">GitHub Actions</text><text class="d-s" x="596" y="317">OIDC deploy to ECS</text>
+<path class="d-edge acc thick" d="M408,302 H536" marker-end="url(#tech-stack-mapping-d1-ah)"/>
+<text class="d-lab" x="472" y="292" text-anchor="middle">rewrite</text>
+<rect class="d-tag acc" x="451" y="310" width="42" height="20" rx="10"/><text class="d-s" x="472" y="324" text-anchor="middle">done</text>
+<rect class="d-lane alt" x="20" y="356" width="760" height="88" rx="10"/>
+<rect class="d-lanehead" x="20" y="356" width="160" height="88" rx="10"/>
+<text class="d-t" x="32" y="396">Observability</text><text class="d-s" x="32" y="414">metrics, traces</text>
+<rect class="d-box g0" x="196" y="368" width="210" height="64" rx="12"/>
+<image class="d-logo" data-logo="newrelic.com" data-name="New Relic" x="208" y="384" width="32" height="32"/>
+<text class="d-t" x="252" y="396">New Relic</text><text class="d-s" x="252" y="415">APM agent v8</text>
+<rect class="d-box g2" x="540" y="368" width="224" height="64" rx="12"/>
+<image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="552" y="384" width="32" height="32"/>
+<text class="d-t" x="596" y="396">Datadog</text><text class="d-s" x="596" y="415">APM + log pipeline</text>
+<path class="d-edge acc thick" d="M408,400 H536" marker-end="url(#tech-stack-mapping-d1-ah)"/>
+<text class="d-lab" x="472" y="390" text-anchor="middle">swap agent</text>
+<rect class="d-tag" x="431" y="408" width="82" height="20" rx="10"/><text class="d-s" x="472" y="422" text-anchor="middle">planned Q1</text>
+<rect class="d-lane" x="20" y="454" width="760" height="88" rx="10"/>
+<rect class="d-lanehead" x="20" y="454" width="160" height="88" rx="10"/>
+<text class="d-t" x="32" y="494">Cache</text><text class="d-s" x="32" y="512">sessions, rate limits</text>
+<rect class="d-box g0" x="196" y="466" width="210" height="64" rx="12"/>
+<image class="d-logo" data-logo="redis.io" data-name="Redis 6" x="208" y="482" width="32" height="32"/>
+<text class="d-t" x="252" y="494">Redis 6</text><text class="d-s" x="252" y="513">Heroku add-on</text>
+<rect class="d-box g2" x="540" y="466" width="224" height="64" rx="12"/>
+<image class="d-logo" data-logo="redis.io" data-name="Redis 7" x="552" y="482" width="32" height="32"/>
+<text class="d-t" x="596" y="494">Redis 7</text><text class="d-s" x="596" y="513">ElastiCache</text>
+<path class="d-edge acc thick" d="M408,498 H536" marker-end="url(#tech-stack-mapping-d1-ah)"/>
+<text class="d-lab" x="472" y="488" text-anchor="middle">re-host</text>
+<rect class="d-tag" x="425" y="506" width="94" height="20" rx="10"/><text class="d-s" x="472" y="520" text-anchor="middle">with compute</text>
+<rect class="d-lane alt" x="20" y="552" width="760" height="88" rx="10"/>
+<rect class="d-lanehead" x="20" y="552" width="160" height="88" rx="10"/>
+<text class="d-t" x="32" y="592">Edge</text><text class="d-s" x="32" y="610">DNS, CDN, WAF</text>
+<rect class="d-box g0" x="196" y="564" width="210" height="64" rx="12"/>
+<image class="d-logo" data-logo="cloudflare.com" data-name="Cloudflare" x="208" y="580" width="32" height="32"/>
+<text class="d-t" x="252" y="592">Cloudflare</text><text class="d-s" x="252" y="611">proxied DNS, WAF rules</text>
+<rect class="d-box g0" x="540" y="564" width="224" height="64" rx="12"/>
+<image class="d-logo" data-logo="cloudflare.com" data-name="Cloudflare" x="552" y="580" width="32" height="32"/>
+<text class="d-t" x="596" y="592">Cloudflare</text><text class="d-s" x="596" y="611">origin repointed to ALB</text>
+<path class="d-edge dash" d="M408,596 H536" marker-end="url(#tech-stack-mapping-d1-ah)"/>
+<text class="d-lab" x="472" y="586" text-anchor="middle">keep</text>
+<rect class="d-tag" x="434" y="604" width="75" height="20" rx="10"/><text class="d-s" x="472" y="618" text-anchor="middle">no change</text>
+<path class="d-edge acc thick" d="M200,668 H240" marker-end="url(#tech-stack-mapping-d1-ah)"/><text class="d-s" x="250" y="672">migrating</text>
+<path class="d-edge dash" d="M340,668 H380" marker-end="url(#tech-stack-mapping-d1-ah)"/><text class="d-s" x="390" y="672">kept as is</text>
+<text class="d-s" x="500" y="672">order: CI/CD, compute + cache, DB, APM</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg class="hd" viewBox="0 0 800 500" role="img" aria-label="Dichotomous key for choosing a datastore for a new service: six yes or no questions lead to seven datastores, with the orders-service path to PostgreSQL highlighted" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="dichotomous-key-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+  <text class="d-k" x="20" y="30">Which datastore for a new service?</text>
+  <path class="d-edge acc" d="M330,94 L156,147" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M390,94 L564,147" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M126,194 L74,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge acc" d="M186,194 L237.5,247" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M207.5,294 L183,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge acc" d="M267.5,294 L292,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M534,194 L455.5,247" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M594,194 L673.5,247" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M425.5,294 L401,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M485.5,294 L510,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M643.5,294 L619,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <path class="d-edge" d="M703.5,294 L728,357" marker-end="url(#dichotomous-key-d1-ah)"/>
+  <rect id="dichotomous-key-d1-q1" class="d-box g0" x="285" y="50" width="150" height="44" rx="10"/>
+  <circle class="d-badge" cx="285" cy="50" r="11"/><text class="d-bt" x="285" y="54">1</text>
+  <text class="d-t" x="366" y="77" text-anchor="middle">Relational schema?</text>
+  <rect id="dichotomous-key-d1-q2" class="d-box g0" x="81" y="150" width="150" height="44" rx="10"/>
+  <circle class="d-badge" cx="81" cy="150" r="11"/><text class="d-bt" x="81" y="154">2</text>
+  <text class="d-t" x="162" y="177" text-anchor="middle">Global writes?</text>
+  <rect id="dichotomous-key-d1-q4" class="d-box g5" x="489" y="150" width="150" height="44" rx="10"/>
+  <circle class="d-badge" cx="489" cy="150" r="11"/><text class="d-bt" x="489" y="154">4</text>
+  <text class="d-t" x="570" y="177" text-anchor="middle">Key lookups only?</text>
+  <rect id="dichotomous-key-d1-q3" class="d-box g0" x="162.5" y="250" width="150" height="44" rx="10"/>
+  <circle class="d-badge" cx="162.5" cy="250" r="11"/><text class="d-bt" x="162.5" y="254">3</text>
+  <text class="d-t" x="243.5" y="277" text-anchor="middle">Analytics scans?</text>
+  <rect id="dichotomous-key-d1-q5" class="d-box g5" x="380.5" y="250" width="150" height="44" rx="10"/>
+  <circle class="d-badge" cx="380.5" cy="250" r="11"/><text class="d-bt" x="380.5" y="254">5</text>
+  <text class="d-t" x="461.5" y="277" text-anchor="middle">Sub-ms, fits RAM?</text>
+  <rect id="dichotomous-key-d1-q6" class="d-box g5" x="598.5" y="250" width="150" height="44" rx="10"/>
+  <circle class="d-badge" cx="598.5" cy="250" r="11"/><text class="d-bt" x="598.5" y="254">6</text>
+  <text class="d-t" x="679.5" y="277" text-anchor="middle">Full-text search?</text>
+  <rect id="dichotomous-key-d1-leaf0" class="d-box g1" x="22" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="cockroachlabs.com" data-name="CockroachDB" x="62" y="370" width="24" height="24"/>
+  <text class="d-t" x="74" y="412" text-anchor="middle">CockroachDB</text>
+  <text class="d-s" x="74" y="429" text-anchor="middle">global OLTP</text>
+  <rect id="dichotomous-key-d1-leaf1" class="d-box g1" x="131" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="clickhouse.com" data-name="ClickHouse" x="171" y="370" width="24" height="24"/>
+  <text class="d-t" x="183" y="412" text-anchor="middle">ClickHouse</text>
+  <text class="d-s" x="183" y="429" text-anchor="middle">event OLAP</text>
+  <rect id="dichotomous-key-d1-leaf2" class="d-box g2" x="240" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="280" y="370" width="24" height="24"/>
+  <text class="d-t" x="292" y="412" text-anchor="middle">PostgreSQL</text>
+  <text class="d-s" x="292" y="429" text-anchor="middle">default OLTP</text>
+  <rect id="dichotomous-key-d1-leaf3" class="d-box g1" x="349" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="redis.io" data-name="Redis" x="389" y="370" width="24" height="24"/>
+  <text class="d-t" x="401" y="412" text-anchor="middle">Redis</text>
+  <text class="d-s" x="401" y="429" text-anchor="middle">cache, locks</text>
+  <rect id="dichotomous-key-d1-leaf4" class="d-box g1" x="458" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="aws.amazon.com" data-name="DynamoDB" x="498" y="370" width="24" height="24"/>
+  <text class="d-t" x="510" y="412" text-anchor="middle">DynamoDB</text>
+  <text class="d-s" x="510" y="429" text-anchor="middle">serverless KV</text>
+  <rect id="dichotomous-key-d1-leaf5" class="d-box g1" x="567" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="opensearch.org" data-name="OpenSearch" x="607" y="370" width="24" height="24"/>
+  <text class="d-t" x="619" y="412" text-anchor="middle">OpenSearch</text>
+  <text class="d-s" x="619" y="429" text-anchor="middle">log search</text>
+  <rect id="dichotomous-key-d1-leaf6" class="d-box g1" x="676" y="360" width="104" height="80" rx="10"/>
+  <image class="d-logo" data-logo="mongodb.com" data-name="MongoDB" x="716" y="370" width="24" height="24"/>
+  <text class="d-t" x="728" y="412" text-anchor="middle">MongoDB</text>
+  <text class="d-s" x="728" y="429" text-anchor="middle">doc store</text>
+  <text class="d-lab" x="251.7" y="121.85" text-anchor="middle">yes</text>
+  <text class="d-lab" x="468.3" y="121.85" text-anchor="middle">no</text>
+  <text class="d-lab" x="102.6" y="271.35" text-anchor="middle">yes</text>
+  <text class="d-lab" x="209.175" y="221.85" text-anchor="middle">no</text>
+  <text class="d-lab" x="196.475" y="326.35" text-anchor="middle">yes</text>
+  <text class="d-lab" x="278.525" y="326.35" text-anchor="middle">no</text>
+  <text class="d-lab" x="498.675" y="221.85" text-anchor="middle">yes</text>
+  <text class="d-lab" x="629.775" y="221.85" text-anchor="middle">no</text>
+  <text class="d-lab" x="414.475" y="326.35" text-anchor="middle">yes</text>
+  <text class="d-lab" x="496.525" y="326.35" text-anchor="middle">no</text>
+  <text class="d-lab" x="632.475" y="326.35" text-anchor="middle">yes</text>
+  <text class="d-lab" x="714.525" y="326.35" text-anchor="middle">no</text>
+  <rect class="d-tag acc" x="242" y="450" width="100" height="22" rx="11"/><text class="d-m" x="292" y="465" text-anchor="middle">orders-svc</text>
+  <text class="d-s" x="360" y="465">orders-svc took yes, no, no to PostgreSQL</text>
+  <text class="d-s" x="20" y="490">Start at 1. Yes goes left, no goes right, until you reach a store.</text>
+</svg>

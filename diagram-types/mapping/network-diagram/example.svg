@@ -1,0 +1,109 @@
+<svg class="hd" viewBox="0 0 800 510" role="img" aria-label="Network diagram of an AWS VPC across two availability zones: internet traffic enters through an internet gateway to a load balancer in public subnets, which routes to ECS tasks in private subnets that reach an RDS primary in data subnets, with NAT gateways for egress" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="network-diagram-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+
+  <!-- internet and gateway chain -->
+  <circle class="d-box g1" cx="52" cy="124" r="40"/>
+  <g transform="translate(32,104)"><path class="d-fillpaper" d="M10,30 C3,30 3,19 11,19 C12,10 27,9 29,18 C37,17 38,30 30,30 Z"/></g>
+  <text class="d-t" x="52" y="184" text-anchor="middle">Internet</text>
+  <text class="d-s" x="52" y="200" text-anchor="middle">riders, APIs</text>
+  <path class="d-edge" d="M92,124 H112"/>
+  <circle class="d-box g1" cx="150" cy="124" r="36"/>
+  <circle class="d-fillpaper" cx="150" cy="124" r="22"/>
+  <path class="d-line" d="M150,104 V114 M146,108 L150,104 L154,108 M150,144 V134 M146,140 L150,144 L154,140 M130,124 H140 M136,120 L140,124 L136,128 M170,124 H160 M164,120 L160,124 L164,128"/>
+  <text class="d-t" x="150" y="180" text-anchor="middle">Internet GW</text>
+  <text class="d-m" x="150" y="196" text-anchor="middle">igw-0a1f</text>
+
+  <!-- VPC -->
+  <rect class="d-box g2" x="206" y="20" width="582" height="476" rx="18"/>
+  <image class="d-logo" data-logo="aws.amazon.com" data-name="AWS" x="220" y="30" width="24" height="24"/>
+  <text class="d-t" x="252" y="47">VPC 10.0.0.0/16</text>
+  <text class="d-s" x="378" y="47">prod, eu-west-1</text>
+
+  <!-- availability zones -->
+  <rect class="d-blob2" x="314" y="60" width="227" height="426" rx="14"/>
+  <rect class="d-blob2" x="549" y="60" width="227" height="426" rx="14"/>
+  <text class="d-k" x="328" y="80">az eu-west-1a</text>
+  <text class="d-k" x="563" y="80">az eu-west-1b</text>
+
+  <!-- row headers: subnet tier and CIDRs -->
+  <text class="d-k" x="220" y="152">public</text>
+  <text class="d-m" x="220" y="170">10.0.1.0/24</text>
+  <text class="d-m" x="220" y="186">10.0.2.0/24</text>
+  <text class="d-k" x="220" y="276">private</text>
+  <text class="d-m" x="220" y="294">10.0.11.0/24</text>
+  <text class="d-m" x="220" y="310">10.0.12.0/24</text>
+  <text class="d-k" x="220" y="404">data</text>
+  <text class="d-m" x="220" y="422">10.0.21.0/24</text>
+  <text class="d-m" x="220" y="438">10.0.22.0/24</text>
+
+  <!-- subnet bands -->
+  <rect class="d-band g3" x="322" y="92" width="211" height="124" rx="10"/>
+  <rect class="d-band g3" x="557" y="92" width="211" height="124" rx="10"/>
+  <rect class="d-band g1" x="322" y="232" width="211" height="110" rx="10"/>
+  <rect class="d-band g1" x="557" y="232" width="211" height="110" rx="10"/>
+  <rect class="d-band g5" x="322" y="358" width="211" height="118" rx="10"/>
+  <rect class="d-band g5" x="557" y="358" width="211" height="118" rx="10"/>
+
+  <!-- public: ALB spans both AZs, one NAT per AZ -->
+  <rect class="d-box g0" x="332" y="102" width="426" height="44" rx="10"/>
+  <text class="d-t" x="545" y="121" text-anchor="middle">Application Load Balancer</text>
+  <text class="d-s" x="545" y="138" text-anchor="middle">HTTPS 443, target group api</text>
+  <rect class="d-box g0" x="413" y="164" width="112" height="40" rx="10"/>
+  <text class="d-t" x="469" y="189" text-anchor="middle">NAT gateway</text>
+  <rect class="d-box g0" x="648" y="164" width="112" height="40" rx="10"/>
+  <text class="d-t" x="704" y="189" text-anchor="middle">NAT gateway</text>
+  <path class="d-edge" d="M186,124 H330" marker-end="url(#network-diagram-d1-ah)"/>
+  <text class="d-lab" x="258" y="116" text-anchor="middle">HTTPS</text>
+
+  <!-- private: ECS tasks -->
+  <rect class="d-box g4" x="332" y="252" width="80" height="56" rx="10"/>
+  <text class="d-t" x="372" y="276" text-anchor="middle">api</text>
+  <text class="d-s" x="372" y="294" text-anchor="middle">Fargate</text>
+  <rect class="d-box g4" x="428" y="252" width="95" height="56" rx="10"/>
+  <text class="d-t" x="475" y="276" text-anchor="middle">worker</text>
+  <text class="d-s" x="475" y="294" text-anchor="middle">Fargate</text>
+  <rect class="d-box g4" x="567" y="252" width="80" height="56" rx="10"/>
+  <text class="d-t" x="607" y="276" text-anchor="middle">api</text>
+  <text class="d-s" x="607" y="294" text-anchor="middle">Fargate</text>
+  <rect class="d-box g4" x="663" y="252" width="95" height="56" rx="10"/>
+  <text class="d-t" x="710" y="276" text-anchor="middle">worker</text>
+  <text class="d-s" x="710" y="294" text-anchor="middle">Fargate</text>
+
+  <path class="d-edge" d="M372,146 V250" marker-end="url(#network-diagram-d1-ah)"/>
+  <path class="d-edge" d="M607,146 V250" marker-end="url(#network-diagram-d1-ah)"/>
+  <text class="d-lab" x="366" y="190" text-anchor="end">8080</text>
+  <text class="d-lab" x="601" y="190" text-anchor="end">8080</text>
+  <path class="d-edge" d="M475,252 V206" marker-end="url(#network-diagram-d1-ah)"/>
+  <path class="d-edge" d="M710,252 V206" marker-end="url(#network-diagram-d1-ah)"/>
+  <text class="d-lab" x="481" y="227">egress</text>
+  <text class="d-lab" x="716" y="227">egress</text>
+
+  <!-- data: RDS Multi-AZ -->
+  <rect class="d-box g0" x="332" y="384" width="190" height="64" rx="10"/>
+  <image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="344" y="403" width="26" height="26"/>
+  <text class="d-t" x="380" y="410">RDS primary</text>
+  <text class="d-s" x="380" y="428">Postgres 16, writer</text>
+  <rect class="d-box g0" x="567" y="384" width="190" height="64" rx="10"/>
+  <image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="579" y="403" width="26" height="26"/>
+  <text class="d-t" x="615" y="410">RDS standby</text>
+  <text class="d-s" x="615" y="428">failover target</text>
+  <path class="d-edge dash" d="M522,430 H565" marker-end="url(#network-diagram-d1-ah)"/>
+  <text class="d-lab" x="567" y="466">sync replication</text>
+
+  <path class="d-edge" d="M372,308 V382" marker-end="url(#network-diagram-d1-ah)"/>
+  <text class="d-lab" x="378" y="354">5432</text>
+  <path class="d-edge" d="M607,308 C607,352 500,346 500,382" marker-end="url(#network-diagram-d1-ah)"/>
+  <text class="d-lab" x="614" y="334">cross-AZ</text>
+
+  <!-- notes: routing and security groups -->
+  <rect class="d-note" x="14" y="236" width="184" height="112" rx="6"/>
+  <text class="d-tn" x="26" y="260">Route tables</text>
+  <text class="d-tn" x="26" y="284">public: 0/0 to IGW</text>
+  <text class="d-tn" x="26" y="306">private: 0/0 to NAT</text>
+  <text class="d-tn" x="26" y="328">data: local only</text>
+  <rect class="d-note g3" x="14" y="364" width="184" height="112" rx="6"/>
+  <text class="d-tn" x="26" y="388">Security groups</text>
+  <text class="d-tn" x="26" y="412">alb to api: 8080</text>
+  <text class="d-tn" x="26" y="434">api to rds: 5432</text>
+  <text class="d-tn" x="26" y="456">rds: no public IP</text>
+</svg>

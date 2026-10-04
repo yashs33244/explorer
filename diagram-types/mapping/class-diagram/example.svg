@@ -1,0 +1,65 @@
+<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="UML class diagram of a payment domain: StripeProcessor and AdyenProcessor implement the PaymentProcessor interface, Payment uses it and owns zero or more Refunds" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="class-diagram-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">payments-svc / domain/payments.py</text>
+<text class="d-h" x="20" y="54">Payment domain: one interface, two PSPs</text>
+<rect class="d-box g3" x="274" y="190" width="230" height="152" rx="10"/>
+<path class="d-line" d="M274,236 H504 M274,250 H504"/>
+<text class="d-s" x="389.0" y="207" text-anchor="middle">«interface»</text>
+<text class="d-t" x="389.0" y="226" text-anchor="middle">PaymentProcessor</text>
+<text class="d-m" x="286" y="270">+ authorize(p): AuthId</text>
+<text class="d-m" x="286" y="290">+ capture(id): Result</text>
+<text class="d-m" x="286" y="310">+ refund(id, amt): Result</text>
+<text class="d-m" x="286" y="330">+ parse_webhook(raw): Event</text>
+<rect class="d-box g2" x="568" y="86" width="218" height="180" rx="10"/>
+<path class="d-line" d="M568,122 H786 M568,174 H786"/>
+<text class="d-t" x="684" y="109" text-anchor="middle">StripeProcessor</text>
+<image class="d-logo" data-logo="stripe.com" data-name="Stripe" x="578" y="92" width="24" height="24"/>
+<text class="d-m" x="580" y="142">- client: StripeClient</text>
+<text class="d-m" x="580" y="162">- api_key: Secret</text>
+<text class="d-m" x="580" y="194">+ authorize(p): AuthId</text>
+<text class="d-m" x="580" y="214">+ capture(id): Result</text>
+<text class="d-m" x="580" y="234">+ refund(id, amt): Result</text>
+<text class="d-m" x="580" y="254">+ parse_webhook(raw): Event</text>
+<rect class="d-box g4" x="568" y="306" width="218" height="180" rx="10"/>
+<path class="d-line" d="M568,342 H786 M568,394 H786"/>
+<text class="d-t" x="684" y="329" text-anchor="middle">AdyenProcessor</text>
+<image class="d-logo" data-logo="adyen.com" data-name="Adyen" x="578" y="312" width="24" height="24"/>
+<text class="d-m" x="580" y="362">- merchant: str</text>
+<text class="d-m" x="580" y="382">- hmac_key: Secret</text>
+<text class="d-m" x="580" y="414">+ authorize(p): AuthId</text>
+<text class="d-m" x="580" y="434">+ capture(id): Result</text>
+<text class="d-m" x="580" y="454">+ refund(id, amt): Result</text>
+<text class="d-m" x="580" y="474">+ parse_webhook(raw): Event</text>
+<rect class="d-box g1" x="20" y="86" width="206" height="180" rx="10"/>
+<path class="d-line" d="M20,122 H226 M20,214 H226"/>
+<text class="d-t" x="123.0" y="109" text-anchor="middle">Payment</text>
+<text class="d-m" x="32" y="142">- id: UUID</text>
+<text class="d-m" x="32" y="162">- amount: Money</text>
+<text class="d-m" x="32" y="182">- status: PaymentStatus</text>
+<text class="d-m" x="32" y="202">- psp_ref: str</text>
+<text class="d-m" x="32" y="234">+ capture(): Result</text>
+<text class="d-m" x="32" y="254">+ refund(amt): Refund</text>
+<rect class="d-box g5" x="20" y="346" width="206" height="160" rx="10"/>
+<path class="d-line" d="M20,382 H226 M20,474 H226"/>
+<text class="d-t" x="123.0" y="369" text-anchor="middle">Refund</text>
+<text class="d-m" x="32" y="402">- id: UUID</text>
+<text class="d-m" x="32" y="422">- payment_id: UUID</text>
+<text class="d-m" x="32" y="442">- amount: Money</text>
+<text class="d-m" x="32" y="462">- reason: str</text>
+<text class="d-m" x="32" y="494">+ submit(): Result</text>
+<path class="d-edge dash" d="M568,176 H546 V396 H568 M546,266 H518"/>
+<path class="d-fillpaper" d="M504,266.0 L518,258.0 L518,274.0 Z"/>
+<text class="d-lab" x="538" y="336.0" text-anchor="middle" transform="rotate(-90 538 336.0)">implements</text>
+<path class="d-edge" d="M226,216.0 H274" marker-end="url(#class-diagram-d1-ah)"/>
+<text class="d-lab" x="250.0" y="208.0" text-anchor="middle">uses</text>
+<path class="d-fillink" d="M123.0,266 L131.0,278 L123.0,290 L115.0,278 Z"/>
+<path class="d-edge" d="M123.0,290 V346"/>
+<text class="d-s" x="137.0" y="286">1</text>
+<text class="d-s" x="137.0" y="338">0..*</text>
+<text class="d-lab" x="109.0" y="322.0" text-anchor="end">owns</text>
+<path class="d-line" d="M20,548 H780"/>
+<path class="d-edge dash" d="M30,572 H66"/><path class="d-fillpaper" d="M66,572 L80,565 L80,579 Z"/><text class="d-s" x="90" y="576">realizes interface</text>
+<path class="d-fillink" d="M230,572 L240,566 L250,572 L240,578 Z"/><path class="d-edge" d="M250,572 H280"/><text class="d-s" x="290" y="576">composition</text>
+<path class="d-edge" d="M400,572 H440" marker-end="url(#class-diagram-d1-ah)"/><text class="d-s" x="450" y="576">association</text>
+<text class="d-m" x="560" y="576">+ public   - private</text>
+</svg>

@@ -1,0 +1,73 @@
+<svg class="hd" viewBox="0 0 800 660" role="img" aria-label="Pedigree chart of Log4Shell across three release generations: v1 releases built on log4j 2.14.1 are affected, v2 releases on log4j 2.15.0 carry a shaded vulnerable copy, v3 on log4j 2.17.1 is clean" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="pedigree-chart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">LOG4SHELL, CVE-2021-44228</text>
+<text class="d-s" x="24" y="52">which releases inherit the defect</text>
+<text class="d-h" x="24" y="110">I</text>
+<text class="d-s" x="24" y="128">v1 line</text>
+<text class="d-h" x="24" y="270">II</text>
+<text class="d-s" x="24" y="288">v1.x + v2</text>
+<text class="d-h" x="24" y="440">III</text>
+<text class="d-s" x="24" y="458">v2.x + v3</text>
+<image class="d-logo" data-logo="apache.org" data-name="Apache" x="740" y="22" width="28" height="28"/>
+<path class="d-edge thick" d="M368,110 H442"/>
+<path class="d-edge thick" d="M405,110 V200"/>
+<path class="d-edge thick" d="M140,242 V214 Q140,200 154,200 H406 Q420,200 420,214 V242"/>
+<path class="d-edge thick" d="M290,200 V242"/>
+<rect class="d-box" x="312.0" y="82.0" width="56" height="56" rx="4"/>
+<rect class="d-fill g3" x="312.0" y="82.0" width="56" height="56" rx="4"/>
+<text class="d-t" x="340" y="158.0" text-anchor="middle">app v1.0</text>
+<text class="d-s" x="340" y="174.0" text-anchor="middle">JndiLookup on</text>
+<circle class="d-box" cx="470" cy="110" r="28"/>
+<circle class="d-fill g3" cx="470" cy="110" r="28"/>
+<text class="d-t" x="470" y="158" text-anchor="middle">log4j 2.14.1</text>
+<text class="d-s" x="470" y="174" text-anchor="middle">CVE-2021-44228</text>
+<path class="d-edge thick" d="M448,270 H522"/>
+<path class="d-edge thick" d="M485,270 V370"/>
+<path class="d-edge thick" d="M380,412 V384 Q380,370 394,370 H606 Q620,370 620,384 V412"/>
+<path class="d-edge thick" d="M500,370 V412"/>
+<rect class="d-box" x="112.0" y="242.0" width="56" height="56" rx="4"/>
+<rect class="d-fill g3" x="112.0" y="242.0" width="56" height="56" rx="4"/>
+<text class="d-t" x="140" y="318.0" text-anchor="middle">app v1.1</text>
+<text class="d-s" x="140" y="334.0" text-anchor="middle">patch skipped</text>
+<rect class="d-box" x="262.0" y="242.0" width="56" height="56" rx="4"/>
+<rect class="d-fill g3" x="262.0" y="242.0" width="56" height="56" rx="4"/>
+<text class="d-t" x="290" y="318.0" text-anchor="middle">app v1.2</text>
+<text class="d-s" x="290" y="334.0" text-anchor="middle">exploitable</text>
+<rect class="d-box" x="392.0" y="242.0" width="56" height="56" rx="4"/>
+<rect class="d-fill g3" x="392.0" y="242.0" width="28.0" height="56"/>
+<text class="d-t" x="420" y="318.0" text-anchor="middle">app v2.0</text>
+<text class="d-s" x="420" y="334.0" text-anchor="middle">shaded copy left</text>
+<circle class="d-box" cx="550" cy="270" r="28"/>
+<path class="d-fill g3" d="M550,242 A28,28 0 0 0 550,298 Z"/>
+<text class="d-t" x="550" y="318" text-anchor="middle">log4j 2.15.0</text>
+<text class="d-s" x="550" y="334" text-anchor="middle">partial fix</text>
+<path class="d-edge thick" d="M648,440 H712"/>
+<rect class="d-box" x="352.0" y="412.0" width="56" height="56" rx="4"/>
+<rect class="d-fill g3" x="352.0" y="412.0" width="28.0" height="56"/>
+<text class="d-t" x="380" y="488.0" text-anchor="middle">app v2.1</text>
+<text class="d-s" x="380" y="504.0" text-anchor="middle">in es-client jar</text>
+<rect class="d-box" x="472.0" y="412.0" width="56" height="56" rx="4"/>
+<text class="d-t" x="500" y="488.0" text-anchor="middle">app v2.2</text>
+<text class="d-s" x="500" y="504.0" text-anchor="middle">jar purged</text>
+<rect class="d-box" x="592.0" y="412.0" width="56" height="56" rx="4"/>
+<text class="d-t" x="620" y="488.0" text-anchor="middle">app v3.0</text>
+<text class="d-s" x="620" y="504.0" text-anchor="middle">scan clean</text>
+<circle class="d-box" cx="740" cy="440" r="28"/>
+<text class="d-t" x="740" y="488" text-anchor="middle">log4j 2.17.1</text>
+<text class="d-s" x="740" y="504" text-anchor="middle">full fix</text>
+<path class="d-edge acc" d="M212,372 L256,296" marker-end="url(#pedigree-chart-d1-ah)"/>
+<text class="d-lab" x="212" y="392" text-anchor="middle">found by pen test</text>
+<rect class="d-blob2" x="24" y="548" width="752" height="88" rx="14"/>
+<rect class="d-box" x="44" y="566" width="22" height="22" rx="3"/>
+<text class="d-s" x="74" y="582">release we ship</text>
+<circle class="d-box" cx="55" cy="611" r="11"/>
+<text class="d-s" x="74" y="616">log4j version pulled in</text>
+<rect class="d-box" x="244" y="566" width="22" height="22" rx="3"/><rect class="d-fill g3" x="244" y="566" width="22" height="22" rx="3"/>
+<text class="d-s" x="274" y="582">affected: exploitable</text>
+<rect class="d-box" x="244" y="600" width="22" height="22" rx="3"/><rect class="d-fill g3" x="244" y="600" width="11" height="22"/>
+<text class="d-s" x="274" y="616">carrier: patched, vulnerable dep inside</text>
+<rect class="d-box" x="524" y="566" width="22" height="22" rx="3"/>
+<text class="d-s" x="554" y="582">clean</text>
+<path class="d-edge acc" d="M524,622 L544,602" marker-end="url(#pedigree-chart-d1-ah)"/>
+<text class="d-s" x="554" y="616">proband: first detected</text>
+</svg>

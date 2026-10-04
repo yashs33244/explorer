@@ -1,0 +1,61 @@
+<svg class="hd" viewBox="0 0 800 560" role="img" aria-label="System context diagram of Shipyard, an internal deploy platform: engineers approve deploys, GitHub sends merge webhooks in, and Shipyard applies manifests to Kubernetes, pages PagerDuty on a failed rollout and posts status to Slack" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="system-context-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+
+  <!-- the system in scope -->
+  <circle class="d-box g2" cx="330" cy="330" r="108"/>
+  <g transform="translate(310,252)"><circle class="d-fillpaper" cx="20" cy="20" r="9"/><circle class="d-lineacc" cx="20" cy="20" r="3.5"/><path class="d-line" d="M20,3 V8 M20,32 V37 M3,20 H8 M32,20 H37 M8,8 L11.5,11.5 M28.5,28.5 L32,32 M8,32 L11.5,28.5 M28.5,11.5 L32,8"/></g>
+  <text class="d-k" x="330" y="312" text-anchor="middle">software system</text>
+  <text class="d-h" x="330" y="336" text-anchor="middle">Shipyard</text>
+  <text class="d-s" x="330" y="356" text-anchor="middle">internal deploy platform</text>
+  <text class="d-s" x="330" y="374" text-anchor="middle">canary, rollback</text>
+
+  <!-- people -->
+  <rect class="d-box g4" x="14" y="290" width="140" height="80" rx="12"/>
+  <g transform="translate(26,300)"><circle class="d-line" cx="20" cy="12" r="7"/><path class="d-line" d="M6,36 C6,25 34,25 34,36 Z"/></g>
+  <text class="d-t" x="72" y="318">Engineers</text>
+  <text class="d-s" x="72" y="336">[person]</text>
+  <text class="d-s" x="26" y="358">40 product teams</text>
+  <path class="d-edge" d="M154,330 H220" marker-end="url(#system-context-d1-ah)"/>
+  <text class="d-lab" x="187" y="318" text-anchor="middle">approves</text>
+
+  <!-- external systems -->
+  <rect class="d-box g0" x="540" y="62" width="224" height="72" rx="12"/>
+  <image class="d-logo" data-logo="github.com" data-name="GitHub" x="556" y="85" width="26" height="26"/>
+  <text class="d-t" x="594" y="94">GitHub</text>
+  <text class="d-s" x="594" y="113">repos, CI checks</text>
+
+  <rect class="d-box g0" x="540" y="200" width="224" height="72" rx="12"/>
+  <image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="556" y="223" width="26" height="26"/>
+  <text class="d-t" x="594" y="232">Kubernetes</text>
+  <text class="d-s" x="594" y="251">prod-us, prod-eu clusters</text>
+
+  <rect class="d-box g0" x="540" y="310" width="224" height="72" rx="12"/>
+  <image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="556" y="333" width="26" height="26"/>
+  <text class="d-t" x="594" y="342">PagerDuty</text>
+  <text class="d-s" x="594" y="361">on-call: platform-sre</text>
+
+  <rect class="d-box g0" x="540" y="420" width="224" height="72" rx="12"/>
+  <image class="d-logo" data-logo="slack.com" data-name="Slack" x="556" y="443" width="26" height="26"/>
+  <text class="d-t" x="594" y="452">Slack</text>
+  <text class="d-m" x="594" y="471">#deploys</text>
+
+  <!-- input loop: GitHub back into the system -->
+  <path class="d-edge" d="M652,62 V44 Q652,32 640,32 H342 Q330,32 330,44 V218" marker-end="url(#system-context-d1-ah)"/>
+  <text class="d-lab" x="490" y="36" text-anchor="middle">merge webhook</text>
+
+  <!-- outputs: one trunk branching to three systems -->
+  <path class="d-edge" d="M438,346 H470 V248 Q470,236 482,236 H538" marker-end="url(#system-context-d1-ah)"/>
+  <path class="d-edge" d="M438,346 H538" marker-end="url(#system-context-d1-ah)"/>
+  <path class="d-edge" d="M438,346 H470 V444 Q470,456 482,456 H538" marker-end="url(#system-context-d1-ah)"/>
+  <text class="d-lab" x="508" y="230" text-anchor="middle">applies</text>
+  <text class="d-lab" x="508" y="340" text-anchor="middle">pages</text>
+  <text class="d-lab" x="508" y="450" text-anchor="middle">posts</text>
+
+  <!-- legend -->
+  <rect class="d-box g2" x="24" y="512" width="16" height="16" rx="4"/>
+  <text class="d-s" x="48" y="525">in scope</text>
+  <rect class="d-box g0" x="120" y="512" width="16" height="16" rx="4"/>
+  <text class="d-s" x="144" y="525">external system</text>
+  <rect class="d-box g4" x="256" y="512" width="16" height="16" rx="4"/>
+  <text class="d-s" x="280" y="525">people</text>
+</svg>
