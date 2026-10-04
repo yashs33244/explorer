@@ -1,0 +1,70 @@
+<svg class="hd" viewBox="0 0 800 520" role="img" aria-label="Orders CDC data pipeline: Postgres changes captured by Debezium into Kafka, processed by Flink and Snowpipe Streaming into Snowflake, modelled by dbt and served in Metabase" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="data-pipeline-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="30">orders CDC pipeline</text>
+<text class="d-s" x="20" y="50">p95 lag: 45s to RAW, 17 min to dashboard</text>
+<rect class="d-box g1" x="300" y="34" width="160" height="50" rx="10"/>
+<text class="d-t" x="380" y="56" text-anchor="middle">Schema Registry</text>
+<text class="d-s" x="380" y="74" text-anchor="middle">Avro, BACKWARD</text>
+<rect class="d-box g4" x="20" y="165" width="120" height="70" rx="10"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="32" y="176" width="24" height="24"/>
+<text class="d-t" x="62" y="193">Postgres</text>
+<text class="d-m" x="32" y="222">orders db</text>
+<circle class="d-box g5" cx="210" cy="200" r="46"/>
+<text class="d-t" x="210" y="198" text-anchor="middle">Debezium</text>
+<text class="d-s" x="210" y="216" text-anchor="middle">CDC</text>
+<path class="d-edge" d="M80,237 V270 Q80,280 90,280 H200 Q210,280 210,270 V249" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="145" y="298" text-anchor="middle">WAL, pgoutput</text>
+<path class="d-edge" d="M210,153 V130 Q210,120 200,120 H90 Q80,120 80,130 V162" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="145" y="112" text-anchor="middle">ack LSN</text>
+<path class="d-edge acc" d="M257,200 H297" marker-end="url(#data-pipeline-d1-ah)"/>
+<rect class="d-box g0" x="300" y="140" width="130" height="120" rx="28"/>
+<image class="d-logo" data-logo="confluent.io" data-name="Apache Kafka" x="353" y="152" width="24" height="24"/>
+<text class="d-t" x="365" y="196" text-anchor="middle">Kafka</text>
+<text class="d-m" x="365" y="218" text-anchor="middle">orders.cdc.v1</text>
+<text class="d-s" x="365" y="238" text-anchor="middle">12 partitions</text>
+<path class="d-edge acc" d="M432,195 H450 Q460,195 460,185 V145 Q460,135 465,135 H469" marker-end="url(#data-pipeline-d1-ah)"/>
+<path class="d-edge acc" d="M432,205 H450 Q460,205 460,215 V255 Q460,265 465,265 H469" marker-end="url(#data-pipeline-d1-ah)"/>
+<circle class="d-box g2" cx="520" cy="135" r="48"/>
+<image class="d-logo" data-logo="flink.apache.org" data-name="Apache Flink" x="508" y="96" width="24" height="24"/>
+<text class="d-t" x="520" y="139" text-anchor="middle">Flink</text>
+<text class="d-s" x="520" y="155" text-anchor="middle">dedupe, join</text>
+<circle class="d-box g2" cx="520" cy="265" r="48"/>
+<image class="d-logo" data-logo="snowflake.com" data-name="Snowpipe" x="508" y="226" width="24" height="24"/>
+<text class="d-t" x="520" y="269" text-anchor="middle">Snowpipe</text>
+<text class="d-s" x="520" y="285" text-anchor="middle">raw landing</text>
+<path class="d-edge dash" d="M243,167 C258,110 268,62 297,62" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="254" y="100" text-anchor="end">register</text>
+<path class="d-edge dash" d="M463,62 H510 Q520,62 520,72 V84" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="486" y="58" text-anchor="middle">fetch</text>
+<path class="d-edge acc" d="M568,135 H580 Q590,135 590,145 V180 Q590,190 600,190 H607" marker-end="url(#data-pipeline-d1-ah)"/>
+<path class="d-edge acc" d="M568,265 H580 Q590,265 590,255 V220 Q590,210 600,210 H607" marker-end="url(#data-pipeline-d1-ah)"/>
+<rect class="d-box g4" x="610" y="160" width="170" height="80" rx="10"/>
+<image class="d-logo" data-logo="snowflake.com" data-name="Snowflake" x="622" y="172" width="24" height="24"/>
+<text class="d-t" x="654" y="189">Snowflake</text>
+<text class="d-m" x="622" y="214">RAW.ORDERS_CDC</text>
+<text class="d-s" x="622" y="230">lands in under 60s</text>
+<text class="d-lab" x="598" y="152" text-anchor="start">MERGE upserts</text>
+<rect class="d-band g3" x="20" y="326" width="760" height="174" rx="12"/>
+<text class="d-k" x="36" y="352">transform + serve, every 15 min</text>
+<rect class="d-box g0" x="560" y="368" width="200" height="104" rx="10"/>
+<image class="d-logo" data-logo="getdbt.com" data-name="dbt" x="574" y="380" width="24" height="24"/>
+<text class="d-t" x="608" y="397">dbt Cloud</text>
+<text class="d-m" x="574" y="430">stg_orders</text>
+<text class="d-m" x="574" y="452">fct_orders + tests</text>
+<rect class="d-box g0" x="300" y="368" width="200" height="104" rx="10"/>
+<image class="d-logo" data-logo="snowflake.com" data-name="Snowflake" x="314" y="380" width="24" height="24"/>
+<text class="d-t" x="348" y="397">ANALYTICS</text>
+<text class="d-m" x="314" y="430">fct_orders</text>
+<text class="d-m" x="314" y="452">dim_customers</text>
+<rect class="d-box g0" x="40" y="368" width="200" height="104" rx="10"/>
+<image class="d-logo" data-logo="metabase.com" data-name="Metabase" x="54" y="380" width="24" height="24"/>
+<text class="d-t" x="88" y="397">Metabase</text>
+<text class="d-s" x="54" y="430">Revenue dashboard</text>
+<text class="d-m" x="54" y="452">model: fct_orders</text>
+<path class="d-edge acc" d="M720,242 V366" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="728" y="306" text-anchor="start">RAW tables</text>
+<path class="d-edge acc" d="M558,420 H502" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="530" y="412" text-anchor="middle">builds</text>
+<path class="d-edge acc" d="M298,420 H242" marker-end="url(#data-pipeline-d1-ah)"/>
+<text class="d-lab" x="270" y="412" text-anchor="middle">serves</text>
+</svg>

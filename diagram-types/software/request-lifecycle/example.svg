@@ -1,0 +1,80 @@
+<svg class="hd" viewBox="0 0 800 580" role="img" aria-label="Numbered path of one HTTPS request for GET /v1/orders/42: DNS lookup, Cloudflare edge, AWS load balancer, orders-api pod, Redis cache miss, Postgres read, then the 200 response, with a 38 ms latency budget" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="request-lifecycle-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-m" x="430" y="46">GET api.shop.io/v1/orders/42</text>
+<text class="d-s" x="430" y="68">cold cache, one user, one request</text>
+<rect class="d-box g5" x="210" y="40" width="140" height="62" rx="12"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="Route 53" x="220" y="50" width="22" height="22"/>
+<text class="d-t" x="250" y="66">Route 53</text>
+<text class="d-s" x="222" y="90">api.shop.io zone</text>
+<rect class="d-box" x="20" y="195" width="120" height="70" rx="12"/>
+<g transform="translate(30,203) scale(0.55)"><rect class="d-fillpaper" x="3" y="5" width="34" height="23" rx="3"/><path class="d-line" d="M14,35 H26 M20,28 V35"/><path class="d-lineacc" d="M9,14 H21 M9,20 H28"/></g>
+<text class="d-t" x="58" y="220">Browser</text>
+<text class="d-s" x="32" y="250">shop.io/orders</text>
+<rect class="d-box g2" x="210" y="195" width="130" height="70" rx="12"/>
+<image class="d-logo" data-logo="cloudflare.com" data-name="Cloudflare" x="220" y="205" width="22" height="22"/>
+<text class="d-t" x="250" y="221">Cloudflare</text>
+<text class="d-s" x="222" y="250">edge, cache MISS</text>
+<rect class="d-box g1" x="410" y="195" width="130" height="70" rx="12"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="AWS ALB" x="420" y="205" width="22" height="22"/>
+<text class="d-t" x="450" y="221">AWS ALB</text>
+<text class="d-s" x="422" y="250">TLS ends, :8080</text>
+<rect class="d-box g0" x="610" y="165" width="170" height="135" rx="14"/>
+<image class="d-logo" data-logo="kubernetes.io" data-name="Kubernetes" x="622" y="177" width="22" height="22"/>
+<text class="d-t" x="652" y="193">orders-api pod</text>
+<text class="d-s" x="624" y="220">Node 20, Express</text>
+<text class="d-m" x="624" y="244">auth: verify JWT</text>
+<text class="d-m" x="624" y="264">cache: order:42</text>
+<text class="d-m" x="624" y="284">db: fallback read</text>
+<rect class="d-box g4" x="420" y="380" width="160" height="70" rx="12"/>
+<image class="d-logo" data-logo="redis.io" data-name="Redis" x="430" y="390" width="22" height="22"/>
+<text class="d-t" x="460" y="406">Redis</text>
+<text class="d-s" x="432" y="434">nil, then SET EX 60</text>
+<rect class="d-box g3" x="620" y="380" width="160" height="70" rx="12"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="PostgreSQL" x="630" y="390" width="22" height="22"/>
+<text class="d-t" x="660" y="406">Postgres</text>
+<text class="d-s" x="632" y="434">orders PK, 12 ms</text>
+<path class="d-edge" d="M60,193 V60 H206" marker-end="url(#request-lifecycle-d1-ah)"/>
+<text class="d-lab" x="132" y="52" text-anchor="middle">resolve api.shop.io</text>
+<circle class="d-badge" cx="60" cy="128" r="11"/><text class="d-bt" x="60" y="132">1</text>
+<path class="d-edge" d="M210,84 H100 V191" marker-end="url(#request-lifecycle-d1-ah)"/>
+<text class="d-lab" x="108" y="122">CNAME, A 104.18.2.7</text>
+<circle class="d-badge" cx="100" cy="150" r="11"/><text class="d-bt" x="100" y="154">2</text>
+<path class="d-edge acc" d="M142,230 H206" marker-end="url(#request-lifecycle-d1-ah)"/>
+<circle class="d-badge" cx="175" cy="208" r="11"/><text class="d-bt" x="175" y="212">3</text>
+<text class="d-lab" x="175" y="250" text-anchor="middle">TLS GET</text>
+<path class="d-edge acc" d="M342,230 H406" marker-end="url(#request-lifecycle-d1-ah)"/>
+<circle class="d-badge" cx="375" cy="208" r="11"/><text class="d-bt" x="375" y="212">4</text>
+<text class="d-lab" x="375" y="250" text-anchor="middle">forward</text>
+<path class="d-edge acc" d="M542,230 H606" marker-end="url(#request-lifecycle-d1-ah)"/>
+<circle class="d-badge" cx="575" cy="208" r="11"/><text class="d-bt" x="575" y="212">5</text>
+<text class="d-lab" x="575" y="250" text-anchor="middle">route</text>
+<path class="d-edge" d="M640,302 V340 H500 V376" marker-end="url(#request-lifecycle-d1-ah)"/>
+<text class="d-lab" x="548" y="333" text-anchor="middle">GET order:42</text>
+<circle class="d-badge" cx="612" cy="340" r="11"/><text class="d-bt" x="612" y="344">6</text>
+<path class="d-edge" d="M720,302 V376" marker-end="url(#request-lifecycle-d1-ah)"/>
+<circle class="d-badge" cx="720" cy="340" r="11"/><text class="d-bt" x="720" y="344">7</text>
+<text class="d-lab" x="738" y="344">SELECT</text>
+<path class="d-edge acc dash" d="M606,290 H80 V269" marker-end="url(#request-lifecycle-d1-ah)"/>
+<circle class="d-badge" cx="380" cy="290" r="11"/><text class="d-bt" x="380" y="294">8</text>
+<text class="d-lab" x="300" y="312" text-anchor="middle">200 OK, 4 KB JSON</text>
+<text class="d-k" x="40" y="372">What the numbers mean</text>
+<text class="d-s" x="40" y="398">1-2  name lookup, cached 300 s</text>
+<text class="d-s" x="40" y="420">3-5  in through edge and LB</text>
+<text class="d-s" x="40" y="442">6-7  cache miss, then one DB read</text>
+<text class="d-s" x="40" y="464">8  JSON streams back the same way</text>
+<text class="d-k" x="40" y="494">Latency budget, 38 ms end to end</text>
+<rect class="d-fill g5" x="40" y="504" width="57" height="30"/>
+<text class="d-tw" x="68" y="523" text-anchor="middle">DNS 3</text>
+<rect class="d-fill g2" x="97" y="504" width="152" height="30"/>
+<text class="d-tw" x="173" y="523" text-anchor="middle">TLS + edge 8</text>
+<rect class="d-fill g1" x="249" y="504" width="38" height="30"/>
+<rect class="d-fill g0" x="287" y="504" width="76" height="30"/>
+<text class="d-tw" x="325" y="523" text-anchor="middle">app 4</text>
+<rect class="d-fill g4" x="363" y="504" width="19" height="30"/>
+<rect class="d-fill g3" x="382" y="504" width="227" height="30"/>
+<text class="d-tw" x="495" y="523" text-anchor="middle">Postgres 12</text>
+<rect class="d-fill g0 o2" x="609" y="504" width="152" height="30"/>
+<text class="d-tw" x="685" y="523" text-anchor="middle">response 8</text>
+<text class="d-s" x="268" y="554" text-anchor="middle">ALB 2</text>
+<text class="d-s" x="372" y="554" text-anchor="middle">Redis 1</text>
+</svg>

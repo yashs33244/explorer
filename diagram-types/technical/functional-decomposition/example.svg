@@ -1,0 +1,30 @@
+<svg class="hd" viewBox="0 0 800 500" role="img" aria-label="Functional decomposition of a checkout service into validate cart, calculate total and take payment; validate cart splits into hold inventory (check stock, reserve for 15 minutes, release on expiry), take payment into authorize card (fraud score, 3-D Secure, idempotency key)" xmlns="http://www.w3.org/2000/svg">
+<path class="d-edge" d="M300,80 V100 M105,100 H495 M105,100 V120 M300,100 V120 M495,100 V120"/>
+<path class="d-edge" d="M300,180 V220"/>
+<path class="d-edge" d="M495,180 V220"/>
+<path class="d-edge" d="M105,180 V320"/>
+<path class="d-edge" d="M495,280 V300 M300,300 H690 M300,300 V320 M495,300 V320 M690,300 V320"/>
+<path class="d-edge" d="M105,380 V400 M105,400 H495 M105,400 V420 M300,400 V420 M495,400 V420"/>
+<rect class="d-box g0" x="215" y="20" width="170" height="60" rx="10"/><text class="d-t" x="300" y="46" text-anchor="middle">Checkout service</text><text class="d-m" x="300" y="66" text-anchor="middle">POST /v1/checkout</text>
+<rect class="d-box g2" x="20" y="120" width="170" height="60" rx="10"/><text class="d-t" x="105" y="146" text-anchor="middle">Validate cart</text><text class="d-m" x="105" y="166" text-anchor="middle">validateCart()</text>
+<rect class="d-box g3" x="215" y="120" width="170" height="60" rx="10"/><text class="d-t" x="300" y="146" text-anchor="middle">Calculate total</text><text class="d-m" x="300" y="166" text-anchor="middle">priceOrder()</text>
+<rect class="d-box g4" x="410" y="120" width="170" height="60" rx="10"/><text class="d-t" x="495" y="146" text-anchor="middle">Take payment</text><text class="d-m" x="495" y="166" text-anchor="middle">chargePayment()</text>
+<rect class="d-box g3" x="215" y="220" width="170" height="60" rx="10"/><text class="d-t" x="300" y="246" text-anchor="middle">Apply promo codes</text><text class="d-m" x="300" y="266" text-anchor="middle">applyPromos()</text>
+<rect class="d-box g4" x="410" y="220" width="170" height="60" rx="10"/><text class="d-t" x="495" y="246" text-anchor="middle">Authorize card</text><text class="d-m" x="495" y="266" text-anchor="middle">authorize()</text>
+<rect class="d-box g2" x="20" y="320" width="170" height="60" rx="10"/><text class="d-t" x="105" y="346" text-anchor="middle">Hold inventory</text><text class="d-m" x="105" y="366" text-anchor="middle">holdInventory()</text>
+<rect class="d-box g4" x="215" y="320" width="170" height="60" rx="10"/><text class="d-t" x="300" y="346" text-anchor="middle">Score fraud risk</text><text class="d-m" x="300" y="366" text-anchor="middle">fraudScore()</text>
+<rect class="d-box g4" x="410" y="320" width="170" height="60" rx="10"/><text class="d-t" x="495" y="346" text-anchor="middle">3-D Secure step</text><text class="d-m" x="495" y="366" text-anchor="middle">challenge3ds()</text>
+<rect class="d-box g4" x="605" y="320" width="170" height="60" rx="10"/><text class="d-t" x="690" y="346" text-anchor="middle">Dedupe retries</text><text class="d-m" x="690" y="366" text-anchor="middle">idempotencyKey()</text>
+<rect class="d-box g2" x="20" y="420" width="170" height="60" rx="10"/><text class="d-t" x="105" y="446" text-anchor="middle">Check stock</text><text class="d-m" x="105" y="466" text-anchor="middle">checkStock()</text>
+<rect class="d-box g2" x="215" y="420" width="170" height="60" rx="10"/><text class="d-t" x="300" y="446" text-anchor="middle">Reserve for 15 min</text><text class="d-m" x="300" y="466" text-anchor="middle">reserveSku(ttl)</text>
+<rect class="d-box g2" x="410" y="420" width="170" height="60" rx="10"/><text class="d-t" x="495" y="446" text-anchor="middle">Release on expiry</text><text class="d-m" x="495" y="466" text-anchor="middle">releaseExpired()</text>
+<rect class="d-note g1" x="625" y="24" width="150" height="104" rx="4"/>
+<text class="d-tn" x="637" y="50">Stop splitting when</text>
+<text class="d-tn" x="637" y="70">a box is one function</text>
+<text class="d-tn" x="637" y="90">with one owner and</text>
+<text class="d-tn" x="637" y="110">one test file</text>
+<text class="d-k" x="625" y="168">Branches</text>
+<rect class="d-fill g2" x="625" y="182" width="16" height="16" rx="4"/><text class="d-s" x="649" y="194">inventory team</text>
+<rect class="d-fill g3" x="625" y="208" width="16" height="16" rx="4"/><text class="d-s" x="649" y="220">pricing team</text>
+<rect class="d-fill g4" x="625" y="234" width="16" height="16" rx="4"/><text class="d-s" x="649" y="246">payments team</text>
+</svg>

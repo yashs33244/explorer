@@ -1,0 +1,57 @@
+<svg class="hd" viewBox="0 0 800 570" role="img" aria-label="State machine for the Payment.status column in checkout-svc: created, requires_action, processing, succeeded, failed and canceled, with the API calls, Stripe webhooks and timers that move it between states" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="state-machine-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="20" y="34">Payment.status</text>
+<text class="d-s" x="20" y="54">checkout-svc payments table, moved by our calls and Stripe webhooks</text>
+<circle class="d-fillink" cx="48" cy="118" r="8"/>
+<path class="d-edge acc" d="M58,118 H97" marker-end="url(#state-machine-d1-ah)"/>
+<rect class="d-box g0" x="100" y="90" width="150" height="56" rx="12"/>
+<text class="d-t" x="175" y="115" text-anchor="middle">created</text>
+<text class="d-s" x="175" y="133" text-anchor="middle">awaiting confirm</text>
+<rect class="d-box g2" x="360" y="90" width="150" height="56" rx="12"/>
+<text class="d-t" x="435" y="115" text-anchor="middle">processing</text>
+<text class="d-s" x="435" y="133" text-anchor="middle">bank authorising</text>
+<rect class="d-box g1" x="630" y="90" width="150" height="56" rx="12"/>
+<rect class="d-box g1" x="635" y="95" width="140" height="46" rx="9"/>
+<text class="d-t" x="705" y="115" text-anchor="middle">succeeded</text>
+<text class="d-s" x="705" y="133" text-anchor="middle">funds captured</text>
+<rect class="d-box g5" x="220" y="270" width="160" height="56" rx="12"/>
+<text class="d-t" x="300" y="295" text-anchor="middle">requires_action</text>
+<text class="d-s" x="300" y="313" text-anchor="middle">3DS challenge</text>
+<rect class="d-box g3" x="560" y="270" width="160" height="56" rx="12"/>
+<text class="d-t" x="640" y="295" text-anchor="middle">failed</text>
+<text class="d-s" x="640" y="313" text-anchor="middle">declined, retryable</text>
+<rect class="d-box g4" x="100" y="430" width="150" height="56" rx="12"/>
+<rect class="d-box g4" x="105" y="435" width="140" height="46" rx="9"/>
+<text class="d-t" x="175" y="455" text-anchor="middle">canceled</text>
+<text class="d-s" x="175" y="473" text-anchor="middle">voided, no charge</text>
+<path class="d-edge acc" d="M252,118 H357" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="305" y="110" text-anchor="middle">confirm()</text>
+<path class="d-edge" d="M512,118 H627" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="570" y="110" text-anchor="middle">charge.succeeded</text>
+<path class="d-edge acc" d="M175,148 C175,210 260,210 260,267" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="222" y="236" text-anchor="end">confirm() + 3DS</text>
+<path class="d-edge" d="M340,268 C340,210 390,210 390,151" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="344" y="222" text-anchor="end">3DS passed</text>
+<path class="d-edge" d="M440,148 V288 Q440,298 450,298 H557" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="499" y="290" text-anchor="middle">card_declined</text>
+<path class="d-edge acc" d="M640,268 V218 Q640,208 630,208 H500 Q490,208 490,198 V151" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="565" y="200" text-anchor="middle">retry, new card</text>
+<path class="d-edge acc" d="M120,148 V427" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="128" y="380" text-anchor="start">cancel()</text>
+<path class="d-edge dash" d="M300,328 C300,410 290,458 253,458" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="304" y="404" text-anchor="start">24h timeout</text>
+<path class="d-edge acc" d="M575,328 V370 Q575,380 565,380 H460 Q450,380 450,390 V468 Q450,478 440,478 H253" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-lab" x="350" y="482" text-anchor="middle">cancel()</text>
+<rect class="d-note" x="470" y="392" width="300" height="78" rx="6"/>
+<text class="d-tn" x="486" y="420">Every transition emits an event:</text>
+<text class="d-m" x="486" y="444">payments.status_changed</text>
+<text class="d-s" x="486" y="461">fulfilment listens for succeeded</text>
+<path class="d-edge acc" d="M20,528 H56" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-s" x="64" y="532">API call from our code</text>
+<path class="d-edge" d="M232,528 H268" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-s" x="276" y="532">network or customer event</text>
+<path class="d-edge dash" d="M464,528 H500" marker-end="url(#state-machine-d1-ah)"/>
+<text class="d-s" x="508" y="532">timer</text>
+<rect class="d-box g0" x="574" y="517" width="30" height="22" rx="6"/><rect class="d-box g0" x="578" y="521" width="22" height="14" rx="4"/>
+<text class="d-s" x="612" y="532">terminal, no exits</text>
+</svg>

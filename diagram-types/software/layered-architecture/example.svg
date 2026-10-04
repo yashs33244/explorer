@@ -1,0 +1,115 @@
+<svg class="hd" viewBox="0 0 800 656" role="img" aria-label="Layered architecture of a shop platform: presentation, application, integration and data tiers, calls only going down and the services reaching the data tier directly past the integration tier, with an observability column that every tier reports to" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="layered-architecture-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-band g1" x="20" y="20" width="600" height="124" rx="12"/>
+<text class="d-k" x="36" y="60">Tier 1</text>
+<text class="d-h" x="36" y="82">Presentation</text>
+<text class="d-s" x="36" y="102">what users touch</text>
+<rect class="d-box g0" x="160" y="42" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="cloudflare.com" data-name="Cloudflare" x="172" y="54" width="24" height="24"/>
+<text class="d-t" x="204" y="71">Cloudflare</text>
+<text class="d-s" x="172" y="97">CDN, WAF, TLS</text>
+<text class="d-m" x="172" y="113">*.shop.io</text>
+<rect class="d-box g0" x="314" y="42" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="nextjs.org" data-name="web-app" x="326" y="54" width="24" height="24"/>
+<text class="d-t" x="358" y="71">web-app</text>
+<text class="d-s" x="326" y="97">Next.js SSR</text>
+<text class="d-m" x="326" y="113">apps/web</text>
+<rect class="d-box g0" x="468" y="42" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="swift.org" data-name="ios-app" x="480" y="54" width="24" height="24"/>
+<text class="d-t" x="512" y="71">ios-app</text>
+<text class="d-s" x="480" y="97">SwiftUI client</text>
+<text class="d-m" x="480" y="113">apps/ios</text>
+<path class="d-edge dash" d="M622,82 H637" marker-end="url(#layered-architecture-d1-ah)"/>
+<path class="d-edge acc" d="M387,147 V175" marker-end="url(#layered-architecture-d1-ah)"/>
+<text class="d-lab" x="398" y="165">HTTPS, gRPC</text>
+<rect class="d-band g2" x="20" y="178" width="600" height="124" rx="12"/>
+<text class="d-k" x="36" y="218">Tier 2</text>
+<text class="d-h" x="36" y="240">Application</text>
+<text class="d-s" x="36" y="260">business rules</text>
+<rect class="d-box g0" x="160" y="200" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="konghq.com" data-name="api-gateway" x="172" y="212" width="24" height="24"/>
+<text class="d-t" x="204" y="229">api-gateway</text>
+<text class="d-s" x="172" y="255">auth, rate limits</text>
+<text class="d-m" x="172" y="271">/v2/*</text>
+<rect class="d-box g0" x="314" y="200" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="go.dev" data-name="checkout-svc" x="326" y="212" width="24" height="24"/>
+<text class="d-t" x="358" y="229">checkout-svc</text>
+<text class="d-s" x="326" y="255">Go, gRPC</text>
+<text class="d-m" x="326" y="271">svc/checkout</text>
+<rect class="d-box g0" x="468" y="200" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="spring.io" data-name="orders-svc" x="480" y="212" width="24" height="24"/>
+<text class="d-t" x="512" y="229">orders-svc</text>
+<text class="d-s" x="480" y="255">Spring Boot</text>
+<text class="d-m" x="480" y="271">svc/orders</text>
+<path class="d-edge dash" d="M622,240 H637" marker-end="url(#layered-architecture-d1-ah)"/>
+<path class="d-edge acc" d="M387,305 V333" marker-end="url(#layered-architecture-d1-ah)"/>
+<text class="d-lab" x="398" y="323">publish events, call APIs</text>
+<rect class="d-band g3" x="20" y="336" width="600" height="124" rx="12"/>
+<text class="d-k" x="36" y="376">Tier 3</text>
+<text class="d-h" x="36" y="398">Integration</text>
+<text class="d-s" x="36" y="418">async + partners</text>
+<rect class="d-box g0" x="160" y="358" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="kafka.apache.org" data-name="Kafka" x="172" y="370" width="24" height="24"/>
+<text class="d-t" x="204" y="387">Kafka</text>
+<text class="d-s" x="172" y="413">domain events</text>
+<text class="d-m" x="172" y="429">orders.v1</text>
+<rect class="d-box g0" x="314" y="358" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="temporal.io" data-name="Temporal" x="326" y="370" width="24" height="24"/>
+<text class="d-t" x="358" y="387">Temporal</text>
+<text class="d-s" x="326" y="413">sagas, retries</text>
+<text class="d-m" x="326" y="429">wf/fulfil</text>
+<rect class="d-box g0" x="468" y="358" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="stripe.com" data-name="Stripe API" x="480" y="370" width="24" height="24"/>
+<text class="d-t" x="512" y="387">Stripe API</text>
+<text class="d-s" x="480" y="413">card payments</text>
+<text class="d-m" x="480" y="429">webhooks</text>
+<path class="d-edge dash" d="M622,398 H637" marker-end="url(#layered-architecture-d1-ah)"/>
+<path class="d-edge acc" d="M387,463 V491" marker-end="url(#layered-architecture-d1-ah)"/>
+<text class="d-lab" x="398" y="481">webhook writes, exports</text>
+<path class="d-edge acc" d="M148,305 V491" marker-end="url(#layered-architecture-d1-ah)"/>
+<text class="d-lab" x="140" y="481" text-anchor="end">SQL, cache</text>
+<rect class="d-band g4" x="20" y="494" width="600" height="124" rx="12"/>
+<text class="d-k" x="36" y="534">Tier 4</text>
+<text class="d-h" x="36" y="556">Data</text>
+<text class="d-s" x="36" y="576">state of record</text>
+<rect class="d-box g0" x="160" y="516" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="postgresql.org" data-name="Postgres 16" x="172" y="528" width="24" height="24"/>
+<text class="d-t" x="204" y="545">Postgres 16</text>
+<text class="d-s" x="172" y="571">orders, users</text>
+<text class="d-m" x="172" y="587">primary + 2 RR</text>
+<rect class="d-box g0" x="314" y="516" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="redis.io" data-name="Redis" x="326" y="528" width="24" height="24"/>
+<text class="d-t" x="358" y="545">Redis</text>
+<text class="d-s" x="326" y="571">sessions, carts</text>
+<text class="d-m" x="326" y="587">TTL 30m</text>
+<rect class="d-box g0" x="468" y="516" width="146" height="80" rx="10"/>
+<image class="d-logo" data-logo="aws.amazon.com" data-name="Amazon S3" x="480" y="528" width="24" height="24"/>
+<text class="d-t" x="512" y="545">Amazon S3</text>
+<text class="d-s" x="480" y="571">invoices, exports</text>
+<text class="d-m" x="480" y="587">s3://shop-docs</text>
+<path class="d-edge dash" d="M622,556 H637" marker-end="url(#layered-architecture-d1-ah)"/>
+<rect class="d-blob" x="640" y="20" width="144" height="598" rx="14"/>
+<text class="d-k" x="654" y="50">Cross-cutting</text>
+<text class="d-h" x="654" y="72">Observability</text>
+<rect class="d-box g5" x="648" y="92" width="128" height="96" rx="10"/>
+<image class="d-logo" data-logo="opentelemetry.io" data-name="OTel SDK" x="656" y="104" width="24" height="24"/>
+<text class="d-t" x="686" y="121">OTel SDK</text>
+<text class="d-s" x="656" y="152">auto-instrument</text>
+<text class="d-m" x="656" y="172">otlp :4317</text>
+<rect class="d-box g5" x="648" y="210" width="128" height="96" rx="10"/>
+<image class="d-logo" data-logo="datadoghq.com" data-name="Datadog" x="656" y="222" width="24" height="24"/>
+<text class="d-t" x="686" y="239">Datadog</text>
+<text class="d-s" x="656" y="270">APM, dashboards</text>
+<text class="d-m" x="656" y="290">p99 &lt; 300ms</text>
+<rect class="d-box g5" x="648" y="328" width="128" height="96" rx="10"/>
+<image class="d-logo" data-logo="sentry.io" data-name="Sentry" x="656" y="340" width="24" height="24"/>
+<text class="d-t" x="686" y="357">Sentry</text>
+<text class="d-s" x="656" y="388">error tracking</text>
+<text class="d-m" x="656" y="408">release tags</text>
+<rect class="d-box g5" x="648" y="446" width="128" height="96" rx="10"/>
+<image class="d-logo" data-logo="pagerduty.com" data-name="PagerDuty" x="656" y="458" width="24" height="24"/>
+<text class="d-t" x="686" y="475">PagerDuty</text>
+<text class="d-s" x="656" y="506">on-call alerts</text>
+<text class="d-m" x="656" y="526">SEV1 to SEV3</text>
+<text class="d-s" x="20" y="644">Calls only go down. Services skip integration to reach their own data. Every tier exports traces to the right.</text>
+</svg>

@@ -1,0 +1,64 @@
+<svg class="hd" viewBox="0 0 800 580" role="img" aria-label="UML use case diagram of a CI/CD platform: developer, reviewer and release bot actors, use cases inside the system boundary, include and extend relations" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="uml-use-case-d1-open" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" class="d-line"/></marker></defs>
+<rect class="d-blob2" x="160" y="16" width="480" height="548" rx="18"/>
+<image class="d-logo" data-logo="github.com" data-name="GitHub" x="178" y="28" width="22" height="22"/>
+<text class="d-h" x="208" y="45">Shipyard CI/CD</text>
+<text class="d-k" x="178" y="68">system boundary</text>
+<g><circle class="d-line" cx="78" cy="112" r="10"/><path class="d-line" d="M78,122 V154 M60,134 H96 M78,154 L64,178 M78,154 L92,178"/></g>
+<text class="d-t" x="78" y="200" text-anchor="middle">Developer</text>
+<text class="d-s" x="78" y="218" text-anchor="middle">writes code</text>
+<g><circle class="d-line" cx="78" cy="302" r="10"/><path class="d-line" d="M78,312 V344 M60,324 H96 M78,344 L64,368 M78,344 L92,368"/></g>
+<text class="d-t" x="78" y="390" text-anchor="middle">Reviewer</text>
+<text class="d-s" x="78" y="408" text-anchor="middle">CODEOWNERS</text>
+<g><circle class="d-line" cx="722" cy="362" r="10"/><path class="d-line" d="M722,372 V404 M704,384 H740 M722,404 L708,428 M722,404 L736,428"/></g>
+<text class="d-t" x="722" y="450" text-anchor="middle">Release bot</text>
+<text class="d-s" x="714" y="476">Argo CD</text>
+<image class="d-logo" data-logo="argoproj.github.io" data-name="Argo CD" x="688" y="461" width="20" height="20"/>
+<ellipse class="d-box g0" cx="280" cy="112" rx="88" ry="24"/>
+<text class="d-t" x="280" y="117" text-anchor="middle">Push branch</text>
+<ellipse class="d-box g0" cx="280" cy="192" rx="88" ry="24"/>
+<text class="d-t" x="280" y="197" text-anchor="middle">Open pull request</text>
+<ellipse class="d-box g2" cx="280" cy="300" rx="88" ry="24"/>
+<text class="d-t" x="280" y="305" text-anchor="middle">Approve PR</text>
+<ellipse class="d-box g2" cx="280" cy="380" rx="88" ry="24"/>
+<text class="d-t" x="280" y="385" text-anchor="middle">Merge to main</text>
+<ellipse class="d-box g3" cx="280" cy="480" rx="88" ry="24"/>
+<text class="d-t" x="280" y="485" text-anchor="middle">Run smoke tests</text>
+<ellipse class="d-box g4" cx="520" cy="66" rx="88" ry="30"/>
+<text class="d-t" x="520" y="64" text-anchor="middle">Audit dependencies</text>
+<text class="d-s" x="520" y="81" text-anchor="middle">if lockfile changed</text>
+<ellipse class="d-box g1" cx="520" cy="160" rx="88" ry="24"/>
+<text class="d-t" x="520" y="165" text-anchor="middle">Run CI pipeline</text>
+<ellipse class="d-box g1" cx="520" cy="246" rx="88" ry="24"/>
+<text class="d-t" x="520" y="251" text-anchor="middle">Run unit tests</text>
+<ellipse class="d-box g3" cx="520" cy="330" rx="88" ry="24"/>
+<text class="d-t" x="520" y="335" text-anchor="middle">Deploy to staging</text>
+<ellipse class="d-box g3" cx="520" cy="410" rx="88" ry="24"/>
+<text class="d-t" x="520" y="415" text-anchor="middle">Promote to prod</text>
+<ellipse class="d-box g5" cx="520" cy="505" rx="88" ry="30"/>
+<text class="d-t" x="520" y="503" text-anchor="middle">Roll back release</text>
+<text class="d-s" x="520" y="520" text-anchor="middle">if smoke fails</text>
+<path class="d-edge" d="M98,136 L194,114"/>
+<path class="d-edge" d="M98,140 L194,190"/>
+<path class="d-edge" d="M98,326 L194,302"/>
+<path class="d-edge" d="M98,330 L194,378"/>
+<path class="d-edge" d="M702,388 L606,334"/>
+<path class="d-edge" d="M702,392 L606,410"/>
+<path class="d-edge" d="M702,396 L606,500"/>
+<path class="d-edge dash" d="M368,114 L436,150" marker-end="url(#uml-use-case-d1-open)"/>
+<text class="d-lab" x="410" y="110" text-anchor="middle">«include»</text>
+<path class="d-edge dash" d="M368,190 L436,168" marker-end="url(#uml-use-case-d1-open)"/>
+<text class="d-lab" x="404" y="196" text-anchor="middle">«include»</text>
+<path class="d-edge dash" d="M520,96 V132" marker-end="url(#uml-use-case-d1-open)"/>
+<text class="d-lab" x="530" y="118" text-anchor="start">«extend»</text>
+<path class="d-edge dash" d="M520,184 V218" marker-end="url(#uml-use-case-d1-open)"/>
+<text class="d-lab" x="530" y="206" text-anchor="start">«include»</text>
+<path class="d-edge dash" d="M520,476 V438" marker-end="url(#uml-use-case-d1-open)"/>
+<text class="d-lab" x="530" y="462" text-anchor="start">«extend»</text>
+<path class="d-edge dash" d="M452,425 L360,462" marker-end="url(#uml-use-case-d1-open)"/>
+<text class="d-lab" x="432" y="466" text-anchor="middle">«include»</text>
+<text class="d-k" x="20" y="470">Legend</text>
+<path class="d-edge" d="M20,492 H56"/><text class="d-s" x="64" y="496">uses</text>
+<path class="d-edge dash" d="M20,516 H54" marker-end="url(#uml-use-case-d1-open)"/><text class="d-s" x="64" y="520">include: always</text>
+<path class="d-edge dash" d="M20,540 H54" marker-end="url(#uml-use-case-d1-open)"/><text class="d-s" x="64" y="544">extend: if ...</text>
+</svg>
