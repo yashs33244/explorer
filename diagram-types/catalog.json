@@ -1,0 +1,1590 @@
+[
+ {
+  "slug": "euler-diagram",
+  "category": "mapping",
+  "name": "Euler diagram",
+  "summary": "Four nested circles, internally tangent at the bottom as in the Figma template: All services (142), Stateful (34), Needs backups (21), Holds PII (8). Each ring holds real member tags. A separate Batch jobs circle (nightly-etl, invoice-run, sitemap-gen) shows a disjoint set, and a sticky note states the containment chain.",
+  "use_for": "Showing how policy or permission sets in a system contain one another, and which workloads fall entirely outside a rule.",
+  "keywords": [
+   "euler",
+   "sets",
+   "containment",
+   "subset",
+   "service catalog",
+   "PII",
+   "backups",
+   "policy"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "dichotomous-key",
+  "category": "mapping",
+  "name": "Dichotomous key",
+  "summary": "A top-down binary tree of six numbered yes or no questions (relational schema, global writes, analytics scans, key lookups only, sub-ms and fits RAM, full-text search). It ends in seven datastore leaves with logos: CockroachDB, ClickHouse, PostgreSQL, Redis, DynamoDB, OpenSearch and MongoDB. The orders-svc path to PostgreSQL (yes, no, no) is highlighted in accent.",
+  "use_for": "Writing down a team's tech-selection or triage rule as a chain of yes or no questions that always ends in one answer.",
+  "keywords": [
+   "dichotomous key",
+   "decision tree",
+   "yes no",
+   "datastore selection",
+   "database choice",
+   "triage"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "family-tree",
+  "category": "mapping",
+  "name": "Family tree",
+  "summary": "Left-to-right lineage that follows the FigJam shot: a diamond root, a second-generation box, then a shared trunk with elbow connectors. Berkeley Postgres (1986) leads to PostgreSQL (1996, renamed), then to six forks and rewrites (Netezza, Greenplum, ParAccel, Citus, Aurora PostgreSQL, Neon). Four of those lead on to descendants (Apache Cloudberry, Amazon Redshift, Cosmos DB for PostgreSQL, Databricks Lakebase). Boxes are colored by kind of fork, dashed arrows mark licensing or acquisition, and a legend sits underneath.",
+  "use_for": "Tracing the lineage of a codebase, database or library through forks, rewrites and acquisitions, one generation per column.",
+  "keywords": [
+   "family tree",
+   "lineage",
+   "fork",
+   "PostgreSQL",
+   "derivatives",
+   "genealogy",
+   "history"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "cloud-architecture",
+  "category": "technical",
+  "name": "Cloud architecture diagram",
+  "summary": "A checkout workload in Azure West Europe. Shoppers reach Front Door (global edge, WAF), which routes to App Service. App Service enqueues to Service Bus, which triggers Functions, which upserts orders into Cosmos DB. App Service and Functions read secrets from Key Vault. Key Vault sends audit logs and Functions sends traces to App Insights. Workload and Constraints panels sit on top, with sticky notes on failover and managed identity. viewBox 800x700.",
+  "use_for": "Explaining which managed cloud services a system runs on, where the region and network boundaries are, and how the request path and async path move through them.",
+  "keywords": [
+   "cloud",
+   "azure",
+   "architecture",
+   "front door",
+   "app service",
+   "service bus",
+   "functions",
+   "cosmos db",
+   "key vault",
+   "region",
+   "vnet",
+   "managed identity"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "functional-decomposition",
+  "category": "technical",
+  "name": "Functional decomposition diagram",
+  "summary": "Checkout service (POST /v1/checkout) decomposed into Validate cart, Calculate total and Take payment. Validate cart goes to Hold inventory (holdInventory), which splits into checkStock, reserveSku(ttl) and releaseExpired. Calculate total goes to applyPromos. Take payment goes to authorize, which splits into fraudScore, challenge3ds and idempotencyKey. Elbow bracket connectors, colored by owning team, with a stop-rule sticky note and a branch legend. viewBox 800x500.",
+  "use_for": "Explaining how a service or endpoint breaks into functions and sub-functions, and which team owns each branch.",
+  "keywords": [
+   "functional decomposition",
+   "tree",
+   "hierarchy",
+   "checkout",
+   "functions",
+   "ownership",
+   "breakdown",
+   "refactor"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "tech-stack-mapping",
+  "category": "mapping",
+  "name": "Tech stack mapping",
+  "summary": "The stack as stacked concern layers (Compute, Database, CI/CD, Observability, Cache, Edge), with the current tool on the left and the target tool on the right, using real logos. Heroku moves to AWS ECS Fargate, MySQL 5.7 to PostgreSQL 16 (Aurora via AWS DMS), Jenkins to GitHub Actions, New Relic to Datadog, and Redis 6 on a Heroku add-on is re-hosted as Redis 7 on ElastiCache. Cloudflare is kept at the edge with its origin repointed. Thick accent arrows carry verb labels (move, replicate, rewrite, swap agent, re-host) and status tags (cutover Nov, CDC sync, done, planned Q1, with compute). The kept layer uses a dashed arrow. Includes a legend and a migration-order line. viewBox 800x680.",
+  "use_for": "Explaining which tools a system uses per concern, and a migration plan from the current stack to the target stack with the status of each move.",
+  "keywords": [
+   "tech stack",
+   "migration",
+   "heroku",
+   "aws ecs",
+   "mysql",
+   "postgresql",
+   "jenkins",
+   "github actions",
+   "new relic",
+   "datadog",
+   "redis",
+   "cloudflare",
+   "logos"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "layered-architecture",
+  "category": "software",
+  "name": "Layered architecture",
+  "summary": "Four stacked tiers of a shop platform: presentation (Cloudflare, Next.js web-app, SwiftUI ios-app), application (Kong api-gateway, Go checkout-svc, Spring orders-svc), integration (Kafka, Temporal, Stripe) and data (Postgres 16, Redis, S3). Labelled downward arrows run between tiers, and a dashed cross-cutting observability column (OTel SDK, Datadog, Sentry, PagerDuty) receives telemetry from every tier.",
+  "use_for": "Showing what runs in each tier of a service platform, the rule that calls only go down, and where cross-cutting concerns like tracing plug in.",
+  "keywords": [
+   "tiers",
+   "layers",
+   "n-tier",
+   "presentation",
+   "application",
+   "data layer",
+   "observability",
+   "cross-cutting",
+   "dependency rule"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "state-machine",
+  "category": "software",
+  "name": "State machine",
+  "summary": "Payment.status lifecycle in checkout-svc, moved by our API calls, Stripe webhooks and a timer. A start dot leads to created, then processing on confirm(). created goes to requires_action on 3DS required, which returns to processing on 3DS passed or times out to canceled after 24h. processing goes to succeeded on charge.succeeded or to failed on card_declined, and failed loops back on retry with a new card. created also goes to canceled on cancel(). Terminal states have double borders, a sticky note says every transition emits payments.status_changed, and a legend explains the edge styles (API call, network event, timer).",
+  "use_for": "Explaining an entity's status field, which transitions are legal, and which ones our code triggers versus webhooks and timers.",
+  "keywords": [
+   "states",
+   "transitions",
+   "events",
+   "lifecycle",
+   "status enum",
+   "payment",
+   "terminal state",
+   "retry"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "data-pipeline",
+  "category": "software",
+  "name": "Data pipeline",
+  "summary": "Orders CDC pipeline laid out like the Figma template: Postgres (store) loops with Debezium (circle) through WAL/pgoutput and ack LSN, feeds a Kafka hub (orders.cdc.v1, 12 partitions), fans out to Flink (dedupe, join) and Snowpipe (raw landing), then fans back into Snowflake RAW.ORDERS_CDC. A dashed Schema Registry sits on the side. The path then U-turns into a 'transform + serve every 15 min' band: dbt Cloud builds ANALYTICS fct_orders, which serves a Metabase revenue dashboard. A p95 lag figure (45s to RAW, 17 min to dashboard) sits at the top.",
+  "use_for": "Explaining how data moves from an OLTP database through streaming and batch stages to a dashboard, with the latency and contracts at each hop.",
+  "keywords": [
+   "ETL",
+   "ELT",
+   "CDC",
+   "streaming",
+   "Kafka",
+   "warehouse",
+   "dbt",
+   "fan-out",
+   "data flow"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "cross-functional-flowchart",
+  "category": "process-workflow",
+  "name": "Cross-functional flowchart (swimlane)",
+  "summary": "Four horizontal lanes (Support, On-call, SRE, Comms) with coloured lane heads, following a SEV2 checkout-api incident: 5xx tickets, PagerDuty page, triage, a 'Bad deploy?' decision leading to an Argo CD rollback or an RDS failover, a Grafana SLO check, Slack #incident updates and a Statuspage resolution.",
+  "use_for": "Showing how an incident, release or request is handed off between teams, with each step in the lane of the team that owns it.",
+  "keywords": [
+   "swimlane",
+   "handoff",
+   "incident",
+   "on-call",
+   "roles",
+   "lanes",
+   "runbook"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "sequence-diagram",
+  "category": "process-workflow",
+  "name": "Sequence diagram",
+  "summary": "Five participants (Browser, Next.js web app, Auth0, profile API, Postgres) with dashed lifelines, activation bars and 13 numbered messages for an OAuth authorization code login with PKCE. It covers the /authorize redirect, the /callback code exchange, POST /token, a Bearer call to /me, a self-call to verify the JWT, a SELECT, and Set-Cookie. A legend explains request, response and activation.",
+  "use_for": "Showing the time-ordered calls between a client and services, such as an auth handshake or one request fanning out to an API and a database.",
+  "keywords": [
+   "sequence",
+   "lifeline",
+   "activation",
+   "oauth",
+   "pkce",
+   "messages",
+   "request response"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "bpmn",
+  "category": "process-workflow",
+  "name": "BPMN diagram",
+  "summary": "Three pools (Engineering, CI pipeline, QA) with narrow rotated pool headers, following a v2.8 release. A code-freeze start event leads to Cut branch, then Tag RC. A push-tag message triggers the CI build and a staging deploy. A staging-ready message starts the QA regression run, which reaches an exclusive gateway. On pass, Sign off sends an approved message to Promote (canary 10%), which reaches the end event 'v2.8 live'. On fail, a message end event sends 'blockers filed' to Fix bugs, which loops back to retag rc2. A legend explains the BPMN symbols.",
+  "use_for": "Showing a formal release or approval process across teams and systems, with events, gateways and message flows between pools.",
+  "keywords": [
+   "bpmn",
+   "pools",
+   "gateway",
+   "events",
+   "release process",
+   "message flow",
+   "approval"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "er-diagram",
+  "category": "mapping",
+  "name": "Entity relationship diagram",
+  "summary": "Postgres schema for a deploy platform: users, memberships, orgs, projects and deployments tables with PK/FK tags, typed rows, crow's foot cardinality, named relationship diamonds (triggers, owns, ships) as in the Figma Chen-style template, a UNIQUE/CASCADE sticky note and a notation legend.",
+  "use_for": "Explaining which tables a service owns, which foreign keys tie them together, and the cardinality and constraints a migration must respect.",
+  "keywords": [
+   "database",
+   "schema",
+   "tables",
+   "primary key",
+   "foreign key",
+   "crow's foot",
+   "postgres",
+   "cardinality",
+   "join table"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "class-diagram",
+  "category": "mapping",
+  "name": "Class diagram",
+  "summary": "Payment domain in UML: PaymentProcessor interface (authorize, capture, refund, parse_webhook), StripeProcessor and AdyenProcessor realizing all of it through a forked dashed line into one hollow triangle (as in the Figma fork), Payment using the interface and composing 0..* Refunds, three-compartment classes with +/- members and a legend.",
+  "use_for": "Explaining an adapter or plugin seam in a codebase: one interface, one class per vendor, and which objects own or call which.",
+  "keywords": [
+   "uml",
+   "class",
+   "interface",
+   "inheritance",
+   "realization",
+   "composition",
+   "association",
+   "oop",
+   "adapter"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "mind-map",
+  "category": "mapping",
+  "name": "Mind map",
+  "summary": "Kubernetes (EKS 1.30, prod-eu) onboarding map: central circle with logo, five colored branches (Workloads, Networking, Security, Storage, Observability) each fanning out to mono leaf tags such as Deployment, NetworkPolicy, RBAC, PVC, with Prometheus, Grafana, OpenTelemetry and CoreDNS logos.",
+  "use_for": "Explaining the surface area of a platform or framework to a new engineer, grouped by concern.",
+  "keywords": [
+   "mind map",
+   "brainstorm",
+   "topic",
+   "branches",
+   "kubernetes",
+   "onboarding",
+   "radial"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "kinship-diagram",
+  "category": "mapping",
+  "name": "Kinship diagram",
+  "summary": "Kinship notation applied to the Node.js runtime lineage. Node.js 0.12 = io.js 3.3 (merged Sep 2015) has three children: Node.js 4 LTS (the maintained line), the Electron node fork and the NW.js deps/node vendored copy. Generation III holds Node.js 8 (EOL), Ayo.js (an archived fork, slashed), Node.js 22 (maintenance LTS) and VS Code, which bundles Electron's node. A legend explains the shape code: circle = upstream line, triangle = hard fork, square = vendored copy, = for merged lines, slash for archived.",
+  "use_for": "Show which forks, vendored copies and maintained siblings of a library exist and which ones need a security fix backported by hand.",
+  "keywords": [
+   "kinship",
+   "lineage",
+   "fork",
+   "vendored",
+   "upstream",
+   "node.js",
+   "io.js",
+   "electron",
+   "package genealogy"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "pedigree-chart",
+  "category": "mapping",
+  "name": "Pedigree chart",
+  "summary": "A pedigree chart of Log4Shell (CVE-2021-44228) across release generations I-III. Squares are shipped app releases and circles are the log4j version each one pulled in. Fill shows status: filled = affected, left-half filled = carrier (patched, but a vulnerable shaded copy is still inside), empty = clean. app v1.0 + log4j 2.14.1 lead to v1.1, v1.2 (affected) and v2.0 (carrier). v2.0 + log4j 2.15.0 lead to v2.1 (carrier, es-client jar), v2.2 (clean) and v3.0 (clean), with v3.0 mated to log4j 2.17.1. A proband arrow marks v1.2 as 'found by pen test', and there is a full legend.",
+  "use_for": "Show which supported release branches inherit a security defect, which are only carriers through a transitive or shaded dependency, and where the defect was first detected.",
+  "keywords": [
+   "pedigree",
+   "inheritance",
+   "CVE",
+   "log4shell",
+   "log4j",
+   "release branches",
+   "carrier",
+   "backport",
+   "security"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "flowchart",
+  "category": "process-workflow",
+  "name": "Flowchart",
+  "summary": "A login request flowchart for one POST /api/login. Steps: check the Redis rate bucket, then 'Over 5 in 15 min?' (yes leads to 429 Retry-After). Next, verify the password with argon2id, then 'Password valid?' (no leads to Record failure: INCR + EXPIRE 900, then 401 Unauthorized). Then 'MFA enrolled?': no skips left straight to the session; yes sends a TOTP challenge, then 'Code valid?' (no also leads to Record failure). The flow ends with 'Reset counter, issue session' (Set-Cookie: sid; HttpOnly) and 200 OK.",
+  "use_for": "Walk through how a request handler branches on rate limits, credentials and MFA, which status code each path returns, and where failure paths converge.",
+  "keywords": [
+   "flowchart",
+   "decision",
+   "login",
+   "MFA",
+   "TOTP",
+   "rate limit",
+   "redis",
+   "argon2id",
+   "auth",
+   "request handling"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "directory-tree",
+  "category": "software",
+  "name": "Directory tree",
+  "summary": "Annotated pnpm/Turborepo monorepo tree: root box, trunk with colored top-level folders (.github/workflows, apps, packages, services, infra), children with product logos and purpose column, yellow sticky notes per folder (rule, consequence, owner) linked by dashed pointers, plus root config files.",
+  "use_for": "Showing where code lives in a repo, which folders deploy versus get imported, who owns each area, and how paths map to CI.",
+  "keywords": [
+   "monorepo",
+   "folder layout",
+   "repo structure",
+   "ownership",
+   "turborepo",
+   "pnpm",
+   "codeowners"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "request-lifecycle",
+  "category": "software",
+  "name": "Request lifecycle",
+  "summary": "Numbered path of GET /v1/orders/42: browser to Route 53 (resolve, CNAME then A record), Cloudflare edge, AWS ALB, central orders-api pod on Kubernetes, Redis cache miss and Postgres read below, dashed 200 response back; legend for step groups and a proportional 38 ms latency budget bar.",
+  "use_for": "Walking through one request end to end to show which hop does what and where the latency goes.",
+  "keywords": [
+   "https request",
+   "latency",
+   "cdn",
+   "load balancer",
+   "cache miss",
+   "dns",
+   "end to end"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "uml-use-case",
+  "category": "technical",
+  "name": "UML diagram (use case)",
+  "summary": "CI/CD platform 'Shipyard' use case diagram: Developer and Reviewer stick actors on the left, Argo CD release bot on the right, 11 use case ellipses inside a dashed system boundary, associations, include arrows (push/PR include Run CI, CI includes unit tests, promote includes smoke tests) and extend arrows with conditions (audit deps if lockfile changed, rollback if smoke fails) with UML open arrowheads, plus a legend.",
+  "use_for": "Showing who can trigger what on an internal platform and which behaviours are always included versus conditional.",
+  "keywords": [
+   "uml",
+   "use case",
+   "actors",
+   "include",
+   "extend",
+   "ci/cd",
+   "system boundary"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "causal-loop",
+  "category": "mapping",
+  "name": "Causal loop diagram",
+  "summary": "Tech debt spiral for a payments team. Deadline pressure, shortcuts, tech debt, prod bugs, on-call pages and delivery velocity form reinforcing loop R1, which has two minus links. Refactor time (B1, Payback) and crunch hours (B2, Crunch) are balancing loops with one minus link each. Every link has a +/− polarity badge, and a legend explains polarity and R/B.",
+  "use_for": "Explaining feedback in an engineering system, such as why a team keeps slowing down as tech debt and on-call load grow, or how retry storms amplify an incident.",
+  "keywords": [
+   "feedback loop",
+   "reinforcing",
+   "balancing",
+   "polarity",
+   "tech debt",
+   "on-call",
+   "velocity",
+   "systems thinking"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "social-network",
+  "category": "mapping",
+  "name": "Social network diagram",
+  "summary": "Q3 code review graph: a staff engineer bridges the Payments, Platform and Mobile clusters. Each team sits around its lead in a dashed blob. Node radius scales with the square root of PRs reviewed, and the count is shown inside the node. Thick edges with review counts mark the heaviest pairs. Dashed edges are cross-team reviews (shared SDK, API contract).",
+  "use_for": "Explaining who reviews or owns whose code across teams, where review load concentrates (bus factor), and which engineers bridge teams.",
+  "keywords": [
+   "graph",
+   "nodes",
+   "edges",
+   "clusters",
+   "code review",
+   "teams",
+   "bus factor",
+   "hub"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "venn-diagram",
+  "category": "mapping",
+  "name": "Venn diagram",
+  "summary": "SQL vs NoSQL vs NewSQL comparison for picking the orders service store, with all seven regions filled. Exclusive regions carry logos (PostgreSQL/MySQL, MongoDB/Cassandra, CockroachDB/YugabyteDB) and traits. The pairwise regions hold Low write latency, SQL joins/Serializable and Horizontal scale-out. The centre region is Indexes, replication. A sticky note records the decision: joins, serializable txns and scale-out, so pick NewSQL.",
+  "use_for": "Explaining how three technologies, services or team responsibilities overlap before making a choice, for example which database family fits a service's needs.",
+  "keywords": [
+   "sets",
+   "overlap",
+   "comparison",
+   "SQL",
+   "NoSQL",
+   "NewSQL",
+   "database choice",
+   "intersection"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "c4-model",
+  "category": "mapping",
+  "name": "C4 model (container)",
+  "summary": "I recreated the C4 container diagram of a ride-hailing backend. It is laid out top-down as a tree, like the template, with an abstraction axis on the left. The levels are: the riders and drivers who use it, the Rider app (React Native) and the Driver app (Kotlin), the Kong API gateway, then three services: Trip (Go), Matching (Go) and Payment (Java). Under each service sit the two stores it uses: Postgres and Kafka with a CDC link between them, Redis and Google Maps, and Postgres and Stripe. A dashed line marks the system boundary, and every arrow is labelled with a protocol or verb.",
+  "use_for": "Showing which deployable containers a system is made of, the technology and protocol of each, and which datastore each service owns.",
+  "keywords": [
+   "c4",
+   "container",
+   "microservices",
+   "api gateway",
+   "kafka",
+   "postgres",
+   "system boundary",
+   "architecture"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "system-context",
+  "category": "mapping",
+  "name": "System context diagram",
+  "summary": "I recreated the system context diagram around Shipyard, an internal deploy platform, following the template: one big circle with external systems stacked on the right. GitHub feeds back into Shipyard with a merge webhook along a loop over the top, as in the template. One trunk out of Shipyard branches to three systems: Kubernetes (applies), PagerDuty (pages) and Slack (posts to #deploys). Engineers on the left approve deploys. A legend at the bottom explains the colours for in scope, external and people.",
+  "use_for": "Showing a single system from the outside: who uses it, which external systems push into it and which ones it drives.",
+  "keywords": [
+   "system context",
+   "c4 level 1",
+   "integrations",
+   "webhook",
+   "deploy platform",
+   "kubernetes",
+   "pagerduty",
+   "slack",
+   "github"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "network-diagram",
+  "category": "mapping",
+  "name": "Network diagram",
+  "summary": "I recreated the AWS VPC network diagram. It starts with the template's left-to-right chain: Internet, then the internet gateway, then the VPC block. Inside the VPC there are two dashed columns, one per availability zone (eu-west-1a and eu-west-1b), and three subnet rows: public, private and data. Each row's CIDRs sit in a gutter on the left. One Application Load Balancer spans both zones, and each zone has its own NAT gateway, api and worker ECS Fargate tasks, and an RDS Postgres box (the primary in one zone, the standby in the other, with sync replication between them). The arrows are labelled with ports or purpose: HTTPS, 8080, egress, 5432, a cross-AZ write and sync replication. Sticky notes on the left list the route tables and security groups.",
+  "use_for": "Showing where workloads run in a cloud network and how traffic is allowed to flow between the internet, subnets, availability zones and databases.",
+  "keywords": [
+   "network",
+   "aws",
+   "vpc",
+   "subnets",
+   "availability zones",
+   "alb",
+   "nat gateway",
+   "rds",
+   "ecs",
+   "infrastructure"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "bar-graph",
+  "category": "data-visualization",
+  "name": "Bar graph",
+  "summary": "p95 CI build time for six services over 30 days, sorted longest first, drawn against a dashed 15 min SLO line. The two services over the SLO are colored differently, each bar has its stack logo, and a sticky note gives the Gradle cache cause for the slowest one.",
+  "use_for": "Comparing one metric (build time, cost, error count) across services or pipelines, and showing which ones break a target.",
+  "keywords": [
+   "bar chart",
+   "CI",
+   "build time",
+   "p95",
+   "SLO",
+   "comparison",
+   "services"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "pie-chart",
+  "category": "data-visualization",
+  "name": "Pie chart",
+  "summary": "The September AWS bill for the platform account ($181.9k) split by service: EC2 41%, RDS 22%, S3 14%, data transfer 12%, other 11%. A legend table on the right gives dollar amounts and a total, and a sticky note covers the cross-AZ Kafka transfer cost.",
+  "use_for": "Showing how one total, such as a cloud bill, traffic or storage, splits across a handful of services or teams.",
+  "keywords": [
+   "pie chart",
+   "cloud cost",
+   "AWS bill",
+   "FinOps",
+   "share",
+   "breakdown"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "supply-demand-graph",
+  "category": "data-visualization",
+  "name": "Supply and demand graph",
+  "summary": "A checkout API under load drawn as a market: p99 latency is the price and requests per second is the quantity. Client demand slopes down and cluster supply slopes up. With 6 pods the curves meet at 2.5k rps and 200 ms, over a 180 ms SLO. After the HPA scales to 10 pods, supply shifts right and they meet at 3.0k rps and 160 ms, back under the SLO. A side panel holds the before and after values, the HPA config with the Kubernetes logo, and a note on retry budgets.",
+  "use_for": "Explaining where latency and throughput settle for a service, and why adding capacity (supply) and cutting retries (demand) move that point differently.",
+  "keywords": [
+   "supply and demand",
+   "capacity planning",
+   "autoscaling",
+   "HPA",
+   "latency",
+   "throughput",
+   "equilibrium"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "hiring-process-flowchart",
+  "category": "process-workflow",
+  "name": "Hiring process flowchart",
+  "summary": "Stage board for a backend engineer hiring loop on a payments platform (req ENG-2291). Four coloured columns (recruiter screen, coding round, system design, match + offer) carry tool logos in their headers. Anonymised candidate cards with pass or reject marks thin from 4 to 3 to 2 to 1, so the funnel shows without a chart. A sticky per stage holds the bar or rubric, and a flow rule arrow runs underneath.",
+  "use_for": "Explain how an engineering interview loop is staged, which tool runs each round, and where candidates drop out.",
+  "keywords": [
+   "hiring",
+   "interview loop",
+   "funnel",
+   "stage board",
+   "candidates",
+   "recruiting",
+   "kanban"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "change-control-process",
+  "category": "process-workflow",
+  "name": "Change control process",
+  "summary": "Five adjacent stage columns (Request, Assess, Approve, Implement, Verify) for prod Postgres migration CHG-4821. Each column shows a numbered badge, owner logo and role, and the artifact it produces. Blue work boxes step down after the CAB decision, sticky pre-checks sit in Implement and Verify, and dashed loops underneath show the CAB rejection back to the RFC and the rollback on an SLO breach.",
+  "use_for": "Explain how a risky production change such as a database migration passes human gates, who owns each gate, and where it loops back or rolls back.",
+  "keywords": [
+   "change control",
+   "CAB",
+   "RFC",
+   "change management",
+   "migration",
+   "rollback",
+   "ITIL",
+   "approval"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "pdca-cycle",
+  "category": "process-workflow",
+  "name": "Plan Do Check Act (PDCA)",
+  "summary": "Four-quadrant wheel (Plan blue, Do red, Check orange, Act green) with a cycle 3 and sprint 41 hub and four clockwise arc arrows. Each quadrant links by a dashed leader to an evidence card with a logo, for cutting flaky CI tests: the 4.1% flaky rate and its cause, the quarantine and per-test schema pilot, the 1.3% result, and the fix made the default plus a flake gate on every PR.",
+  "use_for": "Explain an iterative reliability or performance improvement loop with a measured before and after, such as cutting flaky CI tests.",
+  "keywords": [
+   "PDCA",
+   "Deming cycle",
+   "continuous improvement",
+   "iteration",
+   "flaky tests",
+   "CI",
+   "kaizen"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "vertical-timeline",
+  "category": "planning",
+  "name": "Vertical timeline",
+  "summary": "A vertical spine split into five coloured phase segments (Detect, Respond, Mitigate, Resolve, Learn) that ends in an arrowhead. Seven event cards alternate left and right, each with a UTC time tag, a title, a detail line and a tool logo. The example is incident INC-2291 (checkout-api 5xx after deploy v4.18.2), from the PagerDuty 5xx rate alert at 14:02 through the Argo CD rollback and recovery to the postmortem, with the action items on a sticky note.",
+  "use_for": "Explaining how an incident, a release or a service's history unfolded in order, with exact timestamps and the system involved at each step.",
+  "keywords": [
+   "timeline",
+   "incident",
+   "postmortem",
+   "utc",
+   "phases",
+   "chronology",
+   "sre"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "project-plan",
+  "category": "planning",
+  "name": "Project plan",
+  "summary": "A table laid out like the Figma template. A header row pairs PROJECT and TARGET labels with value cells, the column headers are PHASE, DELIVERABLE, OWNER, DUE and STATUS, and six phase rows follow. Status cells are colour coded (done, in progress, at risk, not started) and each has a reason line, with a key underneath. The example splits a Rails monolith into services on EKS with Istio, Kong, Postgres CDC via Debezium and Stripe, ending with retiring the monolith routes.",
+  "use_for": "Explaining a migration or platform project phase by phase, with who owns each deliverable, when it is due and which phase is at risk.",
+  "keywords": [
+   "project plan",
+   "migration",
+   "phases",
+   "owners",
+   "status",
+   "strangler fig",
+   "table"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "yearly-calendar",
+  "category": "planning",
+  "name": "Yearly calendar",
+  "summary": "Twelve months in two columns of six rows. Each row has a coloured month tab and a strip carrying a day scale (1 to 31, ticks weekly). Releases are dots placed on their day, with the version above and the day number below. The v7.0 major is a larger purple dot, and code freezes are translucent red ranges with a name. The example is a 2026 release train on a four-week Tuesday cadence, with New Year, SOC 2 audit, Q1 and Q3 close, BFCM and holiday freezes.",
+  "use_for": "Explaining a team's release train across a year: release dates, major versions and the code freeze windows to plan around.",
+  "keywords": [
+   "calendar",
+   "year",
+   "release train",
+   "code freeze",
+   "cadence",
+   "releases",
+   "planning"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "bracket",
+  "category": "data-visualization",
+  "name": "Bracket planner",
+  "summary": "Single-elimination bracket drawn from both edges toward the middle. In the example, eight teams in an internal platform-engineering hackathon play quarterfinals and semifinals, and Canary Cat (an auto rollback tool) beats Flake Hunt in the final next to a central champion node. Each box shows a score, and bold marks the team that advances.",
+  "use_for": "Explaining a pairwise elimination process in engineering, such as a hackathon, a vendor or library bake-off, or build candidates knocked out round by round until one ships.",
+  "keywords": [
+   "bracket",
+   "tournament",
+   "elimination",
+   "hackathon",
+   "bake-off",
+   "knockout",
+   "rounds"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "gantt-chart",
+  "category": "planning",
+  "name": "Gantt chart",
+  "summary": "Eight-week release plan for the payments v2 API. It has a status legend (done, in progress, delayed, pending, critical path, milestone), week headers, numbered task labels and bars with an owner handle in each. Arrows show finish-to-start dependencies, a red Today line marks Sep 29, and a diamond marks the GA milestone on Fri Oct 24.",
+  "use_for": "Explaining a software release plan: which workstreams run in parallel, what blocks launch, where a slip lands relative to today, and who owns each step.",
+  "keywords": [
+   "gantt",
+   "schedule",
+   "release plan",
+   "dependencies",
+   "milestone",
+   "critical path",
+   "today line"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "horizontal-timeline",
+  "category": "planning",
+  "name": "Timeline (horizontal)",
+  "summary": "A thick arrow spine running left to right, with eight Kubernetes major releases on stems that alternate above and below. The releases run from v1.0 in 2015, through Deployments beta, RBAC GA, CRDs GA, the dockershim deprecation and removal and the PodSecurityPolicy removal, to sidecars GA in v1.33 in 2025. Era labels (core APIs, extensibility, runtime cleanup, maturity) sit inside the arrow, cards are coloured by era, and the header carries a Kubernetes logo slot.",
+  "use_for": "Explaining the release or deprecation history of a platform or service, and why an upgrade or migration path looks the way it does.",
+  "keywords": [
+   "timeline",
+   "horizontal",
+   "release history",
+   "kubernetes",
+   "deprecation",
+   "milestones",
+   "eras"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "infographic",
+  "category": "data-visualization",
+  "name": "Infographic",
+  "summary": "One rounded card with a 3 by 2 grid of small charts showing a year of the open source repo tidewave/tide. The panels are segmented outcome bars by work type, contributors by region as a hub and spoke, four headline-number circles, weekly npm downloads as an area chart with a v2.0 event dot, lines by language as a donut, and hours to first review as bars. A takeaway note runs along the bottom.",
+  "use_for": "Summarising a project's, platform's or migration's results in one glanceable card of small charts, each panel answering one question.",
+  "keywords": [
+   "infographic",
+   "year in review",
+   "dashboard card",
+   "stats",
+   "open source",
+   "npm downloads",
+   "contributors",
+   "donut",
+   "bar chart",
+   "area chart"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "radar-chart",
+  "category": "data-visualization",
+  "name": "Radar chart",
+  "summary": "PostgreSQL 16 and Cassandra 5 scored 1 to 5 on six axes for an event store: read latency, write scale, cost at 10 TB, ops simplicity, consistency and ecosystem. The background copies the template's concentric rings and dashed spokes. Each database is a translucent polygon with vertex dots. Logo legend boxes show the totals (24 vs 18), next to a score table and a decision sticky note.",
+  "use_for": "Comparing two or three technology options (databases, queues, frameworks) or a service's maturity scores across several normalised dimensions.",
+  "keywords": [
+   "radar chart",
+   "spider chart",
+   "comparison",
+   "database selection",
+   "PostgreSQL",
+   "Cassandra",
+   "trade-offs",
+   "scoring"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "heat-map",
+  "category": "data-visualization",
+  "name": "Heat map",
+  "summary": "A 7 by 12 grid of 224 Q3 production deploys of a payments API, by weekday and two-hour UTC slot. Cells use five levels from cool to hot (green, pale yellow, yellow, orange, red) with counts. Row totals appear as small bars. A solid outline marks the Tue to Thu 10:00 to 16:00 peak (108 deploys) and a dashed outline marks the Friday change freeze. A bucket legend sits below, with three takeaway sticky notes.",
+  "use_for": "Showing when or where activity clusters across two categories, such as deploys, incidents or errors by day and hour or by service and region.",
+  "keywords": [
+   "heat map",
+   "heatmap",
+   "deploy frequency",
+   "weekday hour",
+   "change freeze",
+   "DORA",
+   "incidents",
+   "matrix"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "calendar-planner",
+  "category": "planning",
+  "name": "Online calendar planner",
+  "summary": "Framed month grid (7 day columns x 5 week rows) with a title bar, and the blank days before the 1st merged into one legend cell. Each day holds colour-coded event chips. Example: October 2026 for a payments-platform team, with Sprint 41/42 ceremonies, three releases and their code freezes, weekly on-call handoffs, a PG 16 upgrade window, a failover drill, a postmortem and a game day. Logo slots show PagerDuty, GitHub and Linear as event sources.",
+  "use_for": "Explaining how a team's sprint cadence, release trains, code freezes, infra change windows and on-call rotation line up across one month.",
+  "keywords": [
+   "calendar",
+   "month",
+   "sprint",
+   "release",
+   "code freeze",
+   "on-call",
+   "planner"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "time-blocking",
+  "category": "planning",
+  "name": "Time blocking calendar",
+  "summary": "Full-width title bar over a grid of a time column plus 7 day columns and 18 half-hour striped rows (09:00 to 18:00). Coloured blocks show duration by height. Example: a backend engineer's Sprint 41 week with standups, deep-work blocks (ledger-svc, idempotency, PG migration, Kafka retries), code review, RFC review, a 1:1, a postmortem, a v4.12 canary deploy, a Friday alert review and weekend on-call primary shifts. A legend sits under the grid, with a Google Calendar logo slot.",
+  "use_for": "Explaining how an engineer protects focus time around standups, reviews, deploys and on-call interrupts, and what an on-call week costs in calendar time.",
+  "keywords": [
+   "time blocking",
+   "calendar",
+   "deep work",
+   "focus",
+   "on-call",
+   "code review",
+   "schedule"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "weekly-schedule",
+  "category": "planning",
+  "name": "Weekly schedule planning",
+  "summary": "Five stacked, offset folder cards (Mon to Fri). Each has a tab naming the day and a strip of time-stamped pills: outlined pills for meetings, purple filled pills for focus blocks. The white front Friday card holds the ship-day sequence (standup, Sprint 41 review, retro), two highlight tags for the v4.12.0 release (GitHub) and the on-call handoff (PagerDuty), and week totals (13h focus, 6.5h meetings, 1 release).",
+  "use_for": "Explaining the ceremony rhythm of a sprint week, where focus time survives, and what happens on ship day.",
+  "keywords": [
+   "weekly schedule",
+   "sprint week",
+   "ceremonies",
+   "focus blocks",
+   "ship day",
+   "release"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "service-blueprint",
+  "category": "customer-ux",
+  "name": "Service blueprint",
+  "summary": "Stage columns across four lanes (user actions, console frontstage, control plane backstage, infra support), split by lines of interaction, visibility and internal interaction. Example: self-serve Postgres provisioning through provision-api, Temporal, Vault, metrics-proxy, AWS quotas, Kubernetes CNPG, Postgres and Prometheus.",
+  "use_for": "Showing which hidden backend services and infrastructure sit behind each user-visible step of a self-serve product flow, and who owns each layer.",
+  "keywords": [
+   "service blueprint",
+   "frontstage",
+   "backstage",
+   "line of visibility",
+   "self-serve",
+   "provisioning",
+   "control plane",
+   "swimlane"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "marketing-funnel",
+  "category": "customer-ux",
+  "name": "Marketing funnel",
+  "summary": "Inverted five-band funnel for a developer tool (docs visit, signup, first API call, team plan, enterprise). Tracked event names sit on the left and monthly counts with stage conversion on the right, with a '60% never call' callout on the activation leak and a PostHog, Snowflake raw.events, dbt funnel_daily, Grafana pipeline strip.",
+  "use_for": "Explaining which product events define each funnel stage, where developer activation leaks, and how the numbers flow from tracking to the dashboard.",
+  "keywords": [
+   "funnel",
+   "conversion",
+   "activation",
+   "growth",
+   "analytics events",
+   "developer tool",
+   "drop-off"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "territory-map",
+  "category": "customer-ux",
+  "name": "Territory map",
+  "summary": "Abstract territory blobs inside timezone bands, each owned by an SRE team (Seattle, Dublin, Bengaluru, Tokyo), with cloud-region pins, handoff arrows at 06:00, 12:00 and 18:00 UTC (wrapping to Tokyo at 00:00), and a 24h follow-the-sun PagerDuty coverage strip; primary takes every page, the owning team is the escalation.",
+  "use_for": "Showing which on-call team owns which cloud regions and how a follow-the-sun rotation hands off to cover 24 hours.",
+  "keywords": [
+   "territory map",
+   "on-call",
+   "follow-the-sun",
+   "timezone",
+   "ownership",
+   "regions",
+   "coverage",
+   "pagerduty"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "todo-list",
+  "category": "planning",
+  "name": "To do list",
+  "summary": "Clipboard checklist for payments-api v4.2.0: P0/P1/P2 groups with checkboxes, owners, due days, progress bar showing 6 of 11 done and an open P0 blocking the tag.",
+  "use_for": "Showing what must be true before a release or cutover ships, who owns each item, and which open item is blocking it.",
+  "keywords": [
+   "checklist",
+   "release",
+   "priorities",
+   "owners",
+   "progress",
+   "todo"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "customer-journey",
+  "category": "customer-ux",
+  "name": "Customer journey map",
+  "summary": "Developer adopting the Acme Payments API across Discover, Sign up, First call, Integrate, Scale: rows for doing, touchpoints with logos, emotion curve, pain points, opportunities and a metric per stage.",
+  "use_for": "Explaining API or SDK developer experience end to end and where time-to-first-call or activation is lost.",
+  "keywords": [
+   "journey",
+   "developer experience",
+   "emotion curve",
+   "touchpoints",
+   "pain points",
+   "TTFC"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "employee-journey",
+  "category": "customer-ux",
+  "name": "Employee journey map",
+  "summary": "New backend engineer from Day 1 setup to first on-call in Week 8: guide cards with avatars above four colored phase cards joined by arrows, tools as logos, mood curve and pain/fix notes.",
+  "use_for": "Explaining an engineering onboarding plan, who owns each phase, and where new hires lose time before joining on-call.",
+  "keywords": [
+   "onboarding",
+   "employee journey",
+   "on-call",
+   "phases",
+   "mood",
+   "engineering ramp-up"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "ux-workflow",
+  "category": "customer-ux",
+  "name": "User experience workflow",
+  "summary": "Shows the acme CLI device-code login as a row of screens: a Start terminator, a terminal showing code WDJB-MJHT, a browser code-entry screen with Okta SSO, a 'Code valid?' decision diamond and a consent screen asking for repo:read and deploy:write. Below that row, an expired-code error screen hangs off the decision, auth-api issues the token, and the polling terminal shows the signed-in result. A sticky note lists the edge cases.",
+  "use_for": "Explaining a login or onboarding flow that crosses the CLI and the browser, what each screen shows, which backend call moves the user to the next screen, and the error branches that need their own screens.",
+  "keywords": [
+   "ux flow",
+   "user flow",
+   "screen flow",
+   "device code",
+   "oauth",
+   "cli login",
+   "onboarding",
+   "decision",
+   "screens"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "wireframe",
+  "category": "design-content",
+  "name": "Website wireframe",
+  "summary": "A low-fidelity wireframe of the Relay payments API docs landing page inside a browser frame. It has a nav with search, a yellow hero with a Quickstart button and a copyable curl snippet, three cards with crossed image placeholders (REST API, Webhooks, SDKs with Python, Node and Go logos), a live status strip and a footer. Five sticky notes outside the frame point at blocks with dashed arrows and give the data behind each design choice.",
+  "use_for": "Explaining the layout of a docs portal or console page before it is built, which API or data source feeds each block, and the design decisions a page review should question.",
+  "keywords": [
+   "wireframe",
+   "lo-fi",
+   "landing page",
+   "docs site",
+   "layout",
+   "mockup",
+   "annotations",
+   "page design"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "sitemap",
+  "category": "design-content",
+  "name": "Website flowchart (sitemap)",
+  "summary": "A tree of the Relay API docs site. Home sits at the root with its page sections as inner rows, a bus links it to five colour-coded section pages (Get started, Guides, API reference, SDKs, Changelog), and each section has its child pages stacked below with real URL paths. GitHub and status.relay.dev appear as dashed external links, a v2 docs page is shown as a 301 redirect, and a legend runs along the bottom.",
+  "use_for": "Explaining the URL and route structure of a docs site or web app, where a new page belongs, which redirects a restructure needs, and which pages depend on external systems.",
+  "keywords": [
+   "sitemap",
+   "site map",
+   "information architecture",
+   "routes",
+   "url structure",
+   "docs site",
+   "navigation",
+   "tree"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "storyboard",
+  "category": "design-content",
+  "name": "Storyboard",
+  "summary": "Six framed panels in a 3x2 grid, each a small scene plus a numbered caption, replaying incident INC-482: a deploy fails in GitHub Actions on a migration lock timeout, a PagerDuty alert fires on a 5xx spike, kubectl rolls back from v2.31 to v2.30, a PR replaces a blocking CREATE INDEX with CREATE INDEX CONCURRENTLY, Argo CD redeploys through a 5/50/100% canary, and a postmortem leaves sticky-note action items.",
+  "use_for": "Replaying how an incident, release or migration played out, step by step, showing what the engineer saw on screen at each moment.",
+  "keywords": [
+   "storyboard",
+   "incident",
+   "timeline",
+   "panels",
+   "rollback",
+   "canary",
+   "postmortem",
+   "runbook"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "concept-map",
+  "category": "design-content",
+  "name": "Concept map",
+  "summary": "A top-down concept map of TLS 1.3. A purple root concept has elbow branches to Handshake and Record layer. These lead to circle leaves (X.509 certificate, ECDHE key share, AES-GCM, AEAD tag) and pill nodes for shared concepts (Session keys, Cipher suite), joined by a dashed 'keyed into' cross-link. A deeper row holds CA chain, X25519, HKDF and the TLS_AES_128_GCM_SHA256 suite name. Every arrow is labeled with a verb phrase.",
+  "use_for": "Explaining how the concepts of a protocol or domain relate, where each arrow reads as a sentence, before someone reads the code or spec.",
+  "keywords": [
+   "concept map",
+   "propositions",
+   "TLS",
+   "handshake",
+   "cryptography",
+   "domain vocabulary",
+   "cross-link"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "brand-guidelines",
+  "category": "design-content",
+  "name": "Brand guidelines",
+  "summary": "The tokens page for the Beacon v3 design system, drawn as four stacked deck pages in a 2x2 grid. Each page has a grey rule panel and a white example area: logo clear space and minimum size, six CSS color tokens by role (--brand, --info, --success, --warning, --danger, --accent), a four-step type scale (--font-xl to --font-mono), and a do-and-don't pair (one primary button versus two competing ones, var(--brand) versus a hard-coded hex). Figma and GitHub logo slots mark where the tokens live.",
+  "use_for": "Explaining which design tokens and UI rules a frontend codebase enforces, with each token named the way it appears in code.",
+  "keywords": [
+   "brand guidelines",
+   "design system",
+   "design tokens",
+   "type scale",
+   "color tokens",
+   "do and don't",
+   "frontend"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "culture-design-process",
+  "category": "design-content",
+  "name": "Culture design process",
+  "summary": "Culture canvas with a central purpose circle surrounded by seven blocks (values, priorities, behaviors, rituals, feedback, decision making, norms) in a 3-2-2 grid, plus a Discover, Define, Design, Embed phase strip; each block carries a badge for the phase that fills it. Example: blameless postmortems and code review norms enforced via PagerDuty, Jira and GitHub CODEOWNERS.",
+  "use_for": "Explaining how an engineering practice such as blameless postmortems or code review norms becomes concrete rituals, tracked actions and CI-enforced rules.",
+  "keywords": [
+   "culture canvas",
+   "engineering culture",
+   "blameless postmortem",
+   "code review norms",
+   "discover define design embed",
+   "values",
+   "rituals"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "org-chart",
+  "category": "org-hierarchy",
+  "name": "Organization chart",
+  "summary": "Top-down tree: VP Engineering root, four heads (Platform, Product Eng, Data, SRE) on an elbow bus, and three teams stacked on a spine under each lead with logo, owned system and headcount; one colour per branch as in the FigJam template.",
+  "use_for": "Explaining which engineering team owns which system and how headcount and on-call ownership are spread across the org.",
+  "keywords": [
+   "org chart",
+   "reporting lines",
+   "engineering org",
+   "teams",
+   "ownership",
+   "headcount",
+   "hierarchy"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "project-org-chart",
+  "category": "org-hierarchy",
+  "name": "Project organization chart",
+  "summary": "Three-level project tree for a Postgres 11 to Aurora 15 orders-db migration: sponsor card, tech lead and TPM side by side, and three workstreams (schema and dual-write, backfill and CDC, cutover and rollback) with owner, repo path or topic and dated milestone pill; downward rounded elbow arrows with verb labels and a dashed tracks line from the TPM.",
+  "use_for": "Explaining who owns each workstream of a cross-team migration or release, who makes the go/no-go call, and the milestone each workstream is driving to.",
+  "keywords": [
+   "project org chart",
+   "workstreams",
+   "database migration",
+   "sponsor",
+   "tech lead",
+   "milestones",
+   "RACI"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "geographic-org-structure",
+  "category": "org-hierarchy",
+  "name": "Geographic organization structure",
+  "summary": "A CTO card sits above four regional hub cards (Bangalore, Berlin, Toronto, San Francisco), each showing time zone, site lead and headcount. Under each hub is a dashed group of its teams with product logos, and a follow-the-sun on-call band shows the UTC shifts with handoff arrows.",
+  "use_for": "Explaining which engineering hub owns which services and how on-call hands off across time zones.",
+  "keywords": [
+   "org chart",
+   "regions",
+   "hubs",
+   "time zones",
+   "follow-the-sun",
+   "on-call",
+   "site lead",
+   "distributed teams"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "succession-planning",
+  "category": "org-hierarchy",
+  "name": "Succession planning",
+  "summary": "A role-holder tree runs down the left: eng director, then the EM, then three ICs on one rounded branch line. Dashed links go out to ready-now and ready-in-1-2-years successor cards colored by readiness. A red no-backup card marks the gap for the ledger staff engineer, with a legend and a risk sticky note.",
+  "use_for": "Explaining who can take over critical engineering roles, how a promotion cascades, and where a system is left with a bus factor of one.",
+  "keywords": [
+   "succession",
+   "bench",
+   "ready now",
+   "ready later",
+   "bus factor",
+   "staff engineer",
+   "engineering manager",
+   "risk"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "nine-box-talent-matrix",
+  "category": "org-hierarchy",
+  "name": "9 box talent matrix",
+  "summary": "A 3x3 grid of performance (below, meets, exceeds bar) against potential (low, moderate, high). Each box is numbered 1 to 9, named (Underperformer to Star), and gives an action plus engineer chips with level and area. Colors run diagonally from red at bottom left to green at top right.",
+  "use_for": "Explaining where engineers land in a calibration and what the next step is for each group.",
+  "keywords": [
+   "9 box",
+   "nine box",
+   "talent",
+   "calibration",
+   "performance",
+   "potential",
+   "promotion",
+   "grid"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "sentence-diagram",
+  "category": "education",
+  "name": "Sentence diagram",
+  "summary": "Reed-Kellogg diagram of 'The scheduler quickly retries failed jobs': a row of word chips colored by part of speech, a baseline with subject, verb and object and their dividers, modifiers on slanted lines, then the same sentence read as scheduler.retry(jobs.where(status=\"failed\"), backoff=FAST) with color-matched underlines and a legend.",
+  "use_for": "Showing how an API call or runbook line reads as a sentence, so receiver, method, argument and policy flags each map to a grammatical role and an ambiguous modifier is easy to spot.",
+  "keywords": [
+   "reed-kellogg",
+   "grammar",
+   "parts of speech",
+   "api naming",
+   "method call",
+   "runbook",
+   "scheduler",
+   "retry"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "interview-cheat-sheet",
+  "category": "education",
+  "name": "Interview cheat sheet",
+  "summary": "Senior backend onsite loop for a payments team: a candidate brief card (role, bar, Go/PostgreSQL/Kafka/AWS logos), three sticky notes of questions to ask the panel, and a 2x2 grid of round cards (coding, system design, production debugging, behavioral), each with a colored header, length, four key questions and the signal being scored.",
+  "use_for": "Laying out what an engineering interview loop or review covers round by round, so each round has distinct questions and a clear signal.",
+  "keywords": [
+   "interview",
+   "hiring loop",
+   "backend",
+   "system design",
+   "coding round",
+   "behavioral",
+   "cheat sheet",
+   "on-call"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "journaling",
+  "category": "education",
+  "name": "Journaling template",
+  "summary": "Engineering daily log for a payments on-call week as three fanned, dated pages (Mon yellow, Tue purple, Wed blue in front). The front page has a large 'Today I shipped' block (PR #4190, payments-api v2.14 deploy, INC-311 postmortem), two smaller blocks (blocked on a staging Kafka quota, learned an N+1 query via pg_stat_statements) and ruled lines for tomorrow, energy, focus time and a note to self.",
+  "use_for": "Showing a repeatable daily engineering log format (shipped, blocked, learned, plan) and how on-call load and delivery look across several days.",
+  "keywords": [
+   "journal",
+   "daily log",
+   "engineering log",
+   "standup",
+   "on-call",
+   "shipped blocked learned",
+   "reflection"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "rean-model",
+  "category": "business-strategy",
+  "name": "REAN model",
+  "summary": "2x2 grid R/E/A/N (purple, coral, blue, green) with big stage letters, a metric tag per stage, three logo channel cards per cell, a measure line, and a funnel strip below showing 48k visits to 6.1k installs to 1.4k weekly users to 85 contributors.",
+  "use_for": "Explaining how an open source project or developer tool turns visitors into active users and contributors, and which channel and team drives each stage.",
+  "keywords": [
+   "REAN",
+   "reach",
+   "engage",
+   "activate",
+   "nurture",
+   "open source growth",
+   "devrel",
+   "adoption funnel"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "cynefin-framework",
+  "category": "business-strategy",
+  "name": "Cynefin framework",
+  "summary": "2x2 grid Complex/Complicated/Chaotic/Clear with the template icons (bubbles, thumbs up, flame, shapes) top-right, two real incident cards per domain with logos, a playbook line, a Confusion circle at the centre and a dashed complacency-cliff arrow from Clear to Chaotic.",
+  "use_for": "Explaining why production incidents need different response playbooks depending on how knowable the cause is.",
+  "keywords": [
+   "cynefin",
+   "incident response",
+   "complex",
+   "complicated",
+   "chaotic",
+   "clear",
+   "runbook",
+   "sre"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "balance-wheel",
+  "category": "business-strategy",
+  "name": "Balance wheel",
+  "summary": "Six coloured areas around a payments-api hub joined by spokes, laid out as in the template (two top, two sides, two bottom). Each area has a tool logo, a 0 to 10 score, the metric behind it and a ten-cell score bar. The two lowest areas carry a Q4 focus tag.",
+  "use_for": "Explaining a team or service engineering health check across tests, docs, on-call, deploy frequency, security and onboarding, and why the weakest areas get next quarter's time.",
+  "keywords": [
+   "balance wheel",
+   "engineering health",
+   "team health check",
+   "scorecard",
+   "dora",
+   "on-call",
+   "onboarding"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "product-comparison",
+  "category": "analysis",
+  "name": "Product comparison",
+  "summary": "Three product columns (Kafka, RabbitMQ, Amazon SQS) with coloured logo headers, a left criteria column, green tick or red cross squares with short reasons for six criteria, and a score pill plus a pick-it-for verdict per column.",
+  "use_for": "Explaining why a design doc chose one queue, database or framework over its alternatives against agreed criteria.",
+  "keywords": [
+   "comparison",
+   "checklist",
+   "vendor selection",
+   "kafka",
+   "rabbitmq",
+   "sqs",
+   "build vs buy",
+   "feature matrix"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "quad-chart",
+  "category": "analysis",
+  "name": "Quad chart",
+  "summary": "Two by two grid of rounded colour panels on impact (up) vs effort (right) axes: Quick wins, Big bets, Fill-ins, Money pits, each with an axis kicker, action tag and three tech debt cards with mono evidence.",
+  "use_for": "Explaining which tech debt or backlog items a team should fund now, plan, fill in, or decline, based on impact and effort.",
+  "keywords": [
+   "2x2",
+   "quadrant",
+   "impact effort",
+   "prioritization",
+   "tech debt",
+   "matrix",
+   "backlog"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "bubble-map",
+  "category": "analysis",
+  "name": "Bubble map",
+  "summary": "Central Redis orders-cache bubble with logo, ringed by eight equal adjective bubbles (fast, bounded, shared, volatile, stale-prone, key-addressed, read-heavy, costly) on straight spokes, each backed by a fact and a config value such as allkeys-lru, AOF off, TTL 300 s with no invalidate, or a 40:1 GET:SET ratio.",
+  "use_for": "Explaining the character of one component (a cache, queue or index) to a new engineer, with each property backed by a setting or metric.",
+  "keywords": [
+   "bubble map",
+   "thinking map",
+   "adjectives",
+   "describe",
+   "cache",
+   "redis",
+   "properties"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "smart-goals",
+  "category": "business-strategy",
+  "name": "SMART goal planning",
+  "summary": "Five coloured S/M/A/R/T header cells over white columns of sticky-note evidence. The backing tool and metric sit at the foot of each column, the T column holds a milestone timeline, and a one-sentence goal band runs underneath.",
+  "use_for": "Explaining whether an engineering target such as a latency SLO or error budget is specific, measured, feasible, relevant and dated before a team commits to it.",
+  "keywords": [
+   "smart",
+   "goal",
+   "okr",
+   "slo",
+   "latency",
+   "p95",
+   "target",
+   "objective"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "value-stream-map",
+  "category": "business-strategy",
+  "name": "Value stream mapping",
+  "summary": "Four numbered stage columns. Each has a queue triangle with its wait time, a process box (C/T, %C&A, who) and a kaizen note, with push arrows between the process boxes. A wait/work timeline ladder and a lead-time and flow-efficiency summary sit underneath.",
+  "use_for": "Explaining where a change spends its time from commit to production and which delivery bottleneck to fix first.",
+  "keywords": [
+   "value stream",
+   "vsm",
+   "lead time",
+   "flow efficiency",
+   "dora",
+   "delivery",
+   "wait time",
+   "lean"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "sipoc",
+  "category": "business-strategy",
+  "name": "SIPOC diagram",
+  "summary": "Five coloured S/I/P/O/C header columns. The Process column holds numbered pipeline steps, the other columns hold sticky notes, and arrows link supplier to input to step to output to customer. A scope band at the bottom gives trigger, boundary, owner and SLO.",
+  "use_for": "Explaining the boundary of a CI or release pipeline: who supplies what it consumes, what it produces, and which downstream teams depend on each output.",
+  "keywords": [
+   "sipoc",
+   "ci pipeline",
+   "scope",
+   "suppliers",
+   "inputs",
+   "outputs",
+   "customers",
+   "supply chain"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "frayer-model",
+  "category": "education",
+  "name": "Frayer model",
+  "summary": "Four quadrants (definition, characteristics, examples, non-examples) around a central concept pill, defining idempotency with Stripe keys, Postgres upsert, Kafka idempotent producer and kubectl apply as examples, and keyless payment retries, stock decrements, email jobs and log appends as non-examples.",
+  "use_for": "Pinning down a term a codebase relies on, such as idempotency, by showing what it is and the near misses that are not.",
+  "keywords": [
+   "frayer",
+   "definition",
+   "concept",
+   "idempotency",
+   "examples",
+   "non-examples",
+   "glossary",
+   "quadrant"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "study-guide",
+  "category": "education",
+  "name": "Study guide",
+  "summary": "Spiral notebook page with a 2x2 grid of cards (key concepts, practice prompts checklist, latency numbers, building blocks with Redis/Kafka/PostgreSQL/S3 logos) for system design interview prep, over a page tilted 10 degrees that holds a mock interview log and weak spots.",
+  "use_for": "Laying out what an engineer needs to revise for a service, an on-call rotation or a system design interview, grouped by kind of material.",
+  "keywords": [
+   "study guide",
+   "notebook",
+   "revision",
+   "interview prep",
+   "system design",
+   "cheat sheet",
+   "onboarding"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "research-outline",
+  "category": "education",
+  "name": "Research paper outline",
+  "summary": "Vertical chain of section blocks under a folder-tabbed title card, outlining the Raft paper (USENIX ATC 2014): thesis, motivation sections 1-3, the core algorithm with subsections 5.1-5.4, extensions 6-8, evaluation 9, and related work with etcd/Consul/CockroachDB logos. Arrows carry verbs and badges give the reading order.",
+  "use_for": "Showing the argument structure of a systems paper, design doc or RFC section by section before it is written or reviewed.",
+  "keywords": [
+   "research outline",
+   "paper",
+   "rfc",
+   "design doc",
+   "raft",
+   "consensus",
+   "sections",
+   "distributed systems"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "sandwich-chart",
+  "category": "analysis",
+  "name": "Sandwich chart",
+  "summary": "Four stacked layers for a PR description of a payments fix. The top bun is why plus the ticket (PAY-1142), the fillings are what changed (retry.go idempotency key) and how it was tested (go test command), and the bottom bun is rollout and rollback (flag pay_idem_key at 10%). The rule for each layer is on the left and who reads it is on the right.",
+  "use_for": "Explaining the sections of a PR, RFC or incident template, the order they go in and which audience reads each one.",
+  "keywords": [
+   "pr description",
+   "template",
+   "layers",
+   "pull request",
+   "rollout",
+   "review"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "decision-tree",
+  "category": "analysis",
+  "name": "Decision tree",
+  "summary": "ADR-017, choosing a queue or a stream for order-events. The root asks whether consumers must replay history, then splits on running your own brokers or routing per message type. The four leaves are Apache Kafka, Amazon Kinesis, RabbitMQ and Amazon SQS, each with a logo and two deciding facts. The chosen path is highlighted with d-edge acc thick and ends at Kinesis, with the reason in a band underneath.",
+  "use_for": "Explaining how an architecture decision or triage rule reached its choice through a series of yes or no questions.",
+  "keywords": [
+   "decision",
+   "adr",
+   "kafka",
+   "sqs",
+   "kinesis",
+   "rabbitmq",
+   "queue",
+   "stream"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "outcome-mapping",
+  "category": "analysis",
+  "name": "Outcome mapping",
+  "summary": "Developer education program for 40 new hires. The program box fans out to three colored rows of activity, output and outcome (codebase tours with videos recorded in Loom, pairing on a first PR, incident game days). A bracket joins all three outcome rows, and an 'adds up to' arrow carries them into an impact band with before-to-after metrics: time to 10th PR, change failure rate and onboarding NPS.",
+  "use_for": "Explaining how a platform or DevEx investment turns from activities into countable outputs, behavior outcomes and delivery impact.",
+  "keywords": [
+   "outcome",
+   "impact",
+   "logic model",
+   "devex",
+   "onboarding",
+   "enablement",
+   "metrics"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "quick-reference-guide",
+  "category": "business-strategy",
+  "name": "Quick reference guide",
+  "summary": "Stacked card with a header, a tool badge circle and a 2x2 grid of task panels, each holding five command rows (mono command plus plain-English effect) with danger pills for history-rewriting or prod-changing commands. Example: checkout team on-call cheat sheet for git and kubectl.",
+  "use_for": "Showing the handful of commands or facts an engineer needs under pressure, grouped by intent, with the risky ones flagged.",
+  "keywords": [
+   "cheat sheet",
+   "quick reference",
+   "on-call",
+   "git",
+   "kubectl",
+   "commands",
+   "runbook card"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "marketing-mix",
+  "category": "business-strategy",
+  "name": "Marketing mix (4Ps)",
+  "summary": "Four overlapping d-soft circles (Product, Price, Place, Promotion) around a solid core circle naming the product, pair-overlap labels in the lenses, and a same-coloured detail card per P with logo, three bullets and a mono line. Example: shipctl v1.0, a Go deploy CLI for platform teams.",
+  "use_for": "Explaining how a developer tool or SDK is packaged, priced, distributed and announced, and where engineering choices carry go-to-market decisions.",
+  "keywords": [
+   "4Ps",
+   "marketing mix",
+   "product",
+   "price",
+   "place",
+   "promotion",
+   "developer CLI",
+   "launch"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "pest-analysis",
+  "category": "business-strategy",
+  "name": "PEST analysis",
+  "summary": "Title column on the left (subject, scope, numbered decisions, legend, platform logos) beside a 2x2 of touching circles for Political, Economic, Social, Technological, each with an icon, three factors and a 'drives N' tag tracing to the decisions. Example: launching a managed vector database on AWS and GCP.",
+  "use_for": "Showing the outside forces (regulation, cost, developer expectations, technology) that shape a platform launch and which decisions they drove.",
+  "keywords": [
+   "PEST",
+   "political",
+   "economic",
+   "social",
+   "technological",
+   "external factors",
+   "vector database",
+   "launch"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "vision-board",
+  "category": "creative",
+  "name": "Vision board",
+  "summary": "Platform team FY2027 vision board: headline goal over a mosaic of tiles (deploys/day bar chart, Backstage to GitHub Actions to Argo CD golden path, quiet on-call, p99 and SLO circles, 30% AWS cost cut with bars, retire-Jenkins diamond, OpenTelemetry trace coverage progress bar).",
+  "use_for": "Showing where an engineering team wants its platform to be in a year, with one measurable target per theme.",
+  "keywords": [
+   "vision",
+   "goals",
+   "platform",
+   "north star",
+   "targets",
+   "FY plan"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "kudos-cards",
+  "category": "creative",
+  "name": "Kudos cards",
+  "summary": "Fanned stack of three thank-you cards after incident INC-2291 (checkout 502s, 23 min): support lead with Statuspage, on-call SRE with Envoy root cause, and front card for the incident commander with smiley, sparkles, alert/rollback/resolved timeline, MTTR tag and Slack channel.",
+  "use_for": "Recognising who did what during an incident response or launch as the close of a blameless postmortem.",
+  "keywords": [
+   "kudos",
+   "thank you",
+   "recognition",
+   "incident",
+   "postmortem",
+   "team"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "work-anniversary",
+  "category": "creative",
+  "name": "Work anniversary celebration",
+  "summary": "Certificate for 3 years on the platform team: double frame, avatar between two stars, name ribbon with folded tails, a 2023 to 2026 shipped-milestones timeline with logos (Terraform, EKS upgrade, Argo CD, Backstage) and three stat tiles.",
+  "use_for": "Telling an engineer's multi-year impact through the systems they shipped.",
+  "keywords": [
+   "anniversary",
+   "celebration",
+   "milestones",
+   "tenure",
+   "certificate",
+   "recognition"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "time-zone-clock",
+  "category": "admin",
+  "name": "Clock / time zone",
+  "summary": "24-hour UTC dial with one wedge per hour, coloured by the city on call. The inner ring names each owner and shows its local hours. Four numbered overlap wedges mark the handoffs, and an accent hand marks now (14:40 UTC). A side panel holds the shift cards and the handoff list.",
+  "use_for": "Explaining a follow-the-sun on-call rotation, or regional batch and deploy windows, and where the handoff overlaps fall in UTC.",
+  "keywords": [
+   "on-call",
+   "follow-the-sun",
+   "time zone",
+   "rotation",
+   "handoff",
+   "pagerduty",
+   "utc",
+   "clock"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "periodic-table",
+  "category": "admin",
+  "name": "Periodic table (of things)",
+  "summary": "Periodic-table-shaped grid of 50 DevOps tools. Source control and CI form the tall left columns, build, delivery and IaC fill the low middle block, observability and security sit on the right, and cloud and collaboration are in a detached strip below. Each cell has a number, a symbol, a logo and a name, plus a key in the gap at the top.",
+  "use_for": "Explaining which tools a platform team runs, grouped by job, as a scannable catalogue with real product logos.",
+  "keywords": [
+   "devops",
+   "toolchain",
+   "catalog",
+   "platform team",
+   "periodic table",
+   "logos",
+   "tooling radar"
+  ],
+  "uses_logos": true
+ },
+ {
+  "slug": "phone-tree",
+  "category": "admin",
+  "name": "Phone tree",
+  "summary": "SEV1 escalation call tree for checkout outage INC-2291. A PagerDuty page goes to the incident commander, who calls the payments eng lead, comms lead and VP Engineering. They in turn call five people: DB and platform on-call, support duty manager, CTO and head of CS. Person cards carry avatars, the first action, a tool logo, call-order badges and T+0/5m/10m deadline tags, with a dashed fallback link for no answer.",
+  "use_for": "Explaining an incident or DR escalation path: who calls whom, in what order, by when, and what happens on no answer.",
+  "keywords": [
+   "escalation",
+   "sev1",
+   "incident",
+   "call tree",
+   "on-call",
+   "runbook",
+   "pagerduty"
+  ],
+  "uses_logos": true
+ }
+]
