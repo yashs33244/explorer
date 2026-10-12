@@ -1,0 +1,31 @@
+<header class="top">
+  <p class="kicker">example · design note</p>
+  <h1>Request Lifecycle</h1>
+  <p class="lede">How one request moves through the service, what each step stores, and what is left to build.</p>
+  <p class="note">Status: example page for the artifact-studio skill.</p>
+  <nav class="toc" aria-label="Sections">
+    <ol>
+      <li><a href="#flow"><span>01</span>The flow</a></li>
+      <li><a href="#fields"><span>02</span>Fields</a></li>
+    </ol>
+  </nav>
+</header>
+
+<section id="flow">
+  <p class="num">01</p>
+  <h2>The flow</h2>
+  <p>Short plain sentences. One idea per paragraph.</p>
+  {{fig:d1}}
+</section>
+
+<section id="fields">
+  <p class="num">02</p>
+  <h2>Fields</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Field</th><th>Where it comes from</th><th>Where it is used</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><code>request.id</code></td><td>Client header</td><td>Logs and traces</td><td><span class="pill ok">Done</span></td></tr>
+      <tr><td><code>user.region</code></td><td>Lookup table</td><td>Pricing</td><td><span class="pill todo">To build</span></td></tr>
+    </tbody>
+  </table></div>
+</section>

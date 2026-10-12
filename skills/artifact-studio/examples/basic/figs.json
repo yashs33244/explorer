@@ -1,0 +1,3 @@
+{"d1": {"type": "Sequence diagram", "title": "One request, in time order",
+        "caption": "Solid arrows are calls, dashed arrows are replies.",
+        "badges": ["The client sends the request.", "The service replies."]}}

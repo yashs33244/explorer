@@ -6,3 +6,12 @@ examples/postgres/page.html
 
 # side-by-side checks embed third-party reference images; keep them local
 diagram-types/**/compare.jpg
+
+# explainer renders and stills
+studio-out/
+
+# backups
+*.bak
+
+# the explainer-video skill renders through a private engine, so it is not published
+skills/artifact-studio-explainer/

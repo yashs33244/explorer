@@ -1,53 +1,93 @@
 # explorer
 
-Turn any codebase or system into an interactive beginner field guide: SVG diagrams in the form that fits each idea (90 diagram types, hand-drawn or clean, with real logos), a walk through the real files, tables that scroll inside the page, and interview questions you can tick off. Built as a Claude Code skill.
+**Agent skills that explain code and systems with real diagrams, not walls of text.**
 
-![The generated page](docs/img/hero.png)
+Ask your coding agent to explain a codebase, a design or a decision, and get back one self-contained HTML page: diagrams drawn in the form that fits each idea (90 types, from sequence diagrams to ERDs to journey maps), wide tables, a walk through the real files, and, for codebases, interview questions you can tick off. The agent draws every diagram as SVG, renders it in headless Chrome, looks at the result and fixes what it sees before you do.
 
-## What you get
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](https://docs.claude.com/en/docs/claude-code)
+[![Agent Skills](https://img.shields.io/badge/agent%20skills-npx%20skills%20add-black)](https://skills.sh)
+[![Diagram types](https://img.shields.io/badge/diagram%20types-90-2ec98a)](diagram-types/README.md)
+[![Runtime dependencies](https://img.shields.io/badge/page%20dependencies-none-lightgrey)](#requirements)
 
-- Three SVG diagrams per topic: how it connects, a numbered lifecycle, and the anatomy, each drawn as the type that fits (a layer diagram for tiers, a sequence diagram for calls, an ERD for tables...).
-- Two diagram styles from the same SVG, switchable on the page: **hand-drawn** line art and **clean** FigJam-like canvas.
-- Real product logos in diagrams through [logo.dev](https://logo.dev), with a monogram fallback when there is no key.
-- A [catalog of 90 diagram types](diagram-types/README.md), each with an example SVG, both renders and a guide.
-- A step-by-step walk through the real code with file and function names.
-- Tables sized by content, scrolling inside the page, with a sticky header.
-- 8 to 10 interview questions per topic with simple answers and a common trap.
-- Light and dark themes, wide margins, phone friendly, no dependencies.
+![A field guide built by codebase-explorer](docs/img/hero.png)
 
-| Architecture | Lifecycle |
-|---|---|
-| ![architecture](docs/img/diagram-architecture.png) | ![lifecycle](docs/img/diagram-lifecycle.png) |
+## Two skills, one diagram kit
 
-![A scrolling table](docs/img/table.png)
+| Skill | Say this to your agent | You get |
+|---|---|---|
+| [`codebase-explorer`](skills/codebase-explorer/SKILL.md) | "Build a field guide for this repo." | A multi-topic beginner guide: 3 diagrams per topic (how it connects, a numbered lifecycle, the anatomy), a walk through real files and functions, scrolling tables, 8 to 10 interview questions per topic, light and dark themes, hand-drawn or clean diagrams. |
+| [`artifact-studio`](skills/artifact-studio/SKILL.md) | "Make an artefact explaining this design." | One shareable page for a single subject: a design doc, proposal, plan, review or comparison. Light theme, clean diagrams, wide tables, a Full screen view for every diagram. |
 
-## Diagram types
+Both use the same SVG diagram kit and the same [catalog of 90 diagram types](diagram-types/README.md), so a page reads like it was drawn by one person.
 
-![Layered architecture, clean style](diagram-types/software/layered-architecture/clean.jpg)
+![A page built by artifact-studio](docs/img/artifact-studio.png)
 
-[`diagram-types/`](diagram-types/README.md) has one folder per type (org charts to sequence diagrams, ERDs, journey maps, Gantt charts, tech stack mapping), each with `example.svg`, `hand.jpg`, `clean.jpg` and a README covering when to use it and its anatomy. The skill reads [`references/diagram-types.md`](skills/codebase-explorer/references/diagram-types.md) to pick the right form for each diagram.
+## Install
 
-## Logos
-
-Diagrams that name real products use logo slots (`<image class="d-logo" data-logo="postgresql.org">`). To fill them, get a free publishable key at [logo.dev](https://logo.dev) and keep it outside the repo:
+With the [skills CLI](https://skills.sh) (Claude Code, Cursor, Codex and other agents that read skills):
 
 ```bash
-mkdir -p ~/.config/explorer && printf 'LOGO_DEV_TOKEN=%s\n' 'pk_...' > ~/.config/explorer/logo-dev.env
+npx skills add yashs33244/explorer
 ```
 
-Logos are fetched once, cached in `~/.cache/explorer-logos`, and inlined as data URIs, so pages work offline. Without a key each slot becomes a monogram, and so does a project under a foundation domain such as `kafka.apache.org`, because Logo.dev answers those with the foundation's logo. The build warns when two domains return the same image. When the skill needs logos and no key is set, it asks you for one. Logos by [Logo.dev](https://logo.dev); they belong to their owners (see License).
-
-## Install the skill
+Or clone and symlink into Claude Code's skills folder:
 
 ```bash
 git clone https://github.com/yashs33244/explorer.git
 cd explorer
-./install.sh          # symlinks skills/codebase-explorer into ~/.claude/skills
+./install.sh    # links each skill into ~/.claude/skills (override with CLAUDE_SKILLS_DIR)
 ```
 
-Then ask Claude Code something like: "Use the codebase-explorer skill to build a field guide for this repo."
+Then just ask:
 
-## Try the example
+- "Use codebase-explorer to build a field guide for this repo."
+- "Make an artefact that explains how our auth flow works, with diagrams."
+- "Explain this migration plan as a one-page artifact with a timeline and a risk table."
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[Read the real code<br/>or source material] --> B[Pick a diagram type<br/>from the 90-type catalog]
+    B --> C[Draw the SVG<br/>with the kit classes]
+    C --> D[Render in headless Chrome]
+    D --> E{Looks right?}
+    E -- "no: overlap, clipped text,<br/>wrong arrow" --> C
+    E -- yes --> F[Build one self-contained<br/>HTML page]
+```
+
+The part that matters is the loop. A model can write SVG that is valid but unreadable: labels on top of each other, an arrow pointing the wrong way, text running out of its box. Here every diagram is rendered to a PNG inside the real page CSS and the agent reads that image and repairs it, up to three rounds, before anything is published. [`docs/how-it-works.md`](docs/how-it-works.md) walks through the exact process behind the PostgreSQL example, including the second agent whose only job is to prove the first one wrong.
+
+## The right diagram for the idea
+
+Most generated docs draw everything as boxes and arrows. The catalog maps "what you are explaining" to a form: tiers become a layered architecture, calls over time become a sequence diagram, tables and keys become an ERD, a status field becomes a state machine, a folder layout becomes an annotated tree.
+
+| | | |
+|---|---|---|
+| ![State machine](diagram-types/software/state-machine/clean.jpg) | ![ER diagram](diagram-types/mapping/er-diagram/clean.jpg) | ![Sequence diagram, hand-drawn](diagram-types/process-workflow/sequence-diagram/hand.jpg) |
+| State machine | ER diagram | Sequence diagram (hand-drawn) |
+| ![Gantt chart](diagram-types/planning/gantt-chart/clean.jpg) | ![Customer journey](diagram-types/customer-ux/customer-journey/clean.jpg) | ![Mind map, hand-drawn](diagram-types/mapping/mind-map/hand.jpg) |
+| Gantt chart | Customer journey | Mind map (hand-drawn) |
+
+90 types in 14 categories: software, technical, mapping, process and workflow, data visualization, planning, customer and UX, design and content, org and hierarchy, education, business strategy, analysis, creative and admin. Every type folder has the source `example.svg`, a hand-drawn and a clean render, and a README with when to use it and its anatomy. Browse them in [`diagram-types/`](diagram-types/README.md).
+
+## Why not just Mermaid?
+
+Mermaid is great for quick diagrams in Markdown, and this README uses it. These skills aim at something else: a page a newcomer can learn from.
+
+| | Mermaid in Markdown | explorer skills |
+|---|---|---|
+| Diagram forms | A fixed set of chart grammars | 90 hand-authored types, picked per idea |
+| Layout control | Automatic | Exact: the agent places every box, label and badge |
+| Styles | Theme colors | Hand-drawn and clean from the same SVG, light and dark |
+| Product logos | No | Real logos via [logo.dev](https://logo.dev), monogram fallback |
+| Quality check | None | Rendered, looked at and repaired by the agent |
+| Output | Diagrams inside your docs | One self-contained HTML page with diagrams, tables, steps and questions |
+
+## Try the examples
+
+The PostgreSQL field guide (20 topics, 63 diagrams, 190 questions and a 37-row contribution backlog):
 
 ```bash
 node skills/codebase-explorer/scripts/build-page.js \
@@ -58,7 +98,30 @@ node skills/codebase-explorer/scripts/build-page.js \
 open examples/postgres/page.html
 ```
 
-`examples/postgres` is a real guide: 20 topics, 63 diagrams, 190 questions and a 37-row contribution backlog table.
+A minimal artifact-studio page (the screenshot above):
+
+```bash
+cd skills/artifact-studio/examples/basic
+python3 ../../scripts/build.py --title "Request Lifecycle" \
+  --body body.html --svg svg --figs figs.json --out /tmp/page.html
+open /tmp/page.html
+```
+
+| Architecture | Lifecycle |
+|---|---|
+| ![architecture](docs/img/diagram-architecture.png) | ![lifecycle](docs/img/diagram-lifecycle.png) |
+
+![A table that scrolls inside the page](docs/img/table.png)
+
+## Logos
+
+Diagrams that name real products use logo slots (`<image class="d-logo" data-logo="postgresql.org">`). To fill them, get a free publishable key at [logo.dev](https://logo.dev) and keep it outside the repo:
+
+```bash
+mkdir -p ~/.config/explorer && printf 'LOGO_DEV_TOKEN=%s\n' 'pk_...' > ~/.config/explorer/logo-dev.env
+```
+
+Logos are fetched once, cached in `~/.cache/explorer-logos` and inlined as data URIs, so pages work offline. Without a key each slot becomes a monogram, and so does a project under a foundation domain such as `kafka.apache.org`, because Logo.dev answers those with the foundation's logo. The build warns when two domains return the same image. When the skill needs logos and no key is set, it asks you for one.
 
 ## Layout
 
@@ -66,25 +129,44 @@ open examples/postgres/page.html
 skills/codebase-explorer/
   SKILL.md                 the skill (pipeline, quality bar, gotchas)
   scripts/build-page.js    JSON + SVG -> one HTML page (no dependencies)
-  scripts/render.sh        look at diagrams (hand or clean, png or jpg) and sections in headless Chrome; --catalog re-renders the gallery
-  scripts/compare.sh       a reference image and our render side by side, to check a diagram against the look it copies
+  scripts/render.sh        render diagrams (hand or clean, png or jpg) and page sections in headless Chrome
+  scripts/compare.sh       a reference image and our render side by side
   scripts/logos.js         fill logo slots from logo.dev, monogram fallback
   scripts/build-catalog.js regenerate the diagram-type gallery and chooser
   scripts/layout.js        automatic diagram fallback
   assets/                  style.css (page and diagram kit), app.js, icons.md, fonts/ (Excalifont license)
-  references/              topic schema, diagram guide, diagram kit, diagram-type chooser, Workflow template
+  references/              topic schema, diagram guide, diagram kit, diagram-type chooser, workflow template
+skills/artifact-studio/
+  SKILL.md                 the skill (one page, one subject)
+  scripts/build.py         body.html + SVGs + figs.json -> one HTML page (Python standard library only)
+  assets/page-template.html light theme, wide tables, Full screen diagram overlay
+  examples/basic/          a minimal working page
 diagram-types/             90 diagram types: example SVG, hand.jpg, clean.jpg, README
-examples/postgres/         a complete guide to learn from
+examples/postgres/         a complete field guide to learn from
 docs/how-it-works.md       how the diagrams and facts were produced
 ```
 
 ## Requirements
 
-Node 18+, Google Chrome for previews (`CHROME=/path/to/chrome` to override). `.jpg` renders also need `sips` (built into macOS) or ImageMagick (`magick`); `.png` renders need neither. `compare.sh` needs `uv`. Publishing and the multi-agent workflow use Claude Code's Artifact and Workflow tools.
+- Node 18+ for `codebase-explorer`; Python 3 (standard library only) for `artifact-studio`.
+- Google Chrome for diagram previews (`CHROME=/path/to/chrome` to override).
+- `.jpg` renders also need `sips` (built into macOS) or ImageMagick (`magick`); `.png` renders need neither. `compare.sh` needs `uv`.
+- The built pages have no runtime dependencies: one HTML file, fonts from Google Fonts, everything else inline.
 
 ## Honesty note
 
-The example's facts were read from the PostgreSQL source and checked by a second pass, and many commands were run against Homebrew PostgreSQL 16. The guide says so, and says which commands were not run. Function names move between releases, so confirm against the version you build.
+The PostgreSQL example's facts were read from the PostgreSQL source and checked by a second pass, and many commands were run against Homebrew PostgreSQL 16. The guide says so, and says which commands were not run. Function names move between releases, so confirm against the version you build. The skills carry the same rule: every file, function, number and command on a page is real, and anything unchecked is marked "not verified".
+
+## Contributing
+
+New diagram types are the easiest way in:
+
+1. Add `diagram-types/<category>/<slug>/example.svg` using only the kit classes ([`diagram-kit.md`](skills/codebase-explorer/references/diagram-kit.md)), plus a `README.md` with "Use it to explain" and an anatomy table. Copy an existing type as a template.
+2. Render both styles: `skills/codebase-explorer/scripts/render.sh <example.svg> <hand.jpg> light hand` and the same with `clean`.
+3. Regenerate the gallery and chooser: `node skills/codebase-explorer/scripts/build-catalog.js`.
+4. Open a pull request with the two renders in the description.
+
+Bug reports with a screenshot of a broken diagram are very welcome.
 
 ## License
 
@@ -92,3 +174,7 @@ The code and docs are MIT licensed. Two things inside the repo are not:
 
 - The hand-drawn style inlines a Latin subset of Excalifont, Copyright (c) 2024 by Excalidraw, under the SIL Open Font License 1.1. Every built page carries it, so keep [`assets/fonts/Excalifont-OFL.txt`](skills/codebase-explorer/assets/fonts/Excalifont-OFL.txt) with any copy.
 - Product logos in the diagrams and in the committed `diagram-types` renders are provided by [Logo.dev](https://logo.dev). They are trademarks of their owners, used only to name the products a diagram shows, and are not covered by the MIT license.
+
+---
+
+If these skills saved you an afternoon of drawing boxes, a star helps other people find them.

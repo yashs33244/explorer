@@ -1,0 +1,194 @@
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg: #ffffff; --paper: #ffffff; --ink: #1e1e1e; --muted: #5c5c5c; --faint: #e2e2e2; --line: #e6e6e6;
+  --soft: #f7f7f8; --code-bg: #f6f7f9; --acc: #1f7aec; --acc-soft: #e8f1fe; --ok: #1b8a5a; --ok-soft: #e3f6ec;
+  --warn: #9a6400; --warn-soft: #fff4d6; --todo: #b3372a; --todo-soft: #fde8e4;
+  --font-b: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-d: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  --font-m: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --cl-bg: #ffffff; --cl-ink: #1e1e1e; --cl-muted: #5c5c5c; --cl-line: #1e1e1e; --cl-faint: #e2e2e2;
+  --cl-lane: #ffffff; --cl-lane2: #f7f7f7; --cl-head: #f0f0f0; --cl-blob: #f5f5f5; --cl-acc: #1f7aec;
+  --cl0-f: #dcb8ff; --cl1-f: #74dfb0; --cl2-f: #ffd43b; --cl3-f: #ff9d8c; --cl4-f: #8ec3ff; --cl5-f: #ffb45e;
+  --cl0-t: #f0e2ff; --cl1-t: #d2f6e5; --cl2-t: #fff1b8; --cl3-t: #ffdcd5; --cl4-t: #d8eaff; --cl5-t: #ffe3c2;
+  --cl0-d: #b57cff; --cl1-d: #2ec98a; --cl2-d: #ffc21a; --cl3-d: #ff6f5e; --cl4-d: #3a9eff; --cl5-d: #ff9933;
+  --cln-0: #ffe066; --cln-1: #ffb8d2; --cln-2: #8fe8c2; --cln-3: #a8d1ff; --cln-4: #ffc078; --cln-5: #e2c4ff;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-b); font-size: 16px; line-height: 1.6; }
+.wrap { width: min(1400px, 100% - 32px); margin-inline: auto; padding: 0 0 72px; }
+@media (min-width: 900px) { .wrap { width: min(1400px, 100% - 48px); } }
+header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
+.kicker { font-family: var(--font-m); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+h1 { font-family: var(--font-d); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.01em; }
+h2 { font-family: var(--font-d); font-size: clamp(1.4rem, 3vw, 1.85rem); line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+h3 { font-size: 1.08rem; margin: 26px 0 8px; }
+.lede { font-size: 1.12rem; max-width: 75ch; margin: 0 0 14px; }
+p, ul, ol { max-width: 75ch; }
+li { margin: 4px 0; }
+a { color: var(--acc); }
+code { font-family: var(--font-m); font-size: 0.86em; background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; overflow-wrap: anywhere; }
+pre { font-family: var(--font-m); font-size: 0.84rem; line-height: 1.55; background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; max-width: 100%; }
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.hl { background: #fff1b8; border-radius: 3px; }
+nav.toc { margin: 18px 0 0; }
+nav.toc ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 18px; max-width: none; }
+nav.toc a { text-decoration: none; color: var(--ink); font-weight: 500; }
+nav.toc a span { font-family: var(--font-m); color: var(--muted); font-size: 0.82rem; margin-right: 6px; }
+nav.toc a:hover { color: var(--acc); }
+section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
+section:last-of-type { border-bottom: 0; }
+.num { font-family: var(--font-m); font-size: 0.8rem; color: var(--acc); letter-spacing: 0.06em; }
+.tldr { background: var(--acc-soft); border-left: 4px solid var(--acc); border-radius: 8px; padding: 12px 16px; margin: 6px 0 16px; max-width: 75ch; }
+.tldr p { margin: 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; margin: 12px 0 16px; }
+.grid2 > div { min-width: 0; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--paper); min-width: 0; }
+.card h4 { margin: 0 0 6px; font-size: 1rem; }
+.card p { margin: 6px 0; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 14px; margin: 12px 0 16px; }
+.pill { display: inline-block; font-size: 0.74rem; font-weight: 600; border-radius: 99px; padding: 1px 9px; border: 1px solid transparent; white-space: nowrap; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); border-color: #b9e6cf; }
+.pill.next { background: var(--warn-soft); color: var(--warn); border-color: #f1dc9c; }
+.pill.todo { background: var(--todo-soft); color: var(--todo); border-color: #f5c3b9; }
+.pill.ill { background: var(--soft); color: var(--muted); border-color: var(--faint); }
+.note { color: var(--muted); font-size: 0.92rem; }
+
+/* tables: full content width, their own horizontal scroll */
+.tablewrap { width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; margin: 12px 0 18px; }
+.tablewrap.tall { max-height: 72vh; overflow: auto; }
+table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.92rem; min-width: 760px; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+th { background: #f4f5f7; font-weight: 600; font-size: 0.86rem; }
+.tall thead th { position: sticky; top: 0; z-index: 1; }
+tr:last-child td { border-bottom: 0; }
+td code { white-space: nowrap; }
+td.wrapcode code { white-space: normal; }
+
+/* figures */
+.fig { margin: 18px auto 20px; background: var(--cl-bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px 14px; max-width: 1100px; }
+.figbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+.ftype { font-family: var(--font-m); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc); background: var(--acc-soft); border: 1px solid #cfe2fc; border-radius: 99px; padding: 1px 9px; }
+.fzoom { font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--acc); background: var(--paper); border: 1.5px solid #cfe2fc; border-radius: 10px; padding: 4px 12px; cursor: pointer; }
+.fzoom:hover, .fzoom:focus-visible { border-color: var(--acc); }
+.figscroll { display: flex; justify-content: center; }
+.figscroll svg.hd { display: block; width: 100%; max-width: 980px; height: auto; margin: 0 auto; }
+figcaption { font-size: 0.92rem; color: var(--muted); margin: 10px auto 0; max-width: 980px; }
+ol.badges { list-style: none; padding: 0; margin: 10px auto 0; max-width: 980px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 4px 20px; font-size: 0.9rem; }
+ol.badges li { display: flex; gap: 8px; align-items: baseline; margin: 0; }
+ol.badges b { flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--cl2-f); border: 1.5px solid var(--cl-line); font-size: 0.75rem; }
+ol.steps { list-style: none; padding: 0; margin: 10px 0 16px; max-width: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px 18px; }
+ol.steps li { display: flex; gap: 10px; align-items: flex-start; margin: 0; min-width: 0; }
+ol.steps li > div { min-width: 0; }
+ol.steps i.n { flex: none; font-style: normal; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--cl2-f); border: 1.5px solid var(--cl-line); font-size: 0.78rem; font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; color: var(--muted); margin: 8px auto 0; max-width: 980px; }
+.legend i { display: inline-block; width: 14px; height: 14px; border: 1.5px solid var(--cl-line); border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+
+/* full screen overlay */
+.zoom { position: fixed; inset: 0; z-index: 50; background: rgba(20, 22, 30, 0.55); display: none; padding: 2vh 2vw; }
+.zoom.open { display: flex; }
+.zoompanel { background: #ffffff; border-radius: 14px; width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+.zoomhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.zoomhead strong { font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zoombody { flex: 1; overflow: auto; padding: 12px; display: flex; }
+.zoombody svg.hd { display: block; margin: auto; width: 100%; height: 100%; max-height: calc(96vh - 80px); }
+@media (max-width: 700px) { .zoombody svg.hd { width: 900px; min-width: 900px; height: auto; max-height: none; } }
+body.zoomed { overflow: hidden; }
+
+/* clean diagram kit (codebase-explorer, light only) */
+svg.hd { color: var(--cl-muted); }
+svg.hd .d-blob { fill: var(--cl-blob); stroke: var(--cl-muted); stroke-width: 1.2; stroke-dasharray: 6 5; }
+svg.hd .d-blob2 { fill: var(--cl-bg); stroke: var(--cl-muted); stroke-width: 1.2; stroke-dasharray: 6 5; }
+svg.hd :is(.d-box, .d-band, .d-lane, .d-lanehead, .d-tag, .d-fill, .d-badge, .d-fillpaper) { stroke: var(--cl-line); stroke-width: 1.5; stroke-linejoin: round; }
+svg.hd .d-box { fill: var(--cl-bg); }
+svg.hd .d-box.g0 { fill: var(--cl0-f); } svg.hd .d-box.g1 { fill: var(--cl1-f); } svg.hd .d-box.g2 { fill: var(--cl2-f); }
+svg.hd .d-box.g3 { fill: var(--cl3-f); } svg.hd .d-box.g4 { fill: var(--cl4-f); } svg.hd .d-box.g5 { fill: var(--cl5-f); }
+svg.hd rect.d-box { rx: 6px; ry: 6px; }
+svg.hd .d-band { fill: var(--cl-head); }
+svg.hd .d-band.g0 { fill: var(--cl0-t); } svg.hd .d-band.g1 { fill: var(--cl1-t); } svg.hd .d-band.g2 { fill: var(--cl2-t); }
+svg.hd .d-band.g3 { fill: var(--cl3-t); } svg.hd .d-band.g4 { fill: var(--cl4-t); } svg.hd .d-band.g5 { fill: var(--cl5-t); }
+svg.hd rect.d-band { rx: 4px; ry: 4px; }
+svg.hd .d-lane { fill: var(--cl-lane); } svg.hd .d-lane.alt { fill: var(--cl-lane2); } svg.hd .d-lanehead { fill: var(--cl-head); }
+svg.hd :is(rect.d-lane, rect.d-lanehead) { rx: 0; ry: 0; }
+svg.hd .d-note { fill: var(--cln-0); stroke: none; }
+svg.hd .d-note.g1 { fill: var(--cln-1); } svg.hd .d-note.g2 { fill: var(--cln-2); } svg.hd .d-note.g3 { fill: var(--cln-3); } svg.hd .d-note.g4 { fill: var(--cln-4); } svg.hd .d-note.g5 { fill: var(--cln-5); }
+/* Solid fills for charts, chips and dots. Without these a .d-fill shape falls
+   back to the SVG default fill, which is black, and any text on it disappears. */
+svg.hd .d-fill { fill: var(--cl-faint); }
+svg.hd .d-fill.g0 { fill: var(--cl0-f); } svg.hd .d-fill.g1 { fill: var(--cl1-f); } svg.hd .d-fill.g2 { fill: var(--cl2-f); }
+svg.hd .d-fill.g3 { fill: var(--cl3-f); } svg.hd .d-fill.g4 { fill: var(--cl4-f); } svg.hd .d-fill.g5 { fill: var(--cl5-f); }
+svg.hd .d-soft { fill: var(--cl-faint); fill-opacity: .55; stroke: var(--cl-line); stroke-width: 1.5; }
+svg.hd .d-soft.g0 { fill: var(--cl0-f); } svg.hd .d-soft.g1 { fill: var(--cl1-f); } svg.hd .d-soft.g2 { fill: var(--cl2-f); }
+svg.hd .d-soft.g3 { fill: var(--cl3-f); } svg.hd .d-soft.g4 { fill: var(--cl4-f); } svg.hd .d-soft.g5 { fill: var(--cl5-f); }
+svg.hd .o1 { fill-opacity: .25; } svg.hd .o2 { fill-opacity: .5; } svg.hd .o3 { fill-opacity: .75; }
+svg.hd .d-grid { fill: none; stroke: var(--cl-faint); stroke-width: 1; }
+svg.hd .d-axis { fill: none; stroke: var(--cl-muted); stroke-width: 1.2; }
+svg.hd rect.d-note { rx: 2px; ry: 2px; }
+svg.hd .d-tag { fill: var(--cl-bg); } svg.hd rect.d-tag { rx: 4px; ry: 4px; }
+svg.hd .d-badge { fill: var(--cl2-f); }
+svg.hd .d-fillpaper { fill: var(--cl-bg); }
+svg.hd :is(.d-edge, .d-line, .d-lineacc) { fill: none; stroke: var(--cl-line); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+svg.hd .d-edge.dash { stroke-dasharray: 5 4; }
+svg.hd .d-edge.acc, svg.hd .d-lineacc { stroke: var(--cl-acc); }
+svg.hd .d-edge.acc { stroke-width: 2; }
+svg.hd .d-fillink { fill: var(--cl-line); stroke: none; }
+svg.hd .d-fillacc { fill: var(--cl-acc); stroke: none; }
+svg.hd :is(.d-t, .d-s, .d-h, .d-lab, .d-tn, .d-k, .d-bt) { font-family: var(--font-b); fill: var(--cl-ink); }
+svg.hd .d-t { font-size: 14px; font-weight: 600; letter-spacing: -0.005em; }
+svg.hd .d-s { font-size: 12px; font-weight: 500; fill: var(--cl-muted); }
+svg.hd .d-h { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+svg.hd .d-m { font-family: var(--font-m); font-size: 12px; fill: var(--cl-ink); }
+svg.hd .d-tw { font-family: var(--font-b); font-size: 12px; font-weight: 700; fill: var(--cl-ink); }
+svg.hd .d-k { font-family: var(--font-m); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; fill: var(--cl-muted); }
+svg.hd .d-lab { font-size: 12px; font-weight: 500; stroke: var(--cl-bg); stroke-width: 4.5px; paint-order: stroke; stroke-linejoin: round; }
+svg.hd .d-tn { font-size: 13px; font-weight: 600; }
+svg.hd .d-bt { font-size: 12px; font-weight: 700; text-anchor: middle; }
+</style>
+
+<div class="wrap">
+{{BODY}}
+</div>
+<div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-labelledby="zoomtitle">
+  <div class="zoompanel">
+    <div class="zoomhead"><strong id="zoomtitle">Diagram</strong><button class="fzoom" id="zoomclose" type="button">Close</button></div>
+    <div class="zoombody" id="zoombody"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var zoom = document.getElementById('zoom'), body = document.getElementById('zoombody');
+  var title = document.getElementById('zoomtitle'), closeBtn = document.getElementById('zoomclose');
+  var lastBtn = null;
+  function close() {
+    zoom.classList.remove('open'); document.body.classList.remove('zoomed'); body.innerHTML = '';
+    if (lastBtn) lastBtn.focus();
+  }
+  document.querySelectorAll('.fig .fzoom').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var fig = btn.closest('.fig'), svg = fig.querySelector('svg.hd');
+      if (!svg) return;
+      var copy = svg.cloneNode(true);
+      // ids inside the copy (markers) must stay unique on the page
+      var map = {};
+      copy.querySelectorAll('[id]').forEach(function (el) { var n = el.id + '-zoom'; map[el.id] = n; el.id = n; });
+      copy.querySelectorAll('[marker-end],[marker-start]').forEach(function (el) {
+        ['marker-end', 'marker-start'].forEach(function (a) {
+          var v = el.getAttribute(a); if (!v) return;
+          var m = v.match(/url\(#([^)]+)\)/); if (m && map[m[1]]) el.setAttribute(a, 'url(#' + map[m[1]] + ')');
+        });
+      });
+      body.innerHTML = ''; body.appendChild(copy);
+      title.textContent = fig.getAttribute('data-title') || 'Diagram';
+      lastBtn = btn; zoom.classList.add('open'); document.body.classList.add('zoomed'); closeBtn.focus();
+    });
+  });
+  closeBtn.addEventListener('click', close);
+  zoom.addEventListener('click', function (e) { if (e.target === zoom) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && zoom.classList.contains('open')) close(); });
+})();
+</script>
+
