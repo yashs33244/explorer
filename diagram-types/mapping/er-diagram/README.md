@@ -18,13 +18,14 @@ Not for: query plans or data flow between services (use `data-pipeline` or `sequ
 
 | Part | Class | Rule |
 |---|---|---|
-| Table | `d-box g1`..`g5` | Name in a header row (`d-t`), one row per column, 22 units tall |
+| Table | `d-box` + `d-band` header | White box, thin ink outline; the name (`d-t`) sits in a light grey `d-band` header with no g-colour, then one row per column, 22 units tall |
 | Column | `d-m` + `d-s` | Field name in mono on the left, type right-aligned and muted |
-| Key tag | `d-tag acc` / `d-tag` + `d-k` | `PK` filled, `FK` outlined; only on key columns |
-| Relationship | `d-box g3` diamond + `d-t` | A verb ("owns", "ships") on long edges; short edges use a `d-lab` |
+| Key tag | `d-tag acc` / `d-tag` + `d-k` | `PK` filled, `FK` outlined; only on key columns. The filled PK tag is the only colour in the diagram, and the legend explains it |
+| Relationship | `d-box` diamond + `d-t` | White diamond with a verb ("owns", "ships") on long edges; short edges use a `d-lab` |
 | Cardinality | `d-edge` | Two bars for exactly one, crow's foot plus bar for one or many, crow's foot plus circle for zero or many (a parent row that may have no children yet), drawn at the table edge |
-| Constraint note | `d-note` + `d-tn` | Uniqueness or cascade rules, placed in empty space near the table |
+| Constraint note | `d-blob2` + `d-tn` | Uniqueness or cascade rules in a dashed neutral box, placed in empty space near the table |
 | Legend | `d-s` | Explain notation once, below a rule line |
+| Colour | at most one meaning | Structure diagrams stay neutral; spend one colour on one meaning (here the primary key; on a change review, new or changed columns) and put it in the legend |
 
 ## Tips
 
@@ -32,6 +33,7 @@ Not for: query plans or data flow between services (use `data-pipeline` or `sequ
 - Keep only the columns that matter to the story; four or five per table is plenty.
 - Name relationships with a verb read from the "one" side to the "many" side.
 - Add the engine logo (`postgresql.org`) so the dialect is obvious.
+- Keep at least 32 units of clear margin inside the viewBox on every side; this example widens the viewBox to `-12 -12 824 698` around content drawn from x=20.
 
 Reference: Figma template Entity relationship diagram
 

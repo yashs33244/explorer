@@ -1,17 +1,19 @@
-<svg class="hd" viewBox="0 0 800 600" role="img" aria-label="UML class diagram of a payment domain: StripeProcessor and AdyenProcessor implement the PaymentProcessor interface, Payment uses it and owns zero or more Refunds" xmlns="http://www.w3.org/2000/svg">
+<svg class="hd" viewBox="-12 -12 830 624" role="img" aria-label="UML class diagram of a payment domain: StripeProcessor and AdyenProcessor implement the PaymentProcessor interface, Payment uses it and owns zero or more Refunds" xmlns="http://www.w3.org/2000/svg">
 <defs><marker id="class-diagram-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
 <text class="d-k" x="20" y="30">payments-svc / domain/payments.py</text>
 <text class="d-h" x="20" y="54">Payment domain: one interface, two PSPs</text>
-<rect class="d-box g3" x="274" y="190" width="230" height="152" rx="10"/>
-<path class="d-line" d="M274,236 H504 M274,250 H504"/>
+<rect class="d-box" x="274" y="190" width="230" height="152" rx="6"/>
+<path class="d-band" d="M274,236 V196 A6,6 0 0 1 280,190 H498 A6,6 0 0 1 504,196 V236 Z"/>
+<path class="d-line" d="M274,250 H504"/>
 <text class="d-s" x="389.0" y="207" text-anchor="middle">«interface»</text>
 <text class="d-t" x="389.0" y="226" text-anchor="middle">PaymentProcessor</text>
 <text class="d-m" x="286" y="270">+ authorize(p): AuthId</text>
 <text class="d-m" x="286" y="290">+ capture(id): Result</text>
 <text class="d-m" x="286" y="310">+ refund(id, amt): Result</text>
 <text class="d-m" x="286" y="330">+ parse_webhook(raw): Event</text>
-<rect class="d-box g2" x="568" y="86" width="218" height="180" rx="10"/>
-<path class="d-line" d="M568,122 H786 M568,174 H786"/>
+<rect class="d-box" x="568" y="86" width="218" height="180" rx="6"/>
+<path class="d-band" d="M568,122 V92 A6,6 0 0 1 574,86 H780 A6,6 0 0 1 786,92 V122 Z"/>
+<path class="d-line" d="M568,174 H786"/>
 <text class="d-t" x="684" y="109" text-anchor="middle">StripeProcessor</text>
 <image class="d-logo" data-logo="stripe.com" data-name="Stripe" x="578" y="92" width="24" height="24"/>
 <text class="d-m" x="580" y="142">- client: StripeClient</text>
@@ -20,8 +22,9 @@
 <text class="d-m" x="580" y="214">+ capture(id): Result</text>
 <text class="d-m" x="580" y="234">+ refund(id, amt): Result</text>
 <text class="d-m" x="580" y="254">+ parse_webhook(raw): Event</text>
-<rect class="d-box g4" x="568" y="306" width="218" height="180" rx="10"/>
-<path class="d-line" d="M568,342 H786 M568,394 H786"/>
+<rect class="d-box" x="568" y="306" width="218" height="180" rx="6"/>
+<path class="d-band" d="M568,342 V312 A6,6 0 0 1 574,306 H780 A6,6 0 0 1 786,312 V342 Z"/>
+<path class="d-line" d="M568,394 H786"/>
 <text class="d-t" x="684" y="329" text-anchor="middle">AdyenProcessor</text>
 <image class="d-logo" data-logo="adyen.com" data-name="Adyen" x="578" y="312" width="24" height="24"/>
 <text class="d-m" x="580" y="362">- merchant: str</text>
@@ -30,8 +33,9 @@
 <text class="d-m" x="580" y="434">+ capture(id): Result</text>
 <text class="d-m" x="580" y="454">+ refund(id, amt): Result</text>
 <text class="d-m" x="580" y="474">+ parse_webhook(raw): Event</text>
-<rect class="d-box g1" x="20" y="86" width="206" height="180" rx="10"/>
-<path class="d-line" d="M20,122 H226 M20,214 H226"/>
+<rect class="d-box" x="20" y="86" width="206" height="180" rx="6"/>
+<path class="d-band" d="M20,122 V92 A6,6 0 0 1 26,86 H220 A6,6 0 0 1 226,92 V122 Z"/>
+<path class="d-line" d="M20,214 H226"/>
 <text class="d-t" x="123.0" y="109" text-anchor="middle">Payment</text>
 <text class="d-m" x="32" y="142">- id: UUID</text>
 <text class="d-m" x="32" y="162">- amount: Money</text>
@@ -39,8 +43,9 @@
 <text class="d-m" x="32" y="202">- psp_ref: str</text>
 <text class="d-m" x="32" y="234">+ capture(): Result</text>
 <text class="d-m" x="32" y="254">+ refund(amt): Refund</text>
-<rect class="d-box g5" x="20" y="346" width="206" height="160" rx="10"/>
-<path class="d-line" d="M20,382 H226 M20,474 H226"/>
+<rect class="d-box" x="20" y="346" width="206" height="160" rx="6"/>
+<path class="d-band" d="M20,382 V352 A6,6 0 0 1 26,346 H220 A6,6 0 0 1 226,352 V382 Z"/>
+<path class="d-line" d="M20,474 H226"/>
 <text class="d-t" x="123.0" y="369" text-anchor="middle">Refund</text>
 <text class="d-m" x="32" y="402">- id: UUID</text>
 <text class="d-m" x="32" y="422">- payment_id: UUID</text>
