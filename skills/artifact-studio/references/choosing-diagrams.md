@@ -19,6 +19,7 @@ Write the questions the reader brings to this page (two to five for most pages; 
 
 | Page | Reader asks | Figure (slug) | Keep as tables |
 |---|---|---|---|
+| Repo or codebase architecture | How is the repo cut, and which way may dependencies point? | `repo-map` (bleed), then `sequence-diagram` for the build or request path | components with paths, "where to change what" |
 | Design doc, architecture | What are the parts and who calls whom? | `layered-architecture`, `c4-model`, `system-context` | APIs, config, fields |
 | | How does one request or job run? | `sequence-diagram`, `request-lifecycle` | |
 | | What crosses the boundary, what is checked at the edge, and where does data land? | `boundary-architecture` (beats `cloud-architecture` when trust and ownership matter more than which cloud services run it) | |
@@ -70,6 +71,8 @@ If the point is how something behaves (waits, fails, is enforced, is blocked), c
 
 | If you are showing | Slug |
 |---|---|
+| Folders, packages and crates of one repo, with links, vendored copies and runtime calls | `repo-map` |
+| A mechanism the reader should feel (thresholds, matching, capacity), or an isometric, 3D or "more detailed" request | `anatomy` (see `detailed-figures.md`) |
 | Components and connections in one snapshot | `layered-architecture`, `c4-model` |
 | Callers, the check at the edge, the parts inside and the stores outside one trust boundary | `boundary-architecture` |
 | Structural change between before and after, with a change ledger | `architecture-delta` |
@@ -96,7 +99,7 @@ If two types fit, pick the one whose main axis carries the answer (time, hierarc
 
 ## 5. Budgets and drawing rules
 
-Per figure: at most 9 primary nodes, 12 connectors, accent (`acc`) on 1 or 2 elements, and 2 callout notes. Type caps: architecture delta 8 components and 8 ledger rows; dependency graph 9 nodes, 14 edges, 1 cycle; story map 5 activities, 3 slices, 12 cards; sankey 3 stages, 8 nodes, 12 flows; treemap 8 cells; waterfall 8 bars; line chart 5 series; wardley 9 components, 2 movement arrows; fishbone 6 bones with 3 causes each; sequence 5 lifelines; swimlane 5 lanes; ER 8 entities; quadrant 12 items.
+Per figure: at most 9 primary nodes, 12 connectors, accent (`acc`) on 1 or 2 elements, and 2 callout notes. Type caps: architecture delta 8 components and 8 ledger rows; dependency graph 9 nodes, 14 edges, 1 cycle; story map 5 activities, 3 slices, 12 cards; sankey 3 stages, 8 nodes, 12 flows; treemap 8 cells; waterfall 8 bars; line chart 5 series; wardley 9 components, 2 movement arrows; fishbone 6 bones with 3 causes each; sequence 5 lifelines; swimlane 5 lanes; ER 8 entities; quadrant 12 items; repo map 9 containers and 60 chips.
 
 Focus and margins:
 

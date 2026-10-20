@@ -14,7 +14,7 @@
 <section id="flow">
   <p class="num">01</p>
   <h2>The flow</h2>
-  <p>Short plain sentences. One idea per paragraph.</p>
+  <p>Short plain sentences. One idea per paragraph. <mark>Mark the one sentence a skimmer must not miss.</mark> Name key terms once in <b class="k">accent bold</b>.</p>
   {{fig:d1}}
 </section>
 
@@ -22,10 +22,10 @@
   <p class="num">02</p>
   <h2>Fields</h2>
   <div class="tablewrap"><table>
-    <thead><tr><th>Field</th><th>Where it comes from</th><th>Where it is used</th><th>Status</th></tr></thead>
+    <thead><tr><th>Field</th><th>Where it comes from</th><th class="key">Where it is used</th><th data-filter>Status</th></tr></thead>
     <tbody>
       <tr><td><code>request.id</code></td><td>Client header</td><td>Logs and traces</td><td><span class="pill ok">Done</span></td></tr>
-      <tr><td><code>user.region</code></td><td>Lookup table</td><td>Pricing</td><td><span class="pill todo">To build</span></td></tr>
+      <tr class="key"><td><code>user.region</code></td><td>Lookup table</td><td>Pricing</td><td><span class="pill todo">To build</span></td></tr>
     </tbody>
   </table></div>
 </section>
