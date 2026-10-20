@@ -1,0 +1,210 @@
+{
+ "key": "repo-map-d1",
+ "width": 1200,
+ "title": "acme/storefront repo structure and dependencies",
+ "zones": [
+  {
+   "id": "repo",
+   "x": 40,
+   "y": 52,
+   "w": 760,
+   "h": 640,
+   "title": "acme/storefront",
+   "tab": true
+  },
+  {
+   "id": "apps",
+   "x": 64,
+   "y": 84,
+   "w": 712,
+   "g": 0,
+   "title": "Process roots",
+   "path": "apps/",
+   "note": "The only folders that build a binary or a bundle. Each one wires modules together and owns its config.",
+   "chips": [
+    [
+     "apps/web",
+     "on"
+    ],
+    [
+     "apps/api",
+     "on"
+    ],
+    "apps/worker",
+    "apps/admin"
+   ]
+  },
+  {
+   "id": "mods",
+   "x": 64,
+   "y": 219,
+   "w": 712,
+   "g": 1,
+   "title": "Feature modules",
+   "path": "modules/",
+   "note": "One folder per business area. Each exports routes, jobs and UI. A module may use packages, never another module.",
+   "chips": [
+    "checkout",
+    "catalog",
+    "search",
+    "accounts",
+    "orders",
+    [
+     "payments -> moving to acme/pay-svc",
+     "dash"
+    ]
+   ]
+  },
+  {
+   "id": "pkgs",
+   "x": 64,
+   "y": 371,
+   "w": 712,
+   "g": 5,
+   "title": "Shared packages",
+   "path": "packages/",
+   "note": "Libraries with no business logic. Published to the internal registry so other repos can use them too.",
+   "groups": [
+    {
+     "label": "Data",
+     "chips": [
+      [
+       "db",
+       "on"
+      ],
+      "db-migrations",
+      "cache"
+     ]
+    },
+    {
+     "label": "Platform",
+     "chips": [
+      "http-client",
+      "auth",
+      "config",
+      "telemetry",
+      "feature-flags"
+     ]
+    },
+    {
+     "label": "UI",
+     "chips": [
+      "ui-kit",
+      [
+       "vendor/design-tokens",
+       "dash"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "infra",
+   "x": 832,
+   "y": 84,
+   "w": 328,
+   "g": 4,
+   "title": "Deploy",
+   "path": "infra/",
+   "note": "Helm values per environment and the CI pipeline. Charts come from the platform repo.",
+   "chips": [
+    [
+     "helm/values-*.yaml",
+     "on"
+    ],
+    "ci/pipeline.yml",
+    "terraform/"
+   ]
+  },
+  {
+   "id": "ext",
+   "x": 832,
+   "y": 268,
+   "w": 328,
+   "g": 3,
+   "title": "Other repositories",
+   "dash": true,
+   "note": "Built and released on their own.",
+   "groups": [
+    {
+     "label": "acme/pay-svc",
+     "chips": [
+      "payments API"
+     ],
+     "note": "Takes over modules/payments."
+    },
+    {
+     "label": "acme/design-tokens",
+     "chips": [
+      "tokens.json"
+     ],
+     "note": "Git submodule at packages/vendor."
+    },
+    {
+     "label": "acme/platform",
+     "chips": [
+      "charts/web-app"
+     ]
+    }
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "d": "M 420 179 V 217",
+   "g": 0,
+   "label": "imports",
+   "lx": 430,
+   "ly": 203,
+   "from": "apps",
+   "to": "mods"
+  },
+  {
+   "d": "M 420 331 V 369",
+   "g": 1,
+   "label": "imports",
+   "lx": 430,
+   "ly": 355,
+   "from": "mods",
+   "to": "pkgs"
+  },
+  {
+   "d": "M 776 292 H 830",
+   "style": "dot",
+   "g": 3,
+   "label": "calls",
+   "lx": 786,
+   "ly": 284,
+   "from": "mods",
+   "to": "ext"
+  },
+  {
+   "d": "M 776 560 H 812 V 440 H 830",
+   "style": "dash",
+   "g": 3,
+   "label": "submodule",
+   "lx": 820,
+   "ly": 545,
+   "from": "pkgs",
+   "to": "ext"
+  },
+  {
+   "d": "M 996 224 V 266",
+   "style": "dash",
+   "g": 4,
+   "label": "chart from",
+   "lx": 1006,
+   "ly": 250,
+   "from": "infra",
+   "to": "ext"
+  }
+ ],
+ "notes": [
+  {
+   "x": 64,
+   "y": 612,
+   "w": 712,
+   "text": "Layer rule: apps -> modules -> packages. A module never imports another module. Checked in CI by pnpm check-deps."
+  }
+ ]
+}

@@ -1818,5 +1818,24 @@
    "data residency"
   ],
   "uses_logos": false
+ },
+ {
+  "slug": "repo-map",
+  "category": "technical",
+  "name": "Repo map",
+  "summary": "acme/storefront drawn as nested containers: apps, modules and packages inside the repo frame, deploy config and three other repositories beside it, mono chips for each package with bold entry points and a dashed chip for payments moving out. Solid, dashed and dotted lines mark build links, a git submodule and a runtime call; a sticky note states the layer rule and the CI check that enforces it.",
+  "use_for": "Showing how one repository is cut into layers, what each part holds, and which way dependencies, vendored copies and runtime calls point.",
+  "keywords": [
+   "repo map",
+   "repository structure",
+   "monorepo",
+   "packages",
+   "crates",
+   "layers",
+   "dependencies",
+   "submodule",
+   "architecture"
+  ],
+  "uses_logos": false
  }
 ]

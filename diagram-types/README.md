@@ -1,13 +1,13 @@
 # Diagram types
 
-101 diagram types, each drawn once and rendered in both styles the explorer page offers: **hand-drawn** and **clean**. Every folder has the source `example.svg`, `hand.jpg`, `clean.jpg` and a README with when to use it and its anatomy.
+102 diagram types, each drawn once and rendered in both styles the explorer page offers: **hand-drawn** and **clean**. Every folder has the source `example.svg`, `hand.jpg`, `clean.jpg` and a README with when to use it and its anatomy.
 
 The skill picks a type with [`references/diagram-types.md`](../skills/codebase-explorer/references/diagram-types.md). The class kit is in [`references/diagram-kit.md`](../skills/codebase-explorer/references/diagram-kit.md). Regenerate this page with `node skills/codebase-explorer/scripts/build-catalog.js`.
 
 Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev). The logos are trademarks of their owners and are not covered by this repo's MIT license.
 
 - [Software and systems](#software-and-systems) (6)
-- [Technical and architecture](#technical-and-architecture) (5)
+- [Technical and architecture](#technical-and-architecture) (6)
 - [Diagramming and mapping](#diagramming-and-mapping) (15)
 - [Process and workflow](#process-and-workflow) (7)
 - [Data visualization](#data-visualization) (11)
@@ -41,6 +41,7 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**UML diagram (use case)**](technical/uml-use-case/) (logos) | Showing who can trigger what on an internal platform and which behaviours are always included versus conditional. | <img src="technical/uml-use-case/clean.jpg" width="220" alt="UML diagram (use case), clean"> | <img src="technical/uml-use-case/hand.jpg" width="220" alt="UML diagram (use case), hand-drawn"> |
 | [**Architecture delta**](technical/architecture-delta/) | Showing what a migration or refactor adds, removes and rewires in a system's topology while holding everything else still. | <img src="technical/architecture-delta/clean.jpg" width="220" alt="Architecture delta, clean"> | <img src="technical/architecture-delta/hand.jpg" width="220" alt="Architecture delta, hand-drawn"> |
 | [**Boundary architecture**](technical/boundary-architecture/) | Showing what crosses the trust boundary, what is checked at the edge, and where data lands, including who owns each store. | <img src="technical/boundary-architecture/clean.jpg" width="220" alt="Boundary architecture, clean"> | <img src="technical/boundary-architecture/hand.jpg" width="220" alt="Boundary architecture, hand-drawn"> |
+| [**Repo map**](technical/repo-map/) | Showing how one repository is cut into layers, what each part holds, and which way dependencies, vendored copies and runtime calls point. | <img src="technical/repo-map/clean.jpg" width="220" alt="Repo map, clean"> | <img src="technical/repo-map/hand.jpg" width="220" alt="Repo map, hand-drawn"> |
 
 ## Diagramming and mapping
 

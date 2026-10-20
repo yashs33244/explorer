@@ -22,6 +22,7 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `uml-use-case` | `technical/uml-use-case` | Showing who can trigger what on an internal platform and which behaviours are always included versus conditional. | uml, use case, actors, include, extend, ci/cd, system boundary |
 | `architecture-delta` | `technical/architecture-delta` | Showing what a migration or refactor adds, removes and rewires in a system's topology while holding everything else still. | architecture delta, before after, migration, refactor, topology diff, change ledger, rewire, service extraction, event queue, design review |
 | `boundary-architecture` | `technical/boundary-architecture` | Showing what crosses the trust boundary, what is checked at the edge, and where data lands, including who owns each store. | boundary, trust boundary, security review, edge check, mtls, gateway, untrusted, ingestion, object storage, ownership, tenant, credentials, data residency |
+| `repo-map` | `technical/repo-map` | Showing how one repository is cut into layers, what each part holds, and which way dependencies, vendored copies and runtime calls point. | repo map, repository structure, monorepo, packages, crates, layers, dependencies, submodule, architecture |
 
 ## Diagramming and mapping
 
