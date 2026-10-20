@@ -1,0 +1,68 @@
+<svg class="hd" viewBox="0 0 800 660" role="img" aria-label="Wardley map of a CI platform: the developer need for fast feedback depends on the CI pipeline, which depends on flaky test triage, test sharding, the build cache and source control, down to artifact storage and compute. Components sit on an evolution axis from genesis to commodity, each tagged build, buy or outsource, and the build cache is moving from custom built to product" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="wardley-map-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<path class="d-grid" d="M270,24 V550"/>
+<path class="d-grid" d="M440,24 V550"/>
+<path class="d-grid" d="M610,24 V550"/>
+<path class="d-axis" d="M100,550 V24" marker-end="url(#wardley-map-d1-ah)"/>
+<path class="d-axis" d="M100,550 H776" marker-end="url(#wardley-map-d1-ah)"/>
+<text class="d-s" x="50" y="40" text-anchor="middle">Visible</text>
+<text class="d-s" x="50" y="56" text-anchor="middle">to user</text>
+<text class="d-t" x="50" y="282" text-anchor="middle">Value</text>
+<text class="d-t" x="50" y="300" text-anchor="middle">chain</text>
+<text class="d-s" x="50" y="546" text-anchor="middle">Invisible</text>
+<text class="d-s" x="185" y="572" text-anchor="middle">Genesis</text>
+<text class="d-s" x="355" y="572" text-anchor="middle">Custom built</text>
+<text class="d-s" x="525" y="572" text-anchor="middle">Product</text>
+<text class="d-s" x="695" y="572" text-anchor="middle">Commodity</text>
+<text class="d-t" x="440" y="596" text-anchor="middle">Evolution</text>
+<path class="d-edge" d="M560,62 V104"/>
+<path class="d-edge" d="M560,116 V184"/>
+<path class="d-edge" d="M554,192 L196,279"/>
+<path class="d-edge" d="M555,194 L405,277"/>
+<path class="d-edge" d="M565,194 L695,296"/>
+<path class="d-edge" d="M399,286 L381,374"/>
+<path class="d-edge" d="M386,382 L539,438"/>
+<path class="d-edge" d="M551,443 L694,502"/>
+<path class="d-edge" d="M700,306 V499"/>
+<rect class="d-box g1" x="500" y="26" width="120" height="36" rx="10"/>
+<text class="d-t" x="560" y="49" text-anchor="middle">Developer</text>
+<circle class="d-fillpaper" cx="560" cy="110" r="6"/>
+<text class="d-t" x="574" y="115">Fast feedback</text>
+<circle class="d-fillpaper" cx="560" cy="190" r="6"/>
+<text class="d-t" x="574" y="190">CI pipeline</text>
+<rect class="d-tag" x="662" y="176" width="46" height="20" rx="10"/>
+<text class="d-s" x="685" y="190" text-anchor="middle">buy</text>
+<circle class="d-fillpaper" cx="190" cy="280" r="6"/>
+<text class="d-t" x="190" y="304" text-anchor="middle">Flaky triage</text>
+<rect class="d-tag" x="164" y="312" width="52" height="20" rx="10"/>
+<text class="d-s" x="190" y="326" text-anchor="middle">build</text>
+<circle class="d-fillpaper" cx="400" cy="280" r="6"/>
+<text class="d-t" x="386" y="285" text-anchor="end">Test sharding</text>
+<rect class="d-tag" x="278" y="294" width="52" height="20" rx="10"/>
+<text class="d-s" x="304" y="308" text-anchor="middle">build</text>
+<circle class="d-fillpaper" cx="700" cy="300" r="6"/>
+<text class="d-t" x="690" y="324" text-anchor="end">Source control</text>
+<rect class="d-tag" x="644" y="332" width="46" height="20" rx="10"/>
+<text class="d-s" x="667" y="346" text-anchor="middle">buy</text>
+<path class="d-edge acc dash" d="M390,380 H532" marker-end="url(#wardley-map-d1-ah)"/>
+<circle class="d-fillacc" cx="380" cy="380" r="7"/>
+<text class="d-t" x="370" y="404" text-anchor="end">Build cache</text>
+<rect class="d-tag" x="324" y="412" width="46" height="20" rx="10"/>
+<text class="d-s" x="347" y="426" text-anchor="middle">buy</text>
+<circle class="d-fillpaper" cx="545" cy="440" r="6"/>
+<text class="d-t" x="557" y="430">Artifact store</text>
+<rect class="d-tag" x="496" y="454" width="46" height="20" rx="10"/>
+<text class="d-s" x="519" y="468" text-anchor="middle">buy</text>
+<circle class="d-fillpaper" cx="700" cy="505" r="6"/>
+<text class="d-t" x="714" y="510">Compute</text>
+<rect class="d-tag" x="610" y="516" width="80" height="20" rx="10"/>
+<text class="d-s" x="650" y="530" text-anchor="middle">outsource</text>
+<path class="d-grid" d="M20,614 H780"/>
+<circle class="d-fillpaper" cx="32" cy="638" r="6"/>
+<path class="d-edge" d="M44,638 H84"/>
+<text class="d-s" x="92" y="642">depends on</text>
+<circle class="d-fillacc" cx="200" cy="638" r="7"/>
+<path class="d-edge acc dash" d="M212,638 H252" marker-end="url(#wardley-map-d1-ah)"/>
+<text class="d-s" x="260" y="642">evolving</text>
+<text class="d-s" x="350" y="642">Build what differentiates, buy the rest.</text>
+</svg>

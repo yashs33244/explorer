@@ -1,0 +1,95 @@
+<svg class="hd" viewBox="0 0 800 536" role="img" aria-label="Story map for self-serve API keys: five developer activities from sign up to rotate key across the top, story cards stacked under each, sliced into Release 1 walking skeleton, Release 2 and Later, with the release cut under Release 1 and zero-downtime rotation flagged as the riskiest story" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="story-map-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="16" y="26">Story map</text>
+<text class="d-h" x="16" y="50">Self-serve API keys</text>
+<text class="d-s" x="784" y="50" text-anchor="end">one persona: a developer</text>
+<path class="d-edge" d="M120,70 H768" marker-end="url(#story-map-d1-ah)"/>
+<text class="d-lab" x="445" y="74" text-anchor="middle">narrative order</text>
+<text class="d-k" x="16" y="112">Backbone</text>
+<text class="d-s" x="16" y="133">activities</text>
+<rect class="d-box g1" x="120" y="86" width="122" height="58" rx="10"/>
+<text class="d-k" x="132" y="108">Activity 1</text>
+<text class="d-t" x="132" y="131">Sign up</text>
+<rect class="d-box g1" x="252" y="86" width="122" height="58" rx="10"/>
+<text class="d-k" x="264" y="108">Activity 2</text>
+<text class="d-t" x="264" y="131">Create key</text>
+<rect class="d-box g1" x="384" y="86" width="122" height="58" rx="10"/>
+<text class="d-k" x="396" y="108">Activity 3</text>
+<text class="d-t" x="396" y="131">Call API</text>
+<rect class="d-box g1" x="516" y="86" width="122" height="58" rx="10"/>
+<text class="d-k" x="528" y="108">Activity 4</text>
+<text class="d-t" x="528" y="131">Watch usage</text>
+<rect class="d-box g1" x="648" y="86" width="122" height="58" rx="10"/>
+<text class="d-k" x="660" y="108">Activity 5</text>
+<text class="d-t" x="660" y="131">Rotate key</text>
+<rect class="d-band g2" x="16" y="158" width="768" height="90" rx="10"/>
+<rect class="d-band g0" x="16" y="272" width="768" height="90" rx="10"/>
+<rect class="d-blob2" x="16" y="380" width="768" height="90" rx="12"/>
+<path class="d-grid" d="M247,152 V474 M379,152 V474 M511,152 V474 M643,152 V474"/>
+<text class="d-t" x="28" y="186">Release 1</text>
+<text class="d-s" x="28" y="204">walking</text>
+<text class="d-s" x="28" y="220">skeleton</text>
+<text class="d-s" x="28" y="236">11 pts</text>
+<text class="d-t" x="28" y="300">Release 2</text>
+<text class="d-s" x="28" y="318">next</text>
+<text class="d-s" x="28" y="334">13 pts</text>
+<text class="d-t" x="28" y="408">Later</text>
+<text class="d-s" x="28" y="426">unscheduled</text>
+<text class="d-s" x="28" y="442">11 pts</text>
+<rect class="d-note" x="120" y="171" width="122" height="64" rx="4"/>
+<text class="d-tn" x="130" y="193">Email sign up</text>
+<text class="d-s" x="130" y="227">2 pts</text>
+<rect class="d-note" x="252" y="171" width="122" height="64" rx="4"/>
+<text class="d-tn" x="262" y="193">First API key</text>
+<text class="d-s" x="262" y="227">3 pts</text>
+<rect class="d-note" x="384" y="171" width="122" height="64" rx="4"/>
+<text class="d-tn" x="394" y="193">Bearer auth</text>
+<text class="d-tn" x="394" y="210">on every call</text>
+<text class="d-s" x="394" y="227">2 pts</text>
+<rect class="d-note" x="516" y="171" width="122" height="64" rx="4"/>
+<text class="d-tn" x="526" y="193">Request count</text>
+<text class="d-tn" x="526" y="210">per day</text>
+<text class="d-s" x="526" y="227">3 pts</text>
+<rect class="d-note" x="648" y="171" width="122" height="64" rx="4"/>
+<text class="d-tn" x="658" y="193">Revoke a key</text>
+<text class="d-s" x="658" y="227">1 pt</text>
+<path class="d-edge acc thick" d="M16,260 H696"/>
+<text class="d-lab" x="784" y="264" text-anchor="end">release cut</text>
+<rect class="d-note" x="120" y="285" width="122" height="64" rx="4"/>
+<text class="d-tn" x="130" y="307">GitHub login</text>
+<text class="d-s" x="130" y="341">2 pts</text>
+<rect class="d-note" x="252" y="285" width="122" height="64" rx="4"/>
+<text class="d-tn" x="262" y="307">Scoped keys</text>
+<text class="d-tn" x="262" y="324">read or write</text>
+<text class="d-s" x="262" y="341">3 pts</text>
+<rect class="d-note" x="516" y="285" width="122" height="64" rx="4"/>
+<text class="d-tn" x="526" y="307">Quota alert</text>
+<text class="d-tn" x="526" y="324">at 80% used</text>
+<text class="d-s" x="526" y="341">3 pts</text>
+<rect class="d-note" x="648" y="285" width="122" height="64" rx="4"/>
+<text class="d-tn" x="658" y="307">Zero-downtime</text>
+<text class="d-tn" x="658" y="324">rotation</text>
+<text class="d-s" x="658" y="341">5 pts</text>
+<rect class="d-tag acc" x="716" y="328" width="44" height="18" rx="9"/>
+<text class="d-k" x="738" y="341" text-anchor="middle">risk</text>
+<rect class="d-note" x="120" y="393" width="122" height="64" rx="4"/>
+<text class="d-tn" x="130" y="415">SSO for teams</text>
+<text class="d-s" x="130" y="449">5 pts</text>
+<rect class="d-note" x="384" y="393" width="122" height="64" rx="4"/>
+<text class="d-tn" x="394" y="415">SDK snippets</text>
+<text class="d-tn" x="394" y="432">per language</text>
+<text class="d-s" x="394" y="449">3 pts</text>
+<rect class="d-note" x="648" y="393" width="122" height="64" rx="4"/>
+<text class="d-tn" x="658" y="415">Auto-rotate</text>
+<text class="d-tn" x="658" y="432">every 90 days</text>
+<text class="d-s" x="658" y="449">3 pts</text>
+<path class="d-grid" d="M16,490 H784"/>
+<rect class="d-note" x="16" y="506" width="24" height="18" rx="3"/>
+<text class="d-s" x="48" y="519">story card</text>
+<rect class="d-tag acc" x="150" y="506" width="44" height="18" rx="9"/>
+<text class="d-k" x="172" y="519" text-anchor="middle">risk</text>
+<text class="d-s" x="202" y="519">riskiest story</text>
+<path class="d-edge acc thick" d="M330,515 H370"/>
+<text class="d-s" x="380" y="519">release cut</text>
+<text class="d-s" x="784" y="519" text-anchor="end">35 pts across 12 stories</text>
+</svg>

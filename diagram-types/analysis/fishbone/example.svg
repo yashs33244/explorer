@@ -1,0 +1,68 @@
+<svg class="hd" viewBox="0 0 800 620" role="img" aria-label="Fishbone diagram of why p95 checkout latency rose 40 percent after release 3.2: six cause categories (Code, Config, Data, Dependencies, Infrastructure, Process) with two or three causes each; an N+1 cart query in Code is the confirmed root cause and a slower tax API is ruled out" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="fishbone-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="24" y="34">INCIDENT REVIEW, RELEASE 3.2</text>
+<text class="d-h" x="24" y="58">Why checkout got slower</text>
+<path class="d-edge thick" d="M36,300 L640,300" marker-end="url(#fishbone-d1-ah)"/>
+<path class="d-edge acc" d="M600,300 L496,120"/>
+<path class="d-edge" d="M569,246 L549,246"/>
+<path class="d-edge" d="M543,201 L523,201"/>
+<path class="d-edge" d="M517,156 L497,156"/>
+<path class="d-edge" d="M420,300 L316,120"/>
+<path class="d-edge" d="M383,235 L363,235"/>
+<path class="d-edge" d="M345,170 L325,170"/>
+<path class="d-edge" d="M240,300 L136,120"/>
+<path class="d-edge" d="M203,235 L183,235"/>
+<path class="d-edge" d="M165,170 L145,170"/>
+<path class="d-edge" d="M600,300 L496,480"/>
+<path class="d-edge" d="M563,365 L543,365"/>
+<path class="d-edge" d="M525,430 L505,430"/>
+<path class="d-edge" d="M420,300 L316,480"/>
+<path class="d-edge" d="M389,354 L369,354"/>
+<path class="d-edge" d="M363,399 L343,399"/>
+<path class="d-edge" d="M337,444 L317,444"/>
+<path class="d-edge" d="M240,300 L136,480"/>
+<path class="d-edge" d="M203,365 L183,365"/>
+<path class="d-edge" d="M165,430 L145,430"/>
+<text class="d-lab" x="545" y="241" text-anchor="end">Sync price recompute</text>
+<rect class="d-tag acc" x="414" y="180" width="113" height="23" rx="11"/>
+<text class="d-lab" x="519" y="196" text-anchor="end">N+1 cart query</text>
+<circle class="d-badge" cx="399" cy="192" r="11"/><text class="d-bt" x="399" y="196.5">✓</text>
+<text class="d-lab" x="493" y="151" text-anchor="end">Larger cart payload</text>
+<rect class="d-tag" x="426" y="90" width="140" height="30" rx="6"/>
+<text class="d-t" x="496" y="110" text-anchor="middle">Code</text>
+<text class="d-lab" x="359" y="230" text-anchor="end">DB pool cut to 10</text>
+<text class="d-lab" x="321" y="165" text-anchor="end">Cache TTL lowered</text>
+<rect class="d-tag" x="246" y="90" width="140" height="30" rx="6"/>
+<text class="d-t" x="316" y="110" text-anchor="middle">Config</text>
+<text class="d-lab" x="179" y="230" text-anchor="end">Missing order index</text>
+<text class="d-lab" x="141" y="165" text-anchor="end">Cart rows doubled</text>
+<rect class="d-tag" x="66" y="90" width="140" height="30" rx="6"/>
+<text class="d-t" x="136" y="110" text-anchor="middle">Data</text>
+<text class="d-s" x="539" y="360" text-anchor="end">Tax API slower</text>
+<path class="d-edge" d="M448,356 L542,356"/>
+<text class="d-lab" x="501" y="425" text-anchor="end">New fraud SDK</text>
+<rect class="d-tag" x="426" y="480" width="140" height="30" rx="6"/>
+<text class="d-t" x="496" y="500" text-anchor="middle">Dependencies</text>
+<text class="d-lab" x="365" y="349" text-anchor="end">Noisy neighbor node</text>
+<text class="d-lab" x="339" y="394" text-anchor="end">Longer GC pauses</text>
+<text class="d-lab" x="313" y="439" text-anchor="end">Fewer pods</text>
+<rect class="d-tag" x="246" y="480" width="140" height="30" rx="6"/>
+<text class="d-t" x="316" y="500" text-anchor="middle">Infrastructure</text>
+<text class="d-lab" x="179" y="360" text-anchor="end">Load test skipped</text>
+<text class="d-lab" x="141" y="425" text-anchor="end">No latency budget</text>
+<rect class="d-tag" x="66" y="480" width="140" height="30" rx="6"/>
+<text class="d-t" x="136" y="500" text-anchor="middle">Process</text>
+<rect class="d-box g4" x="644" y="252" width="140" height="96" rx="12"/>
+<text class="d-k" x="714" y="274" text-anchor="middle">EFFECT</text>
+<text class="d-t" x="714" y="296" text-anchor="middle">p95 checkout</text>
+<text class="d-t" x="714" y="315" text-anchor="middle">latency +40%</text>
+<text class="d-s" x="714" y="334" text-anchor="middle">since release 3.2</text>
+<rect class="d-tag" x="24" y="560" width="752" height="40" rx="12"/>
+<circle class="d-badge" cx="48" cy="580" r="11"/><text class="d-bt" x="48" y="584.5">✓</text>
+<text class="d-s" x="66" y="584">confirmed: badge, colored pill</text>
+<text class="d-lab" x="320" y="584">Plain label</text>
+<text class="d-s" x="402" y="584">suspected, still open</text>
+<text class="d-s" x="572" y="584">Struck</text>
+<path class="d-edge" d="M569,580 L616,580"/>
+<text class="d-s" x="626" y="584">ruled out by data</text>
+</svg>
