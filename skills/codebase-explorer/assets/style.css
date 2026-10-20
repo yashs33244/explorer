@@ -272,6 +272,21 @@ a { color: var(--violet); }
 .d-lfb { font-family: var(--font-d); font-size: 13px; font-weight: 700; fill: var(--violet); text-anchor: middle; }
 
 
+.d-zone { fill: var(--paper); stroke: var(--violet); stroke-width: 1.8; }
+.d-zone.g0 { fill: var(--g0-f); stroke: var(--g0-s); } .d-zone.g1 { fill: var(--g1-f); stroke: var(--g1-s); } .d-zone.g2 { fill: var(--g2-f); stroke: var(--g2-s); }
+.d-zone.g3 { fill: var(--g3-f); stroke: var(--g3-s); } .d-zone.g4 { fill: var(--g4-f); stroke: var(--g4-s); } .d-zone.g5 { fill: var(--g5-f); stroke: var(--g5-s); }
+.d-zone:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill-opacity: 0.4; }
+.d-zone.dash, .d-chip.dash { stroke-dasharray: 6 4; }
+.d-zt { font-family: var(--font-d); font-size: 15px; font-weight: 700; fill: var(--ink); }
+.d-chip { fill: var(--paper); stroke: var(--muted); stroke-width: 1.2; }
+.d-chip.on { stroke: var(--ink); stroke-width: 1.8; }
+.d-mb { font-family: var(--font-m); font-size: 12px; font-weight: 600; fill: var(--ink); }
+.d-g { font-family: var(--font-m); font-size: 12px; font-weight: 500; letter-spacing: 0.02em; fill: var(--muted); }
+.d-edge.dot { stroke-dasharray: 1.5 4.5; stroke-width: 1.9; }
+.d-edge.g0 { stroke: var(--g0-s); } .d-edge.g1 { stroke: var(--g1-s); } .d-edge.g2 { stroke: var(--g2-s); }
+.d-edge.g3 { stroke: var(--g3-s); } .d-edge.g4 { stroke: var(--g4-s); } .d-edge.g5 { stroke: var(--g5-s); }
+.d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--muted); }
+
 /* clean style: FigJam template look. White canvas, flat saturated fills, thin near-black outlines, small corners, no shadows. */
 [data-dstyle="clean"] {
   --fig: #ffffff; --cl-bg: #ffffff; --cl-frame: #e6e6e6; --cl-ink: #1e1e1e; --cl-muted: #5c5c5c; --cl-line: #1e1e1e; --cl-faint: #e2e2e2;
@@ -280,6 +295,7 @@ a { color: var(--violet); }
   --cl0-t: #f0e2ff; --cl1-t: #d2f6e5; --cl2-t: #fff1b8; --cl3-t: #ffdcd5; --cl4-t: #d8eaff; --cl5-t: #ffe3c2;
   --cl0-d: #b57cff; --cl1-d: #2ec98a; --cl2-d: #ffc21a; --cl3-d: #ff6f5e; --cl4-d: #3a9eff; --cl5-d: #ff9933;
   --cln-0: #ffe066; --cln-1: #ffb8d2; --cln-2: #8fe8c2; --cln-3: #a8d1ff; --cln-4: #ffc078; --cln-5: #e2c4ff;
+  --cl0-x: #6d33c9; --cl1-x: #0f7a4f; --cl2-x: #8a6400; --cl3-x: #b4321f; --cl4-x: #1c5fc0; --cl5-x: #a85200;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"])[data-dstyle="clean"], :root:not([data-theme="light"]) [data-dstyle="clean"] {
@@ -289,6 +305,7 @@ a { color: var(--violet); }
     --cl0-t: #352552; --cl1-t: #173d2f; --cl2-t: #40361a; --cl3-t: #4a2420; --cl4-t: #1b3352; --cl5-t: #47301a;
     --cl0-d: #a074ec; --cl1-d: #25a872; --cl2-d: #d9a514; --cl3-d: #e5604f; --cl4-d: #3f8ae6; --cl5-d: #e07f22;
     --cln-0: #9a7b0c; --cln-1: #9c3f62; --cln-2: #1f7d5a; --cln-3: #2f62a3; --cln-4: #a35e1c; --cln-5: #6b47a8;
+    --cl0-x: #c9a6ff; --cl1-x: #6fe0ae; --cl2-x: #ffd65c; --cl3-x: #ff9d8c; --cl4-x: #8ec3ff; --cl5-x: #ffb45e;
   }
 }
 :root[data-theme="dark"][data-dstyle="clean"], :root[data-theme="dark"] [data-dstyle="clean"] {
@@ -298,17 +315,18 @@ a { color: var(--violet); }
   --cl0-t: #352552; --cl1-t: #173d2f; --cl2-t: #40361a; --cl3-t: #4a2420; --cl4-t: #1b3352; --cl5-t: #47301a;
   --cl0-d: #a074ec; --cl1-d: #25a872; --cl2-d: #d9a514; --cl3-d: #e5604f; --cl4-d: #3f8ae6; --cl5-d: #e07f22;
   --cln-0: #9a7b0c; --cln-1: #9c3f62; --cln-2: #1f7d5a; --cln-3: #2f62a3; --cln-4: #a35e1c; --cln-5: #6b47a8;
+    --cl0-x: #c9a6ff; --cl1-x: #6fe0ae; --cl2-x: #ffd65c; --cl3-x: #ff9d8c; --cl4-x: #8ec3ff; --cl5-x: #ffb45e;
 }
 [data-dstyle="clean"] .fig, .fig[data-dstyle="clean"] { background: var(--cl-bg); background-image: none; border: 1px solid var(--cl-frame); border-radius: 12px; box-shadow: none; }
 [data-dstyle="clean"] .fig .figscroll, .fig[data-dstyle="clean"] .figscroll { background: var(--cl-bg); }
 [data-dstyle="clean"] svg.hd { color: var(--cl-muted); }
 /* per-group colors: f = solid box fill, t = light tint, d = deep chart fill */
-[data-dstyle="clean"] svg.hd .g0 { --cf: var(--cl0-f); --ct: var(--cl0-t); --cd: var(--cl0-d); --cn: var(--cln-0); }
-[data-dstyle="clean"] svg.hd .g1 { --cf: var(--cl1-f); --ct: var(--cl1-t); --cd: var(--cl1-d); --cn: var(--cln-1); }
-[data-dstyle="clean"] svg.hd .g2 { --cf: var(--cl2-f); --ct: var(--cl2-t); --cd: var(--cl2-d); --cn: var(--cln-2); }
-[data-dstyle="clean"] svg.hd .g3 { --cf: var(--cl3-f); --ct: var(--cl3-t); --cd: var(--cl3-d); --cn: var(--cln-3); }
-[data-dstyle="clean"] svg.hd .g4 { --cf: var(--cl4-f); --ct: var(--cl4-t); --cd: var(--cl4-d); --cn: var(--cln-4); }
-[data-dstyle="clean"] svg.hd .g5 { --cf: var(--cl5-f); --ct: var(--cl5-t); --cd: var(--cl5-d); --cn: var(--cln-5); }
+[data-dstyle="clean"] svg.hd .g0 { --cf: var(--cl0-f); --ct: var(--cl0-t); --cd: var(--cl0-d); --cn: var(--cln-0); --cx: var(--cl0-x); }
+[data-dstyle="clean"] svg.hd .g1 { --cf: var(--cl1-f); --ct: var(--cl1-t); --cd: var(--cl1-d); --cn: var(--cln-1); --cx: var(--cl1-x); }
+[data-dstyle="clean"] svg.hd .g2 { --cf: var(--cl2-f); --ct: var(--cl2-t); --cd: var(--cl2-d); --cn: var(--cln-2); --cx: var(--cl2-x); }
+[data-dstyle="clean"] svg.hd .g3 { --cf: var(--cl3-f); --ct: var(--cl3-t); --cd: var(--cl3-d); --cn: var(--cln-3); --cx: var(--cl3-x); }
+[data-dstyle="clean"] svg.hd .g4 { --cf: var(--cl4-f); --ct: var(--cl4-t); --cd: var(--cl4-d); --cn: var(--cln-4); --cx: var(--cl4-x); }
+[data-dstyle="clean"] svg.hd .g5 { --cf: var(--cl5-f); --ct: var(--cl5-t); --cd: var(--cl5-d); --cn: var(--cln-5); --cx: var(--cl5-x); }
 /* shapes: flat fill, 1.5px near-black outline, 0 to 6px corners, no shadow */
 [data-dstyle="clean"] svg.hd :is(.d-box, .d-band, .d-lane, .d-lanehead, .d-tag, .d-fill, .d-soft, .d-badge, .d-fillpaper, .d-logo-fb) { stroke: var(--cl-line); stroke-width: 1.5; stroke-linejoin: round; filter: none; }
 [data-dstyle="clean"] svg.hd .d-box { fill: var(--cl-bg); }
@@ -360,6 +378,23 @@ a { color: var(--violet); }
 [data-dstyle="clean"] svg.hd .d-bt { fill: #1e1e1e; }
 /* text on a deep fill stays dark ink in both themes: the dark-theme fills are too light for white text (WCAG 4.5:1) */
 [data-dstyle="clean"] svg.hd .d-tw { fill: #1e1e1e; }
+
+/* containers, chips and coloured edges (repo maps, nested architecture) */
+[data-dstyle="clean"] svg.hd .d-zone { fill: var(--cl-bg); stroke: var(--cl-line); stroke-width: 1.6; filter: none; }
+[data-dstyle="clean"] svg.hd .d-zone:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--ct); fill-opacity: 0.45; stroke: var(--cx); }
+[data-dstyle="clean"] svg.hd rect.d-zone { rx: 8px; ry: 8px; }
+[data-dstyle="clean"] svg.hd .d-zt { font-family: var(--font-d); fill: var(--cl-ink); }
+[data-dstyle="clean"] svg.hd :is(.d-zt, .d-m):is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
+[data-dstyle="clean"] svg.hd .d-chip { fill: var(--cl-bg); stroke: var(--cl-muted); stroke-width: 1; filter: none; }
+[data-dstyle="clean"] svg.hd .d-chip.on { stroke: var(--cl-line); stroke-width: 1.6; }
+[data-dstyle="clean"] svg.hd rect.d-chip { rx: 3px; ry: 3px; }
+[data-dstyle="clean"] svg.hd .d-mb { fill: var(--cl-ink); }
+[data-dstyle="clean"] svg.hd .d-g { fill: var(--cl-muted); }
+[data-dstyle="clean"] svg.hd .d-zone.dash { stroke-dasharray: 6 4; }
+[data-dstyle="clean"] svg.hd .d-chip.dash { stroke-dasharray: 3 2.5; }
+[data-dstyle="clean"] svg.hd .d-edge.dot { stroke-dasharray: 1.5 4.5; stroke-width: 1.8; }
+[data-dstyle="clean"] svg.hd .d-edge:is(.g0, .g1, .g2, .g3, .g4, .g5) { stroke: var(--cx); }
+[data-dstyle="clean"] svg.hd .d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
 
 /* style switch on the page */
 .dsw { display: inline-flex; border: 1.5px solid var(--violet); border-radius: 12px; overflow: hidden; }
@@ -466,6 +501,16 @@ a { color: var(--violet); }
 [data-dstyle="hand"] svg.hd .d-axis { stroke-width: 2; }
 [data-dstyle="hand"] svg.hd .d-grid { stroke: var(--x-faint); stroke-width: 1; stroke-dasharray: 2 6; stroke-linecap: round; }
 [data-dstyle="hand"] svg.hd .d-fillink { fill: var(--x-ink); } [data-dstyle="hand"] svg.hd .d-fillacc { fill: var(--x-acc); }
+/* repo map parts: a light container in its group tone, paper chips, ink text; lines stay ink like every hand edge */
+[data-dstyle="hand"] svg.hd .d-zone { fill: var(--l); fill-opacity: 1; stroke: var(--x-ink); stroke-width: var(--x-sw); filter: url(#xd-rough); }
+[data-dstyle="hand"] svg.hd .d-zone.dash { stroke-dasharray: 8 10; }
+[data-dstyle="hand"] svg.hd .d-chip { fill: var(--x-bg); stroke: var(--x-ink); stroke-width: 1.2; filter: url(#xd-rough); }
+[data-dstyle="hand"] svg.hd .d-chip.on { stroke-width: 2.2; }
+[data-dstyle="hand"] svg.hd .d-chip.dash { stroke-dasharray: 4 5; }
+[data-dstyle="hand"] svg.hd .d-edge.dot { stroke-dasharray: 1.5 7; stroke-width: 2.2; }
+[data-dstyle="hand"] svg.hd :is(.d-zt, .d-mb, .d-g) { font-family: 'Excalifont', 'Virgil', 'Comic Sans MS', cursive; font-weight: 400; fill: var(--x-ink); }
+[data-dstyle="hand"] svg.hd .d-zt { font-size: 15px; }
+[data-dstyle="hand"] svg.hd :is(.d-mb, .d-g) { font-size: 12.5px; }
 /* arrowheads: Excalidraw's open two-stroke chevron, drawn past the marker box */
 [data-dstyle="hand"] svg.hd marker { overflow: visible; }
 [data-dstyle="hand"] svg.hd marker .d-fillink { d: path("M-1.5,-0.5 L8.5,5 L-1.5,10.5"); fill: none; stroke: var(--x-ink); stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }

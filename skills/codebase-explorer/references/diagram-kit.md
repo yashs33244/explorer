@@ -53,6 +53,20 @@ For a named product (a database, a framework, a cloud service) use a logo slot i
 
 Leave out `href`. `scripts/logos.js` fills it at render and build time from logo.dev, inlined as a data URI, with a light tile behind it so dark marks stay visible. It needs a logo.dev publishable key: `LOGO_DEV_TOKEN` in the environment, or `~/.config/explorer/logo-dev.env`. **If a guide needs logos and there is no key, ask the user to sign up at https://logo.dev, copy the publishable key (it starts with `pk_`) and give it to you; store it in that file and never commit it.** Without a key every slot becomes a monogram circle, so the diagram still works. Use the product's real primary domain. A project on a foundation subdomain (`kafka.apache.org`, `flink.apache.org`) always gets a monogram, because Logo.dev returns the foundation's feather for all of them; `logos.js` warns when two domains return the same image. Logos are trademarks of their owners, provided by Logo.dev.
 
+## Containers and chips (repo maps, nested architecture)
+
+| Class | Use |
+|---|---|
+| `d-zone` (+ `gN`, + `dash`) | A container: tinted fill with a coloured outline in group N; `dash` for outside or local-only parts |
+| `d-zt` (+ `gN`) | Container title in the display font, coloured to match |
+| `d-m gN` | A mono path label in the container's colour |
+| `d-chip` (+ `on`, + `dash`) | A small mono chip for a package, crate or file; `on` = entry point (bold outline), `dash` = moving or symlinked |
+| `d-mb` | Bold mono text, for the entry-point chip |
+| `d-edge dot` | A call at runtime (solid = depends on, `dash` = vendored or pinned copy) |
+| `d-edge gN`, `d-fillink gN` | An edge and its arrow head in a group's colour |
+
+`skills/artifact-studio/scripts/repo_map.py` writes all of these from a JSON spec. On a page, wrap a part in `<g data-node="id">` and a link in `<g data-edge="from to">` for hover focus, and a beat in `<g data-step="N">` for step-through (`skills/artifact-studio/references/interactive.md`).
+
 ## Ids and markers
 
 Every id starts with `<key>-d<N>-` (the catalog uses `<slug>-d1-`). Define a marker per SVG:
