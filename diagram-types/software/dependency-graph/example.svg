@@ -1,0 +1,84 @@
+<svg class="hd" viewBox="0 0 800 560" role="img" aria-label="Dependency graph of a monorepo: eight packages in four build layers, arrows from each package to what it depends on, a shared core library with four dependents, and a cycle between auth and users that has no valid build order" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="dependency-graph-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-lane alt" x="22" y="24" width="166" height="446" rx="12"/>
+<text class="d-k" x="34" y="52">Layer 0</text>
+<text class="d-s" x="34" y="72">builds first</text>
+<rect class="d-lane alt" x="222" y="24" width="166" height="446" rx="12"/>
+<text class="d-k" x="234" y="52">Layer 1</text>
+<text class="d-s" x="234" y="72">needs layer 0</text>
+<rect class="d-lane alt" x="422" y="24" width="166" height="446" rx="12"/>
+<text class="d-k" x="434" y="52">Layer 2</text>
+<text class="d-s" x="434" y="72">needs layers 0, 1</text>
+<rect class="d-lane alt" x="622" y="24" width="166" height="446" rx="12"/>
+<text class="d-k" x="634" y="52">Layer 3</text>
+<text class="d-s" x="634" y="72">apps, build last</text>
+<rect class="d-box g2" x="30" y="180" width="150" height="90" rx="10"/>
+<text class="d-t" x="42" y="207">core</text>
+<text class="d-m" x="42" y="232">libs/core</text>
+<text class="d-s" x="42" y="254">errors, ids</text>
+<rect class="d-tag acc" x="130" y="190" width="40" height="20" rx="10"/>
+<text class="d-s" x="150" y="204" text-anchor="middle">4 in</text>
+<rect class="d-box g4" x="30" y="335" width="150" height="70" rx="10"/>
+<text class="d-t" x="42" y="362">config</text>
+<text class="d-m" x="42" y="387">libs/config</text>
+<rect class="d-tag" x="130" y="345" width="40" height="20" rx="10"/>
+<text class="d-s" x="150" y="359" text-anchor="middle">2 in</text>
+<rect class="d-box g4" x="230" y="105" width="150" height="70" rx="10"/>
+<text class="d-t" x="242" y="132">http-kit</text>
+<text class="d-m" x="242" y="157">libs/http-kit</text>
+<rect class="d-tag" x="330" y="115" width="40" height="20" rx="10"/>
+<text class="d-s" x="350" y="129" text-anchor="middle">1 in</text>
+<rect class="d-box g4" x="230" y="265" width="150" height="70" rx="10"/>
+<text class="d-t" x="242" y="292">db-client</text>
+<text class="d-m" x="242" y="317">libs/db-client</text>
+<rect class="d-tag" x="330" y="275" width="40" height="20" rx="10"/>
+<text class="d-s" x="350" y="289" text-anchor="middle">1 in</text>
+<rect class="d-box g4" x="430" y="105" width="150" height="70" rx="10"/>
+<text class="d-t" x="442" y="132">auth</text>
+<text class="d-m" x="442" y="157">libs/auth</text>
+<rect class="d-tag" x="530" y="115" width="40" height="20" rx="10"/>
+<text class="d-s" x="550" y="129" text-anchor="middle">2 in</text>
+<rect class="d-box g4" x="430" y="265" width="150" height="70" rx="10"/>
+<text class="d-t" x="442" y="292">users</text>
+<text class="d-m" x="442" y="317">libs/users</text>
+<rect class="d-tag" x="530" y="275" width="40" height="20" rx="10"/>
+<text class="d-s" x="550" y="289" text-anchor="middle">2 in</text>
+<rect class="d-box g1" x="630" y="105" width="150" height="70" rx="10"/>
+<text class="d-t" x="642" y="132">web</text>
+<text class="d-m" x="642" y="157">apps/web</text>
+<rect class="d-tag" x="730" y="115" width="40" height="20" rx="10"/>
+<text class="d-s" x="750" y="129" text-anchor="middle">0 in</text>
+<rect class="d-box g1" x="630" y="265" width="150" height="70" rx="10"/>
+<text class="d-t" x="642" y="292">admin-cli</text>
+<text class="d-m" x="642" y="317">apps/admin-cli</text>
+<rect class="d-tag" x="730" y="275" width="40" height="20" rx="10"/>
+<text class="d-s" x="750" y="289" text-anchor="middle">0 in</text>
+<path class="d-edge" d="M230,160 H205 V192 H180" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M230,280 H205 V255 H180" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M230,320 H195 V370 H180" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M430,140 H380" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M450,175 V212 H180" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M430,285 H415 V232 H180" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M430,310 H380" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M490,175 V265" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M630,140 H580" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M630,300 H580" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge" d="M705,335 V448 H105 V405" marker-end="url(#dependency-graph-d1-ah)"/>
+<path class="d-edge dash" d="M540,265 V175" marker-end="url(#dependency-graph-d1-ah)"/>
+<text class="d-lab" x="548" y="224">imports back</text>
+<rect class="d-note g1" x="432" y="352" width="146" height="76" rx="6"/>
+<text class="d-tn" x="444" y="375">Cycle found</text>
+<text class="d-s" x="444" y="396">no valid order</text>
+<text class="d-s" x="444" y="415">fix: split auth-api</text>
+<path class="d-edge" d="M30,498 H72" marker-end="url(#dependency-graph-d1-ah)"/>
+<text class="d-s" x="82" y="502">depends on</text>
+<path class="d-edge dash" d="M200,498 H242" marker-end="url(#dependency-graph-d1-ah)"/>
+<text class="d-s" x="252" y="502">back edge, cycle</text>
+<rect class="d-tag acc" x="410" y="488" width="40" height="20" rx="10"/>
+<text class="d-s" x="430" y="502" text-anchor="middle">4 in</text>
+<text class="d-s" x="460" y="502">dependents, highest</text>
+<rect class="d-tag" x="620" y="488" width="40" height="20" rx="10"/>
+<text class="d-s" x="640" y="502" text-anchor="middle">2 in</text>
+<text class="d-s" x="670" y="502">dependents</text>
+<text class="d-s" x="30" y="536">Arrows point from a package to what it needs. Build layers left to right; the cycle has no order.</text>
+</svg>

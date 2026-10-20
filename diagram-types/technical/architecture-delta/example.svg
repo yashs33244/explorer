@@ -1,0 +1,111 @@
+<svg class="hd" viewBox="0 0 800 620" role="img" aria-label="Architecture delta of a checkout service moving from synchronous calls to an event queue: Before and After panels with the same node positions, an added event queue, a changed checkout service, three calls rewired to consume from the queue, a removed retry job, and a numbered changes ledger" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="architecture-delta-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-band" x="20" y="20" width="372" height="44" rx="10"/>
+<text class="d-h" x="34" y="48">Before</text>
+<text class="d-s" x="378" y="47" text-anchor="end">v1, sync calls</text>
+<rect class="d-band" x="408" y="20" width="372" height="44" rx="10"/>
+<text class="d-h" x="422" y="48">After</text>
+<text class="d-s" x="766" y="47" text-anchor="end">v2, event queue</text>
+<path class="d-grid" d="M400,20 V456"/>
+<path class="d-edge" d="M206,140 V185" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="214" y="168">POST /checkout</text>
+<path class="d-edge" d="M156,216 H82 V143" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="119" y="220" text-anchor="middle">writes</text>
+<path class="d-edge" d="M594,140 V185" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="602" y="168">POST /checkout</text>
+<path class="d-edge" d="M544,216 H470 V143" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="507" y="220" text-anchor="middle">writes</text>
+<path class="d-edge dash" d="M330,140 V216 H259" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="322" y="202" text-anchor="end">replays</text>
+<path class="d-edge" d="M156,234 H62 V393" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="70" y="368">charge</text>
+<path class="d-edge" d="M206,244 V393" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="214" y="376">reserve</text>
+<path class="d-edge" d="M256,234 H350 V393" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="342" y="368" text-anchor="end">email</text>
+<path class="d-edge acc" d="M594,244 V289" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="602" y="272">publish</text>
+<path class="d-edge" d="M536,320 H450 V393" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="458" y="368">charge</text>
+<path class="d-edge" d="M594,348 V393" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="602" y="376">reserve</text>
+<path class="d-edge" d="M652,320 H738 V393" marker-end="url(#architecture-delta-d1-ah)"/>
+<text class="d-lab" x="730" y="368" text-anchor="end">email</text>
+<rect class="d-box g0" x="32" y="84" width="100" height="56" rx="10"/>
+<text class="d-t" x="82" y="108" text-anchor="middle">orders-db</text>
+<text class="d-s" x="82" y="128" text-anchor="middle">Postgres</text>
+<rect class="d-box g0" x="156" y="84" width="100" height="56" rx="10"/>
+<text class="d-t" x="206" y="108" text-anchor="middle">web-app</text>
+<text class="d-s" x="206" y="128" text-anchor="middle">storefront</text>
+<rect class="d-box g0" x="32" y="396" width="100" height="56" rx="10"/>
+<text class="d-t" x="82" y="420" text-anchor="middle">payments</text>
+<text class="d-s" x="82" y="440" text-anchor="middle">charge card</text>
+<rect class="d-box g0" x="156" y="396" width="100" height="56" rx="10"/>
+<text class="d-t" x="206" y="420" text-anchor="middle">inventory</text>
+<text class="d-s" x="206" y="440" text-anchor="middle">holds stock</text>
+<rect class="d-box g0" x="280" y="396" width="100" height="56" rx="10"/>
+<text class="d-t" x="330" y="420" text-anchor="middle">notify</text>
+<text class="d-s" x="330" y="440" text-anchor="middle">sends email</text>
+<rect class="d-box g0" x="420" y="84" width="100" height="56" rx="10"/>
+<text class="d-t" x="470" y="108" text-anchor="middle">orders-db</text>
+<text class="d-s" x="470" y="128" text-anchor="middle">Postgres</text>
+<rect class="d-box g0" x="544" y="84" width="100" height="56" rx="10"/>
+<text class="d-t" x="594" y="108" text-anchor="middle">web-app</text>
+<text class="d-s" x="594" y="128" text-anchor="middle">storefront</text>
+<rect class="d-box g0" x="420" y="396" width="100" height="56" rx="10"/>
+<text class="d-t" x="470" y="420" text-anchor="middle">payments</text>
+<text class="d-s" x="470" y="440" text-anchor="middle">charge card</text>
+<rect class="d-box g0" x="544" y="396" width="100" height="56" rx="10"/>
+<text class="d-t" x="594" y="420" text-anchor="middle">inventory</text>
+<text class="d-s" x="594" y="440" text-anchor="middle">holds stock</text>
+<rect class="d-box g0" x="668" y="396" width="100" height="56" rx="10"/>
+<text class="d-t" x="718" y="420" text-anchor="middle">notify</text>
+<text class="d-s" x="718" y="440" text-anchor="middle">sends email</text>
+<rect class="d-blob2" x="280" y="84" width="100" height="56" rx="10"/>
+<text class="d-s" x="330" y="108" text-anchor="middle">retry-job</text>
+<text class="d-s" x="330" y="128" text-anchor="middle">cron, 5 min</text>
+<rect class="d-tag" x="354" y="74" width="34" height="20" rx="10"/>
+<text class="d-m" x="371" y="88" text-anchor="middle">-4</text>
+<rect class="d-box g0" x="156" y="188" width="100" height="56" rx="10"/>
+<text class="d-t" x="206" y="212" text-anchor="middle">checkout</text>
+<text class="d-s" x="206" y="232" text-anchor="middle">sync fan-out</text>
+<rect class="d-box g2" x="544" y="188" width="100" height="56" rx="10"/>
+<text class="d-t" x="594" y="212" text-anchor="middle">checkout</text>
+<text class="d-s" x="594" y="232" text-anchor="middle">emits event</text>
+<rect class="d-tag" x="618" y="178" width="34" height="20" rx="10"/>
+<text class="d-m" x="635" y="192" text-anchor="middle">~2</text>
+<rect class="d-box g1" x="536" y="292" width="116" height="56" rx="10"/>
+<text class="d-t" x="594" y="316" text-anchor="middle">event-queue</text>
+<text class="d-m" x="594" y="336" text-anchor="middle">order.placed</text>
+<rect class="d-tag acc" x="626" y="282" width="34" height="20" rx="10"/>
+<text class="d-m" x="643" y="296" text-anchor="middle">+1</text>
+<rect class="d-tag" x="476" y="310" width="34" height="20" rx="10"/>
+<text class="d-m" x="493" y="324" text-anchor="middle">~3</text>
+<rect class="d-band g0" x="20" y="480" width="760" height="120" rx="12"/>
+<text class="d-h" x="36" y="508">Changes</text>
+<text class="d-s" x="764" y="507" text-anchor="end">numbers match the tags in the panels</text>
+<circle class="d-badge" cx="47" cy="540" r="11"/>
+<text class="d-bt" x="47" y="545" text-anchor="middle">1</text>
+<rect class="d-tag" x="66" y="530" width="24" height="20" rx="10"/>
+<text class="d-m" x="78" y="544" text-anchor="middle">+</text>
+<text class="d-t" x="100" y="545">ADDED</text>
+<text class="d-s" x="192" y="545">event-queue, order.placed</text>
+<circle class="d-badge" cx="419" cy="540" r="11"/>
+<text class="d-bt" x="419" y="545" text-anchor="middle">2</text>
+<rect class="d-tag" x="438" y="530" width="24" height="20" rx="10"/>
+<text class="d-m" x="450" y="544" text-anchor="middle">~</text>
+<text class="d-t" x="472" y="545">CHANGED</text>
+<text class="d-s" x="564" y="545">checkout emits one event</text>
+<circle class="d-badge" cx="47" cy="578" r="11"/>
+<text class="d-bt" x="47" y="583" text-anchor="middle">3</text>
+<rect class="d-tag" x="66" y="568" width="24" height="20" rx="10"/>
+<text class="d-m" x="78" y="582" text-anchor="middle">~</text>
+<text class="d-t" x="100" y="583">REWIRED</text>
+<text class="d-s" x="192" y="583">3 calls now consume queue</text>
+<circle class="d-badge" cx="419" cy="578" r="11"/>
+<text class="d-bt" x="419" y="583" text-anchor="middle">4</text>
+<rect class="d-tag" x="438" y="568" width="24" height="20" rx="10"/>
+<text class="d-m" x="450" y="582" text-anchor="middle">-</text>
+<text class="d-t" x="472" y="583">REMOVED</text>
+<text class="d-s" x="564" y="583">retry-job, queue redelivers</text>
+</svg>

@@ -1,0 +1,109 @@
+<svg class="hd" viewBox="0 0 996 704" role="img" aria-label="Boundary architecture of a metrics ingestion platform: agents, edge collectors and analysts cross an mTLS gate into the platform boundary, where replicated write workers, a metadata database, a compactor and a read only query API run; a credential bar on the right shows how the platform reaches object storage and table catalogs owned by the platform or the customer, and an untrusted public query proxy sits outside the boundary" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="boundary-architecture-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<rect class="d-edge acc" x="260" y="40" width="432" height="480" rx="16"/>
+<text class="d-k" x="276" y="66">PLATFORM BOUNDARY</text>
+<path class="d-edge" d="M188,112 H326" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="198" y="105">OTLP</text>
+<path class="d-edge" d="M188,168 H326" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="198" y="161">batch push</text>
+<path class="d-edge" d="M188,424 H326" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="198" y="417">SQL</text>
+<path class="d-edge dash" d="M188,586 H326" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="198" y="579">HTTPS</text>
+<path class="d-edge dash" d="M413,552 V498" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="421" y="541">scoped token</text>
+<path class="d-edge" d="M510,120 H766" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="528" y="113">PUT objects</text>
+<path class="d-edge" d="M510,164 H560 V194" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="572" y="186">cursors</text>
+<path class="d-edge" d="M470,352 V240 H520" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="462" y="300" text-anchor="end">locate tables</text>
+<path class="d-edge" d="M597,316 V286" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="607" y="306">lease</text>
+<path class="d-edge" d="M597,388 V420 H766" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="606" y="413">commit files</text>
+<path class="d-edge" d="M498,480 H766" marker-end="url(#boundary-architecture-d1-ah)"/>
+<text class="d-lab" x="520" y="473">read tables</text>
+<rect class="d-band" x="32" y="72" width="156" height="68" rx="10"/>
+<text class="d-t" x="44" y="96">Agents and SDKs</text>
+<text class="d-s" x="44" y="114">instrumented apps</text>
+<text class="d-s" x="44" y="130">and host agents</text>
+<rect class="d-band" x="32" y="156" width="156" height="68" rx="10"/>
+<text class="d-t" x="44" y="180">Edge collectors</text>
+<text class="d-s" x="44" y="198">site gateways that</text>
+<text class="d-s" x="44" y="214">batch and push</text>
+<rect class="d-band" x="32" y="390" width="156" height="68" rx="10"/>
+<text class="d-t" x="44" y="414">Analysts</text>
+<text class="d-s" x="44" y="432">trusted readers,</text>
+<text class="d-s" x="44" y="448">ad hoc SQL</text>
+<rect class="d-blob2" x="32" y="552" width="156" height="68" rx="10"/>
+<text class="d-t" x="44" y="576">Public dashboards</text>
+<text class="d-s" x="44" y="594">untrusted viewers,</text>
+<text class="d-s" x="44" y="610">outside scope</text>
+<rect class="d-band g1" x="276" y="80" width="28" height="420" rx="6"/>
+<text class="d-s" x="294" y="290" text-anchor="middle" transform="rotate(-90 294 290)">mTLS client certificate checked on every call</text>
+<rect class="d-box g4" x="340" y="80" width="170" height="88" rx="12"/>
+<rect class="d-box g4" x="334" y="86" width="170" height="88" rx="12"/>
+<rect class="d-box g4" x="328" y="92" width="170" height="88" rx="12"/>
+<text class="d-t" x="340" y="116">Write workers</text>
+<text class="d-s" x="340" y="136">buffer per tenant,</text>
+<text class="d-s" x="340" y="154">flush on size or time</text>
+<rect class="d-box g4" x="522" y="196" width="150" height="88" rx="12"/>
+<text class="d-t" x="534" y="220">Metadata DB</text>
+<text class="d-s" x="534" y="238">Postgres: tenants,</text>
+<text class="d-s" x="534" y="254">cursors, table</text>
+<text class="d-s" x="534" y="270">locations</text>
+<rect class="d-box g4" x="522" y="316" width="150" height="72" rx="12"/>
+<text class="d-t" x="534" y="340">Compactor</text>
+<text class="d-s" x="534" y="358">merges small files</text>
+<text class="d-s" x="534" y="374">on a schedule</text>
+<rect class="d-box g4" x="328" y="352" width="170" height="144" rx="12"/>
+<text class="d-t" x="340" y="376">Query API</text>
+<text class="d-s" x="340" y="394">read only</text>
+<rect class="d-box" x="342" y="406" width="142" height="30" rx="6"/>
+<text class="d-m" x="354" y="426">DuckDB · hot</text>
+<rect class="d-box" x="342" y="448" width="142" height="30" rx="6"/>
+<text class="d-m" x="354" y="468">DuckDB · archive</text>
+<rect class="d-blob2" x="328" y="552" width="170" height="68" rx="10"/>
+<text class="d-t" x="340" y="576">Public query proxy</text>
+<text class="d-s" x="340" y="594">outside the boundary,</text>
+<text class="d-s" x="340" y="610">serves untrusted reads</text>
+<rect class="d-band g1" x="716" y="72" width="28" height="484" rx="6"/>
+<text class="d-s" x="734" y="314" text-anchor="middle" transform="rotate(-90 734 314)">Short-lived role credentials, no stored keys</text>
+<rect class="d-band" x="768" y="72" width="196" height="220" rx="12"/>
+<text class="d-k" x="784" y="96">OBJECT STORAGE</text>
+<rect class="d-box g4" x="784" y="108" width="164" height="48" rx="8"/>
+<text class="d-t" x="796" y="128">Platform bucket</text>
+<text class="d-s" x="796" y="146">platform role</text>
+<rect class="d-box g2" x="784" y="168" width="164" height="48" rx="8"/>
+<text class="d-t" x="796" y="188">Customer bucket</text>
+<text class="d-s" x="796" y="206">customer role</text>
+<text class="d-m" x="784" y="240">&lt;prefix&gt;/tenant/&lt;id&gt;/</text>
+<text class="d-m" x="784" y="258">&lt;prefix&gt;/compacted/</text>
+<text class="d-s" x="784" y="280">one prefix per tenant</text>
+<rect class="d-band" x="768" y="316" width="196" height="240" rx="12"/>
+<text class="d-k" x="784" y="340">TABLE CATALOGS</text>
+<rect class="d-box g4" x="784" y="352" width="164" height="48" rx="8"/>
+<text class="d-t" x="796" y="372">Platform catalog</text>
+<text class="d-s" x="796" y="390">platform tables</text>
+<rect class="d-box g2" x="784" y="412" width="164" height="48" rx="8"/>
+<text class="d-t" x="796" y="432">Customer catalog</text>
+<text class="d-s" x="796" y="450">customer tables</text>
+<rect class="d-box" x="784" y="472" width="164" height="48" rx="8"/>
+<text class="d-t" x="796" y="492">Table data</text>
+<text class="d-s" x="796" y="510">Parquet files</text>
+<text class="d-m" x="784" y="542">catalog.ns.table</text>
+<path class="d-edge acc" d="M32,662 H60"/>
+<text class="d-s" x="68" y="667">trust boundary</text>
+<rect class="d-band g1" x="196" y="652" width="12" height="20" rx="3"/>
+<text class="d-s" x="216" y="667">checked on every call</text>
+<rect class="d-box g4" x="384" y="654" width="20" height="16" rx="3"/>
+<text class="d-s" x="412" y="667">platform owned</text>
+<rect class="d-box g2" x="528" y="654" width="20" height="16" rx="3"/>
+<text class="d-s" x="556" y="667">customer owned</text>
+<rect class="d-blob2" x="672" y="654" width="20" height="16" rx="3"/>
+<text class="d-s" x="700" y="667">outside or untrusted</text>
+<rect class="d-box g4" x="858" y="652" width="16" height="14" rx="3"/>
+<rect class="d-box g4" x="854" y="656" width="16" height="14" rx="3"/>
+<text class="d-s" x="882" y="667">replicated</text>
+</svg>
