@@ -17,12 +17,14 @@
   --cl0-t: #f0e2ff; --cl1-t: #d2f6e5; --cl2-t: #fff1b8; --cl3-t: #ffdcd5; --cl4-t: #d8eaff; --cl5-t: #ffe3c2;
   --cl0-d: #b57cff; --cl1-d: #2ec98a; --cl2-d: #ffc21a; --cl3-d: #ff6f5e; --cl4-d: #3a9eff; --cl5-d: #ff9933;
   --cln-0: #ffe066; --cln-1: #ffb8d2; --cln-2: #8fe8c2; --cln-3: #a8d1ff; --cln-4: #ffc078; --cln-5: #e2c4ff;
+  --cl0-x: #6d33c9; --cl1-x: #0f7a4f; --cl2-x: #8a6400; --cl3-x: #b4321f; --cl4-x: #1c5fc0; --cl5-x: #a85200;
+  --mark: #fff1b8; --key-col: #f1f7ff; --acc-ink: #1660c9;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-b); font-size: 16px; line-height: 1.6; }
-.wrap { width: min(1400px, 100% - 32px); margin-inline: auto; padding: 0 0 72px; }
-@media (min-width: 900px) { .wrap { width: min(1400px, 100% - 48px); } }
+.wrap { width: min(1480px, 100% - 32px); margin-inline: auto; padding: 0 0 72px; }
+@media (min-width: 900px) { .wrap { width: min(1480px, 100% - 40px); } }
 header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
 .kicker { font-family: var(--font-m); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
 h1 { font-family: var(--font-d); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: 0 0 12px; letter-spacing: -0.01em; }
@@ -35,7 +37,16 @@ a { color: var(--acc); }
 code { font-family: var(--font-m); font-size: 0.86em; background: var(--code-bg); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; overflow-wrap: anywhere; }
 pre { font-family: var(--font-m); font-size: 0.84rem; line-height: 1.55; background: var(--code-bg); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; overflow-x: auto; margin: 10px 0 16px; max-width: 100%; }
 pre code { background: none; border: 0; padding: 0; font-size: inherit; }
-.hl { background: #fff1b8; border-radius: 3px; }
+.hl, mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 2px; }
+/* emphasis: one marked sentence per section, key terms in accent, numbers that matter in bold mono */
+b.k, strong.k { color: var(--acc-ink); font-weight: 650; }
+.metric { font-family: var(--font-m); font-weight: 600; background: var(--acc-soft); color: var(--acc-ink); border-radius: 4px; padding: 0 5px; white-space: nowrap; }
+.callout { border: 1px solid var(--line); border-left: 4px solid var(--acc); border-radius: 8px; padding: 10px 14px; margin: 10px 0 16px; max-width: 75ch; background: var(--paper); }
+.callout.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+.callout.risk { border-left-color: var(--todo); background: var(--todo-soft); }
+.callout.ok { border-left-color: var(--ok); background: var(--ok-soft); }
+.callout > :first-child { margin-top: 0; } .callout > :last-child { margin-bottom: 0; }
+.callout .lbl { font-family: var(--font-m); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-right: 6px; }
 nav.toc { margin: 18px 0 0; }
 nav.toc ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px 18px; max-width: none; }
 nav.toc a { text-decoration: none; color: var(--ink); font-weight: 500; }
@@ -43,7 +54,7 @@ nav.toc a span { font-family: var(--font-m); color: var(--muted); font-size: 0.8
 nav.toc a:hover { color: var(--acc); }
 section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
 section:last-of-type { border-bottom: 0; }
-.num { font-family: var(--font-m); font-size: 0.8rem; color: var(--acc); letter-spacing: 0.06em; }
+p.num { font-family: var(--font-m); font-size: 0.8rem; color: var(--acc-ink); letter-spacing: 0.06em; }
 .tldr { background: var(--acc-soft); border-left: 4px solid var(--acc); border-radius: 8px; padding: 12px 16px; margin: 6px 0 16px; max-width: 75ch; }
 .tldr p { margin: 0; }
 .tldr p + p { margin-top: 10px; }
@@ -71,31 +82,70 @@ th { background: #f4f5f7; font-weight: 600; font-size: 0.86rem; }
 tr:last-child td { border-bottom: 0; }
 td code { white-space: nowrap; }
 td.wrapcode code { white-space: normal; }
+td.numcol, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+/* highlighted columns and rows: mark the header (th.key) and the script tints the whole column */
+th.key { background: var(--acc-soft); color: var(--acc-ink); box-shadow: inset 0 -2px 0 var(--acc); }
+td.key { background: var(--key-col); font-weight: 600; }
+tr.key > td { background: var(--mark); }
+tr.key > td:first-child { box-shadow: inset 4px 0 0 var(--warn); }
+tr.key > td.key { background: #fde9a0; }
+tr.good > td { background: var(--ok-soft); } tr.bad > td { background: var(--todo-soft); }
+tr.good > td:first-child { box-shadow: inset 4px 0 0 var(--ok); } tr.bad > td:first-child { box-shadow: inset 4px 0 0 var(--todo); }
+tr.dim > td { color: var(--muted); }
+/* table tools: filter box, column selects, key-rows toggle, sortable headers (added by the script) */
+.ttools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 14px 0 -4px; font-size: 0.86rem; }
+.ttools input[type="search"], .ttools select { font: inherit; font-size: 0.86rem; border: 1px solid var(--faint); border-radius: 8px; padding: 5px 10px; background: var(--paper); color: var(--ink); }
+.ttools input[type="search"] { min-width: min(260px, 100%); flex: 0 1 300px; }
+.ttools input:focus-visible, .ttools select:focus-visible, .ttools button:focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
+.ttools button { font: inherit; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--faint); background: var(--paper); color: var(--ink); border-radius: 99px; padding: 4px 11px; cursor: pointer; }
+.ttools button[aria-pressed="true"] { background: var(--mark); border-color: #f1dc9c; }
+.ttools .tcount { color: var(--muted); font-family: var(--font-m); font-size: 0.78rem; margin-left: auto; }
+th[data-sort] { cursor: pointer; user-select: none; white-space: nowrap; }
+th[data-sort]::after { content: " \2195"; color: var(--faint); font-weight: 400; }
+th[aria-sort="ascending"]::after { content: " \2191"; color: var(--acc); }
+th[aria-sort="descending"]::after { content: " \2193"; color: var(--acc); }
+tr.hide { display: none; }
 
 /* figures */
-.fig { margin: 22px auto 26px; background: var(--cl-bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px 24px 22px; max-width: 1100px; }
+.fig { margin: 22px auto 26px; background: var(--cl-bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px 18px; }
+/* bleed figures (repo maps, big architecture) break out of the text column to nearly the full window */
+.fig.bleed { width: min(100vw - 24px, 1880px); position: relative; left: 50%; transform: translateX(-50%); }
+/* inside a site page, a grid or a card, bleed stays in its column instead of covering its neighbours */
+:is(.sitepage, .grid2, .cards, .card) .fig.bleed { width: auto; left: 0; transform: none; }
+:is(.grid2, .cards) > .fig { min-width: 0; margin-inline: 0; }  /* auto margins would size a grid item to its content */
 .figbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
 .ftype { font-family: var(--font-m); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acc); background: var(--acc-soft); border: 1px solid #cfe2fc; border-radius: 99px; padding: 1px 9px; }
 .fzoom { font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--acc); background: var(--paper); border: 1.5px solid #cfe2fc; border-radius: 10px; padding: 4px 12px; cursor: pointer; }
 .fzoom:hover, .fzoom:focus-visible { border-color: var(--acc); }
-.figscroll { display: flex; justify-content: center; padding: 14px 8px 6px; }
-.figscroll svg.hd { display: block; width: 100%; max-width: 940px; height: auto; margin: 0 auto; }
-.fig.wide .figscroll svg.hd { max-width: none; }
-figcaption { font-size: 0.92rem; color: var(--muted); margin: 14px auto 0; max-width: 940px; }
-ol.badges { list-style: none; padding: 0; margin: 10px auto 0; max-width: 940px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 4px 20px; font-size: 0.9rem; }
+/* block, not a centred flex box: a centred flex child that overflows loses its left edge for good */
+.figscroll { display: block; padding: 10px 0 4px; overflow-x: auto; }
+.figscroll svg.hd { display: block; width: 100%; max-width: 1180px; height: auto; max-height: 88vh; margin: 0 auto; }
+.fig:is(.wide, .bleed) .figscroll svg.hd { max-width: none; max-height: none; }
+@media (max-width: 700px) { .fig.bleed .figscroll svg.hd { min-width: 900px; } }
+figcaption { font-size: 0.92rem; color: var(--muted); margin: 14px auto 0; max-width: 1180px; }
+figcaption b, figcaption strong { color: var(--ink); }
+ol.badges { list-style: none; padding: 0; margin: 10px auto 0; max-width: 1180px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 4px 20px; font-size: 0.9rem; }
 ol.badges li { display: flex; gap: 8px; align-items: baseline; margin: 0; }
 ol.badges b { flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--cl2-f); border: 1.5px solid var(--cl-line); font-size: 0.75rem; }
 ol.steps { list-style: none; padding: 0; margin: 10px 0 16px; max-width: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px 18px; }
 ol.steps li { display: flex; gap: 10px; align-items: flex-start; margin: 0; min-width: 0; }
 ol.steps li > div { min-width: 0; }
 ol.steps i.n { flex: none; font-style: normal; display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--cl2-f); border: 1.5px solid var(--cl-line); font-size: 0.78rem; font-weight: 700; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; color: var(--muted); margin: 8px auto 0; max-width: 940px; }
+/* detailed walkthrough under a figure: one row per badge, with what it does and where it lives */
+ol.badges.detail { grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 10px 22px; margin-top: 14px; }
+ol.badges.detail li > div { min-width: 0; }
+ol.badges.detail strong { display: block; color: var(--ink); }
+ol.badges.detail p { margin: 2px 0 0; color: var(--muted); font-size: 0.88rem; }
+ol.badges.detail code { font-size: 0.8em; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; color: var(--muted); margin: 8px auto 0; max-width: 1180px; }
+.legend i.ln { width: 26px; height: 0; border: 0; border-top: 2px solid var(--cl-line); border-radius: 0; vertical-align: 4px; background: none !important; }
+.legend i.ln.dash { border-top-style: dashed; } .legend i.ln.dot { border-top-style: dotted; border-top-width: 3px; }
 .legend i { display: inline-block; width: 14px; height: 14px; border: 1.5px solid var(--cl-line); border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
 
 /* multi-page site: top nav, contents cards, in-page section list, prev/next */
 .sitenav { position: sticky; top: 0; z-index: 20; background: rgba(255, 255, 255, 0.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
-.sitenav-in { width: min(1400px, 100% - 32px); margin-inline: auto; display: flex; align-items: center; gap: 8px 22px; min-height: 52px; flex-wrap: wrap; padding: 6px 0; }
-@media (min-width: 900px) { .sitenav-in { width: min(1400px, 100% - 48px); } }
+.sitenav-in { width: min(1480px, 100% - 32px); margin-inline: auto; display: flex; align-items: center; gap: 8px 22px; min-height: 52px; flex-wrap: wrap; padding: 6px 0; }
+@media (min-width: 900px) { .sitenav-in { width: min(1480px, 100% - 40px); } }
 .sitenav a { text-decoration: none; color: var(--ink); }
 .sitehome { font-family: var(--font-d); font-weight: 700; font-size: 1.05rem; }
 .sitenav ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 6px; max-width: none; }
@@ -141,6 +191,35 @@ ol.steps i.n { flex: none; font-style: normal; display: inline-grid; place-items
 .zoombody svg.hd { display: block; margin: auto; width: 100%; height: 100%; max-height: calc(96vh - 80px); }
 @media (max-width: 700px) { .zoombody svg.hd { width: 900px; min-width: 900px; height: auto; max-height: none; } }
 body.zoomed { overflow: hidden; }
+.zoomtools { display: flex; gap: 6px; align-items: center; }
+.zoomtools .fzoom { padding: 4px 10px; }
+.zoombody.pan { cursor: grab; touch-action: none; } .zoombody.pan.drag { cursor: grabbing; }
+.zoomtools.noview #zoomin, .zoomtools.noview #zoomout, .zoomtools.noview #zoomreset { display: none; }
+.zoombody iframe.anat { width: 100%; height: 100%; }
+
+/* interactive figures: badge and legend linking, node focus, step-through */
+iframe.anat { display: block; width: 100%; border: 0; border-radius: 8px; background: var(--paper); }
+svg.hd > *, svg.hd :is([data-node], [data-edge], [data-step]) { transition: opacity .18s ease; }
+/* legend filter: whole groups fade unless they hold a lit part; loose text stays readable */
+svg.hd.is-filter > :not(.is-lit):not(:has(.is-lit)):not(text):not(defs) { opacity: .16; }
+svg.hd.is-filter [data-node]:not(.is-lit):not(:has(.is-lit)) { opacity: .16; }
+svg.hd.is-focus :is([data-node], [data-edge]):not(.is-hit) { opacity: .14; }
+svg.hd [data-node] { cursor: pointer; outline: none; }
+svg.hd [data-node]:focus-visible > :is(rect, path, circle):first-of-type { stroke: var(--acc); stroke-width: 3; }
+svg.hd text.d-bt { pointer-events: none; }
+ol.badges li[data-n]:focus-visible, .legend span[data-hit]:focus-visible { outline: 2px solid var(--acc); outline-offset: 1px; }
+svg.hd .d-badge.is-on { stroke: var(--acc); stroke-width: 3.5; }
+svg.hd [data-step].is-later { opacity: .07 !important; pointer-events: none; }
+svg.hd [data-step].is-now :is(.d-box, .d-zone, .d-edge) { stroke: var(--acc); }
+ol.badges li[data-n] { cursor: default; border-radius: 6px; padding: 2px 4px; margin: -2px -4px; }
+ol.badges li.is-on { background: var(--mark); }
+.legend span[data-hit] { cursor: pointer; border-radius: 6px; padding: 1px 4px; }
+.legend span[data-hit]:hover, .legend span[data-hit]:focus-visible { background: var(--soft); }
+.fsteps { display: inline-flex; align-items: center; gap: 4px; font-size: 0.82rem; color: var(--muted); }
+.fsteps button { font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--acc-ink); background: var(--paper); border: 1.5px solid #cfe2fc; border-radius: 8px; padding: 2px 9px; cursor: pointer; }
+.fsteps button:hover, .fsteps button:focus-visible { border-color: var(--acc); }
+.fsteps .fsn { font-family: var(--font-m); min-width: 64px; text-align: center; }
+@media (prefers-reduced-motion: reduce) { svg.hd * { transition: none !important; } }
 
 /* clean diagram kit (codebase-explorer, light only) */
 svg.hd { color: var(--cl-muted); }
@@ -191,6 +270,28 @@ svg.hd .d-k { font-family: var(--font-m); font-size: 12px; letter-spacing: 0.06e
 svg.hd .d-lab { font-size: 12px; font-weight: 500; stroke: var(--cl-bg); stroke-width: 4.5px; paint-order: stroke; stroke-linejoin: round; }
 svg.hd .d-tn { font-size: 13px; font-weight: 600; }
 svg.hd .d-bt { font-size: 12px; font-weight: 700; text-anchor: middle; }
+/* containers, chips and coloured edges for repo maps and nested architecture */
+svg.hd .g0 { --ct: var(--cl0-t); --cx: var(--cl0-x); }
+svg.hd .g1 { --ct: var(--cl1-t); --cx: var(--cl1-x); }
+svg.hd .g2 { --ct: var(--cl2-t); --cx: var(--cl2-x); }
+svg.hd .g3 { --ct: var(--cl3-t); --cx: var(--cl3-x); }
+svg.hd .g4 { --ct: var(--cl4-t); --cx: var(--cl4-x); }
+svg.hd .g5 { --ct: var(--cl5-t); --cx: var(--cl5-x); }
+svg.hd .d-zone { fill: var(--cl-bg); stroke: var(--cl-line); stroke-width: 1.6; }
+svg.hd .d-zone:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--ct); fill-opacity: 0.45; stroke: var(--cx); }
+svg.hd .d-zone.dash { stroke-dasharray: 6 4; }
+svg.hd rect.d-zone { rx: 8px; ry: 8px; }
+svg.hd .d-zt { font-family: var(--font-d); font-size: 15px; font-weight: 700; fill: var(--cl-ink); }
+svg.hd .d-zt:is(.g0, .g1, .g2, .g3, .g4, .g5), svg.hd .d-m:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
+svg.hd .d-chip { fill: var(--cl-bg); stroke: var(--cl-muted); stroke-width: 1; }
+svg.hd .d-chip.on { stroke: var(--cl-line); stroke-width: 1.6; }
+svg.hd .d-chip.dash { stroke-dasharray: 3 2.5; }
+svg.hd rect.d-chip { rx: 3px; ry: 3px; }
+svg.hd .d-mb { font-family: var(--font-m); font-size: 12px; font-weight: 600; fill: var(--cl-ink); }
+svg.hd .d-g { font-family: var(--font-m); font-size: 12px; font-weight: 500; letter-spacing: 0.02em; fill: var(--cl-muted); }
+svg.hd .d-edge.dot { stroke-dasharray: 1.5 4.5; stroke-width: 1.8; }
+svg.hd .d-edge:is(.g0, .g1, .g2, .g3, .g4, .g5) { stroke: var(--cx); }
+svg.hd .d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
 </style>
 
 {{NAV}}<div class="wrap">
@@ -198,7 +299,11 @@ svg.hd .d-bt { font-size: 12px; font-weight: 700; text-anchor: middle; }
 </div>
 <div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-labelledby="zoomtitle">
   <div class="zoompanel">
-    <div class="zoomhead"><strong id="zoomtitle">Diagram</strong><button class="fzoom" id="zoomclose" type="button">Close</button></div>
+    <div class="zoomhead"><strong id="zoomtitle">Diagram</strong><div class="zoomtools">
+      <button class="fzoom" id="zoomout" type="button" aria-label="Zoom out">-</button>
+      <button class="fzoom" id="zoomin" type="button" aria-label="Zoom in">+</button>
+      <button class="fzoom" id="zoomreset" type="button">Fit</button>
+      <button class="fzoom" id="zoomclose" type="button">Close</button></div></div>
     <div class="zoombody" id="zoombody"></div>
   </div>
 </div>
@@ -209,31 +314,351 @@ svg.hd .d-bt { font-size: 12px; font-weight: 700; text-anchor: middle; }
   var title = document.getElementById('zoomtitle'), closeBtn = document.getElementById('zoomclose');
   var lastBtn = null;
   function close() {
-    zoom.classList.remove('open'); document.body.classList.remove('zoomed'); body.innerHTML = '';
+    endDrag(); zoom.classList.remove('open'); document.body.classList.remove('zoomed'); body.innerHTML = ''; view = null;
     if (lastBtn) lastBtn.focus();
   }
+  // full screen: wheel or +/- to zoom, drag to pan, Fit to reset (works on the viewBox, so it stays sharp)
+  var vb = null, view = null, tools = document.querySelector('.zoomtools');
+  function setView() { if (view) view.setAttribute('viewBox', vb.join(' ')); }
+  function zoomBy(f, cx, cy) {
+    if (!view) return;
+    var r = view.getBoundingClientRect(), base = view.__base;
+    // the drawing is letterboxed inside the element (xMidYMid meet): anchor on the drawing, not the box
+    var s = Math.min(r.width / vb[2], r.height / vb[3]), ox = r.left + (r.width - vb[2] * s) / 2, oy = r.top + (r.height - vb[3] * s) / 2;
+    var px = cx == null ? 0.5 : Math.min(1, Math.max(0, (cx - ox) / (vb[2] * s)));
+    var py = cy == null ? 0.5 : Math.min(1, Math.max(0, (cy - oy) / (vb[3] * s)));
+    var w = Math.min(base[2] * 1.5, Math.max(base[2] / 8, vb[2] / f)), h = w * base[3] / base[2];
+    vb = [vb[0] + (vb[2] - w) * px, vb[1] + (vb[3] - h) * py, w, h]; setView();
+  }
+  document.getElementById('zoomin').addEventListener('click', function () { zoomBy(1.3); });
+  document.getElementById('zoomout').addEventListener('click', function () { zoomBy(1 / 1.3); });
+  document.getElementById('zoomreset').addEventListener('click', function () { if (view) { vb = view.__base.slice(); setView(); } });
+  body.addEventListener('wheel', function (e) {
+    if (!view || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    e.preventDefault();
+    // proportional to the scroll distance, so a trackpad's many small events do not overshoot
+    var dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    zoomBy(Math.exp(-Math.max(-60, Math.min(60, dy)) * 0.004), e.clientX, e.clientY);
+  }, { passive: false });
+  // a press only becomes a drag after it moves 4px, so clicks on parts and on empty space still work
+  var drag = null, dragged = false;
+  body.addEventListener('pointerdown', function (e) {
+    if (!view || e.button > 0) return;
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, vb: vb.slice(), on: false }; dragged = false;
+  });
+  body.addEventListener('pointermove', function (e) {
+    if (!drag || !view || e.pointerId !== drag.id) return;
+    if (!drag.on) {
+      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 4) return;
+      drag.on = true; dragged = true; body.classList.add('drag');
+      try { body.setPointerCapture(e.pointerId); } catch (x) { /* pointer already gone: pan without capture */ }
+    }
+    var r = view.getBoundingClientRect(), k = Math.max(drag.vb[2] / r.width, drag.vb[3] / r.height);
+    vb = [drag.vb[0] - (e.clientX - drag.x) * k, drag.vb[1] - (e.clientY - drag.y) * k, drag.vb[2], drag.vb[3]]; setView();
+  });
+  function endDrag() {
+    if (drag && body.hasPointerCapture && body.hasPointerCapture(drag.id)) body.releasePointerCapture(drag.id);
+    drag = null; body.classList.remove('drag');
+  }
+  body.addEventListener('pointerup', endDrag);
+  body.addEventListener('pointercancel', endDrag);
+  body.addEventListener('lostpointercapture', endDrag);
+  // the click that ends a drag must not pin or clear anything
+  body.addEventListener('click', function (e) { if (dragged) { e.stopPropagation(); dragged = false; } }, true);
   document.querySelectorAll('.fig .fzoom').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var fig = btn.closest('.fig'), svg = fig.querySelector('svg.hd');
-      if (!svg) return;
-      var copy = svg.cloneNode(true);
-      // ids inside the copy (markers) must stay unique on the page
-      var map = {};
-      copy.querySelectorAll('[id]').forEach(function (el) { var n = el.id + '-zoom'; map[el.id] = n; el.id = n; });
-      copy.querySelectorAll('[marker-end],[marker-start]').forEach(function (el) {
-        ['marker-end', 'marker-start'].forEach(function (a) {
-          var v = el.getAttribute(a); if (!v) return;
-          var m = v.match(/url\(#([^)]+)\)/); if (m && map[m[1]]) el.setAttribute(a, 'url(#' + map[m[1]] + ')');
+      var fig = btn.closest('.fig'), svg = fig.querySelector('svg.hd'), frame = fig.querySelector('iframe.anat');
+      if (!svg && !frame) return;
+      body.innerHTML = ''; view = null; body.classList.remove('pan');
+      tools.classList.toggle('noview', !!frame);
+      if (frame) {
+        var f = document.createElement('iframe'); f.className = 'anat'; f.title = frame.title;
+        f.setAttribute('srcdoc', frame.getAttribute('srcdoc')); body.appendChild(f);
+      } else {
+        var copy = svg.cloneNode(true);
+        // ids inside the copy (markers) must stay unique on the page
+        var map = {};
+        copy.querySelectorAll('[id]').forEach(function (el) { var n = el.id + '-zoom'; map[el.id] = n; el.id = n; });
+        copy.querySelectorAll('[marker-end],[marker-start]').forEach(function (el) {
+          ['marker-end', 'marker-start'].forEach(function (a) {
+            var v = el.getAttribute(a); if (!v) return;
+            var m = v.match(/url\(#([^)]+)\)/); if (m && map[m[1]]) el.setAttribute(a, 'url(#' + map[m[1]] + ')');
+          });
         });
-      });
-      body.innerHTML = ''; body.appendChild(copy);
+        copy.querySelectorAll('.is-hit, .is-lit, .is-later, .is-now, .is-on').forEach(function (el) { el.classList.remove('is-hit', 'is-lit', 'is-later', 'is-now', 'is-on'); });
+        copy.classList.remove('is-filter', 'is-focus');
+        body.appendChild(copy); body.classList.add('pan');
+        view = copy; view.__base = (copy.getAttribute('viewBox') || '0 0 800 600').split(/[ ,]+/).map(Number); vb = view.__base.slice();
+        wireFocus(copy);
+      }
       title.textContent = fig.getAttribute('data-title') || 'Diagram';
       lastBtn = btn; zoom.classList.add('open'); document.body.classList.add('zoomed'); closeBtn.focus();
     });
   });
   closeBtn.addEventListener('click', close);
   zoom.addEventListener('click', function (e) { if (e.target === zoom) close(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && zoom.classList.contains('open')) close(); });
+  // one Esc handler for the whole page: it closes full screen first, otherwise it clears pinned focus
+  var pageClears = [];
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (zoom.classList.contains('open')) { close(); return; }
+    pageClears.forEach(function (f) { f(); });
+  });
+
+  // node focus: <g data-node="id"> parts and <g data-edge="a b"> links (or the attribute on a path).
+  // Hover or Tab to a part to see it, its links, its neighbours, the parts inside it and the
+  // containers around them; click, Enter or Space pins it; Esc or a click on empty space clears.
+  // Returns the clear function, or null when the figure has no parts.
+  function wireFocus(svg) {
+    var nodes = svg.querySelectorAll('[data-node]');
+    if (!nodes.length) return null;
+    svg.setAttribute('role', 'group');  // it holds focusable parts now, so it is not a single image
+    var edges = svg.querySelectorAll('[data-edge]'), pinned = null;
+    function lightUp(el) {
+      el.classList.add('is-hit');
+      // every container around a lit part stays lit, or its opacity would fade the part too
+      for (var p = el.parentElement; p && p !== svg; p = p.parentElement) if (p.hasAttribute('data-node')) p.classList.add('is-hit');
+    }
+    function show(id) {
+      svg.querySelectorAll('.is-hit').forEach(function (el) { el.classList.remove('is-hit'); });
+      if (!id) { svg.classList.remove('is-focus'); return; }
+      var near = {}; near[id] = 1;
+      edges.forEach(function (e) {
+        var ends = e.getAttribute('data-edge').split(/\s+/);
+        if (ends.indexOf(id) >= 0) { lightUp(e); ends.forEach(function (n) { near[n] = 1; }); }
+      });
+      nodes.forEach(function (n) { if (near[n.getAttribute('data-node')]) lightUp(n); });
+      var self = svg.querySelector('[data-node="' + CSS.escape(id) + '"]');
+      if (self) self.querySelectorAll('[data-node], [data-edge]').forEach(function (el) { el.classList.add('is-hit'); });
+      svg.classList.add('is-focus');
+    }
+    function owner(el) { var p = el && el.closest ? el.closest('[data-node]') : null; return p && svg.contains(p) ? p.getAttribute('data-node') : null; }
+    nodes.forEach(function (n) {
+      var id = n.getAttribute('data-node');
+      n.setAttribute('tabindex', '0');
+      n.addEventListener('pointerenter', function () { if (!pinned) show(id); });
+      // leaving a part for its container hands focus to the container, not to nothing
+      n.addEventListener('pointerleave', function (e) { if (!pinned) show(owner(e.relatedTarget)); });
+      n.addEventListener('focus', function (e) { e.stopPropagation(); if (!pinned) show(id); });
+      n.addEventListener('blur', function (e) { e.stopPropagation(); if (!pinned) show(owner(e.relatedTarget)); });
+      function pin(e) { e.stopPropagation(); pinned = pinned === id ? null : id; show(pinned || id); }
+      n.addEventListener('click', pin);
+      n.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pin(e); } });
+    });
+    function clear() { pinned = null; show(null); }
+    svg.addEventListener('click', clear);
+    return clear;
+  }
+  document.querySelectorAll('.fig').forEach(function (fig) {
+    var svg = fig.querySelector('svg.hd');
+    if (!svg) return;
+    var clear = wireFocus(svg);
+    if (clear) pageClears.push(clear);
+    // numbered badges: the list item and the badge in the drawing light up together
+    var marks = {};
+    svg.querySelectorAll('text.d-bt').forEach(function (t) {
+      var n = t.textContent.trim(), c = t.previousElementSibling;
+      if (!c || !c.classList.contains('d-badge')) {
+        var best = null, bd = 1e9, tb = t.getBBox();
+        svg.querySelectorAll('.d-badge').forEach(function (b) {
+          var bb = b.getBBox(), d = Math.hypot(bb.x + bb.width / 2 - tb.x - tb.width / 2, bb.y + bb.height / 2 - tb.y - tb.height / 2);
+          if (d < bd) { bd = d; best = b; }
+        });
+        c = best;
+      }
+      if (c && /^\d+$/.test(n)) marks[n] = c;
+    });
+    fig.querySelectorAll('ol.badges > li').forEach(function (li, i) {
+      var n = String(i + 1), b = marks[n];
+      if (!b) return;
+      li.setAttribute('data-n', n); li.tabIndex = 0;
+      var on = function () {
+        li.classList.add('is-on');
+        if (!b.closest('.is-later')) b.classList.add('is-on');  // a badge the current step hides stays hidden
+      };
+      var off = function () { b.classList.remove('is-on'); li.classList.remove('is-on'); };
+      li.addEventListener('pointerenter', on); li.addEventListener('pointerleave', off);
+      li.addEventListener('focus', on); li.addEventListener('blur', off);
+      b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
+    });
+    // legend: hover a colour or line style to keep only those parts in view. It uses its own
+    // is-lit class, so it never disturbs a pinned node focus.
+    fig.querySelectorAll('.legend span').forEach(function (sp) {
+      var i = sp.querySelector('i'), sel = null;
+      if (!i) return;
+      var m = (i.getAttribute('style') || '').match(/--cl(\d)-[a-z]/);
+      if (m) sel = '.g' + m[1];
+      else if (i.classList.contains('ln')) sel = i.classList.contains('dash') ? '.d-edge.dash' : i.classList.contains('dot') ? '.d-edge.dot' : '.d-edge:not(.dash):not(.dot)';
+      if (!sel || !svg.querySelector(sel)) return;
+      sp.setAttribute('data-hit', ''); sp.tabIndex = 0;
+      var on = function () { svg.querySelectorAll(sel).forEach(function (el) { el.classList.add('is-lit'); }); svg.classList.add('is-filter'); };
+      var off = function () { svg.querySelectorAll('.is-lit').forEach(function (el) { el.classList.remove('is-lit'); }); svg.classList.remove('is-filter'); };
+      sp.addEventListener('pointerenter', on); sp.addEventListener('pointerleave', off);
+      sp.addEventListener('focus', on); sp.addEventListener('blur', off);
+    });
+    // step-through: figures drawn with <g data-step="N"> (the same groups the explainer video reveals)
+    var steps = svg.querySelectorAll('[data-step]');
+    if (!steps.length) return;
+    var max = 0;
+    steps.forEach(function (g) { max = Math.max(max, +g.getAttribute('data-step') || 0); });
+    if (max < 2) return;
+    var cur = 0, bar = document.createElement('span'), label = document.createElement('span');
+    bar.className = 'fsteps'; label.className = 'fsn';
+    function mk(t, aria, f) { var b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.setAttribute('aria-label', aria); b.addEventListener('click', f); return b; }
+    function go(n) {
+      cur = Math.max(0, Math.min(max, n));
+      steps.forEach(function (g) {
+        var k = +g.getAttribute('data-step');
+        var later = cur > 0 && k > cur;
+        g.classList.toggle('is-later', later); g.classList.toggle('is-now', cur > 0 && k === cur);
+        // a faded step can not be hovered, tabbed to or pinned
+        g.querySelectorAll('[data-node]').forEach(function (n) { n.setAttribute('tabindex', later ? '-1' : '0'); });
+      });
+      label.textContent = cur ? 'step ' + cur + ' / ' + max : 'all ' + max + ' steps';
+    }
+    bar.appendChild(mk('<', 'Previous step', function () { go(cur <= 1 ? max : cur - 1); }));
+    bar.appendChild(label);
+    bar.appendChild(mk('>', 'Next step', function () { go(cur >= max ? 1 : cur + 1); }));
+    bar.appendChild(mk('All', 'Show all steps', function () { go(0); }));
+    var figbar = fig.querySelector('.figbar');
+    figbar.insertBefore(bar, figbar.querySelector('.fzoom'));
+    go(0);
+  });
+  // tables: tint the column under each th.key, make headers sortable, and give longer
+  // tables a filter box, a select per th[data-filter] column and a highlighted-rows toggle.
+  // A .tablewrap with data-filter="off" is left alone; data-filter="on" forces the tools.
+  function cellText(row, i) { var c = row.__cols ? row.__cols[i] : row.cells[i]; return c ? c.textContent.trim() : ''; }
+  // only units with one reading: "m" (minutes or million) and "b" (bytes or billion) are left out on purpose
+  var UNIT = { ns: 1e-9, us: 1e-6, '\u00b5s': 1e-6, ms: 1e-3, s: 1, sec: 1, min: 60, h: 3600, d: 86400,
+               kb: 1e3, mb: 1e6, gb: 1e9, tb: 1e12, kib: 1024, mib: 1048576, gib: 1073741824, x: 1, '%': 1 };
+  function asNumber(t) {
+    // "412 ms", "1.2 s", "3,400", "~12%", "2 GB": a number with an optional known unit. Versions,
+    // addresses and dates (more than one dot or dash) are not numbers; they sort as text.
+    var m = t.replace(/,(?=\d{3}\b)/g, '').match(/^[~<>≈$]?\s*(-?\d+(?:\.\d+)?)\s*([a-zµ%]*)$/i);
+    if (!m) return NaN;
+    var u = m[2].toLowerCase();
+    return u && !(u in UNIT) ? NaN : parseFloat(m[1]) * (UNIT[u] || 1);
+  }
+  // Map each body row's cells to real columns (a colspan cell fills several), and each header
+  // cell to the column it sits over, walking every thead row with its rowspans.
+  function headColumns(thead) {
+    var grid = [], out = [];
+    Array.prototype.forEach.call(thead.rows, function (tr, r) {
+      grid[r] = grid[r] || [];
+      var c = 0;
+      Array.prototype.forEach.call(tr.cells, function (th) {
+        while (grid[r][c]) c++;
+        for (var dr = 0; dr < (th.rowSpan || 1); dr++)
+          for (var dc = 0; dc < (th.colSpan || 1); dc++) { grid[r + dr] = grid[r + dr] || []; grid[r + dr][c + dc] = th; }
+        if ((th.colSpan || 1) === 1) out[c] = th;  // only a header over exactly one column sorts and tints it
+        c += th.colSpan || 1;
+      });
+    });
+    return out;
+  }
+  // the same grid for the body: a rowspan cell fills its column in the rows below it too
+  function bodyColumns(rows) {
+    var grid = rows.map(function () { return []; });
+    rows.forEach(function (tr, r) {
+      var c = 0;
+      Array.prototype.forEach.call(tr.cells, function (td) {
+        while (grid[r][c]) c++;
+        for (var dr = 0; dr < (td.rowSpan || 1) && r + dr < rows.length; dr++)
+          for (var dc = 0; dc < (td.colSpan || 1); dc++) grid[r + dr][c + dc] = td;
+        c += td.colSpan || 1;
+      });
+    });
+    return grid;
+  }
+  document.querySelectorAll('.tablewrap').forEach(function (wrap) {
+    var table = wrap.querySelector('table');
+    if (!table || !table.tHead || !table.tBodies.length) return;
+    var heads = headColumns(table.tHead);
+    var tbody = table.tBodies[0], all = Array.prototype.slice.call(tbody.rows), grid = bodyColumns(all);
+    all.forEach(function (r, k) { r.__cols = grid[k]; });
+    // a row with a cell spanning the whole table is a group heading, not data
+    var width = heads.length, heading = null;
+    var rows = all.filter(function (r) {
+      var isHead = r.cells.length === 1 && r.cells[0].colSpan >= width && width > 1;
+      if (isHead) heading = r; else r.__head = heading;
+      return !isHead;
+    });
+    var spans = all.some(function (r) { return Array.prototype.some.call(r.cells, function (c) { return c.rowSpan > 1; }); });
+    heads.forEach(function (th, i) {
+      if (!th) return;
+      if (th.classList.contains('key')) rows.forEach(function (r) { if (r.__cols[i]) r.__cols[i].classList.add('key'); });
+      if (th.classList.contains('num')) rows.forEach(function (r) { if (r.__cols[i]) r.__cols[i].classList.add('numcol'); });
+    });
+    var mode = wrap.getAttribute('data-filter');
+    if (mode === 'off' || (mode !== 'on' && rows.length < 6)) return;
+    // sorting would tear rows away from their group heading, or split a rowspan cell
+    var grouped = rows.length !== all.length || spans;
+    heads.forEach(function (th, i) {
+      if (!th || grouped || th.hasAttribute('data-nosort')) return;
+      th.setAttribute('data-sort', ''); th.tabIndex = 0;
+      function sort() {
+        var asc = th.getAttribute('aria-sort') !== 'ascending';
+        heads.forEach(function (h) { if (h) h.removeAttribute('aria-sort'); });
+        th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+        // numbers only when every filled cell in the column is one, so the order is consistent
+        var numeric = rows.every(function (r) { var t = cellText(r, i); return !t || !isNaN(asNumber(t)); });
+        rows.slice().sort(function (a, b) {
+          var x = cellText(a, i), y = cellText(b, i);
+          var c = numeric ? (asNumber(x) || 0) - (asNumber(y) || 0) : x.localeCompare(y, undefined, { numeric: true, sensitivity: 'base' });
+          return asc ? c : -c;
+        }).forEach(function (r) { tbody.appendChild(r); });
+      }
+      th.addEventListener('click', sort);
+      th.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sort(); } });
+    });
+    var bar = document.createElement('div'); bar.className = 'ttools';
+    var q = document.createElement('input'); q.type = 'search';
+    q.placeholder = 'Filter ' + rows.length + ' rows'; q.setAttribute('aria-label', 'Filter table rows');
+    bar.appendChild(q);
+    var selects = [];
+    heads.forEach(function (th, i) {
+      if (!th || !th.hasAttribute('data-filter')) return;
+      var values = {};
+      rows.forEach(function (r) { var t = cellText(r, i); if (t) values[t] = 1; });
+      var sel = document.createElement('select'), name = th.textContent.trim();
+      sel.setAttribute('aria-label', 'Filter by ' + name);
+      sel.appendChild(new Option(name + ': all', ''));
+      Object.keys(values).sort(function (a, b) { return a.localeCompare(b, undefined, { numeric: true }); })
+        .forEach(function (v) { sel.appendChild(new Option(v, v)); });
+      bar.appendChild(sel); selects.push({ el: sel, i: i });
+    });
+    var keyOnly = false, keyBtn = null;
+    if (rows.some(function (r) { return r.classList.contains('key'); })) {
+      keyBtn = document.createElement('button'); keyBtn.type = 'button';
+      keyBtn.textContent = 'Highlighted rows only'; keyBtn.setAttribute('aria-pressed', 'false');
+      keyBtn.addEventListener('click', function () { keyOnly = !keyOnly; keyBtn.setAttribute('aria-pressed', String(keyOnly)); apply(); });
+      bar.appendChild(keyBtn);
+    }
+    var count = document.createElement('span'); count.className = 'tcount'; count.setAttribute('aria-live', 'polite');
+    bar.appendChild(count);
+    function apply() {
+      var t = q.value.trim().toLowerCase(), shown = 0, active = !!t || keyOnly || selects.some(function (s) { return s.el.value; });
+      rows.forEach(function (r) {
+        // a match on the row's group heading keeps the row too
+        var ok = !t || r.textContent.toLowerCase().indexOf(t) >= 0 || (r.__head && r.__head.textContent.toLowerCase().indexOf(t) >= 0);
+        selects.forEach(function (s) { if (s.el.value && cellText(r, s.i) !== s.el.value) ok = false; });
+        if (keyOnly && !r.classList.contains('key')) ok = false;
+        r.classList.toggle('hide', !ok); if (ok) shown++;
+      });
+      // a group heading shows while any row under it shows
+      if (grouped) all.forEach(function (r, k) {
+        if (rows.indexOf(r) >= 0) return;
+        var any = false;
+        for (var j = k + 1; j < all.length && rows.indexOf(all[j]) >= 0; j++) if (!all[j].classList.contains('hide')) any = true;
+        r.classList.toggle('hide', active && !any);
+      });
+      count.textContent = shown + ' of ' + rows.length + ' rows';
+    }
+    q.addEventListener('input', apply);
+    selects.forEach(function (s) { s.el.addEventListener('change', apply); });
+    wrap.parentNode.insertBefore(bar, wrap);
+    apply();
+  });
   // site pages: mark the section in view in the "On this page" list
   var toc = document.querySelector('.pagetoc');
   if (toc && 'IntersectionObserver' in window) {
