@@ -1,0 +1,11 @@
+{
+  "name": "explorer",
+  "owner": { "name": "yashs33244" },
+  "plugins": [
+    {
+      "name": "explorer",
+      "source": "./",
+      "description": "codebase-explorer and artifact-studio skills with the shared diagram kit and catalog."
+    }
+  ]
+}

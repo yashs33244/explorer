@@ -1,0 +1,10 @@
+{
+  "name": "explorer",
+  "version": "1.1.0",
+  "description": "Explain code and systems with real diagrams: codebase field guides, artifact pages and sites with interactive figures and filterable tables, and a catalog of 102 diagram types.",
+  "author": { "name": "yashs33244" },
+  "homepage": "https://github.com/yashs33244/explorer",
+  "repository": "https://github.com/yashs33244/explorer",
+  "license": "MIT",
+  "keywords": ["diagrams", "svg", "artifact", "codebase", "architecture", "documentation"]
+}

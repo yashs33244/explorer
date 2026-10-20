@@ -15,3 +15,4 @@ studio-out/
 
 # the explainer-video skill renders through a private engine, so it is not published
 skills/artifact-studio-explainer/
+__pycache__/
