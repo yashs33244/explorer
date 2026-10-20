@@ -1,0 +1,47 @@
+<svg class="hd" viewBox="0 0 800 800" role="img" aria-label="Sankey of 10,000 API requests per second: 6,200 are CDN cache hits served at the edge, 3,800 reach the origin and split into 2,100 served from Redis, 800 from Postgres, 860 writes and 40 errors" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="sankey-diagram-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="156" y="26" text-anchor="middle">ingress</text>
+<text class="d-k" x="406" y="26" text-anchor="middle">cdn</text>
+<text class="d-k" x="646" y="26" text-anchor="middle">outcome</text>
+<path class="d-soft g1" d="M162,116 C281,116 281,78 400,78 L400,388 C281,388 281,426 162,426 Z"/>
+<path class="d-soft g2" d="M162,426 C281,426 281,464 400,464 L400,654 C281,654 281,616 162,616 Z"/>
+<path class="d-soft g1" d="M412,78 H640 V388 H412 Z"/>
+<path class="d-soft g2" d="M412,464 C526,464 526,428 640,428 L640,533 C526,533 526,569 412,569 Z"/>
+<path class="d-soft g2" d="M412,569 C526,569 526,557 640,557 L640,597 C526,597 526,609 412,609 Z"/>
+<path class="d-soft g2" d="M412,609 C526,609 526,621 640,621 L640,662 C526,662 526,650 412,650 Z"/>
+<path class="d-fill g3" d="M412,650 C526,650 526,686 640,686 L640,690 C526,690 526,654 412,654 Z"/>
+<rect class="d-fillink" x="150" y="116" width="12" height="500"/>
+<rect class="d-fillink" x="400" y="78" width="12" height="310"/>
+<rect class="d-fillink" x="400" y="464" width="12" height="190"/>
+<rect class="d-fillink" x="640" y="78" width="12" height="310"/>
+<rect class="d-fillink" x="640" y="428" width="12" height="105"/>
+<rect class="d-fillink" x="640" y="557" width="12" height="40"/>
+<rect class="d-fillink" x="640" y="621" width="12" height="41"/>
+<rect class="d-fillink" x="640" y="686" width="12" height="4"/>
+<text class="d-t" x="138" y="360" text-anchor="end">Ingress</text>
+<text class="d-s" x="138" y="378" text-anchor="end">10,000 req/s</text>
+<text class="d-t" x="406" y="50" text-anchor="middle">CDN hit</text>
+<text class="d-s" x="406" y="68" text-anchor="middle">6,200 req/s</text>
+<text class="d-t" x="406" y="420" text-anchor="middle">Origin</text>
+<text class="d-s" x="406" y="438" text-anchor="middle">3,800 req/s</text>
+<text class="d-t" x="664" y="229">Edge served</text>
+<text class="d-s" x="664" y="247">6,200 req/s</text>
+<text class="d-t" x="664" y="477">From Redis</text>
+<text class="d-s" x="664" y="495">2,100 req/s</text>
+<text class="d-t" x="664" y="574">From Postgres</text>
+<text class="d-s" x="664" y="592">800 req/s</text>
+<text class="d-t" x="664" y="638">Written</text>
+<text class="d-s" x="664" y="656">860 req/s</text>
+<text class="d-t" x="664" y="686">Errors</text>
+<text class="d-s" x="664" y="704">40 req/s</text>
+<rect class="d-tag acc" x="250" y="226" width="96" height="22" rx="11"/>
+<text class="d-s" x="298" y="241" text-anchor="middle">62% cache hit</text>
+<path class="d-grid" d="M20,728 H780"/>
+<rect class="d-soft g2" x="40" y="748" width="24" height="20"/>
+<text class="d-s" x="74" y="763">20 px band = 400 req/s</text>
+<rect class="d-soft g1" x="252" y="752" width="24" height="12"/>
+<text class="d-s" x="286" y="763">served at edge</text>
+<rect class="d-fill g3" x="410" y="756" width="24" height="4"/>
+<text class="d-s" x="444" y="763">errors, 4 px minimum</text>
+<text class="d-s" x="780" y="763" text-anchor="end">each column sums to 10,000</text>
+</svg>

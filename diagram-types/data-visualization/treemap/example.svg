@@ -1,0 +1,46 @@
+<svg class="hd" viewBox="0 0 800 580" role="img" aria-label="Treemap of 120 minutes of CI test time in a monorepo, grouped by team: Payments 54 minutes (checkout-api 30, ledger 16, refunds 8), Platform 40 minutes (auth-service 18, api-gateway 14, shared-utils 8), Web 26 minutes (web-app 17, ui-kit 9); checkout-api alone is a quarter of the total" xmlns="http://www.w3.org/2000/svg">
+<text class="d-k" x="40" y="34">MONOREPO CI, ONE FULL TEST RUN</text>
+<text class="d-h" x="40" y="58">Where 120 minutes of test time goes</text>
+<rect class="d-band g1" x="40" y="84" width="307" height="388" rx="10"/>
+<text class="d-h" x="52" y="110">Payments</text>
+<text class="d-s" x="335" y="110" text-anchor="end">54 min</text>
+<rect class="d-band g3" x="359" y="84" width="233" height="388" rx="10"/>
+<text class="d-h" x="371" y="110">Platform</text>
+<text class="d-s" x="580" y="110" text-anchor="end">40 min</text>
+<rect class="d-band g4" x="604" y="84" width="155" height="388" rx="10"/>
+<text class="d-h" x="616" y="110">Web</text>
+<text class="d-s" x="747" y="110" text-anchor="end">26 min</text>
+<rect class="d-fill g1" x="48" y="124" width="291" height="186" data-minutes="30"/>
+<text class="d-t" x="60" y="150">checkout-api</text>
+<text class="d-s" x="60" y="170">30 min</text>
+<rect class="d-fill g1" x="48" y="314" width="192" height="150" data-minutes="16"/>
+<text class="d-t" x="60" y="340">ledger</text>
+<text class="d-s" x="60" y="360">16 min</text>
+<rect class="d-fill g1" x="244" y="314" width="95" height="150" data-minutes="8"/>
+<text class="d-t" x="256" y="340">refunds</text>
+<text class="d-s" x="256" y="360">8 min</text>
+<rect class="d-fill g3" x="367" y="124" width="217" height="149" data-minutes="18"/>
+<text class="d-t" x="379" y="150">auth-service</text>
+<text class="d-s" x="379" y="170">18 min</text>
+<rect class="d-fill g3" x="367" y="277" width="217" height="117" data-minutes="14"/>
+<text class="d-t" x="379" y="303">api-gateway</text>
+<text class="d-s" x="379" y="323">14 min</text>
+<rect class="d-fill g3" x="367" y="398" width="217" height="66" data-minutes="8"/>
+<text class="d-t" x="379" y="424">shared-utils</text>
+<text class="d-s" x="379" y="444">8 min</text>
+<rect class="d-fill g4" x="612" y="124" width="139" height="220" data-minutes="17"/>
+<text class="d-t" x="624" y="150">web-app</text>
+<text class="d-s" x="624" y="170">17 min</text>
+<rect class="d-fill g4" x="612" y="348" width="139" height="116" data-minutes="9"/>
+<text class="d-t" x="624" y="374">ui-kit</text>
+<text class="d-s" x="624" y="394">9 min</text>
+<rect class="d-edge acc" x="49.5" y="125.5" width="288" height="183" rx="2"/>
+<rect class="d-tag acc" x="215" y="136" width="112" height="26"/>
+<text class="d-s" x="271" y="154" text-anchor="middle">25% of total</text>
+<text class="d-s" x="40" y="500">Area = test minutes per full CI run.</text>
+<text class="d-s" x="40" y="520">Teams 54 + 40 + 26 = 120 min (illustrative).</text>
+<rect class="d-note g2" x="452" y="484" width="308" height="76" rx="6"/>
+<text class="d-tn" x="466" y="508">checkout-api e2e suite is a</text>
+<text class="d-tn" x="466" y="528">quarter of CI: shard it before</text>
+<text class="d-tn" x="466" y="548">buying more runners</text>
+</svg>

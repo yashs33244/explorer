@@ -1,0 +1,68 @@
+<svg class="hd" viewBox="0 0 800 540" role="img" aria-label="Line chart of weekly p95 CI build time over 12 weeks for three pipelines against a 10 minute target: remote cache turned on in week 7 cut web from 16.4 to 6.9 minutes and api from 12.2 to 9.0 minutes, while mobile kept rising to 22.8 minutes" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="line-chart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="40" y="34">CI PIPELINES, LAST 12 WEEKS</text>
+<text class="d-h" x="40" y="58">p95 build time per pipeline</text>
+<rect class="d-band g2" x="40" y="76" width="720" height="440" rx="12"/>
+<path class="d-grid" d="M110,380 H640 M110,260 H640 M110,200 H640 M110,140 H640"/>
+<text class="d-s" x="96" y="128" text-anchor="end">min</text>
+<text class="d-s" x="96" y="444" text-anchor="end">0</text>
+<text class="d-s" x="96" y="384" text-anchor="end">5</text>
+<text class="d-s" x="96" y="324" text-anchor="end">10</text>
+<text class="d-s" x="96" y="264" text-anchor="end">15</text>
+<text class="d-s" x="96" y="204" text-anchor="end">20</text>
+<text class="d-s" x="96" y="144" text-anchor="end">25</text>
+<path class="d-edge dash" d="M110,320 H632"/>
+<text class="d-lab" x="540" y="312" text-anchor="middle">target 10 min</text>
+<path class="d-edge dash" d="M377,118 V440"/>
+<circle class="d-badge" cx="377" cy="102" r="11"/>
+<text class="d-bt" x="377" y="106.5">1</text>
+<text class="d-t" x="395" y="107">remote cache on</text>
+<path class="d-axis" d="M110,136 V440 H644"/>
+<path class="d-axis" d="M104,380 H110 M104,320 H110 M104,260 H110 M104,200 H110 M104,140 H110 M124,440 V446 M170,440 V446 M216,440 V446 M262,440 V446 M308,440 V446 M354,440 V446 M400,440 V446 M446,440 V446 M492,440 V446 M538,440 V446 M584,440 V446 M630,440 V446"/>
+<text class="d-s" x="124" y="462" text-anchor="middle">W1</text>
+<text class="d-s" x="170" y="462" text-anchor="middle">W2</text>
+<text class="d-s" x="216" y="462" text-anchor="middle">W3</text>
+<text class="d-s" x="262" y="462" text-anchor="middle">W4</text>
+<text class="d-s" x="308" y="462" text-anchor="middle">W5</text>
+<text class="d-s" x="354" y="462" text-anchor="middle">W6</text>
+<text class="d-s" x="400" y="462" text-anchor="middle">W7</text>
+<text class="d-s" x="446" y="462" text-anchor="middle">W8</text>
+<text class="d-s" x="492" y="462" text-anchor="middle">W9</text>
+<text class="d-s" x="538" y="462" text-anchor="middle">W10</text>
+<text class="d-s" x="584" y="462" text-anchor="middle">W11</text>
+<text class="d-s" x="630" y="462" text-anchor="middle">W12</text>
+<text class="d-s" x="110" y="494">week of build, p95 per week</text>
+<text class="d-s" x="740" y="494" text-anchor="end">n = 3,960 builds</text>
+<path class="d-edge" d="M124,202.4 L170,196.4 L216,189.2 L262,183.2 L308,188.0 L354,179.6 L400,182.0 L446,177.2 L492,172.4 L538,176.0 L584,168.8 L630,166.4"/>
+<rect class="d-fillink" x="120.5" y="198.9" width="7" height="7"/>
+<rect class="d-fillink" x="166.5" y="192.9" width="7" height="7"/>
+<rect class="d-fillink" x="212.5" y="185.7" width="7" height="7"/>
+<rect class="d-fillink" x="258.5" y="179.7" width="7" height="7"/>
+<rect class="d-fillink" x="304.5" y="184.5" width="7" height="7"/>
+<rect class="d-fillink" x="350.5" y="176.1" width="7" height="7"/>
+<rect class="d-fillink" x="396.5" y="178.5" width="7" height="7"/>
+<rect class="d-fillink" x="442.5" y="173.7" width="7" height="7"/>
+<rect class="d-fillink" x="488.5" y="168.9" width="7" height="7"/>
+<rect class="d-fillink" x="534.5" y="172.5" width="7" height="7"/>
+<rect class="d-fillink" x="580.5" y="165.3" width="7" height="7"/>
+<rect class="d-fillink" x="626.5" y="162.9" width="7" height="7"/>
+<path class="d-edge thick" d="M124,308.0 L170,304.4 L216,300.8 L262,303.2 L308,297.2 L354,293.6 L400,312.8 L446,327.2 L492,332.0 L538,333.2 L584,330.8 L630,332.0"/>
+<circle class="d-fillpaper" cx="124" cy="308.0" r="4"/>
+<circle class="d-fillpaper" cx="170" cy="304.4" r="4"/>
+<circle class="d-fillpaper" cx="216" cy="300.8" r="4"/>
+<circle class="d-fillpaper" cx="262" cy="303.2" r="4"/>
+<circle class="d-fillpaper" cx="308" cy="297.2" r="4"/>
+<circle class="d-fillpaper" cx="354" cy="293.6" r="4"/>
+<circle class="d-fillpaper" cx="400" cy="312.8" r="4"/>
+<circle class="d-fillpaper" cx="446" cy="327.2" r="4"/>
+<circle class="d-fillpaper" cx="492" cy="332.0" r="4"/>
+<circle class="d-fillpaper" cx="538" cy="333.2" r="4"/>
+<circle class="d-fillpaper" cx="584" cy="330.8" r="4"/>
+<circle class="d-fillpaper" cx="630" cy="332.0" r="4"/>
+<path class="d-edge acc thick" d="M124,269.6 L170,262.4 L216,258.8 L262,252.8 L308,249.2 L354,243.2 L400,305.6 L446,339.2 L492,348.8 L538,353.6 L584,356.0 L630,357.2"/>
+<text class="d-t" x="644" y="171.4">mobile 22.8</text>
+<text class="d-t" x="644" y="337.0">api 9.0</text>
+<text class="d-t" x="644" y="362.2">web 6.9</text>
+<rect class="d-note g1" x="420" y="384" width="210" height="40" rx="6"/>
+<text class="d-tn" x="434" y="409">web p95: 16.4 to 6.9</text>
+</svg>

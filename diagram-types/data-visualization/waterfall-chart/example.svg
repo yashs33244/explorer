@@ -1,0 +1,59 @@
+<svg class="hd" viewBox="0 0 800 548" role="img" aria-label="Waterfall chart of the monthly cloud bill from 84 thousand dollars in August to 71 thousand in September: plus 6k new region, minus 9k rightsizing, minus 7k reserved instances, plus 3k traffic growth, minus 6k log retention cut" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="waterfall-chart-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+<text class="d-k" x="40" y="34">CLOUD BILL, MONTH OVER MONTH</text>
+<text class="d-h" x="40" y="58">August $84k to September $71k</text>
+<rect class="d-box g2" x="40" y="76" width="720" height="448" rx="12"/>
+<text class="d-s" x="100" y="108" text-anchor="end">USD</text>
+<path class="d-grid" d="M110,120 H740 M110,195 H740 M110,270 H740 M110,345 H740"/>
+<text class="d-s" x="100" y="124" text-anchor="end">$100k</text>
+<text class="d-s" x="100" y="199" text-anchor="end">$75k</text>
+<text class="d-s" x="100" y="274" text-anchor="end">$50k</text>
+<text class="d-s" x="100" y="349" text-anchor="end">$25k</text>
+<text class="d-s" x="100" y="424" text-anchor="end">$0</text>
+<rect class="d-fill g4" x="127" y="168" width="56" height="252" data-role="total" data-value="84" data-name="August total"/>
+<rect class="d-fill g3" x="217" y="150" width="56" height="18" data-role="delta" data-value="+6" data-name="New region"/>
+<rect class="d-fill g1" x="307" y="150" width="56" height="27" data-role="delta" data-value="-9" data-name="Rightsizing"/>
+<rect class="d-fill g1" x="397" y="177" width="56" height="21" data-role="delta" data-value="-7" data-name="Reserved instances"/>
+<rect class="d-fill g3" x="487" y="189" width="56" height="9" data-role="delta" data-value="+3" data-name="Traffic growth"/>
+<rect class="d-fill g1" x="577" y="189" width="56" height="18" data-role="delta" data-value="-6" data-name="Log retention"/>
+<rect class="d-fill g4" x="667" y="207" width="56" height="213" data-role="total" data-value="71" data-name="September total"/>
+<path class="d-edge dash" d="M183,168 H217" data-carry="84"/>
+<path class="d-edge dash" d="M273,150 H307" data-carry="90"/>
+<path class="d-edge dash" d="M363,177 H397" data-carry="81"/>
+<path class="d-edge dash" d="M453,198 H487" data-carry="74"/>
+<path class="d-edge dash" d="M543,189 H577" data-carry="77"/>
+<path class="d-edge dash" d="M633,207 H667" data-carry="71"/>
+<text class="d-tw" x="155" y="188" text-anchor="middle">$84k</text>
+<text class="d-t" x="245" y="142" text-anchor="middle">+$6k</text>
+<text class="d-t" x="335" y="194" text-anchor="middle">-$9k</text>
+<text class="d-t" x="425" y="215" text-anchor="middle">-$7k</text>
+<text class="d-t" x="515" y="181" text-anchor="middle">+$3k</text>
+<text class="d-t" x="605" y="224" text-anchor="middle">-$6k</text>
+<text class="d-tw" x="695" y="227" text-anchor="middle">$71k</text>
+<path class="d-axis" d="M110,116 V420 H744"/>
+<text class="d-s" x="155" y="442" text-anchor="middle">August</text>
+<text class="d-s" x="155" y="458" text-anchor="middle">total</text>
+<text class="d-s" x="245" y="442" text-anchor="middle">New</text>
+<text class="d-s" x="245" y="458" text-anchor="middle">region</text>
+<text class="d-s" x="335" y="442" text-anchor="middle">Rightsizing</text>
+<text class="d-s" x="425" y="442" text-anchor="middle">Reserved</text>
+<text class="d-s" x="425" y="458" text-anchor="middle">instances</text>
+<text class="d-s" x="515" y="442" text-anchor="middle">Traffic</text>
+<text class="d-s" x="515" y="458" text-anchor="middle">growth</text>
+<text class="d-s" x="605" y="442" text-anchor="middle">Log</text>
+<text class="d-s" x="605" y="458" text-anchor="middle">retention</text>
+<text class="d-s" x="695" y="442" text-anchor="middle">September</text>
+<text class="d-s" x="695" y="458" text-anchor="middle">total</text>
+<rect class="d-fill g4" x="110" y="490" width="14" height="14"/>
+<text class="d-s" x="132" y="502">monthly total</text>
+<rect class="d-fill g3" x="250" y="490" width="14" height="14"/>
+<text class="d-s" x="272" y="502">increase (+)</text>
+<rect class="d-fill g1" x="380" y="490" width="14" height="14"/>
+<text class="d-s" x="402" y="502">decrease (-)</text>
+<path class="d-edge dash" d="M510,497 H540"/>
+<text class="d-s" x="548" y="502">running total</text>
+<text class="d-s" x="740" y="502" text-anchor="end">net -$13k</text>
+<rect class="d-note g1" x="480" y="90" width="250" height="58" rx="6"/>
+<text class="d-tn" x="494" y="114">Savings of $22k outweigh</text>
+<text class="d-tn" x="494" y="134">$9k of growth</text>
+</svg>
