@@ -17,6 +17,9 @@ Do not draw everything as boxes and arrows. Choose the diagram type whose shape 
 | one request end to end | `request-lifecycle` |
 | the system from outside | `system-context`, then `c4-model` |
 | a folder layout | `directory-tree` |
+| what depends on what, build order, cycles | `dependency-graph` |
+| how a topology changes, before and after | `architecture-delta` |
+| which item supports which capability | `coverage-matrix` |
 
 ## Three diagrams per topic
 
@@ -28,7 +31,10 @@ Put the chosen slug in `meta.json` as `"type"`.
 
 ## Rules
 
-- One `<svg class="hd" viewBox="0 0 800 H" role="img" aria-label="...">` with H between 300 and 900, no width or height attributes.
+- One `<svg class="hd" viewBox="0 0 800 H" role="img" aria-label="...">` with H between 300 and 900, no width or height attributes. A wider or offset viewBox (such as `-12 -12 824 H+24`) is fine when it buys margin for an existing layout.
+- Keep at least 32 units of clear margin inside the viewBox on every side: with a viewBox 800 wide, draw between x=32 and x=768, and leave 32 above the first line of text and below the last mark.
+- One idea per diagram. More than about 9 nodes or 3 bands (lanes, layers, rows of groups): split it into an overview and a detail. Prefer fewer, larger labels; put detail in the caption.
+- Structure diagrams (`er-diagram`, `class-diagram`, database schemas, `directory-tree`) use a neutral scheme: white `d-box` with no g-colour, thin ink outline, a light grey `d-band` header with no g-colour, neutral diamonds and notes (`d-box`, `d-blob2`). Colour carries at most one meaning (for example new or changed fields) and that meaning has a legend entry.
 - Classes only (the full list is in `references/diagram-kit.md`). No hex colors, no inline fill or stroke colors, no `<style>`, `<script>` or `<foreignObject>`. The only image allowed is a logo slot, `<image class="d-logo" data-logo="domain">`.
 - Every id starts with `<key>-d<N>-`.
 - Text is at least 12 units, labels are 1 to 5 words. Put sentences in the caption, not the drawing. Estimate text width at about 7.3px per character for 14px bold and 6.2px for 12px.

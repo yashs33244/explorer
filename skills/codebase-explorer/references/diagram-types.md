@@ -11,6 +11,7 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `data-pipeline` | `software/data-pipeline` | Explaining how data moves from an OLTP database through streaming and batch stages to a dashboard, with the latency and contracts at each hop. | ETL, ELT, CDC, streaming, Kafka, warehouse, dbt, fan-out, data flow |
 | `directory-tree` | `software/directory-tree` | Showing where code lives in a repo, which folders deploy versus get imported, who owns each area, and how paths map to CI. | monorepo, folder layout, repo structure, ownership, turborepo, pnpm, codeowners |
 | `request-lifecycle` | `software/request-lifecycle` | Walking through one request end to end to show which hop does what and where the latency goes. | https request, latency, cdn, load balancer, cache miss, dns, end to end |
+| `dependency-graph` | `software/dependency-graph` | Showing build order, the blast radius of a change, and dependency cycles across packages, modules or services. | dependency, dependencies, monorepo, packages, build order, fan-in, blast radius, cycle, circular import, modules, imports, topological |
 
 ## Technical and architecture
 
@@ -19,6 +20,8 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `cloud-architecture` | `technical/cloud-architecture` | Explaining which managed cloud services a system runs on, where the region and network boundaries are, and how the request path and async path move through them. | cloud, azure, architecture, front door, app service, service bus, functions, cosmos db, key vault, region, vnet, managed identity |
 | `functional-decomposition` | `technical/functional-decomposition` | Explaining how a service or endpoint breaks into functions and sub-functions, and which team owns each branch. | functional decomposition, tree, hierarchy, checkout, functions, ownership, breakdown, refactor |
 | `uml-use-case` | `technical/uml-use-case` | Showing who can trigger what on an internal platform and which behaviours are always included versus conditional. | uml, use case, actors, include, extend, ci/cd, system boundary |
+| `architecture-delta` | `technical/architecture-delta` | Showing what a migration or refactor adds, removes and rewires in a system's topology while holding everything else still. | architecture delta, before after, migration, refactor, topology diff, change ledger, rewire, service extraction, event queue, design review |
+| `boundary-architecture` | `technical/boundary-architecture` | Showing what crosses the trust boundary, what is checked at the edge, and where data lands, including who owns each store. | boundary, trust boundary, security review, edge check, mtls, gateway, untrusted, ingestion, object storage, ownership, tenant, credentials, data residency |
 
 ## Diagramming and mapping
 
@@ -63,6 +66,10 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `infographic` | `data-visualization/infographic` | Summarising a project's, platform's or migration's results in one glanceable card of small charts, each panel answering one question. | infographic, year in review, dashboard card, stats, open source, npm downloads, contributors, donut, bar chart, area chart |
 | `radar-chart` | `data-visualization/radar-chart` | Comparing two or three technology options (databases, queues, frameworks) or a service's maturity scores across several normalised dimensions. | radar chart, spider chart, comparison, database selection, PostgreSQL, Cassandra, trade-offs, scoring |
 | `heat-map` | `data-visualization/heat-map` | Showing when or where activity clusters across two categories, such as deploys, incidents or errors by day and hour or by service and region. | heat map, heatmap, deploy frequency, weekday hour, change freeze, DORA, incidents, matrix |
+| `sankey-diagram` | `data-visualization/sankey-diagram` | Showing how a quantity such as traffic, cost or tokens splits and merges across a few stages, with band width carrying the magnitude. | sankey, flow, traffic split, cache hit ratio, cost allocation, token usage, volume, breakdown, splits and merges, quantity flow, alluvial |
+| `waterfall-chart` | `data-visualization/waterfall-chart` | Explaining how a start total becomes an end total through signed contributions, such as a cost, latency budget or headcount bridge. | waterfall, bridge, walk, budget, cost, variance, delta, running total, cloud bill, month over month, headcount, latency budget |
+| `line-chart` | `data-visualization/line-chart` | Showing how a metric trends over time for a few series, before and after a change, and against a target or SLO. | line chart, trend, time series, over time, before after, change point, slo, target line, build time, latency, weekly metric |
+| `treemap` | `data-visualization/treemap` | Showing a part-of-whole with many parts and a two-level hierarchy, such as cost by team and service, bundle size by module, or test time by team and package. | treemap, part of whole, hierarchy, area, breakdown, ci time, test time, bundle size, cost by team, squarified, proportion |
 
 ## Analysis and comparison
 
@@ -74,6 +81,8 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `sandwich-chart` | `analysis/sandwich-chart` | Explaining the sections of a PR, RFC or incident template, the order they go in and which audience reads each one. | pr description, template, layers, pull request, rollout, review |
 | `decision-tree` | `analysis/decision-tree` | Explaining how an architecture decision or triage rule reached its choice through a series of yes or no questions. | decision, adr, kafka, sqs, kinesis, rabbitmq, queue, stream |
 | `outcome-mapping` | `analysis/outcome-mapping` | Explaining how a platform or DevEx investment turns from activities into countable outputs, behavior outcomes and delivery impact. | outcome, impact, logic model, devex, onboarding, enablement, metrics |
+| `coverage-matrix` | `analysis/coverage-matrix` | Showing which items cover which capabilities, such as feature parity across languages or platforms, release gap analysis, or role by component permissions. | coverage, matrix, parity, gap analysis, support matrix, feature matrix, permissions, capabilities, sdk, compatibility, checklist grid |
+| `fishbone` | `analysis/fishbone` | Explaining a postmortem or open investigation by showing every cause checked for one observed effect, grouped by category, and which one the evidence confirmed. | fishbone, ishikawa, root cause, cause and effect, postmortem, incident review, rca, regression, investigation, latency, ruled out |
 
 ## Planning and management
 
@@ -88,6 +97,7 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `time-blocking` | `planning/time-blocking` | Explaining how an engineer protects focus time around standups, reviews, deploys and on-call interrupts, and what an on-call week costs in calendar time. | time blocking, calendar, deep work, focus, on-call, code review, schedule |
 | `weekly-schedule` | `planning/weekly-schedule` | Explaining the ceremony rhythm of a sprint week, where focus time survives, and what happens on ship day. | weekly schedule, sprint week, ceremonies, focus blocks, ship day, release |
 | `todo-list` | `planning/todo-list` | Showing what must be true before a release or cutover ships, who owns each item, and which open item is blocking it. | checklist, release, priorities, owners, progress, todo |
+| `story-map` | `planning/story-map` | Showing how a feature is scoped into releases, which thin end-to-end slice ships first and what is cut. | story map, user story map, release planning, walking skeleton, mvp, release slice, backbone, scope cut, backlog, user activities |
 
 ## Customer and user experience
 
@@ -134,6 +144,7 @@ Pick the type whose shape matches what you are explaining, then start from its e
 | `quick-reference-guide` | `business-strategy/quick-reference-guide` | Showing the handful of commands or facts an engineer needs under pressure, grouped by intent, with the risky ones flagged. | cheat sheet, quick reference, on-call, git, kubectl, commands, runbook card |
 | `marketing-mix` | `business-strategy/marketing-mix` | Explaining how a developer tool or SDK is packaged, priced, distributed and announced, and where engineering choices carry go-to-market decisions. | 4Ps, marketing mix, product, price, place, promotion, developer CLI, launch |
 | `pest-analysis` | `business-strategy/pest-analysis` | Showing the outside forces (regulation, cost, developer expectations, technology) that shape a platform launch and which decisions they drove. | PEST, political, economic, social, technological, external factors, vector database, launch |
+| `wardley-map` | `business-strategy/wardley-map` | Explaining which parts of a platform to build, buy or outsource, what to commoditise next, and the strategic moves that follow. | wardley, value chain, evolution, build vs buy, commodity, strategy, outsource, genesis, platform, dependencies |
 
 ## Education
 

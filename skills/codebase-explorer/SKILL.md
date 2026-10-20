@@ -1,6 +1,6 @@
 ---
 name: codebase-explorer
-description: Turn a codebase, system or subject into an interactive beginner field guide with SVG diagrams (hand-drawn or clean style, 90 diagram types, real logos), step-by-step walkthroughs, interview questions, scrollable tables and a published artifact. Use when the user asks to explore, explain or onboard them onto a repo or technology "with diagrams", says "explorer", "field guide", "teach me this codebase", or wants an interview-style tour of how something works.
+description: Turn a codebase, system or subject into an interactive beginner field guide with SVG diagrams (hand-drawn or clean style, 101 diagram types, real logos), step-by-step walkthroughs, interview questions, scrollable tables and a published artifact. Use when the user asks to explore, explain or onboard them onto a repo or technology "with diagrams", says "explorer", "field guide", "teach me this codebase", or wants an interview-style tour of how something works.
 ---
 
 # Codebase Explorer

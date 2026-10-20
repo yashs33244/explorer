@@ -1586,5 +1586,237 @@
    "pagerduty"
   ],
   "uses_logos": true
+ },
+ {
+  "slug": "architecture-delta",
+  "category": "technical",
+  "name": "Architecture delta",
+  "summary": "Before and After topology panels of a checkout service moving from synchronous calls to an event queue, with unchanged nodes in identical positions. Added, changed, rewired and removed parts carry +, ~ and - tags tied to a numbered Changes ledger along the bottom.",
+  "use_for": "Showing what a migration or refactor adds, removes and rewires in a system's topology while holding everything else still.",
+  "keywords": [
+   "architecture delta",
+   "before after",
+   "migration",
+   "refactor",
+   "topology diff",
+   "change ledger",
+   "rewire",
+   "service extraction",
+   "event queue",
+   "design review"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "dependency-graph",
+  "category": "software",
+  "name": "Dependency graph",
+  "summary": "Eight monorepo packages in four build-order layers, left to right, with arrows from each package to what it depends on and a fan-in count on every box. The shared core library with the most dependents is highlighted, and a dashed back edge between auth and users is flagged as a cycle with no valid build order.",
+  "use_for": "Showing build order, the blast radius of a change, and dependency cycles across packages, modules or services.",
+  "keywords": [
+   "dependency",
+   "dependencies",
+   "monorepo",
+   "packages",
+   "build order",
+   "fan-in",
+   "blast radius",
+   "cycle",
+   "circular import",
+   "modules",
+   "imports",
+   "topological"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "coverage-matrix",
+  "category": "analysis",
+  "name": "Coverage matrix",
+  "summary": "An API client SDK in Python, TypeScript, Go and Java checked against six capabilities, each cell marked full, partial or none by shape and glyph. Row and column totals (15/24 overall) show Go at 2/6, accented as the column to close next, with streaming and telemetry as its biggest gaps.",
+  "use_for": "Showing which items cover which capabilities, such as feature parity across languages or platforms, release gap analysis, or role by component permissions.",
+  "keywords": [
+   "coverage",
+   "matrix",
+   "parity",
+   "gap analysis",
+   "support matrix",
+   "feature matrix",
+   "permissions",
+   "capabilities",
+   "sdk",
+   "compatibility",
+   "checklist grid"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "fishbone",
+  "category": "analysis",
+  "name": "Fishbone (cause and effect)",
+  "summary": "Root cause analysis of p95 checkout latency up 40% after release 3.2: six category ribs (Code, Config, Data, Dependencies, Infrastructure, Process) hang two or three causes each off a spine that ends at the effect box. The N+1 cart query is marked as the confirmed root cause, a slower tax API is struck out as ruled out, and the rest stay open as suspects.",
+  "use_for": "Explaining a postmortem or open investigation by showing every cause checked for one observed effect, grouped by category, and which one the evidence confirmed.",
+  "keywords": [
+   "fishbone",
+   "ishikawa",
+   "root cause",
+   "cause and effect",
+   "postmortem",
+   "incident review",
+   "rca",
+   "regression",
+   "investigation",
+   "latency",
+   "ruled out"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "story-map",
+  "category": "planning",
+  "name": "Story map",
+  "summary": "A user story map for a self-serve API key feature: five developer activities (sign up, create key, call API, watch usage, rotate key) across the top, story cards stacked under each, sliced into a Release 1 walking skeleton, Release 2 and Later. A colored release cut sits under the first slice and zero-downtime rotation is flagged as the riskiest story.",
+  "use_for": "Showing how a feature is scoped into releases, which thin end-to-end slice ships first and what is cut.",
+  "keywords": [
+   "story map",
+   "user story map",
+   "release planning",
+   "walking skeleton",
+   "mvp",
+   "release slice",
+   "backbone",
+   "scope cut",
+   "backlog",
+   "user activities"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "wardley-map",
+  "category": "business-strategy",
+  "name": "Wardley map",
+  "summary": "A CI platform's value chain, from a developer's need for fast feedback down through the CI pipeline, test sharding, build cache and artifact store to compute, with each component placed in an evolution stage from Genesis to Commodity. Each component is tagged build, buy or outsource, and a dashed colored arrow shows the homegrown build cache moving toward a bought product.",
+  "use_for": "Explaining which parts of a platform to build, buy or outsource, what to commoditise next, and the strategic moves that follow.",
+  "keywords": [
+   "wardley",
+   "value chain",
+   "evolution",
+   "build vs buy",
+   "commodity",
+   "strategy",
+   "outsource",
+   "genesis",
+   "platform",
+   "dependencies"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "sankey-diagram",
+  "category": "data-visualization",
+  "name": "Sankey diagram",
+  "summary": "Three stage columns of thin bars joined by bands whose width is proportional to volume: 10,000 API requests per second split into 6,200 CDN cache hits served at the edge and 3,800 origin requests, which divide into 2,100 served from Redis, 800 from Postgres, 860 writes and 40 errors. One scale (1 px = 20 req/s) holds for every band and each column sums to 10,000.",
+  "use_for": "Showing how a quantity such as traffic, cost or tokens splits and merges across a few stages, with band width carrying the magnitude.",
+  "keywords": [
+   "sankey",
+   "flow",
+   "traffic split",
+   "cache hit ratio",
+   "cost allocation",
+   "token usage",
+   "volume",
+   "breakdown",
+   "splits and merges",
+   "quantity flow",
+   "alluvial"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "waterfall-chart",
+  "category": "data-visualization",
+  "name": "Waterfall chart",
+  "summary": "A monthly cloud bill bridge from $84k in August to $71k in September: +$6k new region, -$9k rightsizing, -$7k reserved instances, +$3k traffic growth and -$6k log retention cut, each floating between running totals linked by dashed lines. Increases and decreases take different fills and print their sign, and a sticky note says $22k of savings outweigh $9k of growth.",
+  "use_for": "Explaining how a start total becomes an end total through signed contributions, such as a cost, latency budget or headcount bridge.",
+  "keywords": [
+   "waterfall",
+   "bridge",
+   "walk",
+   "budget",
+   "cost",
+   "variance",
+   "delta",
+   "running total",
+   "cloud bill",
+   "month over month",
+   "headcount",
+   "latency budget"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "line-chart",
+  "category": "data-visualization",
+  "name": "Line chart",
+  "summary": "Weekly p95 CI build time over 12 weeks for three pipelines against a dashed 10 minute target, labelled at their line ends. A dashed rule with a badge marks the week the remote cache was turned on: the accented web line drops from 16.4 to 6.9 minutes, api falls under the target and mobile keeps rising.",
+  "use_for": "Showing how a metric trends over time for a few series, before and after a change, and against a target or SLO.",
+  "keywords": [
+   "line chart",
+   "trend",
+   "time series",
+   "over time",
+   "before after",
+   "change point",
+   "slo",
+   "target line",
+   "build time",
+   "latency",
+   "weekly metric"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "treemap",
+  "category": "data-visualization",
+  "name": "Treemap",
+  "summary": "Where 120 minutes of CI test time goes in a monorepo: three team regions (Payments 54, Platform 40, Web 26 min) tile eight packages as rectangles whose area matches their minutes, with the biggest, checkout-api at 30 minutes, outlined as a quarter of the total and a note to shard it.",
+  "use_for": "Showing a part-of-whole with many parts and a two-level hierarchy, such as cost by team and service, bundle size by module, or test time by team and package.",
+  "keywords": [
+   "treemap",
+   "part of whole",
+   "hierarchy",
+   "area",
+   "breakdown",
+   "ci time",
+   "test time",
+   "bundle size",
+   "cost by team",
+   "squarified",
+   "proportion"
+  ],
+  "uses_logos": false
+ },
+ {
+  "slug": "boundary-architecture",
+  "category": "technical",
+  "name": "Boundary architecture",
+  "summary": "A metrics ingestion platform inside one rounded PLATFORM BOUNDARY. Agents and SDKs (OTLP), edge collectors (batch push) and analysts (SQL) cross an mTLS gate bar into replicated write workers, a Postgres metadata DB, a compactor and a read only query API with two DuckDB engines. A short-lived role credentials bar leads to object storage and table catalogs split into platform owned and customer owned sub-boxes. Untrusted public dashboards reach a dashed public query proxy outside the boundary that holds a scoped token. Legend explains tints, dashed and stacked cards.",
+  "use_for": "Showing what crosses the trust boundary, what is checked at the edge, and where data lands, including who owns each store.",
+  "keywords": [
+   "boundary",
+   "trust boundary",
+   "security review",
+   "edge check",
+   "mtls",
+   "gateway",
+   "untrusted",
+   "ingestion",
+   "object storage",
+   "ownership",
+   "tenant",
+   "credentials",
+   "data residency"
+  ],
+  "uses_logos": false
  }
 ]

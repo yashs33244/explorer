@@ -1,22 +1,22 @@
 # Diagram types
 
-90 diagram types, each drawn once and rendered in both styles the explorer page offers: **hand-drawn** and **clean**. Every folder has the source `example.svg`, `hand.jpg`, `clean.jpg` and a README with when to use it and its anatomy.
+101 diagram types, each drawn once and rendered in both styles the explorer page offers: **hand-drawn** and **clean**. Every folder has the source `example.svg`, `hand.jpg`, `clean.jpg` and a README with when to use it and its anatomy.
 
 The skill picks a type with [`references/diagram-types.md`](../skills/codebase-explorer/references/diagram-types.md). The class kit is in [`references/diagram-kit.md`](../skills/codebase-explorer/references/diagram-kit.md). Regenerate this page with `node skills/codebase-explorer/scripts/build-catalog.js`.
 
 Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev). The logos are trademarks of their owners and are not covered by this repo's MIT license.
 
-- [Software and systems](#software-and-systems) (5)
-- [Technical and architecture](#technical-and-architecture) (3)
+- [Software and systems](#software-and-systems) (6)
+- [Technical and architecture](#technical-and-architecture) (5)
 - [Diagramming and mapping](#diagramming-and-mapping) (15)
 - [Process and workflow](#process-and-workflow) (7)
-- [Data visualization](#data-visualization) (7)
-- [Analysis and comparison](#analysis-and-comparison) (6)
-- [Planning and management](#planning-and-management) (9)
+- [Data visualization](#data-visualization) (11)
+- [Analysis and comparison](#analysis-and-comparison) (8)
+- [Planning and management](#planning-and-management) (10)
 - [Customer and user experience](#customer-and-user-experience) (6)
 - [Design and content](#design-and-content) (6)
 - [Organization and hierarchy](#organization-and-hierarchy) (5)
-- [Business and strategy](#business-and-strategy) (9)
+- [Business and strategy](#business-and-strategy) (10)
 - [Education](#education) (6)
 - [Creative](#creative) (3)
 - [Admin and reference](#admin-and-reference) (3)
@@ -30,6 +30,7 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**Data pipeline**](software/data-pipeline/) (logos) | Explaining how data moves from an OLTP database through streaming and batch stages to a dashboard, with the latency and contracts at each hop. | <img src="software/data-pipeline/clean.jpg" width="220" alt="Data pipeline, clean"> | <img src="software/data-pipeline/hand.jpg" width="220" alt="Data pipeline, hand-drawn"> |
 | [**Directory tree**](software/directory-tree/) (logos) | Showing where code lives in a repo, which folders deploy versus get imported, who owns each area, and how paths map to CI. | <img src="software/directory-tree/clean.jpg" width="220" alt="Directory tree, clean"> | <img src="software/directory-tree/hand.jpg" width="220" alt="Directory tree, hand-drawn"> |
 | [**Request lifecycle**](software/request-lifecycle/) (logos) | Walking through one request end to end to show which hop does what and where the latency goes. | <img src="software/request-lifecycle/clean.jpg" width="220" alt="Request lifecycle, clean"> | <img src="software/request-lifecycle/hand.jpg" width="220" alt="Request lifecycle, hand-drawn"> |
+| [**Dependency graph**](software/dependency-graph/) | Showing build order, the blast radius of a change, and dependency cycles across packages, modules or services. | <img src="software/dependency-graph/clean.jpg" width="220" alt="Dependency graph, clean"> | <img src="software/dependency-graph/hand.jpg" width="220" alt="Dependency graph, hand-drawn"> |
 
 ## Technical and architecture
 
@@ -38,6 +39,8 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**Cloud architecture diagram**](technical/cloud-architecture/) (logos) | Explaining which managed cloud services a system runs on, where the region and network boundaries are, and how the request path and async path move through them. | <img src="technical/cloud-architecture/clean.jpg" width="220" alt="Cloud architecture diagram, clean"> | <img src="technical/cloud-architecture/hand.jpg" width="220" alt="Cloud architecture diagram, hand-drawn"> |
 | [**Functional decomposition diagram**](technical/functional-decomposition/) | Explaining how a service or endpoint breaks into functions and sub-functions, and which team owns each branch. | <img src="technical/functional-decomposition/clean.jpg" width="220" alt="Functional decomposition diagram, clean"> | <img src="technical/functional-decomposition/hand.jpg" width="220" alt="Functional decomposition diagram, hand-drawn"> |
 | [**UML diagram (use case)**](technical/uml-use-case/) (logos) | Showing who can trigger what on an internal platform and which behaviours are always included versus conditional. | <img src="technical/uml-use-case/clean.jpg" width="220" alt="UML diagram (use case), clean"> | <img src="technical/uml-use-case/hand.jpg" width="220" alt="UML diagram (use case), hand-drawn"> |
+| [**Architecture delta**](technical/architecture-delta/) | Showing what a migration or refactor adds, removes and rewires in a system's topology while holding everything else still. | <img src="technical/architecture-delta/clean.jpg" width="220" alt="Architecture delta, clean"> | <img src="technical/architecture-delta/hand.jpg" width="220" alt="Architecture delta, hand-drawn"> |
+| [**Boundary architecture**](technical/boundary-architecture/) | Showing what crosses the trust boundary, what is checked at the edge, and where data lands, including who owns each store. | <img src="technical/boundary-architecture/clean.jpg" width="220" alt="Boundary architecture, clean"> | <img src="technical/boundary-architecture/hand.jpg" width="220" alt="Boundary architecture, hand-drawn"> |
 
 ## Diagramming and mapping
 
@@ -82,6 +85,10 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**Infographic**](data-visualization/infographic/) (logos) | Summarising a project's, platform's or migration's results in one glanceable card of small charts, each panel answering one question. | <img src="data-visualization/infographic/clean.jpg" width="220" alt="Infographic, clean"> | <img src="data-visualization/infographic/hand.jpg" width="220" alt="Infographic, hand-drawn"> |
 | [**Radar chart**](data-visualization/radar-chart/) (logos) | Comparing two or three technology options (databases, queues, frameworks) or a service's maturity scores across several normalised dimensions. | <img src="data-visualization/radar-chart/clean.jpg" width="220" alt="Radar chart, clean"> | <img src="data-visualization/radar-chart/hand.jpg" width="220" alt="Radar chart, hand-drawn"> |
 | [**Heat map**](data-visualization/heat-map/) (logos) | Showing when or where activity clusters across two categories, such as deploys, incidents or errors by day and hour or by service and region. | <img src="data-visualization/heat-map/clean.jpg" width="220" alt="Heat map, clean"> | <img src="data-visualization/heat-map/hand.jpg" width="220" alt="Heat map, hand-drawn"> |
+| [**Sankey diagram**](data-visualization/sankey-diagram/) | Showing how a quantity such as traffic, cost or tokens splits and merges across a few stages, with band width carrying the magnitude. | <img src="data-visualization/sankey-diagram/clean.jpg" width="220" alt="Sankey diagram, clean"> | <img src="data-visualization/sankey-diagram/hand.jpg" width="220" alt="Sankey diagram, hand-drawn"> |
+| [**Waterfall chart**](data-visualization/waterfall-chart/) | Explaining how a start total becomes an end total through signed contributions, such as a cost, latency budget or headcount bridge. | <img src="data-visualization/waterfall-chart/clean.jpg" width="220" alt="Waterfall chart, clean"> | <img src="data-visualization/waterfall-chart/hand.jpg" width="220" alt="Waterfall chart, hand-drawn"> |
+| [**Line chart**](data-visualization/line-chart/) | Showing how a metric trends over time for a few series, before and after a change, and against a target or SLO. | <img src="data-visualization/line-chart/clean.jpg" width="220" alt="Line chart, clean"> | <img src="data-visualization/line-chart/hand.jpg" width="220" alt="Line chart, hand-drawn"> |
+| [**Treemap**](data-visualization/treemap/) | Showing a part-of-whole with many parts and a two-level hierarchy, such as cost by team and service, bundle size by module, or test time by team and package. | <img src="data-visualization/treemap/clean.jpg" width="220" alt="Treemap, clean"> | <img src="data-visualization/treemap/hand.jpg" width="220" alt="Treemap, hand-drawn"> |
 
 ## Analysis and comparison
 
@@ -93,6 +100,8 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**Sandwich chart**](analysis/sandwich-chart/) (logos) | Explaining the sections of a PR, RFC or incident template, the order they go in and which audience reads each one. | <img src="analysis/sandwich-chart/clean.jpg" width="220" alt="Sandwich chart, clean"> | <img src="analysis/sandwich-chart/hand.jpg" width="220" alt="Sandwich chart, hand-drawn"> |
 | [**Decision tree**](analysis/decision-tree/) (logos) | Explaining how an architecture decision or triage rule reached its choice through a series of yes or no questions. | <img src="analysis/decision-tree/clean.jpg" width="220" alt="Decision tree, clean"> | <img src="analysis/decision-tree/hand.jpg" width="220" alt="Decision tree, hand-drawn"> |
 | [**Outcome mapping**](analysis/outcome-mapping/) (logos) | Explaining how a platform or DevEx investment turns from activities into countable outputs, behavior outcomes and delivery impact. | <img src="analysis/outcome-mapping/clean.jpg" width="220" alt="Outcome mapping, clean"> | <img src="analysis/outcome-mapping/hand.jpg" width="220" alt="Outcome mapping, hand-drawn"> |
+| [**Coverage matrix**](analysis/coverage-matrix/) | Showing which items cover which capabilities, such as feature parity across languages or platforms, release gap analysis, or role by component permissions. | <img src="analysis/coverage-matrix/clean.jpg" width="220" alt="Coverage matrix, clean"> | <img src="analysis/coverage-matrix/hand.jpg" width="220" alt="Coverage matrix, hand-drawn"> |
+| [**Fishbone (cause and effect)**](analysis/fishbone/) | Explaining a postmortem or open investigation by showing every cause checked for one observed effect, grouped by category, and which one the evidence confirmed. | <img src="analysis/fishbone/clean.jpg" width="220" alt="Fishbone (cause and effect), clean"> | <img src="analysis/fishbone/hand.jpg" width="220" alt="Fishbone (cause and effect), hand-drawn"> |
 
 ## Planning and management
 
@@ -107,6 +116,7 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**Time blocking calendar**](planning/time-blocking/) (logos) | Explaining how an engineer protects focus time around standups, reviews, deploys and on-call interrupts, and what an on-call week costs in calendar time. | <img src="planning/time-blocking/clean.jpg" width="220" alt="Time blocking calendar, clean"> | <img src="planning/time-blocking/hand.jpg" width="220" alt="Time blocking calendar, hand-drawn"> |
 | [**Weekly schedule planning**](planning/weekly-schedule/) (logos) | Explaining the ceremony rhythm of a sprint week, where focus time survives, and what happens on ship day. | <img src="planning/weekly-schedule/clean.jpg" width="220" alt="Weekly schedule planning, clean"> | <img src="planning/weekly-schedule/hand.jpg" width="220" alt="Weekly schedule planning, hand-drawn"> |
 | [**To do list**](planning/todo-list/) | Showing what must be true before a release or cutover ships, who owns each item, and which open item is blocking it. | <img src="planning/todo-list/clean.jpg" width="220" alt="To do list, clean"> | <img src="planning/todo-list/hand.jpg" width="220" alt="To do list, hand-drawn"> |
+| [**Story map**](planning/story-map/) | Showing how a feature is scoped into releases, which thin end-to-end slice ships first and what is cut. | <img src="planning/story-map/clean.jpg" width="220" alt="Story map, clean"> | <img src="planning/story-map/hand.jpg" width="220" alt="Story map, hand-drawn"> |
 
 ## Customer and user experience
 
@@ -153,6 +163,7 @@ Rows marked (logos) show product logos provided by [Logo.dev](https://logo.dev).
 | [**Quick reference guide**](business-strategy/quick-reference-guide/) (logos) | Showing the handful of commands or facts an engineer needs under pressure, grouped by intent, with the risky ones flagged. | <img src="business-strategy/quick-reference-guide/clean.jpg" width="220" alt="Quick reference guide, clean"> | <img src="business-strategy/quick-reference-guide/hand.jpg" width="220" alt="Quick reference guide, hand-drawn"> |
 | [**Marketing mix (4Ps)**](business-strategy/marketing-mix/) (logos) | Explaining how a developer tool or SDK is packaged, priced, distributed and announced, and where engineering choices carry go-to-market decisions. | <img src="business-strategy/marketing-mix/clean.jpg" width="220" alt="Marketing mix (4Ps), clean"> | <img src="business-strategy/marketing-mix/hand.jpg" width="220" alt="Marketing mix (4Ps), hand-drawn"> |
 | [**PEST analysis**](business-strategy/pest-analysis/) (logos) | Showing the outside forces (regulation, cost, developer expectations, technology) that shape a platform launch and which decisions they drove. | <img src="business-strategy/pest-analysis/clean.jpg" width="220" alt="PEST analysis, clean"> | <img src="business-strategy/pest-analysis/hand.jpg" width="220" alt="PEST analysis, hand-drawn"> |
+| [**Wardley map**](business-strategy/wardley-map/) | Explaining which parts of a platform to build, buy or outsource, what to commoditise next, and the strategic moves that follow. | <img src="business-strategy/wardley-map/clean.jpg" width="220" alt="Wardley map, clean"> | <img src="business-strategy/wardley-map/hand.jpg" width="220" alt="Wardley map, hand-drawn"> |
 
 ## Education
 
