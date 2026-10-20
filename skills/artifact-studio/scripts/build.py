@@ -17,7 +17,21 @@ KEY matches svg/KEY.svg and an entry in figs.json:
           "title": "Where the fields flow",
           "caption": "One or two sentences.",
           "badges": ["step one", "step two"],          # numbered legend (optional)
-          "legend": [["--cl1-f", "label"]]}}            # colour chips (optional)
+          "legend": [["--cl1-f", "label"]],            # colour chips (optional); "line", "line dash", "line dot" draw line styles
+          "size": "bleed"}}                           # optional: "wide" fills the text column, "bleed" nearly the window
+
+An "anatomy" figure is a crafted, interactive isometric object built with the anatomy
+skill (references/detailed-figures.md). It needs no svg/KEY.svg:
+
+  {"d4": {"type": "anatomy", "src": "anatomy/lock-light.html", "height": 620,
+          "why": "...", "title": "...", "caption": "..."}}
+
+"src" is relative to the figs.json that names it. The built page is embedded live
+with iframe srcdoc, so the artifact stays one file.
+
+A badge can also be {"t": "Short name", "d": "What it does and why it matters.", "file": "src/x.py"};
+then the figure gets a detailed walkthrough under it (one row per badge). Engineering pages
+(--kind engineering, or "kind": "engineering" on a site page) should use detailed badges.
 
 "type" must be a type in the explorer repo's diagram-types/catalog.json; see
 ../references/choosing-diagrams.md for which type answers which question.
@@ -37,6 +51,7 @@ site.json (paths are relative to the site.json folder):
       "summary": "One line for the card.",  # optional; defaults to the body's p.lede
       "group": "Decide",                  # optional; consecutive pages with one group share a heading on the index
       "body": "overview.html",
+      "kind": "engineering",              # optional; turns on the engineering checks for this page
       "figs": "overview.figs.json",       # optional
       "svg": "svg"}]}                     # optional, overrides the site default
 
@@ -67,9 +82,19 @@ def load_types():
     return types
 
 
+ANATOMY = 'Isometric object (anatomy)'
+
+
 def check_types(figs, types):
     for key, spec in figs.items():
         given = spec.get('type', '')
+        if given.lower() in ('anatomy', ANATOMY.lower()):
+            spec['type'] = ANATOMY
+            if not spec.get('src'):
+                sys.exit(f'{key}: an anatomy figure needs "src", the page its build.mjs wrote')
+            if not spec.get('why'):
+                print(f'warning: {key} has no "why" (the reader question it answers)', file=sys.stderr)
+            continue
         name = types.get(given) or types.get(given.lower())
         if not name:
             near = difflib.get_close_matches(given.lower(), types.keys(), n=3, cutoff=0.4)
@@ -83,36 +108,123 @@ def check_types(figs, types):
               'pick one type per reader question (references/choosing-diagrams.md)', file=sys.stderr)
 
 
-def figure(key, spec, svg_dir):
-    svg = open(os.path.join(svg_dir, f'{key}.svg')).read()
-    svg = svg.replace(' xmlns="http://www.w3.org/2000/svg"', '', 1)
+# Types drawn big by default: they hold many small labels and need nearly the whole window.
+BLEED_TYPES = {'Repo map'}
+
+
+def badge(i, b):
+    if isinstance(b, str):
+        return f'<li><b>{i + 1}</b><span>{html.escape(b)}</span></li>'
+    if not isinstance(b, dict) or not b.get('t'):
+        sys.exit(f'badge {i + 1}: a detailed badge needs "t" (and usually "d", "file"): {b!r}')
+    where = f' <code>{html.escape(b["file"])}</code>' if b.get('file') else ''
+    return (f'<li><b>{i + 1}</b><div><strong>{html.escape(b["t"])}</strong>'
+            f'<p>{html.escape(b.get("d", ""))}{where}</p></div></li>')
+
+
+def legend_item(c, l):
+    if c.startswith('line'):  # "line", "line dash", "line dot": a line-style key, not a colour chip
+        return f'<span><i class="ln {html.escape(c[4:].strip())}"></i>{html.escape(l)}</span>'
+    return f'<span><i style="background:var({c})"></i>{html.escape(l)}</span>'
+
+
+RELATIVE = re.compile(r'\b(?:src|href)="(?!data:|https?:|#|about:|javascript:)[^"]+"')
+
+
+def anatomy_frame(spec, base):
+    doc = open(os.path.join(base, spec['src'])).read()
+    # srcdoc has no base URL, so a relative asset in the built page would not load
+    rel = RELATIVE.findall(doc)
+    if rel:
+        print(f'warning: {spec["src"]} links {len(rel)} relative file(s) ({rel[0]}); they will not load inside srcdoc. '
+              'Build the anatomy page standalone (kitScript() inlined) or embed the assets as data: URIs', file=sys.stderr)
+    h = int(spec.get('height', 620))
+    return (f'<iframe class="anat" title="{html.escape(spec["title"])}" loading="lazy" style="height:{h}px" '
+            f'srcdoc="{html.escape(doc, quote=True)}"></iframe>')
+
+
+def figure(key, spec, svg_dir, base='.'):
     title = html.escape(spec['title'])
+    if spec['type'] == ANATOMY:
+        svg = anatomy_frame(spec, base)
+    else:
+        svg = open(os.path.join(svg_dir, f'{key}.svg')).read()
+        svg = svg.replace(' xmlns="http://www.w3.org/2000/svg"', '', 1)
     extra = ''
     if spec.get('badges'):
-        extra += '<ol class="badges">' + ''.join(
-            f'<li><b>{i + 1}</b><span>{html.escape(s)}</span></li>' for i, s in enumerate(spec['badges'])) + '</ol>'
+        detail = ' detail' if any(not isinstance(b, str) for b in spec['badges']) else ''
+        extra += f'<ol class="badges{detail}">' + ''.join(badge(i, b) for i, b in enumerate(spec['badges'])) + '</ol>'
     if spec.get('legend'):
-        extra += '<div class="legend">' + ''.join(
-            f'<span><i style="background:var({c})"></i>{html.escape(l)}</span>' for c, l in spec['legend']) + '</div>'
-    wide = ' wide' if spec.get('wide') else ''  # wide figures (timelines, long flows) fill the content width
+        extra += '<div class="legend">' + ''.join(legend_item(c, l) for c, l in spec['legend']) + '</div>'
+    size = spec.get('size') or ('wide' if spec.get('wide') else '')
+    if not size and spec.get('type') in BLEED_TYPES:
+        size = 'bleed'
+    if size not in ('', 'wide', 'bleed'):
+        sys.exit(f'{key}: "size" must be "wide" or "bleed", not "{size}"')
+    wide = f' {size}' if size else ''
     return (f'<figure class="fig{wide}" data-title="{title}"><div class="figbar">'
             f'<span class="ftype">{html.escape(spec.get("type", ""))}</span>'
             f'<button class="fzoom" type="button" aria-label="Open {title} full screen">Full screen</button></div>'
             f'<div class="figscroll">{svg}</div><figcaption>{html.escape(spec.get("caption", ""))}</figcaption>{extra}</figure>')
 
 
-def fill_figs(body, figs, svg_dir, types):
-    """Check figure types, then swap every {{fig:KEY}} for its figure."""
+def fill_figs(body, figs, svg_dir, types, base='.'):
+    """Check figure types, then swap every {{fig:KEY}} for its figure in one pass over the
+    body, so text inside an inserted figure (an anatomy page, an SVG) is never rescanned."""
     check_types(figs, types)
-    for key, spec in figs.items():
-        mark = '{{fig:' + key + '}}'
-        if mark not in body:
-            sys.exit(f'body has no {mark}')
-        body = body.replace(mark, figure(key, spec, svg_dir))
-    left = re.findall(r'\{\{fig:[^}]+\}\}', body)
+    marks = re.findall(r'\{\{fig:([^}]+)\}\}', body)
+    for key in figs:
+        if key not in marks:
+            sys.exit(f'body has no {{{{fig:{key}}}}}')
+    left = sorted({k for k in marks if k not in figs})
     if left:
-        sys.exit(f'no figs.json entry for {left}')
-    return body
+        sys.exit(f'no figs.json entry for {["{{fig:" + k + "}}" for k in left]}')
+    done = {}
+    def swap(m):
+        k = m.group(1)
+        if k not in done:
+            done[k] = figure(k, figs[k], svg_dir, base)
+        return done[k]
+    return re.sub(r'\{\{fig:([^}]+)\}\}', swap, body)
+
+
+# a whole class token, so kit classes such as d-k or keyframe names never count as highlights
+# a whole class token in single or double quotes, so kit classes such as d-k never count as highlights
+HIGHLIGHT = re.compile(r'<mark\b|class=(["\'])(?:(?!\1).)*?(?<![\w-])(?:hl|k|metric|key|good|bad|callout)(?![\w-])')
+KEYED = re.compile(r'<(?:th|tr)\b[^>]*class=(["\'])(?:(?!\1).)*?(?<![\w-])(?:key|good|bad)(?![\w-])')
+HEADINGS = re.compile(r'<h[2-4]\b[^>]*>(.*?)</h[2-4]>', re.S)
+
+
+def lint(body, figs, where, kind=''):
+    """Warn about pages that bury the point: nothing highlighted, tables without a key
+    column or row, and engineering pages missing the depth a reviewer needs."""
+    warn = lambda m: print(f'warning: {where}: {m}', file=sys.stderr)
+    if not HIGHLIGHT.search(body):
+        warn('nothing is highlighted; mark the sentence that matters (<mark>), key terms (<b class="k">), '
+             'the deciding table column (<th class="key">) or rows (<tr class="key">) (references/highlighting.md)')
+    for n, t in enumerate(re.findall(r'<table\b.*?</table>', body, re.S), 1):
+        if '<thead' not in t:
+            warn(f'table {n} has no <thead>; the key column tint, sorting and filters need one')
+        # the widest header row, counting colspans, is the table's column count
+        cols = max([sum(int(c or 1) for c in re.findall(r'<th\b(?:[^>]*colspan=["\']?(\d+))?', tr))
+                    for tr in re.findall(r'<tr\b.*?</tr>', re.search(r'<thead\b.*?</thead>', t, re.S).group(0), re.S)]
+                   or [0]) if '<thead' in t else 0
+        if cols >= 4 and not KEYED.search(t):
+            warn(f'table {n} has {cols} columns and no highlighted column (th class="key") or row (tr class="key")')
+    if kind != 'engineering':
+        return
+    # look at section headings, as whole words, so "latest" or "failover" in a sentence does not count
+    heads = ' '.join(text(h).lower() for h in HEADINGS.findall(body))
+    for need, pat in (('failure modes or risks section', r'\b(failures?|failure modes|risks?|what can go wrong)\b'),
+                      ('verification or tests section', r'\b(verification|verify|tests?|testing|checks|how we know)\b')):
+        if not re.search(pat, heads):
+            warn(f'engineering page has no {need} heading (references/engineering.md)')
+    if not re.search(r'<td\b[^>]*>(?:(?!</td>).)*<code\b', body, re.S):
+        warn('engineering page has no table naming real files or commands in <code> (references/engineering.md)')
+    plain = [k for k, s in figs.items() if s.get('badges') and all(isinstance(b, str) for b in s['badges'])]
+    if plain:
+        warn(f'figures {", ".join(plain)} use one-line badges; engineering figures explain each badge '
+             'with {"t", "d", "file"} (references/engineering.md)')
 
 
 def page_html(title, body, nav=''):
@@ -125,7 +237,8 @@ def build_single(a):
         sys.exit('single page mode needs --title and --body (or use --site site.json)')
     body = open(a.body).read()
     figs = json.load(open(a.figs)) if a.figs else {}
-    page = page_html(a.title, fill_figs(body, figs, a.svg, load_types()))
+    lint(body, figs, a.body, a.kind)
+    page = page_html(a.title, fill_figs(body, figs, a.svg, load_types(), os.path.dirname(os.path.abspath(a.figs or a.body))))
     open(a.out, 'w').write(page)
     print(f'{a.out}: {len(page)} bytes, {len(figs)} diagrams')
 
@@ -217,8 +330,10 @@ def build_site(a):
     for i, p in enumerate(pages):
         body = open(rel(p['body'])).read()
         figs = json.load(open(rel(p['figs']))) if p.get('figs') else {}
+        lint(body, figs, p['slug'], p.get('kind', ''))
         try:
-            body = fill_figs(body, figs, rel(p.get('svg', default_svg)), types)
+            figs_dir = os.path.dirname(rel(p['figs'])) if p.get('figs') else root
+            body = fill_figs(body, figs, rel(p.get('svg', default_svg)), types, figs_dir)
         except SystemExit as e:
             sys.exit(f'{p["slug"]}: {e}')
         summary = p.get('summary') or lede(body)
@@ -255,7 +370,8 @@ def build_site(a):
     if site.get('intro'):
         figs = json.load(open(rel(site['intro_figs']))) if site.get('intro_figs') else {}
         try:
-            intro = fill_figs(open(rel(site['intro'])).read(), figs, rel(default_svg), types)
+            figs_dir = os.path.dirname(rel(site['intro_figs'])) if site.get('intro_figs') else root
+            intro = fill_figs(open(rel(site['intro'])).read(), figs, rel(default_svg), types, figs_dir)
         except SystemExit as e:
             sys.exit(f'index intro: {e}')
         total += len(figs)
@@ -282,6 +398,7 @@ def main():
     ap.add_argument('--body')
     ap.add_argument('--svg', default='svg')
     ap.add_argument('--figs', default=None)
+    ap.add_argument('--kind', default='', help='"engineering" turns on the engineering depth checks')
     ap.add_argument('--site', help='site.json; then --out is the output folder')
     ap.add_argument('--out', required=True)
     a = ap.parse_args()
