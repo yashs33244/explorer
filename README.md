@@ -2,12 +2,12 @@
 
 **Agent skills that explain code and systems with real diagrams, not walls of text.**
 
-Ask your coding agent to explain a codebase, a design or a decision, and get back one self-contained HTML page: diagrams drawn in the form that fits each idea (90 types, from sequence diagrams to ERDs to journey maps), wide tables, a walk through the real files, and, for codebases, interview questions you can tick off. The agent draws every diagram as SVG, renders it in headless Chrome, looks at the result and fixes what it sees before you do.
+Ask your coding agent to explain a codebase, a design or a decision, and get back one self-contained HTML page: diagrams drawn in the form that fits each idea (101 types, from sequence diagrams to ERDs to journey maps), wide tables, a walk through the real files, and, for codebases, interview questions you can tick off. The agent draws every diagram as SVG, renders it in headless Chrome, looks at the result and fixes what it sees before you do.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](https://docs.claude.com/en/docs/claude-code)
 [![Agent Skills](https://img.shields.io/badge/agent%20skills-npx%20skills%20add-black)](https://skills.sh)
-[![Diagram types](https://img.shields.io/badge/diagram%20types-90-2ec98a)](diagram-types/README.md)
+[![Diagram types](https://img.shields.io/badge/diagram%20types-100-2ec98a)](diagram-types/README.md)
 [![Runtime dependencies](https://img.shields.io/badge/page%20dependencies-none-lightgrey)](#requirements)
 
 ![A field guide built by codebase-explorer](docs/img/hero.png)
@@ -17,9 +17,9 @@ Ask your coding agent to explain a codebase, a design or a decision, and get bac
 | Skill | Say this to your agent | You get |
 |---|---|---|
 | [`codebase-explorer`](skills/codebase-explorer/SKILL.md) | "Build a field guide for this repo." | A multi-topic beginner guide: 3 diagrams per topic (how it connects, a numbered lifecycle, the anatomy), a walk through real files and functions, scrolling tables, 8 to 10 interview questions per topic, light and dark themes, hand-drawn or clean diagrams. |
-| [`artifact-studio`](skills/artifact-studio/SKILL.md) | "Make an artefact explaining this design." | One shareable page for a single subject: a design doc, proposal, plan, review or comparison. Light theme, clean diagrams, wide tables, a Full screen view for every diagram. |
+| [`artifact-studio`](skills/artifact-studio/SKILL.md) | "Make an artefact explaining this design." | One shareable page, or a small multi-page site, for a single subject: a design doc, proposal, roadmap, review, comparison, investigation or report. Each figure is picked for the reader question it answers ([`choosing-diagrams.md`](skills/artifact-studio/references/choosing-diagrams.md)). Light theme, clean diagrams, wide tables, a Full screen view for every diagram; sites add an index, a shared nav, a section list per page and Previous / Next links. |
 
-Both use the same SVG diagram kit and the same [catalog of 90 diagram types](diagram-types/README.md), so a page reads like it was drawn by one person.
+Both use the same SVG diagram kit and the same [catalog of 101 diagram types](diagram-types/README.md), so a page reads like it was drawn by one person.
 
 ![A page built by artifact-studio](docs/img/artifact-studio.png)
 
@@ -49,7 +49,7 @@ Then just ask:
 
 ```mermaid
 flowchart LR
-    A[Read the real code<br/>or source material] --> B[Pick a diagram type<br/>from the 90-type catalog]
+    A[Read the real code<br/>or source material] --> B[Pick a diagram type<br/>from the 100-type catalog]
     B --> C[Draw the SVG<br/>with the kit classes]
     C --> D[Render in headless Chrome]
     D --> E{Looks right?}
@@ -70,7 +70,7 @@ Most generated docs draw everything as boxes and arrows. The catalog maps "what 
 | ![Gantt chart](diagram-types/planning/gantt-chart/clean.jpg) | ![Customer journey](diagram-types/customer-ux/customer-journey/clean.jpg) | ![Mind map, hand-drawn](diagram-types/mapping/mind-map/hand.jpg) |
 | Gantt chart | Customer journey | Mind map (hand-drawn) |
 
-90 types in 14 categories: software, technical, mapping, process and workflow, data visualization, planning, customer and UX, design and content, org and hierarchy, education, business strategy, analysis, creative and admin. Every type folder has the source `example.svg`, a hand-drawn and a clean render, and a README with when to use it and its anatomy. Browse them in [`diagram-types/`](diagram-types/README.md).
+101 types in 14 categories: software, technical, mapping, process and workflow, data visualization, planning, customer and UX, design and content, org and hierarchy, education, business strategy, analysis, creative and admin. Every type folder has the source `example.svg`, a hand-drawn and a clean render, and a README with when to use it and its anatomy. Browse them in [`diagram-types/`](diagram-types/README.md). Ten of them (architecture delta, dependency graph, coverage matrix, story map, Wardley map, sankey, waterfall, line chart, treemap, fishbone) adapt types from [diagram-design](https://github.com/cathrynlavery/diagram-design) (MIT) to this kit.
 
 ## Why not just Mermaid?
 
@@ -78,7 +78,7 @@ Mermaid is great for quick diagrams in Markdown, and this README uses it. These 
 
 | | Mermaid in Markdown | explorer skills |
 |---|---|---|
-| Diagram forms | A fixed set of chart grammars | 90 hand-authored types, picked per idea |
+| Diagram forms | A fixed set of chart grammars | 101 hand-authored types, picked per idea |
 | Layout control | Automatic | Exact: the agent places every box, label and badge |
 | Styles | Theme colors | Hand-drawn and clean from the same SVG, light and dark |
 | Product logos | No | Real logos via [logo.dev](https://logo.dev), monogram fallback |
@@ -105,6 +105,13 @@ cd skills/artifact-studio/examples/basic
 python3 ../../scripts/build.py --title "Request Lifecycle" \
   --body body.html --svg svg --figs figs.json --out /tmp/page.html
 open /tmp/page.html
+```
+
+A multi-page site (an index with one card per page, a shared top nav, an "On this page" list per page, Previous / Next links) builds from a `site.json` that lists the pages; see [`SKILL.md`](skills/artifact-studio/SKILL.md) for the format:
+
+```bash
+python3 skills/artifact-studio/scripts/build.py --site site.json --out site/
+open site/index.html
 ```
 
 | Architecture | Lifecycle |
@@ -137,11 +144,12 @@ skills/codebase-explorer/
   assets/                  style.css (page and diagram kit), app.js, icons.md, fonts/ (Excalifont license)
   references/              topic schema, diagram guide, diagram kit, diagram-type chooser, workflow template
 skills/artifact-studio/
-  SKILL.md                 the skill (one page, one subject)
-  scripts/build.py         body.html + SVGs + figs.json -> one HTML page (Python standard library only)
-  assets/page-template.html light theme, wide tables, Full screen diagram overlay
+  SKILL.md                 the skill (one page or a small multi-page site, one subject)
+  scripts/build.py         body.html + SVGs + figs.json -> one HTML page, or site.json -> index + one page per topic with nav, section list and Previous / Next; checks each figure type against the catalog and every link (Python standard library only)
+  references/choosing-diagrams.md  which diagram answers which reader question, per kind of page
+  assets/page-template.html light theme, wide tables, Full screen diagram overlay, site nav and section list
   examples/basic/          a minimal working page
-diagram-types/             90 diagram types: example SVG, hand.jpg, clean.jpg, README
+diagram-types/             101 diagram types: example SVG, hand.jpg, clean.jpg, README
 examples/postgres/         a complete field guide to learn from
 docs/how-it-works.md       how the diagrams and facts were produced
 ```
