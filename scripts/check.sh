@@ -1,6 +1,6 @@
 #!/bin/bash
 # Repo gate: run before every push. Exits non-zero on the first failure.
-#   catalog files and links, the example page, the repo map example, python syntax, no em dash.
+#   catalog files and links, the example page, the repo map example, python and shell syntax, no em dash.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TMP="${TMPDIR:-/tmp}/explorer-check-$$"; mkdir -p "$TMP"; trap 'rm -rf "$TMP"' EXIT
@@ -19,8 +19,10 @@ RM="$ROOT/diagram-types/technical/repo-map"
 python3 "$AS/scripts/repo_map.py" "$RM/spec.json" > "$TMP/rm.svg" 2>/dev/null
 cmp -s "$TMP/rm.svg" "$RM/example.svg" || { echo "example.svg is stale: rerun repo_map.py spec.json > example.svg" >&2; exit 1; }
 
-echo "4. python syntax"
-python3 -m py_compile "$AS/scripts/build.py" "$AS/scripts/repo_map.py"
+echo "4. python and shell syntax"
+EX="$ROOT/skills/artifact-studio-explainer"
+PYTHONPYCACHEPREFIX="$TMP/pycache" python3 -m py_compile "$AS/scripts/build.py" "$AS/scripts/repo_map.py" "$EX"/manim/*.py "$EX"/scripts/*.py
+for f in "$EX"/manim/*.sh "$EX"/scripts/*.sh; do bash -n "$f"; done
 
 echo "5. no em dash"
 if git -C "$ROOT" ls-files -z --cached --others --exclude-standard -- '*.md' '*.html' '*.py' '*.js' '*.json' '*.css' '*.sh' '*.svg' \
