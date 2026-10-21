@@ -119,9 +119,11 @@ tr.hide { display: none; }
 .fzoom { font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--acc); background: var(--paper); border: 1.5px solid #cfe2fc; border-radius: 10px; padding: 4px 12px; cursor: pointer; }
 .fzoom:hover, .fzoom:focus-visible { border-color: var(--acc); }
 /* block, not a centred flex box: a centred flex child that overflows loses its left edge for good */
-.figscroll { display: block; padding: 10px 0 4px; overflow-x: auto; }
-.figscroll svg.hd { display: block; width: 100%; max-width: 1180px; height: auto; max-height: 88vh; margin: 0 auto; }
+/* side padding keeps every drawing clear of the frame: 16px on phones up to 64px on wide screens */
+.figscroll { display: block; padding: 14px clamp(16px, 5vw, 64px) 6px; overflow-x: auto; }
+.figscroll svg.hd { display: block; width: 100%; max-width: 1080px; height: auto; max-height: 88vh; margin: 0 auto; }
 .fig:is(.wide, .bleed) .figscroll svg.hd { max-width: none; max-height: none; }
+.fig.bleed .figscroll { padding-inline: 16px; }  /* a bleed figure already has the window margin around it */
 @media (max-width: 700px) { .fig.bleed .figscroll svg.hd { min-width: 900px; } }
 figcaption { font-size: 0.92rem; color: var(--muted); margin: 14px auto 0; max-width: 1180px; }
 figcaption b, figcaption strong { color: var(--ink); }

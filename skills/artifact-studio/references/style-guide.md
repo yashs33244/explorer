@@ -24,7 +24,7 @@ Fonts: Bricolage Grotesque for headings (`h1`, `h2`, `d-h`, `d-zt`), Figtree for
 
 | Size | figs.json | Width on a 1440px screen | Use for |
 |---|---|---|---|
-| inline (default) | nothing | up to 1180px, height capped at 88vh | most figures (viewBox 800 wide) |
+| inline (default) | nothing | up to 1080px inside 16 to 64px of side padding, height capped at 88vh | most figures (viewBox 800 wide) |
 | wide | `"size": "wide"` | the full text column | timelines, long flows, short and wide figures |
 | bleed | `"size": "bleed"` | wider than the text column, keeping about 40px on each side (16px on phones) | repo maps, dense architecture (viewBox 1200 to 1400 wide); default for `repo-map` |
 
