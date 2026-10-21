@@ -44,47 +44,73 @@
   <rect class="d-fillpaper" x="684" y="432" width="12" height="52"/>
 
   <!-- messages: solid = request, dashed = response -->
+  <g data-step="1">
   <path class="d-edge" d="M116,112 H247" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="182" y="105" text-anchor="middle">GET /login</text>
+  </g>
+  <g data-step="2">
   <path class="d-edge dash" d="M249,148 H118" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="182" y="141" text-anchor="middle">302 /authorize</text>
+  </g>
+  <g data-step="3">
   <path class="d-edge acc" d="M116,184 H392" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="327" y="177" text-anchor="middle">GET /authorize + PKCE</text>
+  </g>
+  <g data-step="4">
   <path class="d-edge dash" d="M394,220 H118" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="327" y="213" text-anchor="middle">302 /callback?code</text>
+  </g>
+  <g data-step="5">
   <path class="d-edge" d="M116,256 H247" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="182" y="249" text-anchor="middle">GET /callback</text>
+  </g>
+  <g data-step="6">
   <path class="d-edge acc" d="M261,292 H392" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="327" y="285" text-anchor="middle">POST /token</text>
+  </g>
+  <g data-step="7">
   <path class="d-edge dash" d="M394,328 H263" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="327" y="321" text-anchor="middle">access + ID token</text>
+  </g>
+  <g data-step="8">
   <path class="d-edge" d="M261,364 H537" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="472" y="357" text-anchor="middle">GET /me, Bearer JWT</text>
+  </g>
+  <g data-step="9">
   <path class="d-edge" d="M551,394 H592 V414 H553" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="600" y="408">verify JWT sig</text>
+  </g>
+  <g data-step="10">
   <path class="d-edge" d="M551,444 H682" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="617" y="437" text-anchor="middle">SELECT user</text>
+  </g>
+  <g data-step="11">
   <path class="d-edge dash" d="M684,480 H553" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="617" y="473" text-anchor="middle">1 row</text>
+  </g>
+  <g data-step="12">
   <path class="d-edge dash" d="M539,516 H263" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="472" y="509" text-anchor="middle">200 profile JSON</text>
+  </g>
+  <g data-step="13">
   <path class="d-edge dash" d="M249,552 H118" marker-end="url(#sequence-diagram-d1-ah)"/>
   <text class="d-lab" x="182" y="545" text-anchor="middle">Set-Cookie: sid</text>
+  </g>
 
   <!-- step numbers -->
-  <g><circle class="d-badge" cx="30" cy="112" r="11"/><text class="d-bt" x="30" y="116">1</text></g>
-  <g><circle class="d-badge" cx="30" cy="148" r="11"/><text class="d-bt" x="30" y="152">2</text></g>
-  <g><circle class="d-badge" cx="30" cy="184" r="11"/><text class="d-bt" x="30" y="188">3</text></g>
-  <g><circle class="d-badge" cx="30" cy="220" r="11"/><text class="d-bt" x="30" y="224">4</text></g>
-  <g><circle class="d-badge" cx="30" cy="256" r="11"/><text class="d-bt" x="30" y="260">5</text></g>
-  <g><circle class="d-badge" cx="30" cy="292" r="11"/><text class="d-bt" x="30" y="296">6</text></g>
-  <g><circle class="d-badge" cx="30" cy="328" r="11"/><text class="d-bt" x="30" y="332">7</text></g>
-  <g><circle class="d-badge" cx="30" cy="364" r="11"/><text class="d-bt" x="30" y="368">8</text></g>
-  <g><circle class="d-badge" cx="30" cy="404" r="11"/><text class="d-bt" x="30" y="408">9</text></g>
-  <g><circle class="d-badge" cx="30" cy="444" r="11"/><text class="d-bt" x="30" y="448">10</text></g>
-  <g><circle class="d-badge" cx="30" cy="480" r="11"/><text class="d-bt" x="30" y="484">11</text></g>
-  <g><circle class="d-badge" cx="30" cy="516" r="11"/><text class="d-bt" x="30" y="520">12</text></g>
-  <g><circle class="d-badge" cx="30" cy="552" r="11"/><text class="d-bt" x="30" y="556">13</text></g>
+  <g data-step="1"><circle class="d-badge" cx="30" cy="112" r="11"/><text class="d-bt" x="30" y="116">1</text></g>
+  <g data-step="2"><circle class="d-badge" cx="30" cy="148" r="11"/><text class="d-bt" x="30" y="152">2</text></g>
+  <g data-step="3"><circle class="d-badge" cx="30" cy="184" r="11"/><text class="d-bt" x="30" y="188">3</text></g>
+  <g data-step="4"><circle class="d-badge" cx="30" cy="220" r="11"/><text class="d-bt" x="30" y="224">4</text></g>
+  <g data-step="5"><circle class="d-badge" cx="30" cy="256" r="11"/><text class="d-bt" x="30" y="260">5</text></g>
+  <g data-step="6"><circle class="d-badge" cx="30" cy="292" r="11"/><text class="d-bt" x="30" y="296">6</text></g>
+  <g data-step="7"><circle class="d-badge" cx="30" cy="328" r="11"/><text class="d-bt" x="30" y="332">7</text></g>
+  <g data-step="8"><circle class="d-badge" cx="30" cy="364" r="11"/><text class="d-bt" x="30" y="368">8</text></g>
+  <g data-step="9"><circle class="d-badge" cx="30" cy="404" r="11"/><text class="d-bt" x="30" y="408">9</text></g>
+  <g data-step="10"><circle class="d-badge" cx="30" cy="444" r="11"/><text class="d-bt" x="30" y="448">10</text></g>
+  <g data-step="11"><circle class="d-badge" cx="30" cy="480" r="11"/><text class="d-bt" x="30" y="484">11</text></g>
+  <g data-step="12"><circle class="d-badge" cx="30" cy="516" r="11"/><text class="d-bt" x="30" y="520">12</text></g>
+  <g data-step="13"><circle class="d-badge" cx="30" cy="552" r="11"/><text class="d-bt" x="30" y="556">13</text></g>
 
   <!-- legend -->
   <path class="d-edge" d="M110,610 H150" marker-end="url(#sequence-diagram-d1-ah)"/>

@@ -17,7 +17,7 @@ Run it before publishing. `build.py` checks the starred items and warns; the res
 - [ ] Within budget (9 nodes, 12 connectors, 2 accents) or split into overview and detail.
 - [ ] Rendered and read as a PNG; no overlaps, clipped text, wrong arrows; 32 units of margin.
 - [ ] Big figures use `"size": "bleed"`; repo maps are drawn with `repo_map.py`.
-- [ ] Parts and links carry `data-node` / `data-edge` where hover focus helps; ordered figures carry `data-step`.
+- [ ] Every figure is interactive: parts and links carry `data-node` / `data-edge`, ordered figures carry `data-step`. *
 - [ ] Detailed, isometric or 3D requests went to the anatomy skill (`detailed-figures.md`), light theme.
 
 ## Engineering pages (`--kind engineering`)

@@ -152,6 +152,10 @@ def figure(key, spec, svg_dir, base='.'):
     else:
         svg = open(os.path.join(svg_dir, f'{key}.svg')).read()
         svg = svg.replace(' xmlns="http://www.w3.org/2000/svg"', '', 1)
+        # every figure is interactive: hover focus on its parts, or a step-through for ordered ones
+        if not re.search(r'data-(?:node|edge|step)=', svg):
+            print(f'warning: figure {key} is not interactive; wrap its parts in <g data-node> and links in '
+                  '<g data-edge>, or its beats in <g data-step> (references/interactive.md)', file=sys.stderr)
     extra = ''
     if spec.get('badges'):
         detail = ' detail' if any(not isinstance(b, str) for b in spec['badges']) else ''
