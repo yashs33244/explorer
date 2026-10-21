@@ -26,7 +26,7 @@ Fonts: Bricolage Grotesque for headings (`h1`, `h2`, `d-h`, `d-zt`), Figtree for
 |---|---|---|---|
 | inline (default) | nothing | up to 1180px, height capped at 88vh | most figures (viewBox 800 wide) |
 | wide | `"size": "wide"` | the full text column | timelines, long flows, short and wide figures |
-| bleed | `"size": "bleed"` | nearly the whole window (12px gutters) | repo maps, dense architecture (viewBox 1200 to 1400 wide); default for `repo-map` |
+| bleed | `"size": "bleed"` | wider than the text column, keeping about 40px on each side (16px on phones) | repo maps, dense architecture (viewBox 1200 to 1400 wide); default for `repo-map` |
 
 The page column is `min(1480px, 100% - 40px)`: small side margins so tables and figures get the room, prose capped at 75ch. In site mode a bleed figure stays inside the page column so it never covers the "On this page" list.
 

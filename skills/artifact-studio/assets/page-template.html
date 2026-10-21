@@ -109,7 +109,8 @@ tr.hide { display: none; }
 /* figures */
 .fig { margin: 22px auto 26px; background: var(--cl-bg); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px 18px; }
 /* bleed figures (repo maps, big architecture) break out of the text column to nearly the full window */
-.fig.bleed { width: min(100vw - 24px, 1880px); position: relative; left: 50%; transform: translateX(-50%); }
+.fig.bleed { width: max(100%, min(100vw - 80px, 1840px)); position: relative; left: 50%; transform: translateX(-50%); }
+@media (max-width: 700px) { .fig.bleed { width: calc(100vw - 32px); } }
 /* inside a site page, a grid or a card, bleed stays in its column instead of covering its neighbours */
 :is(.sitepage, .grid2, .cards, .card) .fig.bleed { width: auto; left: 0; transform: none; }
 :is(.grid2, .cards) > .fig { min-width: 0; margin-inline: 0; }  /* auto margins would size a grid item to its content */
