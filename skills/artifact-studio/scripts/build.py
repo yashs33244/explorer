@@ -17,7 +17,7 @@ KEY matches svg/KEY.svg and an entry in figs.json:
           "title": "Where the fields flow",
           "caption": "One or two sentences.",
           "badges": ["step one", "step two"],          # numbered legend (optional)
-          "legend": [["--cl1-f", "label"]],            # colour chips (optional); "line", "line dash", "line dot" draw line styles
+          "legend": [["--cl1-f", "label"]],            # colour chips (optional); "line", "line dash", "line dot", "line acc" draw line styles
           "size": "bleed"}}                           # optional: "wide" fills the text column, "bleed" nearly the window
 
 An "anatomy" figure is a crafted, interactive isometric object built with the anatomy
@@ -123,8 +123,10 @@ def badge(i, b):
 
 
 def legend_item(c, l):
-    if c.startswith('line'):  # "line", "line dash", "line dot": a line-style key, not a colour chip
+    if c.startswith('line'):  # "line", "line dash", "line dot", "line acc": a line-style key, not a colour chip
         return f'<span><i class="ln {html.escape(c[4:].strip())}"></i>{html.escape(l)}</span>'
+    if not c.startswith('--'):
+        sys.exit(f'legend "{l}": the key must be a colour token such as "--cl1-f" or a line style such as "line dash", not "{c}"')
     return f'<span><i style="background:var({c})"></i>{html.escape(l)}</span>'
 
 

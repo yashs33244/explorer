@@ -140,6 +140,7 @@ ol.badges.detail code { font-size: 0.8em; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.88rem; color: var(--muted); margin: 8px auto 0; max-width: 1180px; }
 .legend i.ln { width: 26px; height: 0; border: 0; border-top: 2px solid var(--cl-line); border-radius: 0; vertical-align: 4px; background: none !important; }
 .legend i.ln.dash { border-top-style: dashed; } .legend i.ln.dot { border-top-style: dotted; border-top-width: 3px; }
+.legend i.ln.acc { border-top-color: var(--cl-acc); }
 .legend i { display: inline-block; width: 14px; height: 14px; border: 1.5px solid var(--cl-line); border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
 
 /* multi-page site: top nav, contents cards, in-page section list, prev/next */
@@ -488,7 +489,7 @@ svg.hd .d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
       if (!i) return;
       var m = (i.getAttribute('style') || '').match(/--cl(\d)-[a-z]/);
       if (m) sel = '.g' + m[1];
-      else if (i.classList.contains('ln')) sel = i.classList.contains('dash') ? '.d-edge.dash' : i.classList.contains('dot') ? '.d-edge.dot' : '.d-edge:not(.dash):not(.dot)';
+      else if (i.classList.contains('ln')) sel = i.classList.contains('acc') ? '.d-edge.acc, .d-lineacc' : i.classList.contains('dash') ? '.d-edge.dash' : i.classList.contains('dot') ? '.d-edge.dot' : '.d-edge:not(.dash):not(.dot)';
       if (!sel || !svg.querySelector(sel)) return;
       sp.setAttribute('data-hit', ''); sp.tabIndex = 0;
       var on = function () { svg.querySelectorAll(sel).forEach(function (el) { el.classList.add('is-lit'); }); svg.classList.add('is-filter'); };
