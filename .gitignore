@@ -13,6 +13,7 @@ studio-out/
 # backups
 *.bak
 
-# the explainer-video skill renders through a private engine, so it is not published
-skills/artifact-studio-explainer/
+# explainer skill: local env, render cache and outputs
+skills/artifact-studio-explainer/manim/cache/
+skills/artifact-studio-explainer/examples/*/studio-out/
 __pycache__/
