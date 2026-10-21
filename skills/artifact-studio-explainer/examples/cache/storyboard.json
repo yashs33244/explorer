@@ -1,0 +1,50 @@
+{
+  "meta": { "title": "How a Cache Works", "kicker": "Explainer · example", "outro": "Ask the copy first, the source only on a miss." },
+  "scenes": [
+    {
+      "id": "s1", "type": "title", "duration_hint_s": 6,
+      "narration": "A cache keeps a copy of slow answers close by. The first request pays, every request after it is fast.",
+      "kicker": "Explainer · example",
+      "title": "How a Cache Works",
+      "lede": "Keep a copy of slow answers close, so the next request is fast.",
+      "tldr": ["**Hit:** the answer comes from the copy", "**Miss:** read the source once, then keep a copy"]
+    },
+    {
+      "id": "s2", "type": "figure", "num": "01", "heading": "One request, three steps", "duration_hint_s": 9,
+      "narration": "The app asks the cache first. If the cache does not have it, it reads the database. Then it keeps a copy, so the next ask is a hit.",
+      "ftype": "flowchart",
+      "svg_file": "svg/path.svg",
+      "steps": [{ "at": "the cache first" }, { "at": "reads the database" }, { "at": "keeps a copy" }],
+      "badges": ["Ask the cache", "On a miss, read the database", "Keep a copy for next time"],
+      "side": { "title": "Why it helps", "points": ["Most reads repeat", "The database does less work", "Answers come back in microseconds"] }
+    },
+    {
+      "id": "s3", "type": "table", "num": "02", "heading": "Hit or miss", "duration_hint_s": 8,
+      "narration": "A hit is fast. A miss costs one database read. A stale copy is the risk, so every entry gets an expiry time.",
+      "columns": ["Case", "What happens", "Cost", "Status"],
+      "widths": [1, 3, 1.4, 1],
+      "rows": [
+        { "cells": ["Hit", "Answer comes from the `cache`", "about 1 ms", "{ok|fast}"], "at": "A hit" },
+        { "cells": ["Miss", "Read the database, then store a copy", "about 20 ms, once", "{next|slower once}"], "at": "A miss" },
+        { "cells": ["Stale", "Copy is older than the source", "wrong answer", "{todo|set a TTL}"], "at": "stale copy" }
+      ]
+    },
+    {
+      "id": "s4", "type": "bars", "num": "03", "heading": "Where the time goes", "duration_hint_s": 7,
+      "narration": "Across a thousand requests, the misses cost more than all the hits together. Illustrative numbers.",
+      "groups": [{ "label": "Milliseconds per 1,000 requests (illustrative)", "max": 3000, "bars": [
+        { "label": "900 hits", "value": 900, "display": "900 ms", "color": 1 },
+        { "label": "100 misses", "value": 2000, "display": "2,000 ms", "color": 3, "est": true }
+      ] }]
+    },
+    {
+      "id": "s5", "type": "points", "num": "04", "heading": "What to do", "duration_hint_s": 7,
+      "narration": "Cache reads that repeat. Give every entry an expiry. Watch the hit rate.",
+      "points": [
+        { "title": "Cache reads that repeat", "tag": "start here", "tone": "ok", "at": "Cache reads" },
+        { "title": "Give every entry an expiry", "body": "A TTL bounds how stale a copy can be.", "at": "Give every" },
+        { "title": "Watch the hit rate", "body": "Below about 80 percent, the cache is not paying for itself.", "tone": "next", "tag": "metric", "at": "Watch the" }
+      ]
+    }
+  ]
+}

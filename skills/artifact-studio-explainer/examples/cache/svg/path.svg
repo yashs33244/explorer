@@ -1,0 +1,27 @@
+<svg class="hd" viewBox="0 0 800 300" role="img" aria-label="An app asks a cache; on a miss the cache reads the database and keeps a copy">
+  <defs><marker id="path-d1-ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L9,5 L0,9 z" class="d-fillink"/></marker></defs>
+  <rect class="d-box g1" x="30" y="110" width="190" height="70" rx="12"/>
+  <text class="d-t" x="50" y="140">App</text>
+  <text class="d-s" x="50" y="160">asks for a user</text>
+  <g data-step="1">
+    <rect class="d-box g2" x="305" y="110" width="190" height="70" rx="12"/>
+    <text class="d-t" x="325" y="140">Cache</text>
+    <text class="d-s" x="325" y="160">in memory, fast</text>
+    <path class="d-edge" d="M222,145 H303" marker-end="url(#path-d1-ah)"/>
+    <text class="d-lab" x="262" y="135" text-anchor="middle">asks</text>
+    <circle class="d-badge" cx="305" cy="110" r="11"/><text class="d-bt" x="305" y="114">1</text>
+  </g>
+  <g data-step="2">
+    <rect class="d-box g4" x="580" y="110" width="190" height="70" rx="12"/>
+    <text class="d-t" x="600" y="140">Database</text>
+    <text class="d-s" x="600" y="160">on disk, slow</text>
+    <path class="d-edge acc" d="M497,145 H578" marker-end="url(#path-d1-ah)"/>
+    <text class="d-lab" x="537" y="135" text-anchor="middle">on a miss</text>
+    <circle class="d-badge" cx="580" cy="110" r="11"/><text class="d-bt" x="580" y="114">2</text>
+  </g>
+  <g data-step="3">
+    <path class="d-edge dash" d="M675,182 V240 H400 V184" marker-end="url(#path-d1-ah)"/>
+    <text class="d-lab" x="537" y="236" text-anchor="middle">keeps a copy</text>
+    <circle class="d-badge" cx="400" cy="240" r="11"/><text class="d-bt" x="400" y="244">3</text>
+  </g>
+</svg>
