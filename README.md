@@ -2,7 +2,7 @@
 
 **Agent skills that explain code and systems with real diagrams, not walls of text.**
 
-Ask your coding agent to explain a codebase, a design or a decision, and get back one self-contained HTML page: diagrams drawn in the form that fits each idea (102 types, from sequence diagrams to ERDs to journey maps), wide tables, a walk through the real files, and, for codebases, interview questions you can tick off. The agent draws every diagram as SVG, renders it in headless Chrome, looks at the result and fixes what it sees before you do.
+Ask your coding agent to explain a codebase, a design or a decision, and get back one self-contained HTML page: diagrams drawn in the form that fits each idea (102 types, from sequence diagrams to ERDs to Wardley maps), highlighted tables you can filter and sort, interactive figures, a walk through the real files, and, for codebases, interview questions you can tick off. Or get a narrated video of the same figures. The agent draws every diagram as SVG, renders it in headless Chrome, looks at the result and fixes what it sees before you do.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](https://docs.claude.com/en/docs/claude-code)
@@ -12,16 +12,29 @@ Ask your coding agent to explain a codebase, a design or a decision, and get bac
 
 ![A field guide built by codebase-explorer](docs/img/hero.png)
 
-## Two skills, one diagram kit
+## Three skills, one diagram kit
 
 | Skill | Say this to your agent | You get |
 |---|---|---|
 | [`codebase-explorer`](skills/codebase-explorer/SKILL.md) | "Build a field guide for this repo." | A multi-topic beginner guide: 3 diagrams per topic (how it connects, a numbered lifecycle, the anatomy), a walk through real files and functions, scrolling tables, 8 to 10 interview questions per topic, light and dark themes, hand-drawn or clean diagrams. |
-| [`artifact-studio`](skills/artifact-studio/SKILL.md) | "Make an artefact explaining this design." | One shareable page, or a small multi-page site, for a single subject: a design doc, proposal, roadmap, review, comparison, investigation or report. Each figure is picked for the reader question it answers ([`choosing-diagrams.md`](skills/artifact-studio/references/choosing-diagrams.md)). Light theme, clean diagrams, wide tables, a Full screen view for every diagram; sites add an index, a shared nav, a section list per page and Previous / Next links. |
+| [`artifact-studio`](skills/artifact-studio/SKILL.md) | "Make an artefact explaining this design." | One shareable page, or a small multi-page site, for a single subject: a design doc, proposal, roadmap, review, comparison, investigation or report. Each figure is picked for the reader question it answers ([`choosing-diagrams.md`](skills/artifact-studio/references/choosing-diagrams.md)). Light theme, clean diagrams, highlighted tables with filters and sorting, interactive figures (hover focus, step-through, zoom and pan), repo maps, and detailed isometric figures through the [anatomy](https://github.com/wheresryan22/anatomy) skill; sites add an index, a shared nav, a section list per page and Previous / Next links. |
+| [`artifact-studio-explainer`](skills/artifact-studio-explainer/SKILL.md) | "Create an explainer video about this." | A narrated 1920x1080 MP4 of the same figures. The Manim engine shows each real diagram full screen, steps through it, zooms into the part being explained and marks it with a red highlighter, with captions that follow the voice. |
 
-Both use the same SVG diagram kit and the same [catalog of 102 diagram types](diagram-types/README.md), so a page reads like it was drawn by one person.
+All three use the same SVG diagram kit and the same [catalog of 102 diagram types](diagram-types/README.md), so a page and its video read like they were drawn by one person.
 
 ![A page built by artifact-studio](docs/img/artifact-studio.png)
+
+### One subject, four readers
+
+The showcase page draws the explorer repo itself for four readers, with a different diagram type per question: a repo map, a sequence and a state machine for engineers; an isometric machine for the render loop (built with anatomy); a story map, a priority quadrant and a roadmap for product; a Wardley map and a waterfall for business.
+
+![The showcase page: nine figures for four readers](docs/img/showcase.jpg)
+
+### Explainer videos that point at what they say
+
+The video shows the page's own figures, sharp and full screen. As the voice reaches a part, the camera zooms to it and a red highlighter rings it, so a viewer always knows what is being explained.
+
+![A frame from the explainer video: the camera zoomed on the gauge, ringed in red](docs/img/explainer-frame.jpg)
 
 ## Install
 
@@ -44,6 +57,7 @@ Then just ask:
 - "Use codebase-explorer to build a field guide for this repo."
 - "Make an artefact that explains how our auth flow works, with diagrams."
 - "Explain this migration plan as a one-page artifact with a timeline and a risk table."
+- "Create an explainer video about how our build works."
 
 ## How it works
 
@@ -152,6 +166,20 @@ skills/artifact-studio/
   examples/basic/          a minimal working page
 diagram-types/             102 diagram types: example SVG, hand.jpg, clean.jpg, README
 examples/postgres/         a complete field guide to learn from
+skills/artifact-studio-explainer/
+  SKILL.md                 the skill (storyboard, engines, pipeline)
+  manim/setup.sh           one-time env: uv, Python 3.12, manim 0.22.0
+  manim/render.py          storyboard -> voiced, captioned MP4 (the default Manim engine)
+  manim/engine.py          layouts, build scheduling, one scene render
+  manim/kit.py             chips, boxes, containers, edges, tables, caption bar
+  manim/theme.py           artifact-studio tokens and fonts
+  manim/figure.py          the figure layout: real SVG figures full screen, step, focus (zoom) and mark (red highlighter)
+  manim/svgshot.py         SVG -> high-resolution PNG per data-step state, in the page CSS
+  manim/fonts/             Figtree, Bricolage Grotesque, JetBrains Mono and their OFL licences
+  manim/examples/demo/     a small working storyboard
+  manim/GUIDE.md           storyboard format, layouts, actions and look rules
+  references/              pointer to the storyboard formats
+  scripts/, examples/cache the optional Studio engine and its example (needs a daybook reel checkout)
 docs/how-it-works.md       how the diagrams and facts were produced
 docs/adr/                  short records of settled design decisions
 scripts/check.sh           the repo gate: catalog, example page, repo map example, syntax, no em dash
@@ -161,6 +189,8 @@ scripts/check.sh           the repo gate: catalog, example page, repo map exampl
 ## Requirements
 
 - Node 18+ for `codebase-explorer`; Python 3 (standard library only) for `artifact-studio`.
+- For explainer videos (Manim engine): `uv`, `ffmpeg`, `cairo` and `pango` (`brew install uv ffmpeg cairo pango pkgconf`), then `skills/artifact-studio-explainer/manim/setup.sh`, plus Chrome or Chromium for figures. The voice is kokoro through daybook reel when present, else macOS `say`, else `espeak-ng`; `--no-voice` makes a silent cut. Tested on macOS; Linux should work with Chrome or Chromium and espeak-ng, but is not tested. The optional Studio engine needs a daybook reel checkout.
+- For isometric figures: the [anatomy](https://github.com/wheresryan22/anatomy) skill (`npx skills add wheresryan22/anatomy -g`), Node 20.10+.
 - Google Chrome for diagram previews (`CHROME=/path/to/chrome` to override).
 - `.jpg` renders also need `sips` (built into macOS) or ImageMagick (`magick`); `.png` renders need neither. `compare.sh` needs `uv`.
 - The built pages have no runtime dependencies: one HTML file, fonts from Google Fonts, everything else inline.

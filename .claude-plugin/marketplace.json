@@ -5,7 +5,7 @@
     {
       "name": "explorer",
       "source": "./",
-      "description": "codebase-explorer and artifact-studio skills with the shared diagram kit and catalog."
+      "description": "codebase-explorer, artifact-studio and artifact-studio-explainer (narrated explainer videos) skills with the shared diagram kit and catalog."
     }
   ]
 }
