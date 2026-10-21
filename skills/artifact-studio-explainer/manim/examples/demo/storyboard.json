@@ -1,0 +1,81 @@
+{
+  "meta": { "title": "A second engine for engineering scenes", "voice": "af_heart" },
+  "scenes": [
+    {
+      "id": "s1-title",
+      "layout": "title",
+      "kicker": "artifact-studio-explainer",
+      "title": "A second engine for engineering scenes",
+      "subtitle": "Manim draws repo maps, flows and tables step by step, in sync with the voice.",
+      "tldr": "Studio stays the default. Pick Manim when the story is motion: a request path, a data flow, or a table that builds.",
+      "narration": "This is the Manim engine for the explainer skill. It draws repo maps, flows and tables step by step, in sync with the voice. Studio stays the default for text heavy cards.",
+      "build": [
+        { "at": "It draws repo maps", "action": "show", "target": "subtitle" },
+        { "at": "Studio stays the default", "action": "show", "target": "tldr" }
+      ]
+    },
+    {
+      "id": "s2-repomap",
+      "layout": "repomap",
+      "kicker": "01 . layout",
+      "heading": "Where the pieces live",
+      "legend": true,
+      "containers": [
+        { "id": "manim", "title": "manim", "path": "explainer/manim/", "group": 4, "chips": [
+          { "id": "render", "label": "render.py", "bold": true },
+          { "id": "engine", "label": "engine.py" },
+          { "id": "kitpy", "label": "kit.py" },
+          { "id": "themepy", "label": "theme.py" },
+          { "id": "fonts", "label": "fonts/", "dashed": true }
+        ]},
+        { "id": "daybook", "title": "daybook reel", "path": "daybook/reel/", "group": 1, "chips": [
+          { "id": "voice", "label": "src/voice.ts" },
+          { "id": "studio", "label": "src/studio/" },
+          { "id": "pubfonts", "label": "render/public/fonts/" }
+        ]},
+        { "id": "skill", "title": "explainer skill", "path": "skills/", "group": 0, "chips": [
+          { "id": "skillmd", "label": "SKILL.md" },
+          { "id": "rendersh", "label": "scripts/render.sh" },
+          { "id": "examples", "label": "examples/" }
+        ]}
+      ],
+      "edges": [
+        { "id": "e-voice", "from": "render", "to": "voice", "style": "dotted", "label": "speech" },
+        { "id": "e-fonts", "from": "fonts", "to": "pubfonts", "style": "dashed", "label": "pinned copy" },
+        { "id": "e-studio", "from": "rendersh", "to": "studio", "style": "solid", "label": "renders with" }
+      ],
+      "narration": "Here is how the pieces fit. The manim folder holds the new engine, and render dot py is the entry point. Daybook reel stays untouched. At runtime, render dot py calls the voice module for speech. The fonts are a pinned copy of the studio fonts. The skill folder keeps the default Studio path, which renders with daybook reel.",
+      "build": [
+        { "at": "The manim folder", "action": "show", "target": "manim" },
+        { "at": "the entry point", "action": "highlight", "target": "render" },
+        { "at": "Daybook reel stays", "action": "show", "target": "daybook" },
+        { "at": "calls the voice module", "action": "show", "target": "e-voice" },
+        { "at": "for speech", "action": "flow", "target": "e-voice" },
+        { "at": "a pinned copy", "action": "show", "target": "e-fonts" },
+        { "at": "The skill folder", "action": "show", "target": "skill" },
+        { "at": "renders with daybook", "action": "show", "target": "e-studio" }
+      ]
+    },
+    {
+      "id": "s3-table",
+      "layout": "table",
+      "kicker": "02 . choice",
+      "heading": "Which engine to pick",
+      "columns": ["Engine", "Best for", "Draws with", "Voice"],
+      "rows": [
+        ["Studio (default)", "Text heavy cards, bars and wide tables", "Remotion, SVG kit", "kokoro, say fallback"],
+        ["Manim", "Repo maps, flows, request paths, table builds", "Manim Text, no LaTeX", "kokoro, say fallback"],
+        ["Claude Motion", "A shareable film in the browser", "Motion artifact type", "none, captions only"]
+      ],
+      "key": 1,
+      "narration": "Pick by what the scene must do. Studio is best for text heavy cards and bars. Pick Manim when the story moves, like a request path or a table that builds. Claude Motion is for a shareable film in the browser.",
+      "build": [
+        { "at": "Studio is", "action": "show", "target": "row:0" },
+        { "at": "best for text", "action": "highlight", "target": "key" },
+        { "at": "Pick Manim", "action": "show", "target": "row:1" },
+        { "at": "the story moves", "action": "highlight", "target": "row:1" },
+        { "at": "Claude Motion", "action": "show", "target": "row:2" }
+      ]
+    }
+  ]
+}
