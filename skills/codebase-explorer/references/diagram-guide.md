@@ -1,6 +1,6 @@
 # SVG diagram guide
 
-Every diagram is drawn once and shows in two styles: **hand-drawn** (Excalidraw look: rough ink outlines, pastel fills, hard offset shadows, Excalifont labels) and **clean** (FigJam-like: flat fills, thin outlines, no shadows). The page has a switch; `explorer.config.json` sets the default with `"diagramStyle": "hand" | "clean"`. The class kit, both styles and logos are in `references/diagram-kit.md`. Copy-paste icons are in `assets/icons.md`.
+Every diagram is drawn once and shows in three styles: **modern** (the default: dotted canvas, outlined cards with a stacked offset, monospace uppercase titles, chip edge labels, after the Cloudflare and Figma engineering diagrams), **clean** (FigJam-like: flat fills, thin outlines, no shadows) and **hand-drawn** (Excalidraw look: rough ink outlines, pastel fills, hard offset shadows, Excalifont labels). The page has a switch; `explorer.config.json` sets the default with `"diagramStyle": "modern" | "clean" | "hand"`. The class kit, the styles and logos are in `references/diagram-kit.md`. Copy-paste icons are in `assets/icons.md`.
 
 ## Pick the form that fits the content
 

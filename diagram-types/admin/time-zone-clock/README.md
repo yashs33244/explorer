@@ -2,9 +2,9 @@
 
 A 24-hour dial cut into wedges, one per hour, coloured by who owns that hour, with an inner ring that names each owner and their local hours. It turns "what time is it for them" into a shape you can read at a glance. The example is a follow-the-sun PagerDuty rotation for payments-api: Bangalore, London, San Francisco and Sydney each hold a 7 hour shift, the four 1 hour overlaps are the handoffs, and an accent hand marks now (14:40 UTC).
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

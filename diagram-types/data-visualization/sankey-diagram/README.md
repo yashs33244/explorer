@@ -2,9 +2,9 @@
 
 Three stage columns of thin vertical bars joined by filled bands whose width is proportional to the quantity flowing between them, so splits and merges read as magnitudes rather than just links. The example follows 10,000 API requests per second: 6,200 are CDN cache hits served at the edge and 3,800 reach the origin, where they split into 2,100 served from Redis, 800 from Postgres, 860 writes and 40 errors. One scale holds for every band (1 px = 20 req/s), each column sums to 10,000, and the errors band is the one solid ribbon, widened to a visible 4 px.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

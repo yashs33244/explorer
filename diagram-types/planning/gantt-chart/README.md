@@ -2,9 +2,9 @@
 
 Tasks as rows, time as columns, and one bar per task spanning its planned dates, coloured by status. A legend explains the colours, arrows show finish-to-start dependencies, a red line marks today and a diamond marks the launch milestone. The example is the payments v2 API release over eight weeks: the spec and OAuth scopes are done, pagination has slipped past today, gateway rate limits are in progress, and SDK codegen, a critical load test, v1 deprecation headers and docs lead to GA on Fri Oct 24.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

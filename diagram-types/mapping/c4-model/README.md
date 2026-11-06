@@ -2,9 +2,9 @@
 
 A C4 container diagram zooms one level into a software system and shows the deployable pieces inside it: apps, services and data stores, with the technology of each and the protocol on every arrow. It reads top-down like a tree, from the people who use the system, through the apps and the gateway, to the services and the stores each one owns. The example is the backend of a ride-hailing product.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

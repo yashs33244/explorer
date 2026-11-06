@@ -2,9 +2,9 @@
 
 A two-by-two grid of the four stages a person moves through before they care about a product: Reach (they hear of it), Engage (they try it), Activate (they really use it) and Nurture (they stay and give back). Each cell lists the channels that drive that stage and the one number that measures it, and a strip underneath shows the conversion between stages. The example is tracekit, an open source tracing CLI: Show HN, GitHub and dev.to for reach; Homebrew, the docs quickstart and a StackBlitz sandbox for engagement; a GitHub Action, the npm SDK and OpenTelemetry export for activation; Discord office hours, first issues and monthly releases for nurture, with the funnel from 48k visits to 85 contributors.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

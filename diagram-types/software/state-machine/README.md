@@ -2,9 +2,9 @@
 
 Rounded boxes for the states an object can be in, arrows for the events that move it between them, a filled dot for the start and a double border for terminal states. The example is the Payment.status column in a checkout service, moved by our own API calls, Stripe webhooks and a timer: created, requires_action, processing, succeeded, failed and canceled, with a note on the event every transition emits.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 Participants across the top, time running down, and one horizontal arrow per message between their dashed lifelines. Activation bars show when a participant is busy handling a call. The example is an OAuth 2.0 authorization code login with PKCE: the browser, a Next.js backend-for-frontend, Auth0, a profile API and Postgres, in 13 numbered messages.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A four-quadrant wheel with clockwise arrows around it for one improvement loop: Plan a hypothesis, Do a small experiment, Check the measurement, Act by standardising or starting the next cycle. Each quadrant links to a card with the concrete evidence for that phase. The example is cycle 3 of an effort to cut flaky tests in a monorepo CI, from a 4.1% flaky rate down to 1.3%.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

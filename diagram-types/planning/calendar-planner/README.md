@@ -2,9 +2,9 @@
 
 A month grid of seven day columns and five week rows inside a framed card, with a title bar on top and the blank days before the 1st merged into one cell that holds the legend. Each event is a short colour-coded chip inside its day, so a reader sees the rhythm of a month at a glance. The example is October 2026 for a payments-platform team: Sprint 41 and 42 planning, reviews and retros, three releases with their code freezes, weekly PagerDuty on-call handoffs, a PostgreSQL 16 upgrade window, a failover drill, a postmortem and a game day.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

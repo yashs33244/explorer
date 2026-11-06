@@ -6,7 +6,7 @@
  *
  * Writes diagram-types/README.md (a gallery with thumbnails) and skills/codebase-explorer/references/diagram-types.md
  * (a compact "to explain X, use Y" table the skill reads when picking a diagram). Fails if a listed folder is
- * missing its example.svg, hand.jpg, clean.jpg or README.md, or if a README's "Not for" line names a slug that is
+ * missing its example.svg, modern.jpg, hand.jpg, clean.jpg or README.md, or if a README's "Not for" line names a slug that is
  * not in the catalog. Warns when a jpg is older than its example.svg, style.css or filters.svg (re-render with
  * scripts/render.sh --catalog).
  */
@@ -28,7 +28,7 @@ const DASH = new RegExp('[' + String.fromCharCode(0x2014, 0x2013) + ']', 'g');
 const clean = (s) => String(s || '').replace(DASH, '-').replace(/\|/g, '/');
 
 const missing = [];
-for (const t of cat) for (const f of ['example.svg', 'hand.jpg', 'clean.jpg', 'README.md']) {
+for (const t of cat) for (const f of ['example.svg', 'modern.jpg', 'hand.jpg', 'clean.jpg', 'README.md']) {
   if (!fs.existsSync(path.join(DT, t.category, t.slug, f))) missing.push(`${t.category}/${t.slug}/${f}`);
 }
 if (missing.length) { console.error('missing files:\n  ' + missing.join('\n  ')); process.exit(1); }
@@ -47,7 +47,7 @@ const stale = [];
 for (const t of cat) {
   const dir = path.join(DT, t.category, t.slug);
   const src = Math.max(kitTime, fs.statSync(path.join(dir, 'example.svg')).mtimeMs);
-  for (const f of ['hand.jpg', 'clean.jpg']) if (fs.statSync(path.join(dir, f)).mtimeMs < src) stale.push(`${t.category}/${t.slug}/${f}`);
+  for (const f of ['modern.jpg', 'hand.jpg', 'clean.jpg']) if (fs.statSync(path.join(dir, f)).mtimeMs < src) stale.push(`${t.category}/${t.slug}/${f}`);
 }
 if (stale.length) console.warn(`warning: ${stale.length} renders are older than their example.svg or the kit CSS (run scripts/render.sh --catalog):\n  ` + stale.slice(0, 10).join('\n  ') + (stale.length > 10 ? '\n  ...' : ''));
 
@@ -55,13 +55,13 @@ const byCat = order.map((c) => [c, cat.filter((t) => t.category === c)]).filter(
 const unknown = cat.filter((t) => !CATS[t.category]);
 if (unknown.length) { console.error('unknown categories: ' + unknown.map((t) => t.category).join(', ')); process.exit(1); }
 
-let g = `# Diagram types\n\n${cat.length} diagram types, each drawn once and rendered in both styles the explorer page offers: **hand-drawn** and **clean**. Every folder has the source \`example.svg\`, \`hand.jpg\`, \`clean.jpg\` and a README with when to use it and its anatomy.\n\nThe skill picks a type with [\`references/diagram-types.md\`](../skills/codebase-explorer/references/diagram-types.md). The class kit is in [\`references/diagram-kit.md\`](../skills/codebase-explorer/references/diagram-kit.md). Regenerate this page with \`node skills/codebase-explorer/scripts/build-catalog.js\`.\n\nRows marked (logos) show product logos provided by [Logo.dev](https://logo.dev). The logos are trademarks of their owners and are not covered by this repo's MIT license.\n\n`;
+let g = `# Diagram types\n\n${cat.length} diagram types, each drawn once and rendered in the three styles the explorer page offers: **modern** (the default), **clean** and **hand-drawn**. Every folder has the source \`example.svg\`, \`modern.jpg\`, \`clean.jpg\`, \`hand.jpg\` and a README with when to use it and its anatomy.\n\nThe skill picks a type with [\`references/diagram-types.md\`](../skills/codebase-explorer/references/diagram-types.md). The class kit is in [\`references/diagram-kit.md\`](../skills/codebase-explorer/references/diagram-kit.md). Regenerate this page with \`node skills/codebase-explorer/scripts/build-catalog.js\`.\n\nRows marked (logos) show product logos provided by [Logo.dev](https://logo.dev). The logos are trademarks of their owners and are not covered by this repo's MIT license.\n\n`;
 g += byCat.map(([c, ts]) => `- [${CATS[c]}](#${CATS[c].toLowerCase().replace(/[^a-z0-9]+/g, '-')}) (${ts.length})`).join('\n') + '\n';
 for (const [c, ts] of byCat) {
-  g += `\n## ${CATS[c]}\n\n| Type | Use it to explain | Clean | Hand-drawn |\n|---|---|---|---|\n`;
+  g += `\n## ${CATS[c]}\n\n| Type | Use it to explain | Modern | Clean | Hand-drawn |\n|---|---|---|---|---|\n`;
   for (const t of ts) {
     const d = `${t.category}/${t.slug}`;
-    g += `| [**${clean(t.name)}**](${d}/)${t.uses_logos ? ' (logos)' : ''} | ${clean(t.use_for)} | <img src="${d}/clean.jpg" width="220" alt="${clean(t.name)}, clean"> | <img src="${d}/hand.jpg" width="220" alt="${clean(t.name)}, hand-drawn"> |\n`;
+    g += `| [**${clean(t.name)}**](${d}/)${t.uses_logos ? ' (logos)' : ''} | ${clean(t.use_for)} | <img src="${d}/modern.jpg" width="220" alt="${clean(t.name)}, modern"> | <img src="${d}/clean.jpg" width="220" alt="${clean(t.name)}, clean"> | <img src="${d}/hand.jpg" width="220" alt="${clean(t.name)}, hand-drawn"> |\n`;
   }
 }
 fs.writeFileSync(path.join(DT, 'README.md'), g);

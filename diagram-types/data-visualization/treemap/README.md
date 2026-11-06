@@ -2,9 +2,9 @@
 
 A treemap splits one total into nested rectangles whose area is each part's share. This example is where 120 minutes of test time goes in one full CI run of a monorepo: three team regions (Payments 54 min, Platform 40 min, Web 26 min) each tile their packages, from checkout-api at 30 minutes down to refunds and shared-utils at 8. Every rectangle is drawn to within about 1% of its true area, the single biggest package carries the accent outline and a "25% of total" tag, a source line states the encoding and the sum, and a sticky note names the action.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

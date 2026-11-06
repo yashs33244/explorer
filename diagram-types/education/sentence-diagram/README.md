@@ -2,9 +2,9 @@
 
 A Reed-Kellogg diagram: the sentence's words on top, colored by part of speech, then a baseline that holds the subject, verb and direct object, with modifiers hanging on slanted lines below the word they describe. The example parses a line from job-runner docs, "The scheduler quickly retries failed jobs", and then reads the same sentence as a call, `scheduler.retry(jobs.where(status="failed"), backoff=FAST)`, so each grammatical role lines up with a part of the code.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 An inverted funnel of stacked bands, widest at the top, each band one stage a prospect passes through. Dashed leaders tie each band to the analytics event that marks it on the left and to its monthly count and stage conversion on the right, and a pipeline strip at the bottom shows where the numbers come from. The example is a developer tool: docs visits, signups, first API call, team plan and enterprise contract, tracked in PostHog, modelled in Snowflake with dbt and charted in Grafana, with the signup to first call drop (60% of signups never call the API) flagged as the leak to fix first.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

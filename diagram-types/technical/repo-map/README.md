@@ -2,9 +2,9 @@
 
 One repository drawn as nested containers: an outer frame with the repo name on a tab, one tinted container per top-level folder or layer (title, path in mono, one or two lines on what it holds), and mono chips inside for the crates, packages or modules. Other repositories sit beside it, runtime services under it. Three line styles carry three meanings: solid for "depends on" (a build link), dashed for a vendored, pinned or submodule copy, dotted for a call at runtime. A bold chip is the entry point of its group, a dashed chip is moving or symlinked. A sticky note states the layer rule and what enforces it. The example is `acme/storefront`: apps import modules, modules import packages, payments is moving out to `acme/pay-svc`, and the design tokens come in as a git submodule.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

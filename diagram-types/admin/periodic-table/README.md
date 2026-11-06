@@ -2,9 +2,9 @@
 
 A grid shaped like the periodic table: tall edge columns, a low middle block and a detached strip below, where each cell holds a number, a two-letter symbol, a logo and a name, and colour marks the family. The shape makes a large catalogue scannable and invites "which element are we missing". The example is a platform team's DevOps tool table: source control and CI on the left, build, delivery and IaC in the middle block, observability (Prometheus, Grafana, Thanos, OTel) and security on the right, cloud and collaboration in the strip.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

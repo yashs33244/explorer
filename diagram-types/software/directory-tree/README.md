@@ -2,9 +2,9 @@
 
 An indented folder tree with a trunk line, one colored row per top-level folder, its children nested underneath, and sticky notes on the right that say what each folder is for and who owns it. The example annotates a pnpm and Turborepo monorepo: CI workflows, deployable apps, shared packages, backend services, infrastructure and the root config files.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

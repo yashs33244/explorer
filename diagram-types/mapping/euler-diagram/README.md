@@ -2,9 +2,9 @@
 
 An Euler diagram draws only the set relationships that actually exist: a set fully inside another is a circle inside a circle, and sets with nothing in common sit apart instead of being forced into an empty overlap as a Venn diagram would. The example nests production services by policy (all services, stateful, needs backups, holds PII) so the containment rules read at a glance, and keeps batch jobs as a disjoint set with their own policy.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

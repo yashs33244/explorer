@@ -2,9 +2,9 @@
 
 A family tree lays out lineage left to right, one column per generation, with elbow connectors from each parent to its children. The example traces PostgreSQL from Berkeley Postgres (1986) through the 1996 open source release to its forks and rewrites (Netezza, Greenplum, ParAccel, Citus, Aurora, Neon) and their descendants (Cloudberry, Redshift, Cosmos DB for PostgreSQL, Databricks Lakebase), colored by kind of fork.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

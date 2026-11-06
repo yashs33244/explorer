@@ -2,9 +2,9 @@
 
 A one-page brief card on top, then one card per interview round in a two-by-two grid, each with a colored header, the round's length and format, the key questions to prepare and the signal interviewers score. The example is a senior backend engineer onsite loop on a payments team: the role and bar, the Go, PostgreSQL, Kafka and AWS stack to revise, three questions to ask the panel, and rounds for coding, system design, production debugging and behavioral.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

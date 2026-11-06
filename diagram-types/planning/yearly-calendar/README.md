@@ -2,9 +2,9 @@
 
 A yearly calendar shows twelve months as two columns of six rows, each with a coloured month tab and a strip for that month's dates. Here every strip carries a day scale with week ticks, so dates land where they fall in the month. The example is a 2026 release train: a release every four weeks on Tuesday, the v7.0 major in September, and code freezes for New Year, a SOC 2 audit, quarter close, Black Friday and the holidays.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

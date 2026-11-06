@@ -2,9 +2,9 @@
 
 A single-elimination bracket drawn from both edges toward the middle: first-round pairs on the far left and right, each pair joined by an elbow connector into the next round, until two finalists meet beside a central winner node. The example is an internal platform engineering hackathon: eight teams (reliability tools on the left, cost and delivery tools on the right) are scored by judges, and Canary Cat, an auto rollback tool, beats Flake Hunt in the final.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

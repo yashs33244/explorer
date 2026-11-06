@@ -2,9 +2,9 @@
 
 A clipboard checklist: a titled list of tasks, each with a checkbox, an owner and a due day, grouped under priority headers, with a progress bar and a done mark at the foot. The example is the release checklist for `payments-api v4.2.0`: P0 blockers (branch cut, migration dry-run, contract tests, webhook secret rotation), P1 should-ship work (SDK regeneration, canary, latency alert, rollback runbook) and P2 nice-to-haves, with 6 of 11 done and one open P0 holding the tag.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

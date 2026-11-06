@@ -16,7 +16,7 @@ Ask your coding agent to explain a codebase, a design or a decision, and get bac
 
 | Skill | Say this to your agent | You get |
 |---|---|---|
-| [`codebase-explorer`](skills/codebase-explorer/SKILL.md) | "Build a field guide for this repo." | A multi-topic beginner guide: 3 diagrams per topic (how it connects, a numbered lifecycle, the anatomy), a walk through real files and functions, scrolling tables, 8 to 10 interview questions per topic, light and dark themes, hand-drawn or clean diagrams. |
+| [`codebase-explorer`](skills/codebase-explorer/SKILL.md) | "Build a field guide for this repo." | A multi-topic beginner guide: 3 diagrams per topic (how it connects, a numbered lifecycle, the anatomy), a walk through real files and functions, scrolling tables, 8 to 10 interview questions per topic, light and dark themes, modern, clean or hand-drawn diagrams. |
 | [`artifact-studio`](skills/artifact-studio/SKILL.md) | "Make an artefact explaining this design." | One shareable page, or a small multi-page site, for a single subject: a design doc, proposal, roadmap, review, comparison, investigation or report. Each figure is picked for the reader question it answers ([`choosing-diagrams.md`](skills/artifact-studio/references/choosing-diagrams.md)). Light theme, clean diagrams, highlighted tables with filters and sorting, interactive figures (hover focus, step-through, zoom and pan), repo maps, and detailed isometric figures through the [anatomy](https://github.com/wheresryan22/anatomy) skill; sites add an index, a shared nav, a section list per page and Previous / Next links. |
 | [`artifact-studio-explainer`](skills/artifact-studio-explainer/SKILL.md) | "Create an explainer video about this." | A narrated 1920x1080 MP4 of the same figures. The Manim engine shows each real diagram full screen, steps through it, zooms into the part being explained and marks it with a red highlighter, with captions that follow the voice. |
 
@@ -79,12 +79,12 @@ Most generated docs draw everything as boxes and arrows. The catalog maps "what 
 
 | | | |
 |---|---|---|
-| ![State machine](diagram-types/software/state-machine/clean.jpg) | ![ER diagram](diagram-types/mapping/er-diagram/clean.jpg) | ![Sequence diagram, hand-drawn](diagram-types/process-workflow/sequence-diagram/hand.jpg) |
-| State machine | ER diagram | Sequence diagram (hand-drawn) |
-| ![Gantt chart](diagram-types/planning/gantt-chart/clean.jpg) | ![Customer journey](diagram-types/customer-ux/customer-journey/clean.jpg) | ![Mind map, hand-drawn](diagram-types/mapping/mind-map/hand.jpg) |
-| Gantt chart | Customer journey | Mind map (hand-drawn) |
+| ![Request lifecycle](diagram-types/software/request-lifecycle/modern.jpg) | ![ER diagram](diagram-types/mapping/er-diagram/modern.jpg) | ![Cloud architecture](diagram-types/technical/cloud-architecture/modern.jpg) |
+| Request lifecycle | ER diagram | Cloud architecture |
+| ![State machine](diagram-types/software/state-machine/modern.jpg) | ![Gantt chart, clean](diagram-types/planning/gantt-chart/clean.jpg) | ![Mind map, hand-drawn](diagram-types/mapping/mind-map/hand.jpg) |
+| State machine | Gantt chart (clean) | Mind map (hand-drawn) |
 
-102 types in 14 categories: software, technical, mapping, process and workflow, data visualization, planning, customer and UX, design and content, org and hierarchy, education, business strategy, analysis, creative and admin. Every type folder has the source `example.svg`, a hand-drawn and a clean render, and a README with when to use it and its anatomy. Browse them in [`diagram-types/`](diagram-types/README.md). Ten of them (architecture delta, dependency graph, coverage matrix, story map, Wardley map, sankey, waterfall, line chart, treemap, fishbone) adapt types from [diagram-design](https://github.com/cathrynlavery/diagram-design) (MIT) to this kit.
+102 types in 14 categories: software, technical, mapping, process and workflow, data visualization, planning, customer and UX, design and content, org and hierarchy, education, business strategy, analysis, creative and admin. Every type folder has the source `example.svg`, a modern, a clean and a hand-drawn render, and a README with when to use it and its anatomy. Browse them in [`diagram-types/`](diagram-types/README.md). Ten of them (architecture delta, dependency graph, coverage matrix, story map, Wardley map, sankey, waterfall, line chart, treemap, fishbone) adapt types from [diagram-design](https://github.com/cathrynlavery/diagram-design) (MIT) to this kit.
 
 ## Why not just Mermaid?
 
@@ -94,7 +94,7 @@ Mermaid is great for quick diagrams in Markdown, and this README uses it. These 
 |---|---|---|
 | Diagram forms | A fixed set of chart grammars | 102 hand-authored types, picked per idea |
 | Layout control | Automatic | Exact: the agent places every box, label and badge |
-| Styles | Theme colors | Hand-drawn and clean from the same SVG, light and dark |
+| Styles | Theme colors | Modern, clean and hand-drawn from the same SVG, light and dark |
 | Product logos | No | Real logos via [logo.dev](https://logo.dev), monogram fallback |
 | Quality check | None | Rendered, looked at and repaired by the agent |
 | Output | Diagrams inside your docs | One self-contained HTML page with diagrams, tables, steps and questions |
@@ -150,10 +150,11 @@ Logos are fetched once, cached in `~/.cache/explorer-logos` and inlined as data 
 skills/codebase-explorer/
   SKILL.md                 the skill (pipeline, quality bar, gotchas)
   scripts/build-page.js    JSON + SVG -> one HTML page (no dependencies)
-  scripts/render.sh        render diagrams (hand or clean, png or jpg) and page sections in headless Chrome
+  scripts/render.sh        render diagrams (modern, clean or hand, png or jpg) and page sections in headless Chrome
   scripts/compare.sh       a reference image and our render side by side
   scripts/logos.js         fill logo slots from logo.dev, monogram fallback
   scripts/build-catalog.js regenerate the diagram-type gallery and chooser
+  scripts/check-overflow.py list diagram text that runs past its box (Playwright)
   scripts/layout.js        automatic diagram fallback
   assets/                  style.css (page and diagram kit), app.js, icons.md, fonts/ (Excalifont license)
   references/              topic schema, diagram guide, diagram kit, diagram-type chooser, workflow template
@@ -164,7 +165,8 @@ skills/artifact-studio/
   references/              choosing diagrams, highlighting, engineering pages, interactive figures, detailed (anatomy) figures, style guide, checklist
   assets/page-template.html light theme, wide and bleed figures, highlighted and filterable tables, interactive figures, Full screen with zoom and pan, site nav and section list
   examples/basic/          a minimal working page
-diagram-types/             102 diagram types: example SVG, hand.jpg, clean.jpg, README
+diagram-types/             102 diagram types: example SVG, modern.jpg, clean.jpg, hand.jpg, README
+scripts/check.sh           repo gate; scripts/sync-modern.py copies the modern style into the page template
 examples/postgres/         a complete field guide to learn from
 skills/artifact-studio-explainer/
   SKILL.md                 the skill (storyboard, engines, pipeline)
@@ -191,7 +193,8 @@ scripts/check.sh           the repo gate: catalog, example page, repo map exampl
 - Node 18+ for `codebase-explorer`; Python 3 (standard library only) for `artifact-studio`.
 - For explainer videos (Manim engine): `uv`, `ffmpeg`, `cairo` and `pango` (`brew install uv ffmpeg cairo pango pkgconf`), then `skills/artifact-studio-explainer/manim/setup.sh`, plus Chrome or Chromium for figures. The voice is kokoro through daybook reel when present, else macOS `say`, else `espeak-ng`; `--no-voice` makes a silent cut. Tested on macOS; Linux should work with Chrome or Chromium and espeak-ng, but is not tested. The optional Studio engine needs a daybook reel checkout.
 - For isometric figures: the [anatomy](https://github.com/wheresryan22/anatomy) skill (`npx skills add wheresryan22/anatomy -g`), Node 20.10+.
-- Google Chrome for diagram previews (`CHROME=/path/to/chrome` to override).
+- Google Chrome or Chromium for diagram previews (`CHROME=/path/to/chrome` to override).
+- Optional: Python Playwright with Chromium for `scripts/check-overflow.py`.
 - `.jpg` renders also need `sips` (built into macOS) or ImageMagick (`magick`); `.png` renders need neither. `compare.sh` needs `uv`.
 - The built pages have no runtime dependencies: one HTML file, fonts from Google Fonts, everything else inline.
 
@@ -204,9 +207,9 @@ The PostgreSQL example's facts were read from the PostgreSQL source and checked 
 Run `scripts/check.sh` before you push; [`CONTRIBUTING.md`](CONTRIBUTING.md) has the details. New diagram types are the easiest way in:
 
 1. Add `diagram-types/<category>/<slug>/example.svg` using only the kit classes ([`diagram-kit.md`](skills/codebase-explorer/references/diagram-kit.md)), plus a `README.md` with "Use it to explain" and an anatomy table. Copy an existing type as a template.
-2. Render both styles: `skills/codebase-explorer/scripts/render.sh <example.svg> <hand.jpg> light hand` and the same with `clean`.
+2. Render all three styles: `skills/codebase-explorer/scripts/render.sh <example.svg> <modern.jpg> light modern` and the same with `clean` and `hand`.
 3. Regenerate the gallery and chooser: `node skills/codebase-explorer/scripts/build-catalog.js`.
-4. Open a pull request with the two renders in the description.
+4. Open a pull request with the renders in the description.
 
 Bug reports with a screenshot of a broken diagram are very welcome.
 

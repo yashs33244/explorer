@@ -2,9 +2,9 @@
 
 Brand guidelines are a deck of pages, each split into a grey rule panel on the left and a worked example on the right. The example is the tokens page of a product design system, Beacon v3, as four stacked pages: logo clear space and minimum size, color tokens by role, the type scale with token names, and a do and don't page that bans competing primary buttons and raw hex values in component code.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

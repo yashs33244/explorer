@@ -2,9 +2,9 @@
 
 A fanned stack of thank-you cards, one per person, with the front card fully open and the cards behind it showing their recipient, role and the one thing they did. The example thanks three people after incident INC-2291, a 23 minute checkout outage of 502s: the support lead who kept 140 merchants updated on the status page, the on-call SRE who traced it to a bad Envoy route, and the incident commander who called the rollback at minute 6.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

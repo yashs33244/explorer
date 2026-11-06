@@ -2,9 +2,9 @@
 
 A system context diagram puts one software system in the middle and shows only who and what it talks to: the people who use it and the external systems it depends on or drives. Internals are hidden on purpose. The example is Shipyard, an internal deploy platform that takes merge webhooks from GitHub, applies manifests to Kubernetes, pages PagerDuty when a rollout fails and posts status to Slack.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

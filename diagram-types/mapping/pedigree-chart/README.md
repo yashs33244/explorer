@@ -2,9 +2,9 @@
 
 A pedigree chart tracks how a trait passes down generations, using filled, half-filled and empty shapes for affected, carrier and clean. Here the trait is Log4Shell (CVE-2021-44228): each release we ship (square) is paired with the log4j version it pulled in (circle), and the shading shows which descendant releases are exploitable, which were patched but still carry a vulnerable shaded jar, and which are clean. Generation numerals on the left read as release lines v1, v2 and v3.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

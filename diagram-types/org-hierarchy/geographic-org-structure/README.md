@@ -2,9 +2,9 @@
 
 An org chart split by location: one leader at the top, a card per regional hub (city, time zone, site lead, headcount) and the teams based in each hub underneath. Because every hub sits in a different time zone, the example adds the follow-the-sun on-call rota that hands the pager from one hub to the next.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

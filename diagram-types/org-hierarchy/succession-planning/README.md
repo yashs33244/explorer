@@ -2,9 +2,9 @@
 
 A role tree on the left with named successors on the right: each critical role is joined by a dashed line to a ready-now and a ready-later successor, colored by readiness. It shows at once where a promotion cascades and where a role has no cover.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

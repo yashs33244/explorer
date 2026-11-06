@@ -2,9 +2,9 @@
 
 Five columns, Suppliers, Inputs, Process, Outputs and Customers, that scope a process from what feeds it to who consumes what it makes. The Process column holds five or so numbered steps in order, and lines link each supplier to its input, each input to the step that uses it, each step to the output it produces and each output to its customer. The example scopes a pull request CI pipeline: developers, GitHub, the npm registry and Vault supply a commit, a webhook event, locked dependencies and short-lived registry credentials; checkout, build, test, scan and push turn them into a check status, a JUnit report, an SBOM and a container image for branch protection, reviewers, the security team and Argo CD.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A top-down tree of who reports to whom: one root, a row of leads joined by an elbow bus, and each lead's teams hanging off a spine below them. The example is a 64-person engineering org: the VP of Engineering, four heads (platform, product engineering, data, SRE), and the twelve teams under them, each with its headcount and the main system it runs (EKS, GitHub Actions, Stripe checkout, Kafka CDC, Snowflake, PagerDuty, Datadog).
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

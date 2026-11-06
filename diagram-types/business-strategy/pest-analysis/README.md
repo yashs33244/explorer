@@ -2,9 +2,9 @@
 
 Four circles in a 2x2 for the Political, Economic, Social and Technological forces outside the team's control, each with an icon, three factors and a tag pointing to the decision it drove, beside a title column that states the subject and the numbered decisions. The example is the launch of a managed vector database on AWS and GCP: EU data residency, a price war with Pinecone and Weaviate, developers expecting a free tier, and HNSW indexes that are heavy on RAM.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

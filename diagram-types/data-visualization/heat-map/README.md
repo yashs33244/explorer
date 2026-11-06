@@ -2,9 +2,9 @@
 
 A grid of cells where two categories meet, each cell coloured by how much happens there, so clusters and gaps show up before anyone reads a number. The example shows 224 production deploys of a payments API in one quarter, by weekday and two-hour UTC slot. It shows a Tuesday to Thursday midday peak, an empty Friday afternoon behind a change freeze, and two weekend hotfixes.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

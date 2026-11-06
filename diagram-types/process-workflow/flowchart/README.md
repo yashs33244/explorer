@@ -2,9 +2,9 @@
 
 A flowchart shows one process as a spine of steps (rectangles) and decisions (diamonds), with every branch labelled yes or no and every path ending in a terminal (pill). Here it walks one `POST /api/login` request through an auth service: a Redis-backed rate limit, an argon2id password check, an optional TOTP challenge and a shared failure counter, ending in 429, 401 or 200 with a session cookie.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

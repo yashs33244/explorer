@@ -2,9 +2,9 @@
 
 Four equal panels in a two by two grid, split by two axes, so every item lands in exactly one quadrant. Each panel gets a kicker naming its axis values, a title, an action tag and a short list of items. The example sorts a payments team's tech debt backlog by impact and effort into Quick wins, Big bets, Fill-ins and Money pits, with the evidence behind each item.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

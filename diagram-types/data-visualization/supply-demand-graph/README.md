@@ -2,9 +2,9 @@
 
 A supply and demand graph plots two opposing curves on the same axes and reads the answer where they cross. This example treats a checkout API under load like a market: the "price" is p99 latency and the "quantity" is requests per second. Client demand falls as latency rises (timeouts, users leaving), while cluster supply only serves more by queueing longer. With 6 pods the curves meet at 2.5k rps and 200 ms, over the 180 ms SLO; when the HorizontalPodAutoscaler adds 4 pods the supply curve shifts right and the new equilibrium is 3.0k rps at 160 ms, back under it. Numbered badges mark both points and the side panel explains them.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

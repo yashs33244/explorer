@@ -2,9 +2,9 @@
 
 A certificate: a double frame, an avatar between two stars, a name ribbon, then what the person actually shipped. The example marks Ravi Menon's 3 years on the platform team with a timeline of milestones (Terraform modules, a zero-downtime EKS upgrade across 40 clusters, an Argo CD rollout to 300 services, a Backstage golden path) and three stats.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

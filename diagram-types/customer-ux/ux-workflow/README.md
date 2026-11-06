@@ -2,9 +2,9 @@
 
 A left-to-right run of screens a user moves through, drawn as small screen frames joined by arrows, with a diamond wherever the product makes a decision and a branch for the unhappy path. Each screen is numbered and named so the flow can be discussed step by step. The example is the `acme login` device-code flow: the terminal prints a code, the developer enters it in the browser behind Okta SSO, the code is checked, the consent screen grants `repo:read` and `deploy:write`, auth-api issues a token and the polling terminal shows "Logged in", with an expired-code branch and a note of edge cases.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

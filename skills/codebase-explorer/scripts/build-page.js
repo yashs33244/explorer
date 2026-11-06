@@ -166,13 +166,13 @@ const hero = `<section class="hero"><p class="kicker">${esc(cfg.kicker || '')}</
 const css = fs.readFileSync(path.join(ASSETS, 'style.css'), 'utf8');
 const js = fs.readFileSync(path.join(ASSETS, 'app.js'), 'utf8');
 const brand = `<div class="brand"><svg viewBox="0 0 40 40" width="30" height="30" aria-hidden="true"><path d="M20 4 L34 12 V28 L20 36 L6 28 V12 Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M6 12 L20 20 L34 12 M20 20 V36" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><div><b>${esc(cfg.title)}</b><small>${esc(cfg.brandSub || '')}</small></div></div>`;
-const side = `<aside class="side" id="side">${brand}<nav aria-label="Sections">${nav}</nav><div class="prog"><div class="bar"><i id="bar"></i></div><small><b id="done">0</b> of ${total} interview questions ticked</small></div><button class="btn" id="toggleAll" type="button">Open all answers</button><div class="dsw" role="group" aria-label="Diagram style"><button type="button" data-ds="hand" aria-pressed="false">Hand-drawn</button><button type="button" data-ds="clean" aria-pressed="false">Clean</button></div><button class="btn ghost" id="theme" type="button">Switch theme</button></aside>`;
-const DSTYLE = cfg.diagramStyle === 'clean' ? 'clean' : 'hand';
+const side = `<aside class="side" id="side">${brand}<nav aria-label="Sections">${nav}</nav><div class="prog"><div class="bar"><i id="bar"></i></div><small><b id="done">0</b> of ${total} interview questions ticked</small></div><button class="btn" id="toggleAll" type="button">Open all answers</button><div class="dsw" role="group" aria-label="Diagram style"><button type="button" data-ds="modern" aria-pressed="false">Modern</button><button type="button" data-ds="clean" aria-pressed="false">Clean</button><button type="button" data-ds="hand" aria-pressed="false">Hand-drawn</button></div><button class="btn ghost" id="theme" type="button">Switch theme</button></aside>`;
+const DSTYLE = ['hand', 'clean', 'modern'].includes(cfg.diagramStyle) ? cfg.diagramStyle : 'modern';
 const filters = fs.readFileSync(path.join(ASSETS, 'filters.svg'), 'utf8').trim();
 
 const html = `<title>${esc(cfg.title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <style>${css}</style>
 ${filters}
 <div class="shell" id="shell" data-dstyle="${DSTYLE}">

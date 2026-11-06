@@ -2,9 +2,9 @@
 
 Four overlapping circles for Product, Price, Place and Promotion around the thing being launched, with the shared ground of each neighbouring pair written in the overlaps and a detail card per P outside the circles. The example is the v1.0 launch of shipctl, a deploy CLI for platform teams: a single Go binary, a free OSS core with paid Team and Enterprise plans, distribution through Homebrew, apt, Docker and a GitHub Action, and promotion through a quickstart, Show HN and a KubeCon talk.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

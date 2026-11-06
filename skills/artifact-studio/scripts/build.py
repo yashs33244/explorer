@@ -233,8 +233,12 @@ def lint(body, figs, where, kind=''):
              'with {"t", "d", "file"} (references/engineering.md)')
 
 
+DSTYLE = 'modern'  # diagram style for every figure: modern (default) or clean; set by --style
+
+
 def page_html(title, body, nav=''):
-    page = open(TEMPLATE).read().replace('{{TITLE}}', html.escape(title)).replace('{{NAV}}', nav).replace('{{BODY}}', body)
+    page = (open(TEMPLATE).read().replace('{{TITLE}}', html.escape(title)).replace('{{NAV}}', nav)
+            .replace('{{DSTYLE}}', DSTYLE).replace('{{BODY}}', body))
     return DASHES.sub('-', page)
 
 
@@ -407,6 +411,8 @@ def main():
     ap.add_argument('--kind', default='', help='"engineering" turns on the engineering depth checks')
     ap.add_argument('--site', help='site.json; then --out is the output folder')
     ap.add_argument('--out', required=True)
+    ap.add_argument('--style', choices=['modern', 'clean'], default='modern',
+                    help='diagram style: modern (product-architecture look, the default) or clean (FigJam look)')
     a = ap.parse_args()
     build_site(a) if a.site else build_single(a)
 

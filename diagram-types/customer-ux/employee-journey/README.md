@@ -2,9 +2,9 @@
 
 Phases of an employee's path laid out left to right, each with a coloured header and a body, and a row of cards above naming who guides that phase. Below sit a mood curve and one pain note per phase with its fix. The example is a new backend engineer on payments-platform going from laptop setup on day 1, through a first PR and owning a feature, to a first on-call shift in week 8.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

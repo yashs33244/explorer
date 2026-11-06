@@ -2,9 +2,9 @@
 
 An entity relationship diagram shows the tables in a database, the columns that identify them, and how rows in one table relate to rows in another. This example is the core Postgres schema of a deploy platform: users join orgs through a `memberships` table, orgs own projects, and projects ship deployments that a user triggers. Each table is a box with PK and FK tags, relationships are named diamonds in the middle of the line, and crow's foot ends say "exactly one", "one or many" or "zero or many".
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

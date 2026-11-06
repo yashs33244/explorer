@@ -2,9 +2,9 @@
 
 Stages from source to consumer, drawn as rectangles for stores, circles for processing steps and a rounded hub for the log or bus in the middle, with fan-out and fan-in where work splits and rejoins. The example is an orders CDC pipeline: Postgres changes captured by Debezium (with the WAL and ack-LSN loop), published to Kafka, processed by Flink and landed raw by Snowpipe Streaming into Snowflake, then modelled by dbt and served in Metabase, with a schema registry on the side.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

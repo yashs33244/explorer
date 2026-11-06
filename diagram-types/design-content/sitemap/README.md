@@ -2,9 +2,9 @@
 
 A tree of a site's pages, root at the top, top-level sections in one row and their child pages stacked below, each card showing the page title and its URL path. Top-level cards list the sections on that page, and dashed cards mark external links and redirects. The example is the Relay API docs site: Home links to Get started, Guides, API reference, SDKs and Changelog, each with its child pages (`/api/payments`, `/sdks/python`, `/changelog.rss`), GitHub and the status page as external links, and old v2 docs redirecting with a 301.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

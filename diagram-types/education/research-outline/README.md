@@ -2,9 +2,9 @@
 
 A vertical chain of section boxes, topped by a folder-tabbed title card, with arrows that say how each part leads to the next. It shows the argument of a paper before a single paragraph is written. The example outlines the Raft paper (Ongaro and Ousterhout, USENIX ATC 2014): thesis, why Paxos is hard (sections 1-3), the algorithm with its four subsections (terms, election, replication, safety), practical extensions, the evaluation, and related work, with etcd, Consul and CockroachDB as adopters.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

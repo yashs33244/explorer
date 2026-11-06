@@ -2,9 +2,9 @@
 
 A single board with a headline goal across the top and a loose mosaic of tiles below it: squares, wide panels, circles and a diamond, each holding one aspiration with a number that proves it. The example is a platform team's FY2027 vision, "ship on Friday, sleep on Saturday": 40 deploys a day, a Backstage to GitHub Actions to Argo CD golden path, quiet on-call, p99 and SLO targets, a 30% AWS cost cut, retiring Jenkins and tracing every service with OpenTelemetry.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -1,13 +1,14 @@
-# Diagram kit: classes, two styles, logos
+# Diagram kit: classes, three styles, logos
 
-Every diagram is one inline `<svg class="hd" viewBox="0 0 800 H">` (H from 300 to 900, no width or height attributes) styled only with these classes. The same file renders in two styles, chosen by `data-dstyle` on the page or on one figure:
+Every diagram is one inline `<svg class="hd" viewBox="0 0 800 H">` (H from 300 to 900, no width or height attributes) styled only with these classes. The same file renders in three styles, chosen by `data-dstyle` on the page or on one figure:
 
-- `hand` (default): Excalidraw look. White canvas, rough ink outlines, solid pastel fills, hard offset shadows under boxes and notes, and every label in Excalifont (regular weight, slightly larger, see below). Accent (`acc`) lines are violet.
+- `modern` (default): product-architecture look, after the diagrams on the Cloudflare and Figma engineering blogs. Dotted canvas, white cards with a coloured outline and a solid stacked-card offset, node titles (`d-t`), zone titles and keys in JetBrains Mono uppercase, detail lines in sans, tinted group zones with a solid coloured edge, edge labels (`d-lab`) as small green chips, grey edges that take their group colour (`g0` to `g5`) when they carry a flow. Accent lines are indigo; numbered badges are solid ink circles.
+- `hand`: Excalidraw look. White canvas, rough ink outlines, solid pastel fills, hard offset shadows under boxes and notes, and every label in Excalifont (regular weight, slightly larger, see below). Accent (`acc`) lines are violet.
 - `clean`: FigJam-like. Plain white canvas, flat saturated fills, thin near-black outlines, small corners, no shadows, one sans font. Accent lines are blue.
 
-Never name a color in a legend ("blue: order path"): the accent is violet in one style and blue in the other. Draw a sample line or say "colored".
+Never name a color in a legend ("blue: order path"): the accent is indigo, violet or blue depending on the style. Draw a sample line or say "colored".
 
-Both styles work in light and dark themes, so never write a hex color, an inline `fill`/`stroke`/`style`, a `<style>`, `<script>` or `<foreignObject>`.
+All three styles work in light and dark themes, so never write a hex color, an inline `fill`/`stroke`/`style`, a `<style>`, `<script>` or `<foreignObject>`.
 
 ## Shapes
 
@@ -78,10 +79,15 @@ Every id starts with `<key>-d<N>-` (the catalog uses `<slug>-d1-`). Define a mar
 ## Render and look
 
 ```bash
-scripts/render.sh d1.svg hand.jpg  light hand
-scripts/render.sh d1.svg clean.jpg light clean
-scripts/render.sh d1.svg dark.png  dark  clean     # check the dark theme too
+scripts/render.sh d1.svg modern.jpg light modern
+scripts/render.sh d1.svg clean.jpg  light clean
+scripts/render.sh d1.svg hand.jpg   light hand
+scripts/render.sh d1.svg dark.png   dark  modern     # check the dark theme too
 ```
+
+`render.sh` finds Google Chrome on macOS or Chromium on Linux (`CHROME=/path` overrides it) and adds `--no-sandbox` when it runs as root, as in containers and CI.
+
+**Size boxes for the modern titles.** Monospace uppercase runs about 10 percent wider than the sans the other styles use, so give a box title at least 7.5px per character plus its padding (a 20-character title needs about 150px of text room). `python3 scripts/check-overflow.py` renders every catalog example and lists any title, detail line or label that runs past the box it sits in (needs Python Playwright with Chromium).
 
 To check a drawing against the look it copies, put the two side by side: `scripts/compare.sh reference.png hand.jpg compare.jpg` (needs `uv`; `compare.jpg` is git-ignored). After a change to `style.css` or `filters.svg`, re-render the whole gallery with `scripts/render.sh --catalog`; `build-catalog.js` warns about stale renders.
 

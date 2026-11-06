@@ -2,9 +2,9 @@
 
 A single card made of several small charts, each answering one question with one number, so a reader gets the whole story at a glance. The example is one year of an open source repo. It has issue and PR outcomes by type, contributors by region, headline counts, weekly npm downloads, lines by language and hours to first review, with one takeaway at the bottom.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

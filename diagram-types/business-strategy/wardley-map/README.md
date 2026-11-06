@@ -2,9 +2,9 @@
 
 A value chain plotted against evolution: the user and their need sit at the top, the invisible infrastructure at the bottom, and every component is a small dot placed in one of four evolution stages, Genesis, Custom built, Product and Commodity. Plain lines link a component to the components it depends on, a tag on each says whether to build, buy or outsource it, and a dashed colored arrow shows a component that is moving right. The example maps a team's CI platform, from the developer's need for fast feedback down through the CI pipeline, flaky test triage, test sharding, the build cache, source control and the artifact store to compute, with the homegrown build cache moving toward a bought product.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 The numbered path of one request from the client to the data store and back, with every hop as a box, every step as a badge on its arrow, and a latency bar that splits the total time across the hops. The example follows `GET /v1/orders/42` through Route 53, Cloudflare, an AWS load balancer, an orders-api pod on Kubernetes, a Redis cache miss and a Postgres read, then the 200 response.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A full-width title bar over a grid of day columns and half-hour rows with alternating stripes, where each commitment is a coloured block whose height is its duration. Gaps stay visible as free time. The example is one week for a backend engineer on a payments-platform team: a daily standup, protected deep-work blocks on the ledger service, code review slots, a design review and postmortem, a v4.12 deploy window, and the on-call primary shift covering the weekend.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 
