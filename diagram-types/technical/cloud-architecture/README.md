@@ -2,9 +2,9 @@
 
 A cloud architecture diagram shows which managed services a workload runs on, how they sit inside account, region and network boundaries, and how requests and data move between them. This example is a checkout workload in one Azure region: Front Door routes shoppers to App Service, orders go through a Service Bus queue to Functions and land in Cosmos DB, Key Vault serves secrets through managed identity, and one Log Analytics workspace holds the Application Insights traces and the Key Vault audit logs (sent there by a diagnostic setting). Task and constraint panels sit on top, like the whiteboard template, so the drawing answers a stated design question.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

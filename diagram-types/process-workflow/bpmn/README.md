@@ -2,9 +2,9 @@
 
 Business Process Model and Notation: pools for each participant, rounded tasks, circle events and diamond gateways, with solid sequence flows inside a pool and dashed message flows between pools. The example is a v2.8 release: Engineering cuts and tags a release candidate, the CI pipeline builds and deploys it to staging, and QA runs regression and either signs off (a 10% canary in production) or ends in a message event that files blockers back to Engineering (fix and retag rc2).
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

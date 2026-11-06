@@ -2,9 +2,9 @@
 
 A dichotomous key identifies something by a chain of yes or no questions: each question splits the remaining options in two until one answer is left. The example picks a datastore for a new service with six numbered questions (relational schema, global writes, analytics scans, key lookups, latency, full-text search) ending in seven real stores, and highlights the path orders-svc took to PostgreSQL.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

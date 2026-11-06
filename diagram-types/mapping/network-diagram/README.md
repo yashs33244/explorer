@@ -2,9 +2,9 @@
 
 A network diagram shows where things run and how traffic is allowed to move between them: networks, subnets, gateways and the hosts or tasks inside. It reads left to right like the template chain, internet to gateway to the network block, and then top to bottom through the subnet tiers. The example is a production AWS VPC across two availability zones, with a load balancer in public subnets, ECS tasks in private subnets and RDS Multi-AZ in data subnets.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

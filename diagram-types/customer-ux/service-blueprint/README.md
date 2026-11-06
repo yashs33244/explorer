@@ -2,9 +2,9 @@
 
 A grid of stages across the top and four lanes down the side: what the user does, what they see (frontstage), what the team runs behind it (backstage), and the infrastructure that supports it. Dashed lines of interaction, visibility and internal interaction split the lanes, and vertical arrows show which hidden system answers each visible step. The example is self-serve Postgres provisioning: a developer picks an engine, confirms cost, copies the DSN and watches metrics, while the console, provision-api, a Temporal workflow, Vault, a metrics proxy, AWS quotas, a Kubernetes CNPG operator, Postgres and Prometheus do the work.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

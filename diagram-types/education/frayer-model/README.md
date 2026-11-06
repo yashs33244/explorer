@@ -2,9 +2,9 @@
 
 A square split into four quadrants around a central pill that names one concept: definition, characteristics, examples and non-examples. It pins down a fuzzy term by showing what it is and, just as important, what it is not. The example defines idempotency: a one-line definition with `f(f(x)) = f(x)`, the traits of an idempotent API (client key, stored response, TTL), real examples (Stripe idempotency keys, Postgres upsert, Kafka idempotent producer, `kubectl apply`) and non-examples that cause double charges or duplicate rows.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

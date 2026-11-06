@@ -2,9 +2,9 @@
 
 Five folder cards stacked with an offset, one per weekday, each with a tab naming the day and a strip of time-stamped pills for that day's commitments. The front card is the last day and has room for the highlights and the week's totals. The example is Sprint 41, week 2, for a payments-platform team: standups, grooming, a design review and the RC cut as meeting pills, protected focus blocks as filled pills, and a Friday ship day with the sprint review, retro, the v4.12.0 release and the PagerDuty on-call handoff.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

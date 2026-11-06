@@ -2,9 +2,9 @@
 
 A UML class diagram shows the types in a codebase, what each one holds and exposes, and how they relate: inheritance, interface realization, composition and plain association. This example is the payment domain of a payments service: `StripeProcessor` and `AdyenProcessor` both implement the `PaymentProcessor` interface, `Payment` calls through that interface, and each `Payment` owns zero or more `Refund` objects.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

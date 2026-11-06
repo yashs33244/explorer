@@ -2,9 +2,9 @@
 
 A grid with the customer's stages as columns and what happens in each as rows: what they do, where they touch the product, how they feel (an emotion curve), what hurts, and what to change, closed by one metric per stage. The example follows Priya, a backend engineer, adopting the Acme Payments API: discover, sign up, first call, integrate and scale, with dips at email verification and webhook signing and a peak at a 200 OK in four minutes.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

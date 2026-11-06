@@ -2,9 +2,9 @@
 
 A bar graph compares one number across a set of categories by bar length, so the biggest and smallest stand out at a glance. This example is a CI health report: p95 build time over the last 30 days for six services, sorted longest first, against a dashed 15 minute SLO line. mobile-app and search-indexer breach the target and are colored differently, each service carries its stack logo, and a sticky note records the cause found for the worst offender (a Gradle remote cache regression).
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

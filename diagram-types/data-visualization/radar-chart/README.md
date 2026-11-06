@@ -2,9 +2,9 @@
 
 Several axes radiate from one centre, each scored on the same scale, and every option becomes a polygon, so its strengths and weaknesses show as a shape. The example compares PostgreSQL and Cassandra as the event store for a service on six axes: read latency, write scale, cost at 10 TB, ops simplicity, consistency and ecosystem. It also has a score table and the decision.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

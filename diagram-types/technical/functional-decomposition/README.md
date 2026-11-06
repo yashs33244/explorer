@@ -2,9 +2,9 @@
 
 A functional decomposition diagram breaks one capability into the functions that make it up, then breaks those into sub-functions, until each leaf is small enough to own, build and test on its own. This example decomposes a checkout service into validate cart, calculate total and take payment, and walks each branch down to real function names such as `checkStock()` and `idempotencyKey()`. Branches are colored by the team that owns them, so the tree also reads as an ownership map.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

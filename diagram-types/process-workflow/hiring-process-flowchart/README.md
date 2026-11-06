@@ -2,9 +2,9 @@
 
 A stage board for an engineering hiring loop: one coloured column per interview stage, a card per candidate with a pass or reject mark, and a sticky note holding the bar for that stage. Reading left to right shows where candidates drop out and how long the loop takes. The example tracks a backend engineer req for a payments platform team through recruiter screen, coding round, system design, then team match and offer.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A flowchart split into horizontal lanes, one per team or role, so every step sits in the lane of whoever owns it and every arrow that crosses a lane line is a handoff. The example follows a SEV2 checkout-api incident from a spike in support tickets, through the on-call engineer's rollback-or-failover decision and SRE's SLO check, to Comms posting the resolution.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

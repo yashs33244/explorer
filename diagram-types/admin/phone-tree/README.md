@@ -2,9 +2,9 @@
 
 A tree of person cards where each person calls the people directly below them, so news fans out without one person making every call. Badges set the call order, time tags show when each level should be reached, and a dashed link shows the fallback when someone does not answer. The example is a SEV1 escalation for a checkout outage: PagerDuty pages the incident commander, who calls the payments eng lead, comms lead and VP Engineering, who each call their own people.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

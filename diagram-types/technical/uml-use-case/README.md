@@ -2,9 +2,9 @@
 
 A UML use case diagram: stick-figure actors outside a dashed system boundary, the goals they reach as ellipses inside it, solid association lines, and dashed `«include»` and `«extend»` arrows between use cases. The example models a CI/CD platform used by a developer, a reviewer and an Argo CD release bot, from pushing a branch to promoting and rolling back a release.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

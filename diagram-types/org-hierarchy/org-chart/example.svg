@@ -107,7 +107,7 @@
 <path class="d-edge" d="M622,336 H640"/>
 <rect class="d-box g5" x="640" y="296" width="140" height="80" rx="10"/>
 <image class="d-logo" data-logo="pagerduty.com" data-name="Incident Resp." x="650" y="306" width="22" height="22"/>
-<text class="d-t" x="680" y="322">Incident Resp.</text>
+<text class="d-t" x="680" y="322">Incidents</text>
 <text class="d-s" x="650" y="346">on-call rota</text>
 <rect class="d-tag" x="650" y="352" width="48" height="18" rx="9"/>
 <text class="d-s" x="674" y="365" text-anchor="middle">4 eng</text>

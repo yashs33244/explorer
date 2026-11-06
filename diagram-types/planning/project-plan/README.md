@@ -2,9 +2,9 @@
 
 A project plan is a table: a header row naming the project and its target, column headers, and one row per phase with its deliverable, owner, due date and status. The status column is colour coded so risk stands out at a glance. The example plans the split of a Rails monolith into services with the strangler fig pattern: domain mapping, an EKS and Istio platform, extracting orders behind Kong, splitting the database with Debezium CDC, extracting payments and retiring the monolith routes.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

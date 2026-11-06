@@ -2,9 +2,9 @@
 
 A vertical timeline runs time down a single spine, split into coloured phase segments, with event cards branching off to the left and right. Alternating sides lets each card carry a timestamp, a title and a detail line without crowding. The example is the timeline of incident INC-2291: a 5xx rate alert on checkout-api at 14:02 UTC, the incident channel, the suspect deploy, the Argo CD rollback, recovery, resolution and the postmortem two days later, with its action items on a sticky note.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

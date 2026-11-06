@@ -2,9 +2,9 @@
 
 Six areas arranged around a hub and joined to it by spokes, each scored on the same 0 to 10 scale, so a reader sees at once which areas are healthy and which are neglected. The example scores the engineering health of a payments-api team for Q3: tests (8), docs (4), on-call (5), deploy frequency (9), security (6) and onboarding (3), each with the tool behind it and the metric that justifies the score, with the two lowest flagged as the Q4 focus.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

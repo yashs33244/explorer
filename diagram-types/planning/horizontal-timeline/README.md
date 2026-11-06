@@ -2,9 +2,9 @@
 
 A thick arrow running left to right as the spine, with events hung off it on stems that alternate above and below so the cards never collide. Era labels sit inside the arrow and the card colour groups events into the same eras. The example is Kubernetes major releases from v1.0 in 2015 to v1.33 in 2025: core APIs (Deployments, RBAC), extensibility (CRDs), the runtime cleanup (dockershim deprecated then removed, PodSecurityPolicy removed) and maturity, with sidecar containers going GA.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

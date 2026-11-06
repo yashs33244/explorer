@@ -2,9 +2,9 @@
 
 A sandwich chart stacks content as layers between two buns: the top bun opens, the fillings carry the substance, and the bottom bun closes. The example is the structure of a pull request description for a payments fix: the top bun states why the change exists and links the ticket, the fillings say what changed and how it was tested, and the bottom bun says how it rolls out behind a flag and how to undo it. The left column gives the rule for each layer and the right column says who reads it.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

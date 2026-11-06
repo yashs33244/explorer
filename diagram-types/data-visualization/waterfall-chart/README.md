@@ -2,9 +2,9 @@
 
 A waterfall chart walks a start total to an end total through signed steps: the two totals stand on the baseline, and each step floats between the running total before and after it, with a dashed carry line holding that level across every gap. This example is a monthly cloud bill bridge from $84k in August to $71k in September: a new region adds $6k, rightsizing removes $9k, reserved instances remove $7k, traffic growth adds $3k and a log retention cut removes $6k (84 + 6 - 9 - 7 + 3 - 6 = 71). Increases and decreases take different fills and also print their sign, and a sticky note states the takeaway: $22k of savings outweigh $9k of growth.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

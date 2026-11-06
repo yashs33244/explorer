@@ -2,9 +2,9 @@
 
 A mind map puts one topic in the center and branches the subtopics around it, each with its own leaves. This example is a platform team's onboarding map for Kubernetes on EKS: five branches (workloads, networking, security, storage, observability) radiate from the cluster, and each branch lists the resource kinds or tools a new engineer meets first.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

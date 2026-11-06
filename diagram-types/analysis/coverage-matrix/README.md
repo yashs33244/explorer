@@ -2,9 +2,9 @@
 
 A grid of items against capabilities where every cell holds one of three marks: full, partial or none. Each mark is drawn with shape and text, so it reads without colour. Row totals on the right and column totals along the bottom show where coverage is thin, and one accented column marks the target to close next. The example checks an API client SDK in Python, TypeScript, Go and Java against six capabilities: auth, retries, streaming, pagination, telemetry and typed errors. Go covers 2 of 6, and its biggest gaps are streaming and telemetry.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

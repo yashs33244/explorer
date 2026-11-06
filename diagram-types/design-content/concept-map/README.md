@@ -2,9 +2,9 @@
 
 A concept map lays out concepts as nodes and joins them with labeled arrows, so each concept, link, concept triple reads as a sentence (a proposition). It grows top down from one root concept, with cross-links where branches meet. The example explains TLS 1.3: the handshake verifies an X.509 certificate, exchanges an ECDHE key share and derives session keys; the record layer encrypts with AES-GCM and checks an AEAD tag; a dashed cross-link shows the session keys being keyed into the cipher suite.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

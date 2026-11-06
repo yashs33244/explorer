@@ -2,9 +2,9 @@
 
 A pie chart splits one total into parts, with each slice's angle showing its share. This example is the platform team's September AWS bill of $181.9k, split by service: EC2 compute takes 41%, RDS Postgres 22%, S3 14%, data transfer 12% and the rest 11%. Slices start at twelve o'clock, largest first and clockwise, a legend table on the right gives the dollar amount and what each line covers, and a sticky note flags the slice that moved.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

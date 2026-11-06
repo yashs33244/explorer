@@ -2,9 +2,9 @@
 
 Packages laid out in columns by build order, layer 0 on the left (needs nothing) and apps on the right (built last), with every arrow pointing from a package to the package it depends on. Each box carries a fan-in pill counting how many packages depend on it, so the shared library everyone leans on stands out. The example is a monorepo: `core` and `config` in layer 0, `http-kit` and `db-client` in layer 1, `auth` and `users` in layer 2, and the `web` and `admin-cli` apps in layer 3. `core` has the highest fan-in (4 in) and is highlighted; `users` imports back into `auth`, a cycle drawn as a dashed edge and flagged with a red note.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A culture canvas: a shared purpose in a circle at the centre, surrounded by blocks for values, priorities, behaviours, rituals, feedback, decision making and norms, with a four-phase strip on top (discover, define, design, embed) and a badge in each block naming the phase that fills it. The example is an engineering org setting up blameless postmortems and code review norms: values like "blameless by default", a weekly incident review, RFCs that end in ADRs, and rules enforced in CI with CODEOWNERS.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

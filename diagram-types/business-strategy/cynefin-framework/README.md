@@ -2,9 +2,9 @@
 
 Four domains in a two-by-two grid, sorted by how knowable cause and effect are: Complex (cause only clear in hindsight), Complicated (experts can find it), Chaotic (no time to look) and Clear (known fix), with Confusion in the middle for situations not yet sorted. Each domain has its own way to respond. The example sorts production incidents: Kafka lag spikes and flapping pods are complex, a Postgres plan regression and a p99 regression are complicated, a region outage and a leaked API key are chaotic, an expiring TLS cert and a full disk are clear, and a dashed arrow marks the complacency cliff from clear to chaotic.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 Abstract regions on a canvas, each one territory owned by a team, with pins for the assets inside it and dashed boundaries for the dividing rule. Here the rule is timezone: four SRE teams (Seattle, Dublin, Bengaluru, Tokyo) each own the cloud regions in their band, hand the pager west every six hours (Seattle hands back to Tokyo at 00:00 UTC), and a 24 hour strip below shows the follow-the-sun PagerDuty schedule with no gaps.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

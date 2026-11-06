@@ -2,9 +2,9 @@
 
 An outcome map runs from one program on the left through rows of activities, outputs and outcomes, and ends in the impact they add up to. The example is a platform engineering developer education program for 40 new hires: codebase tours, pairing on a first PR and incident game days each produce something countable (tour videos in Loom, merged PRs, drills) and change a behavior (fewer help-channel asks, first PR in 3 days, on-call by week 4). The impact band holds the headline and the metrics that prove it.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 Side-by-side columns, one per product, each with a coloured header and a stack of check or cross marks against the same criteria. The criteria sit in a left column so every row reads across, and a score plus a one-line verdict closes each column. The example picks a message bus for an orders pipeline: Kafka, RabbitMQ and Amazon SQS scored on ordering, replay, throughput, routing, exactly-once delivery and operational load.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

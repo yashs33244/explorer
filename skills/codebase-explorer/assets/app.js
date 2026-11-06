@@ -53,7 +53,7 @@
     root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
   });
 
-  // diagram style: hand-drawn or clean, remembered per viewer
+  // diagram style: modern, clean or hand-drawn, remembered per viewer
   var shell = document.getElementById('shell');
   var DS_KEY = KEY + '-dstyle';
   function setStyle(v) {
@@ -61,7 +61,7 @@
     document.querySelectorAll('[data-ds]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ds') === v)); });
   }
   var savedDs = null; try { savedDs = localStorage.getItem(DS_KEY); } catch (e) {}
-  setStyle(savedDs === 'hand' || savedDs === 'clean' ? savedDs : shell.getAttribute('data-dstyle') || 'hand');
+  setStyle(['hand', 'clean', 'modern'].indexOf(savedDs) >= 0 ? savedDs : shell.getAttribute('data-dstyle') || 'modern');
   document.querySelectorAll('[data-ds]').forEach(function (b) {
     b.addEventListener('click', function () { var v = b.getAttribute('data-ds'); setStyle(v); try { localStorage.setItem(DS_KEY, v); } catch (e) {} });
   });

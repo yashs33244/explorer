@@ -2,9 +2,9 @@
 
 A storyboard tells a story as a row of framed panels, each with a small scene and a caption under it, read left to right and top to bottom. The example replays incident INC-482 on a checkout API in six panels: a deploy fails on a database migration, an alert pages on-call, the service is rolled back, the migration is fixed, the release goes out again through a canary, and a postmortem files action items. Each frame shows the artifact an engineer actually saw at that moment, and the caption gives the time and what changed.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

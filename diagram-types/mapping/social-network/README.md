@@ -2,9 +2,9 @@
 
 A social network diagram draws people (or services) as nodes and their relationships as edges, so clusters, hubs and bridges stand out. The example is a quarter of code review across three teams: each team clusters around its lead, a staff engineer bridges all three, node size and the number inside show PRs reviewed, and dashed edges are cross-team reviews.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

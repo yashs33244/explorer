@@ -2,9 +2,9 @@
 
 A strip of adjacent stage columns that a production change must pass through, from request to closure. Each column names its stage, its owner and the artifact it produces, and blue boxes show the work in that stage. Dashed loops underneath show where a change goes back: a CAB rejection returns to the RFC and an SLO breach rolls the rollout back. The example is CHG-4821, a NOT NULL column added to a large Postgres orders table.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

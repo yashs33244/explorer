@@ -2,9 +2,9 @@
 
 A five-column board that tests one goal against the SMART criteria: Specific, Measurable, Achievable, Relevant and Time-bound. Each coloured header holds one letter, and the column under it collects the evidence for that criterion as sticky notes, with the tool or setting that backs it at the foot. The example is an engineering goal for the payments platform team: cut checkout-api p95 latency from 480ms to 200ms, measured in Datadog APM, made achievable by an N+1 query fix and a Redis price cache, tied to checkout conversion and the platform OKR, with milestones up to November 15. A goal-statement band at the bottom folds the five columns into one sentence.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

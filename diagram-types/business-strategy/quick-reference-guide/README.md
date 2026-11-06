@@ -2,9 +2,9 @@
 
 A single card that holds the handful of commands or facts a reader needs under pressure, split into a 2x2 grid of panels by task. A stacked card behind it says "there is more, this is the front page". The example is the checkout team's on-call cheat sheet: git commands for undoing work and syncing branches, kubectl commands for inspecting pods and rolling back a deploy, with the commands that rewrite history or change production flagged.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

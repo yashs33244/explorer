@@ -2,9 +2,9 @@
 
 Numbered columns, one per stage of the flow, each showing the queue in front of the stage (an inventory triangle with its wait time), the process box with cycle time, percent complete and accurate, and who does the work, plus a kaizen note with the planned fix. A timeline ladder underneath puts wait above the line and work below it, and a summary band gives lead time, work time and flow efficiency. The example maps payments-svc from commit to production: code review in GitHub, CI on GitHub Actions, staging through Argo CD and release behind LaunchDarkly flags, where 33.5 hours of lead time hold only 2 hours of work.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

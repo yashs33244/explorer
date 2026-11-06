@@ -2,9 +2,9 @@
 
 One system drawn as a single rounded boundary, with the callers on the left, the stores it writes to on the right, and two checkpoint bars between them: a gate just inside the left edge that every inbound call crosses, and a credential bar outside the right edge that every outbound write crosses. The diagram answers what crosses the trust boundary, what is checked at the edge, and where data lands. The example is a metrics ingestion platform: agents and SDKs send OTLP, edge collectors batch push and analysts run SQL through an mTLS gate; inside, replicated write workers buffer per tenant and PUT objects, a Postgres metadata DB holds tenants, cursors and table locations, a compactor merges small files under a lease, and a read only query API runs two DuckDB engines; short-lived role credentials reach object storage and table catalogs that belong either to the platform or to the customer; untrusted public dashboards go through a query proxy that lives outside the boundary and holds only a scoped token.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

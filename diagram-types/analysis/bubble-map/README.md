@@ -2,9 +2,9 @@
 
 One central bubble for the thing being described, ringed by smaller bubbles that each hold one adjective about it, joined by straight spokes. It is a thinking-map form: it describes, it does not rank or sequence. The example describes the Redis orders cache with eight adjectives (fast, bounded, shared, volatile, stale-prone, key-addressed, read-heavy, costly), each backed by a setting or a number (stale-prone, for example, is a 300 s TTL with no invalidation on write).
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A user story map: a backbone of user activities across the top in the order the user meets them, the stories for each activity stacked in its column underneath, and horizontal release slices that cut the stack into what ships first and what waits. A thick colored release cut line sits under the first slice, and one card carries a risk tag. The example is a self-serve API key feature for a developer platform: sign up, create key, call API, watch usage and rotate key, sliced into a Release 1 walking skeleton (one story per activity, 11 pts), Release 2 (13 pts) and Later (11 pts), with zero-downtime rotation flagged as the riskiest story.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

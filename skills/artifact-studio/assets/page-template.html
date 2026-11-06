@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TITLE}}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap">
 <style>
 :root {
   --bg: #ffffff; --paper: #ffffff; --ink: #1e1e1e; --muted: #5c5c5c; --faint: #e2e2e2; --line: #e6e6e6;
@@ -296,9 +296,111 @@ svg.hd .d-g { font-family: var(--font-m); font-size: 12px; font-weight: 500; let
 svg.hd .d-edge.dot { stroke-dasharray: 1.5 4.5; stroke-width: 1.8; }
 svg.hd .d-edge:is(.g0, .g1, .g2, .g3, .g4, .g5) { stroke: var(--cx); }
 svg.hd .d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
+/* modern-style:begin */
+/* generated from codebase-explorer/assets/style.css by scripts/sync-modern.py, light only; do not edit here */
+/* modern style: product-architecture look (Cloudflare and Figma engineering diagrams).
+   Dotted canvas, white cards with a coloured outline and a stacked-card offset, monospace uppercase titles,
+   tinted group zones, chip edge labels, coloured flow edges. Same SVG and classes as hand and clean.
+   per group N: --mdN-s stroke and flow colour, --mdN-t light tint (zones, tiles), --mdN-x dark text on tints. */
+[data-dstyle="modern"] {
+  --fig: #ffffff; --md-bg: #ffffff; --md-dot: #e3e6eb; --md-frame: #e6e8ec; --md-ink: #111827; --md-muted: #6b7280; --md-line: #1f2937;
+  --md-edge: #9aa1ab; --md-faint: #e5e7eb; --md-stack: #d5d9e0; --md-card: #ffffff; --md-lane: #fafafa; --md-head: #f3f4f6;
+  --md-acc: #4f46e5; --md-acc-t: #eef2ff; --md-chip: #eef6f1; --md-chip-ink: #1f6f43; --md-on: #ffffff;
+  --md0-s: #7c3aed; --md0-t: #f3efff; --md0-x: #5b21b6; --md1-s: #16a34a; --md1-t: #ecfaf1; --md1-x: #166534;
+  --md2-s: #f38020; --md2-t: #fff4e8; --md2-x: #9a4a06; --md3-s: #e11d48; --md3-t: #fff0f3; --md3-x: #9f1239;
+  --md4-s: #2f7cf6; --md4-t: #e8f1ff; --md4-x: #1d4ed8; --md5-s: #0d9488; --md5-t: #e7f8f6; --md5-x: #115e59;
+  --md-c: #a5b4fc; --md0-c: #c4b2fd; --md1-c: #8ee0ad; --md2-c: #fbb978; --md3-c: #f9a1b4; --md4-c: #9fc3fd; --md5-c: #86dccf; --md-cink: #111827;
+}
+/* the figure is a dotted canvas inside a thin frame */
+[data-dstyle="modern"] .fig, .fig[data-dstyle="modern"] { --fig: var(--md-bg); background-color: var(--md-bg); background-image: radial-gradient(var(--md-dot) 1.1px, transparent 1.3px); background-size: 16px 16px; border: 1px solid var(--md-frame); border-radius: 14px; box-shadow: none; }
+[data-dstyle="modern"] .fig .figscroll, .fig[data-dstyle="modern"] .figscroll { background: transparent; }
+[data-dstyle="modern"] svg.hd { color: var(--md-muted); --ms: var(--md-line); --mt: var(--md-card); --mx: var(--md-ink); }
+[data-dstyle="modern"] svg.hd .g0 { --ms: var(--md0-s); --mt: var(--md0-t); --mx: var(--md0-x); --mc: var(--md0-c); }
+[data-dstyle="modern"] svg.hd .g1 { --ms: var(--md1-s); --mt: var(--md1-t); --mx: var(--md1-x); --mc: var(--md1-c); }
+[data-dstyle="modern"] svg.hd .g2 { --ms: var(--md2-s); --mt: var(--md2-t); --mx: var(--md2-x); --mc: var(--md2-c); }
+[data-dstyle="modern"] svg.hd .g3 { --ms: var(--md3-s); --mt: var(--md3-t); --mx: var(--md3-x); --mc: var(--md3-c); }
+[data-dstyle="modern"] svg.hd .g4 { --ms: var(--md4-s); --mt: var(--md4-t); --mx: var(--md4-x); --mc: var(--md4-c); }
+[data-dstyle="modern"] svg.hd .g5 { --ms: var(--md5-s); --mt: var(--md5-t); --mx: var(--md5-x); --mc: var(--md5-c); }
+/* cards: white, coloured outline, a solid offset card behind (the Figma stack) */
+[data-dstyle="modern"] svg.hd .d-box { fill: var(--md-card); stroke: var(--md-line); stroke-width: 1.4; stroke-linejoin: round; filter: drop-shadow(3px 3px 0 var(--md-stack)); }
+[data-dstyle="modern"] svg.hd .d-box:is(.g0, .g1, .g2, .g3, .g4, .g5) { stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd rect.d-box { rx: 9px; ry: 9px; }
+[data-dstyle="modern"] svg.hd rect.d-box:is([width="8"], [width="10"], [width="12"], [width="14"], [width="16"]) { rx: 3px; ry: 3px; filter: none; fill: var(--md-head); }
+[data-dstyle="modern"] svg.hd .d-band { fill: var(--md-head); fill-opacity: 1; stroke: var(--md-faint); stroke-width: 1.2; }
+[data-dstyle="modern"] svg.hd .d-band:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mt); stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd rect.d-band { rx: 6px; ry: 6px; }
+/* groups: dashed neutral boundary (Cloudflare edge) or a tinted zone with a solid coloured edge (Figma) */
+[data-dstyle="modern"] svg.hd :is(.d-blob, .d-blob2) { fill: var(--md-bg); fill-opacity: 0.6; stroke: var(--md-edge); stroke-width: 1.3; stroke-dasharray: 6 5; filter: none; }
+[data-dstyle="modern"] svg.hd .d-blob2 { fill: none; }
+[data-dstyle="modern"] svg.hd .d-zone { fill: var(--md-bg); fill-opacity: 0.7; stroke: var(--md-edge); stroke-width: 1.3; filter: none; }
+[data-dstyle="modern"] svg.hd .d-zone:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mt); fill-opacity: 0.9; stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd rect.d-zone { rx: 10px; ry: 10px; }
+[data-dstyle="modern"] svg.hd .d-zone.dash { stroke-dasharray: 6 5; }
+[data-dstyle="modern"] svg.hd :is(.d-lane, .d-lanehead) { fill: var(--md-lane); stroke: var(--md-faint); stroke-width: 1; }
+[data-dstyle="modern"] svg.hd .d-lane.alt { fill: var(--md-head); }
+[data-dstyle="modern"] svg.hd .d-lanehead { fill: var(--md-head); }
+[data-dstyle="modern"] svg.hd .d-lanehead:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mt); stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd :is(rect.d-lane, rect.d-lanehead) { rx: 0; ry: 0; }
+/* notes, tags, chips, plates */
+[data-dstyle="modern"] svg.hd .d-note { fill: var(--md2-t); stroke: var(--md2-s); stroke-width: 1; filter: none; }
+[data-dstyle="modern"] svg.hd .d-note:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mt); stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd rect.d-note { rx: 6px; ry: 6px; }
+[data-dstyle="modern"] svg.hd .d-tag { fill: var(--md-card); stroke: var(--md-faint); stroke-width: 1.2; filter: none; }
+[data-dstyle="modern"] svg.hd .d-tag.acc { fill: var(--md-acc-t); stroke: var(--md-acc); }
+[data-dstyle="modern"] svg.hd rect.d-tag { rx: 5px; ry: 5px; }
+[data-dstyle="modern"] svg.hd .d-chip { fill: var(--md-card); stroke: var(--md-faint); stroke-width: 1.1; filter: none; }
+[data-dstyle="modern"] svg.hd .d-chip.on { stroke: var(--ms); stroke-width: 1.5; }
+[data-dstyle="modern"] svg.hd .d-chip.dash { stroke-dasharray: 3 2.5; }
+[data-dstyle="modern"] svg.hd rect.d-chip { rx: 5px; ry: 5px; }
+[data-dstyle="modern"] svg.hd .d-fillpaper { fill: var(--md-card); stroke: var(--md-line); stroke-width: 1.3; }
+[data-dstyle="modern"] svg.hd .d-logo-plate { fill: var(--mt); stroke: none; filter: none; rx: 7px; ry: 7px; }
+[data-dstyle="modern"] svg.hd .d-logo-fb { fill: var(--md-acc-t); stroke: var(--md-acc); stroke-width: 1.2; }
+/* chart marks */
+[data-dstyle="modern"] svg.hd .d-fill { fill: var(--md-c); stroke: none; filter: none; }
+[data-dstyle="modern"] svg.hd .d-fill:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mc); }
+[data-dstyle="modern"] svg.hd rect.d-fill { rx: 3px; ry: 3px; }
+[data-dstyle="modern"] svg.hd .d-soft { fill: var(--md-acc-t); fill-opacity: 1; stroke: var(--md-acc); stroke-width: 1.3; }
+[data-dstyle="modern"] svg.hd .d-soft:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mt); stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd .o1 { fill-opacity: 0.25; } [data-dstyle="modern"] svg.hd .o2 { fill-opacity: 0.5; } [data-dstyle="modern"] svg.hd .o3 { fill-opacity: 0.75; }
+[data-dstyle="modern"] svg.hd .d-badge { fill: var(--md-ink); stroke: var(--md-bg); stroke-width: 2; filter: none; }
+/* lines: thin grey by default, coloured when they carry a flow, accent when marked */
+[data-dstyle="modern"] svg.hd :is(.d-edge, .d-line, .d-lineacc) { fill: none; stroke: var(--md-edge); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; filter: none; }
+[data-dstyle="modern"] svg.hd .d-edge.dash { stroke-dasharray: 5 4; }
+[data-dstyle="modern"] svg.hd .d-edge.dot { stroke-dasharray: 1.5 4.5; stroke-width: 1.8; }
+[data-dstyle="modern"] svg.hd .d-edge.acc, [data-dstyle="modern"] svg.hd .d-lineacc { stroke: var(--md-acc); }
+[data-dstyle="modern"] svg.hd .d-edge.acc { stroke-width: 1.9; }
+[data-dstyle="modern"] svg.hd .d-edge.thick { stroke-width: 2.6; }
+[data-dstyle="modern"] svg.hd .d-edge:is(.g0, .g1, .g2, .g3, .g4, .g5) { stroke: var(--ms); }
+[data-dstyle="modern"] svg.hd .d-axis { fill: none; stroke: var(--md-muted); stroke-width: 1.2; }
+[data-dstyle="modern"] svg.hd .d-grid { stroke: var(--md-faint); stroke-width: 1; stroke-dasharray: none; }
+[data-dstyle="modern"] svg.hd .d-fillink { fill: var(--md-edge); stroke: none; }
+[data-dstyle="modern"] svg.hd .d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--ms); }
+[data-dstyle="modern"] svg.hd .d-fillacc { fill: var(--md-acc); stroke: none; }
+/* type: monospace uppercase names (titles, zones, keys, labels), sans for the detail line */
+[data-dstyle="modern"] svg.hd :is(.d-t, .d-s, .d-h, .d-lab, .d-tn, .d-k, .d-lfb, .d-bt, .d-tw, .d-m, .d-zt, .d-mb, .d-g) { fill: var(--md-ink); }
+[data-dstyle="modern"] svg.hd .d-t { font-family: var(--font-m); font-size: 12px; font-weight: 600; letter-spacing: 0.01em; text-transform: uppercase; }
+[data-dstyle="modern"] svg.hd .d-s { font-family: var(--font-b); font-size: 12px; font-weight: 500; fill: var(--md-muted); }
+[data-dstyle="modern"] svg.hd .d-h { font-family: var(--font-m); font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+[data-dstyle="modern"] svg.hd .d-k { font-family: var(--font-m); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; fill: var(--md-muted); }
+[data-dstyle="modern"] svg.hd .d-m { font-family: var(--font-m); font-size: 12px; }
+[data-dstyle="modern"] svg.hd .d-zt { font-family: var(--font-m); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+[data-dstyle="modern"] svg.hd :is(.d-zt, .d-m, .d-t):is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--mx); }
+[data-dstyle="modern"] svg.hd .d-mb { font-family: var(--font-m); font-size: 12px; font-weight: 600; }
+[data-dstyle="modern"] svg.hd .d-g { font-family: var(--font-m); font-size: 11.5px; fill: var(--md-muted); }
+[data-dstyle="modern"] svg.hd .d-tn { font-family: var(--font-b); font-size: 13px; font-weight: 600; fill: var(--md-ink); }
+[data-dstyle="modern"] svg.hd .d-tw { font-family: var(--font-m); font-size: 11.5px; font-weight: 700; fill: var(--md-cink); }
+[data-dstyle="modern"] svg.hd .d-bt { font-family: var(--font-m); font-size: 11.5px; font-weight: 700; fill: var(--md-bg); }
+[data-dstyle="modern"] svg.hd .d-lfb { font-family: var(--font-m); fill: var(--md-acc); }
+/* edge labels read as small chips: a tinted halo behind monospace uppercase */
+[data-dstyle="modern"] svg.hd .d-lab { font-family: var(--font-m); font-size: 10.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; fill: var(--md-chip-ink); stroke: var(--md-chip); stroke-width: 9px; paint-order: stroke fill; stroke-linejoin: round; }
+/* the numbered list under a figure matches the badges in it */
+[data-dstyle="modern"] .badges li::before, [data-dstyle="modern"] ol.badges b { background: var(--md-ink); color: var(--md-bg); border: 0; font-family: var(--font-m); font-weight: 700; }
+/* arrowheads keep their marker shape; the marker box may overflow */
+[data-dstyle="modern"] svg.hd marker { overflow: visible; }
+/* modern-style:end */
 </style>
 
-{{NAV}}<div class="wrap">
+{{NAV}}<div class="wrap" data-dstyle="{{DSTYLE}}" data-theme="light">
 {{BODY}}
 </div>
 <div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-labelledby="zoomtitle">

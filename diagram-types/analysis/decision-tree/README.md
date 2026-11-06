@@ -2,9 +2,9 @@
 
 A decision tree starts from one question at the top and splits on each answer until every path ends in a choice. The example is ADR-017, picking a queue or a stream for an order-events topic: replay history splits streams from queues, then running your own brokers splits Kafka from Kinesis and per-message routing splits RabbitMQ from SQS. The path the team took is highlighted and the leaf it reached is marked as chosen, with the reason in a band underneath.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

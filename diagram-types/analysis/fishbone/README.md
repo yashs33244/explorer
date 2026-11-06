@@ -2,9 +2,9 @@
 
 A fishbone (Ishikawa) diagram lays out everything an investigation looked at for one observed effect. A horizontal spine runs into the effect box at the head; category ribs leave the spine at one fixed 60 degree angle, alternating above and below, and each rib carries short ticks with the causes found under it. The example is a review of why p95 checkout latency rose 40% after release 3.2: six ribs (Code, Config, Data, Dependencies, Infrastructure, Process) hold two or three causes each, the N+1 cart query on the Code rib is the confirmed root cause, a slower tax API is struck out as ruled out, and the rest stay open as suspects.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

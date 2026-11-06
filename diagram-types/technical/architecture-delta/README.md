@@ -2,9 +2,9 @@
 
 Two synchronized topology panels, Before on the left and After on the right, drawn on the same grid so every unchanged component sits at the same spot in both and the eye lands only on what moved. Added parts are filled and tagged `+`, removed parts are dashed and greyed with a `-` tag, changed parts carry a `~` tag, and a Changes ledger along the bottom lists each numbered change in one line. The example is a checkout service moving from synchronous calls to an event queue: checkout now publishes `order.placed` to a new event-queue, the charge, reserve and email calls are rewired to consume from that queue, and the retry-job that replayed failed calls is removed because the queue redelivers.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

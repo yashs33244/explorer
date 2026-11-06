@@ -2,9 +2,9 @@
 
 A stack of dated pages, one per day, with the newest page in front. Each page has the same layout: a date line, one large block, two smaller blocks and a few ruled lines, so days compare at a glance. The example is an engineering daily log during a payments on-call week: Monday and Tuesday peek out behind Wednesday, which records what shipped (an idempotency PR, the payments-api v2.14 deploy, an incident postmortem), what is blocked (a staging Kafka quota), what was learned (an N+1 query found with pg_stat_statements) and lines for tomorrow, energy, focus time and a note to self.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A low-fidelity page layout inside a browser frame: nav, hero with its main call to action, a row of cards with image placeholders, and the strips below, annotated with sticky notes that explain why each block is there. The example is the landing page of the Relay payments API docs: search in the nav, a hero with Quickstart and a copyable curl snippet, cards for REST API, Webhooks and SDKs, a live status strip and the footer, with notes tying each decision to data such as search logs and click share.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

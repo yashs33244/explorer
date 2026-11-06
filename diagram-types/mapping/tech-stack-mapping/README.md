@@ -2,9 +2,9 @@
 
 A tech stack mapping lays the stack out as layers, one per concern (compute, database, CI/CD, observability, cache, edge), and puts the tool used today next to the tool planned for each layer. This example maps a platform migration: Heroku to AWS ECS Fargate, MySQL to PostgreSQL, Jenkins to GitHub Actions, New Relic to Datadog, Redis re-hosted on ElastiCache alongside compute, and Cloudflare kept at the edge. Each arrow carries the kind of move and a status tag, so one picture shows both the target and how far along the migration is.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

@@ -2,9 +2,9 @@
 
 A causal loop diagram shows how variables in a system push on each other. Each arrow carries a polarity: `+` when the target moves in the same direction as the source, `−` when it moves the opposite way. Closed chains form loops, marked R (reinforcing, an even count of `−`) or B (balancing, an odd count). The example traces a tech debt spiral on a payments team: deadline pressure drives shortcuts, debt, prod bugs and on-call pages, which cut velocity and raise the pressure again, while refactor time and crunch hours act as brakes.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

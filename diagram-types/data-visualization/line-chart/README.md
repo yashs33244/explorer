@@ -2,9 +2,9 @@
 
 A line chart plots one value per period for a few series, so the reader sees direction, rate of change and the moment something shifted. This example tracks weekly p95 CI build time over 12 weeks for three pipelines against a dashed 10 minute target. A dashed vertical rule with a numbered badge marks week 7, when the remote build cache was turned on: the accented web line drops from 16.4 to 6.9 minutes, api falls from 12.2 to 9.0 and under the target, and mobile, which does not use the cache, keeps creeping up to 22.8. Every line is named at its end, so there is no legend to cross-reference.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

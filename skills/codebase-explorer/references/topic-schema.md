@@ -50,6 +50,6 @@ Roles: `architecture`, `lifecycle`, `structure`.
 | `tryItNote` | caption under every try-it table |
 | `extraSections` | `[{id, navLabel, kicker, title, lede, table:{file, columns, tallAfter, caption}, htmlFile}]` |
 | `footer` | closing sentence |
-| `diagramStyle` | `"hand"` (default) or `"clean"`: the diagram style a viewer sees first, before they use the switch |
+| `diagramStyle` | `"modern"` (default), `"clean"` or `"hand"`: the diagram style a viewer sees first, before they use the switch |
 
 Table columns: `{key, label, kind}` where kind is `text` (default), `num`, `pill`, `code`, `link`, `muted` or `nowrap`. Rows are an array of objects in the JSON file.

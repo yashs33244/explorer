@@ -2,9 +2,9 @@
 
 A Venn diagram shows what sets share and what is unique to each by overlapping circles. With three sets there are seven regions: three exclusive, three pairwise and one shared by all. The example compares relational SQL, NoSQL and NewSQL databases while picking a store for an orders service: exclusive traits sit in each outer region, shared traits in the overlaps, and a sticky note records the decision.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

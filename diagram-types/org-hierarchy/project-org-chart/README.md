@@ -2,9 +2,9 @@
 
 A small tree for a time-boxed project rather than the whole company: a sponsor at the top, the people who run the project in the middle, and the workstreams at the bottom with an owner and a milestone each. The example is a 12-week migration of the orders database from Postgres 11 to Aurora Postgres 15: a director as sponsor, a staff engineer as tech lead with the go/no-go call, a TPM tracking risk, and three workstreams (schema and dual-write, backfill and CDC, cutover and rollback).
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

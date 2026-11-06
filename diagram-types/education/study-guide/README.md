@@ -2,9 +2,9 @@
 
 A spiral notebook page divided into a 2x2 grid of topic cards, with a second page tilted behind it for running notes. Each card collects one kind of material to revise. The example is prep for a backend system design interview loop: key concepts (CAP, consistent hashing, quorums, back-pressure), a practice prompt checklist, latency numbers to know, and building blocks with logos (Redis, Kafka, PostgreSQL, Amazon S3), with a mock interview log and weak spots on the back page.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

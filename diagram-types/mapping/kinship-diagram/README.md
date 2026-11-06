@@ -2,9 +2,9 @@
 
 A kinship diagram borrows anthropology's family notation (shapes for kinds of member, `=` for a union, a sibship bar for children) and applies it to software lineage. Here it traces the Node.js runtime: Node.js 0.12 and the io.js fork merge, and the merged line has three kinds of child: Node.js 4 (whose own children are later LTS lines and an archived fork), a patched fork inside Electron and a vendored copy in NW.js. Shape tells you what kind of relative a codebase is, so you can see at a glance who still ships upstream fixes and who has to backport them.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

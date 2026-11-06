@@ -2,9 +2,9 @@
 
 Horizontal tiers stacked top to bottom, each holding the components that run at that level, with arrows showing that calls only go down. A tier may skip the one below it when that is the real path, as services do here to reach their own database. A cross-cutting column on the side holds the concerns every tier shares, such as observability or auth. The example is a shop platform: presentation (Cloudflare, Next.js, iOS), application (Kong, Go and Spring services), integration (Kafka, Temporal, Stripe) and data (Postgres, Redis, S3), with OpenTelemetry, Datadog, Sentry and PagerDuty on the right.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 

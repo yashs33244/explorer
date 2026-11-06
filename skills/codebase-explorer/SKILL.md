@@ -1,6 +1,6 @@
 ---
 name: codebase-explorer
-description: Turn a codebase, system or subject into an interactive beginner field guide with SVG diagrams (hand-drawn or clean style, 102 diagram types, real logos), step-by-step walkthroughs, interview questions, scrollable tables and a published artifact. Use when the user asks to explore, explain or onboard them onto a repo or technology "with diagrams", says "explorer", "field guide", "teach me this codebase", or wants an interview-style tour of how something works.
+description: Turn a codebase, system or subject into an interactive beginner field guide with SVG diagrams (modern, clean or hand-drawn style, 102 diagram types, real logos), step-by-step walkthroughs, interview questions, scrollable tables and a published artifact. Use when the user asks to explore, explain or onboard them onto a repo or technology "with diagrams", says "explorer", "field guide", "teach me this codebase", or wants an interview-style tour of how something works.
 ---
 
 # Codebase Explorer
@@ -43,7 +43,7 @@ Skip it for a one-fact question or a small bug fix.
 ## Quality bar (these were all learned the hard way)
 
 - **Honesty first.** Never invent a file, function, command or number. Say which facts came from a real run and which are from reading. If a tool (Docker, a server) was unavailable, say the related commands are untested.
-- **Diagrams are inline SVG** styled only with the kit classes, so each one works in both styles (hand-drawn, clean) and both themes. 12px minimum text, 1 to 5 words per label, every arrow labeled with a verb, numbered badges that match a legend, ids prefixed with the topic key. No hex colors, no style or script tags.
+- **Diagrams are inline SVG** styled only with the kit classes, so each one works in all three styles (modern, clean, hand-drawn) and both themes. Size box titles for the modern style's monospace uppercase (see the diagram kit). 12px minimum text, 1 to 5 words per label, every arrow labeled with a verb, numbered badges that match a legend, ids prefixed with the topic key. No hex colors, no style or script tags.
 - **Diagrams fit one screen.** The CSS caps each at about 78vh and scrolls sideways on narrow screens instead of shrinking text.
 - **Tables fit one page.** Use the builder's table helper: columns are sized by content (long sentences get the most room, numbers and tags stay narrow), tables over 8 rows scroll vertically inside the page with a sticky header, and wide tables scroll sideways inside their own box.
 - **Wide margins.** Page gutters are `clamp(20px, 6vw, 104px)`. Keep that.

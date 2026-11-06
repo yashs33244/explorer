@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0 (2026-11)
+
+- New default diagram style, `modern`, after the Cloudflare and Figma engineering-blog diagrams: dotted canvas, outlined cards with a stacked-card offset, JetBrains Mono uppercase titles, tinted group zones, chip edge labels and coloured flow edges, in light and dark. Pure CSS over the existing kit, so all 102 catalog types and the PostgreSQL example restyle without SVG changes.
+- codebase-explorer: the style switch has Modern, Clean and Hand-drawn; `diagramStyle` accepts `"modern"` and defaults to it.
+- artifact-studio: pages use the modern style; `build.py --style clean` keeps the flat look. `scripts/sync-modern.py` generates the template's light-only copy of the rules, and `check.sh` fails when it is stale.
+- Catalog: every type has a `modern.jpg`, shown first in the gallery and in each type's README.
+- `scripts/check-overflow.py` renders the catalog and lists text that runs past its box.
+- `render.sh` finds Chromium on Linux, adds `--no-sandbox` when run as root, and falls back to ImageMagick 6 `convert`.
+- org-chart example: "Incident Resp." shortened to "Incidents" so it fits in the modern style.
+
 ## 1.2.0 (2026-10)
 
 - Publish `artifact-studio-explainer`, the explainer video skill. Its bundled Manim engine is the default; the Studio engine is optional and needs a daybook reel checkout. Tested on macOS; Linux should work with Chrome or Chromium and espeak-ng, but is not tested.

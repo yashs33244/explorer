@@ -2,9 +2,9 @@
 
 A three by three grid with performance on the x axis and potential on the y axis. Each box has a name, an action and the people placed in it, and the colors run from red at bottom left to green at top right.
 
-| Hand-drawn | Clean |
-|---|---|
-| ![hand-drawn](hand.jpg) | ![clean](clean.jpg) |
+| Modern | Clean | Hand-drawn |
+|---|---|---|
+| ![modern](modern.jpg) | ![clean](clean.jpg) | ![hand-drawn](hand.jpg) |
 
 ## Use it to explain
 
