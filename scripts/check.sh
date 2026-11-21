@@ -11,7 +11,9 @@ node "$ROOT/skills/codebase-explorer/scripts/build-catalog.js"
 
 echo "2. example page"
 python3 "$AS/scripts/build.py" --title Basic --body "$AS/examples/basic/body.html" --svg "$AS/examples/basic/svg" \
-  --figs "$AS/examples/basic/figs.json" --out "$TMP/basic.html" 2> "$TMP/warn.txt"
+  --figs "$AS/examples/basic/figs.json" --out "$TMP/basic.html" 2> "$TMP/build.txt"
+# logo notices depend on the local, gitignored logo library, so they are not page warnings
+grep -v '^logos: ' "$TMP/build.txt" > "$TMP/warn.txt" || true
 if [ -s "$TMP/warn.txt" ]; then cat "$TMP/warn.txt"; echo "the example page must build with no warnings" >&2; exit 1; fi
 
 echo "3. repo map example is up to date"
@@ -21,7 +23,7 @@ cmp -s "$TMP/rm.svg" "$RM/example.svg" || { echo "example.svg is stale: rerun re
 
 echo "4. python and shell syntax"
 EX="$ROOT/skills/artifact-studio-explainer"
-PYTHONPYCACHEPREFIX="$TMP/pycache" python3 -m py_compile "$AS/scripts/build.py" "$AS/scripts/repo_map.py" "$EX"/manim/*.py "$EX"/scripts/*.py \
+PYTHONPYCACHEPREFIX="$TMP/pycache" python3 -m py_compile "$AS/scripts/build.py" "$AS/scripts/repo_map.py" "$AS/scripts/excalidraw.py" "$AS/scripts/er_diagram.py" "$AS/scripts/logo_library.py" "$EX"/manim/*.py "$EX"/scripts/*.py \
   "$ROOT/scripts/sync-modern.py" "$ROOT/skills/codebase-explorer/scripts/check-overflow.py"
 for f in "$EX"/manim/*.sh "$EX"/scripts/*.sh; do bash -n "$f"; done
 

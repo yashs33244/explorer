@@ -18,7 +18,12 @@
   --cl0-d: #b57cff; --cl1-d: #2ec98a; --cl2-d: #ffc21a; --cl3-d: #ff6f5e; --cl4-d: #3a9eff; --cl5-d: #ff9933;
   --cln-0: #ffe066; --cln-1: #ffb8d2; --cln-2: #8fe8c2; --cln-3: #a8d1ff; --cln-4: #ffc078; --cln-5: #e2c4ff;
   --cl0-x: #6d33c9; --cl1-x: #0f7a4f; --cl2-x: #8a6400; --cl3-x: #b4321f; --cl4-x: #1c5fc0; --cl5-x: #a85200;
-  --mark: #fff1b8; --key-col: #f1f7ff; --acc-ink: #1660c9;
+  --mark: #fff1b8; --key-col: #f1f7ff; --acc-ink: #1660c9; --logo-plate: #ffffff;
+  --http-key: #8250df; --http-str: #0a7a52; --http-num: #b35900;
+  /* ER tables (scripts/er_diagram.py): dark schema-designer cards on any page theme */
+  --er-card: #23262f; --er-line: #3a3f4c; --er-ink: #eef0f5; --er-muted: #9aa2b4; --er-nn: #c9ceda;
+  --er-violet: #7b2fbf; --er-blue: #1c8ae6; --er-green: #22893a; --er-red: #c4362f; --er-orange: #e07010; --er-teal: #128a7e; --er-grey: #59606f;
+  --er-pk: #f5b82e; --er-fk: #e05252; --er-new: rgba(46, 201, 138, 0.16); --er-newbar: #2ec98a; --er-rel: #8a90a0;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -55,6 +60,9 @@ nav.toc a:hover { color: var(--acc); }
 section { padding: 40px 0 8px; border-bottom: 1px solid var(--line); scroll-margin-top: 12px; }
 section:last-of-type { border-bottom: 0; }
 p.num { font-family: var(--font-m); font-size: 0.8rem; color: var(--acc-ink); letter-spacing: 0.06em; }
+.problem { background: var(--todo-soft); border-left: 4px solid var(--todo); border-radius: 8px; padding: 12px 16px; margin: 6px 0 12px; max-width: 75ch; }
+.problem p { margin: 0; }
+.problem p + p { margin-top: 8px; }
 .tldr { background: var(--acc-soft); border-left: 4px solid var(--acc); border-radius: 8px; padding: 12px 16px; margin: 6px 0 16px; max-width: 75ch; }
 .tldr p { margin: 0; }
 .tldr p + p { margin-top: 10px; }
@@ -81,6 +89,26 @@ th { background: #f4f5f7; font-weight: 600; font-size: 0.86rem; }
 .tall thead th { position: sticky; top: 0; z-index: 1; }
 tr:last-child td { border-bottom: 0; }
 td code { white-space: nowrap; }
+/* a logo in text or a table cell: <img class="logo" data-logo="domain" alt="Name">, filled by build.py */
+img.logo, .logo-mono { display: inline-block; width: 20px; height: 20px; margin-right: 7px; vertical-align: -5px; border-radius: 5px; }
+img.logo { background: var(--logo-plate); padding: 2px; object-fit: contain; }
+.logo-mono { background: var(--acc-soft); color: var(--acc-ink); font: 700 11px/20px var(--font-m); text-align: center; }
+/* an HTTP request or response: <pre class="http" data-title data-logo data-note> in the body, laid out by build.py */
+.httpgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(470px, 100%), 1fr)); gap: 16px; margin: 18px 0 22px; align-items: start; }
+.http { border: 1px solid var(--line); border-radius: 12px; background: var(--paper); padding: 14px 16px 16px; min-width: 0; margin: 14px 0; }
+.httpgrid .http { margin: 0; }
+.http-title { display: flex; align-items: center; gap: 2px; font-weight: 700; font-size: 0.95rem; }
+.http-tag { margin-left: auto; font: 500 11px/1.8 var(--font-m); color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 0 8px; white-space: nowrap; }
+.http-sec { font: 600 11px var(--font-m); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 12px 0 4px; }
+.http pre { margin: 0; padding: 0 0 0 14px; background: none; border: 0; border-radius: 0; font: 12.5px/1.7 var(--font-m); overflow-x: auto; white-space: pre; color: var(--ink); }
+.http .hrow { display: block; }
+.http .hrow.mark { background: var(--mark); box-shadow: inset 3px 0 0 var(--warn); margin-left: -14px; padding-left: 14px; border-radius: 4px; }
+.http .hm { color: var(--http-num); font-weight: 700; }
+.http .hpath, .http .hs { font-weight: 600; }
+.http .hn { color: var(--acc-ink); }
+.http .hp { color: var(--muted); font-style: italic; }
+.http .jk { color: var(--http-key); } .http .js { color: var(--http-str); } .http .jn { color: var(--http-num); } .http .jp { color: var(--muted); }
+.http .hnote { margin-left: 12px; font: 600 11px var(--font-b); color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 1px 8px; }
 td.wrapcode code { white-space: normal; }
 td.numcol, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 /* highlighted columns and rows: mark the header (th.key) and the script tints the whole column */
@@ -256,6 +284,25 @@ svg.hd .d-axis { fill: none; stroke: var(--cl-muted); stroke-width: 1.2; }
 svg.hd rect.d-note { rx: 2px; ry: 2px; }
 svg.hd .d-tag { fill: var(--cl-bg); } svg.hd rect.d-tag { rx: 4px; ry: 4px; }
 svg.hd .d-logo-plate { fill: #ffffff; stroke: var(--line); stroke-width: 1; }
+/* ER tables (scripts/er_diagram.py) */
+svg.hd .er-card { fill: var(--er-card); stroke: var(--er-line); stroke-width: 1; }
+svg.hd .er-head { stroke: none; }
+svg.hd .er-violet { fill: var(--er-violet); } svg.hd .er-blue { fill: var(--er-blue); } svg.hd .er-green { fill: var(--er-green); }
+svg.hd .er-red { fill: var(--er-red); } svg.hd .er-orange { fill: var(--er-orange); } svg.hd .er-teal { fill: var(--er-teal); } svg.hd .er-grey { fill: var(--er-grey); }
+svg.hd .er-title { font: 700 13px var(--font-b); fill: #ffffff; }
+svg.hd .er-col { font: 500 12.5px var(--font-b); fill: var(--er-ink); }
+svg.hd .er-type { font: italic 400 11.5px var(--font-m); fill: var(--er-muted); }
+svg.hd .er-nn { font: 600 11px var(--font-m); fill: var(--er-nn); }
+svg.hd .er-leg { font: 500 12px var(--font-b); fill: var(--muted); }
+svg.hd .er-lab { font: 500 12px var(--font-b); fill: var(--muted); }
+svg.hd .er-rel { fill: none; stroke: var(--er-rel); stroke-width: 1.6; }
+svg.hd .er-pk { stroke: var(--er-pk); } svg.hd .er-fk { stroke: var(--er-fk); }
+svg.hd .er-new { fill: var(--er-new); } svg.hd .er-newbar { fill: var(--er-newbar); }
+/* Excalidraw figures (scripts/excalidraw.py, rendered in the browser by build.py's loader) */
+.exc { min-height: 220px; display: grid; place-items: center; }
+.exc .exc-wait { color: var(--muted); font-size: 0.9rem; }
+.exc svg.hd { width: 100%; height: auto; }
+.fdl { font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--acc); background: none; border: 0; cursor: pointer; margin-left: auto; }
 svg.hd .d-badge { fill: var(--cl2-f); }
 svg.hd .d-fillpaper { fill: var(--cl-bg); }
 svg.hd :is(.d-edge, .d-line, .d-lineacc) { fill: none; stroke: var(--cl-line); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
@@ -398,9 +445,44 @@ svg.hd .d-fillink:is(.g0, .g1, .g2, .g3, .g4, .g5) { fill: var(--cx); }
 /* arrowheads keep their marker shape; the marker box may overflow */
 [data-dstyle="modern"] svg.hd marker { overflow: visible; }
 /* modern-style:end */
+/* theme-dark:begin */
+/* Dark theme, the default. Same tokens, darker values; build.py --theme light strips this block. */
+:root {
+  color-scheme: dark;
+  --bg: #0d1117; --paper: #151b23; --ink: #e6edf3; --muted: #9da7b3; --faint: #30363d; --line: #2a313c;
+  --soft: #161c24; --code-bg: #1b222c; --acc: #58a6ff; --acc-soft: #12253f; --ok: #3fb950; --ok-soft: #0f2a1a;
+  --warn: #e3b341; --warn-soft: #2e2410; --todo: #ff7b72; --todo-soft: #3a1714;
+  --mark: #4d3f0f; --key-col: #142033; --acc-ink: #79b8ff; --logo-plate: #e6edf3;
+  --http-key: #d2a8ff; --http-str: #7ee2a8; --http-num: #ffa657;
+  --cl-bg: #151b23; --cl-ink: #e6edf3; --cl-muted: #9da7b3; --cl-line: #c9d1d9; --cl-faint: #30363d;
+  --cl-lane: #151b23; --cl-lane2: #1a212b; --cl-head: #1f2731; --cl-blob: #1a212b; --cl-acc: #58a6ff;
+  --cl0-t: #2a2040; --cl1-t: #10301f; --cl2-t: #33290a; --cl3-t: #3a1d18; --cl4-t: #13263f; --cl5-t: #3a2610;
+  --cl0-x: #c9a5ff; --cl1-x: #6fdca6; --cl2-x: #f0c94a; --cl3-x: #ff9b8a; --cl4-x: #8cc4ff; --cl5-x: #ffb56b;
+}
+[data-dstyle="modern"] {
+  --fig: #10151c; --md-bg: #10151c; --md-dot: #232b36; --md-frame: #2a313c; --md-ink: #e6edf3; --md-muted: #9da7b3; --md-line: #c9d1d9;
+  --md-edge: #6e7781; --md-faint: #2a313c; --md-stack: #333b47; --md-card: #161c24; --md-lane: #131921; --md-head: #1c232d;
+  --md-acc: #8b93ff; --md-acc-t: #22264a; --md-chip: #13291c; --md-chip-ink: #7ee2a8; --md-on: #0d1117;
+  --md0-s: #a78bfa; --md0-t: #241c3d; --md0-x: #d4c4ff; --md1-s: #3fb950; --md1-t: #102a19; --md1-x: #8fe3a9;
+  --md2-s: #f59e42; --md2-t: #33220f; --md2-x: #ffc78a; --md3-s: #f4637d; --md3-t: #3a1520; --md3-x: #ffaabb;
+  --md4-s: #58a6ff; --md4-t: #11233d; --md4-x: #a9cdff; --md5-s: #2dd4bf; --md5-t: #0e2b29; --md5-x: #8de9dc;
+  --md-c: #818cf8; --md0-c: #a78bfa; --md1-c: #4ade80; --md2-c: #fb923c; --md3-c: #fb7185; --md4-c: #60a5fa; --md5-c: #2dd4bf; --md-cink: #0d1117;
+}
+.pill.ok { border-color: #1f5c36; } .pill.next { border-color: #5c4a14; } .pill.todo { border-color: #6b2a24; }
+th { background: #1a212b; }
+tr.key > td.key { background: #5c4a12; }
+.ttools button[aria-pressed="true"] { border-color: #5c4a14; }
+.ftype, .fzoom, .fsteps button { border-color: #24446e; }
+.sitenav { background: rgba(13, 17, 23, 0.94); }
+.zoom { background: rgba(0, 0, 0, 0.7); }
+.zoompanel { background: var(--bg); }
+/* a light tile behind every logo, in every diagram style: dark marks (OpenAI, GitHub, AWS) vanish on a dark card */
+svg.hd .d-logo-plate, [data-dstyle="modern"] svg.hd .d-logo-plate { fill: var(--logo-plate); }
+input, select, textarea { background: var(--paper); color: var(--ink); border-color: var(--line); }
+/* theme-dark:end */
 </style>
 
-{{NAV}}<div class="wrap" data-dstyle="{{DSTYLE}}" data-theme="light">
+{{NAV}}<div class="wrap" data-dstyle="{{DSTYLE}}" data-theme="{{THEME}}">
 {{BODY}}
 </div>
 <div class="zoom" id="zoom" role="dialog" aria-modal="true" aria-labelledby="zoomtitle">

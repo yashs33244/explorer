@@ -60,14 +60,15 @@ from its <section id> and h2 (sticky on the left on wide screens), and Previous 
 links. A page body without an h1 gets a generated header. After writing, every href in
 every file is checked: the target file must exist in the folder and #ids must exist.
 
-The page template (light theme, clean diagram classes, wide tables, centred diagrams,
+The page template (dark theme by default, --theme light for light; clean diagram classes, wide tables, centred diagrams,
 Full screen overlay, site nav) lives in ../assets/page-template.html.
 """
-import argparse, difflib, html, json, os, re, sys
+import argparse, difflib, hashlib, html, json, os, re, subprocess, sys, tempfile, textwrap
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE = os.path.join(HERE, '..', 'assets', 'page-template.html')
 CATALOG = os.path.join(HERE, '..', '..', '..', 'diagram-types', 'catalog.json')
+LOGOS_JS = os.path.join(HERE, '..', '..', 'codebase-explorer', 'scripts', 'logos.js')
 DASHES = re.compile('[\\u2014\\u2013]')
 SLUG = re.compile(r'^[a-z0-9][a-z0-9-]*$')
 TAGS = re.compile(r'<[^>]+>')
@@ -83,11 +84,120 @@ def load_types():
 
 
 ANATOMY = 'Isometric object (anatomy)'
+EXCALIDRAW = 'Excalidraw'
+EXC_VER = '0.17.6'
+EXC_CDN = f'https://unpkg.com/@excalidraw/excalidraw@{EXC_VER}/dist/'
+# Renders every .exc figure with Excalidraw's own exporter: restore (fills defaults, measures
+# text once the hand-drawn fonts load), then exportToSvg, light or dark per figure.
+EXC_LOADER = f'''
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script>window.EXCALIDRAW_ASSET_PATH = "{EXC_CDN}";</script>
+<script src="{EXC_CDN}excalidraw.production.min.js"></script>
+<script>
+(function () {{
+  var L = window.ExcalidrawLib, base = "{EXC_CDN}excalidraw-assets/";
+  var fonts = [["Virgil", "Virgil.woff2"], ["Cascadia", "Cascadia.woff2"], ["Helvetica", null]];
+  var ready = Promise.all(fonts.filter(function (f) {{ return f[1]; }}).map(function (f) {{
+    try {{ var ff = new FontFace(f[0], "url(" + base + f[1] + ")"); document.fonts.add(ff); return ff.load().catch(function () {{}}); }}
+    catch (e) {{ return Promise.resolve(); }}
+  }}));
+  document.querySelectorAll(".exc:not([data-static])").forEach(function (box) {{
+    var wait = box.querySelector(".exc-wait");
+    if (!L) {{ wait.textContent = "Excalidraw did not load; download the .excalidraw file to view it."; return; }}
+    var scene = JSON.parse(box.querySelector('script[type="application/json"]').textContent);
+    ready.then(function () {{
+      var els = L.restoreElements(scene.elements, null, {{ refreshDimensions: true, repairBindings: true }});
+      return L.exportToSvg({{ elements: els, files: scene.files || {{}}, exportPadding: 28,
+        appState: {{ exportBackground: false, exportWithDarkMode: box.dataset.theme === "dark", viewBackgroundColor: "transparent" }} }});
+    }}).then(function (svg) {{
+      svg.classList.add("hd"); svg.removeAttribute("width"); svg.removeAttribute("height");
+      svg.setAttribute("role", "img"); svg.setAttribute("aria-label", box.dataset.aria || "");
+      wait.remove(); box.appendChild(svg);
+    }}).catch(function (err) {{ wait.textContent = "Excalidraw could not render: " + err.message; }});
+  }});
+  // Save the scene: the artifact downloads capability when the page runs in claude.ai, else a plain download.
+  document.querySelectorAll("[data-exc-dl]").forEach(function (btn) {{
+    btn.addEventListener("click", async function () {{
+      var key = btn.dataset.excDl, box = document.querySelector('.exc[data-key="' + key + '"]');
+      var text = box.querySelector('script[type="application/json"]').textContent, name = key + ".excalidraw.json";
+      var dl = null;
+      try {{ dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null; }} catch (e) {{ dl = null; }}
+      if (dl) {{
+        try {{ await dl.save({{ filename: name, data: text }}); }}
+        catch (err) {{ if (err && err.code !== "declined") btn.textContent = "Download unavailable here"; }}
+        return;
+      }}
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([text], {{ type: "application/json" }}));
+      a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    }});
+  }});
+}})();
+</script>
+'''
+
+# Pages whose scenes were all drawn at build time need only the download handler, not React.
+EXC_DL_ONLY = '<script>\n(function () {\n' + EXC_LOADER[EXC_LOADER.index('  // Save the scene'):EXC_LOADER.rindex('})();')] + '})();\n</script>\n'
+EXC_CACHE = os.path.join(os.path.expanduser('~'), '.cache', 'artifact-studio', 'excalidraw')
+FONT_STYLE = re.compile(r'<style class="style-fonts">.*?</style>', re.S)
+
+
+def find_chrome():
+    for c in (os.environ.get('CHROME'), '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+              '/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bin/chromium-browser'):
+        if c and os.access(c, os.X_OK):
+            return c
+    return None
+
+
+def prerender_excalidraw(scene, dark):
+    """Draw a scene to SVG at build time with Excalidraw's own exporter in headless Chrome, so the
+    reader's browser loads no React, no CDN and no fonts. Cached by scene and theme. None on failure."""
+    key = hashlib.sha256(f'{EXC_VER}|{dark}|{scene}'.encode()).hexdigest()[:24]
+    cached = os.path.join(EXC_CACHE, key + '.svg')
+    if os.path.exists(cached):
+        return open(cached).read()
+    chrome = find_chrome()
+    if not chrome:
+        return None
+    safe = scene.replace('</', '<\\/')
+    page = (EXC_LOADER.split('<script>\n(function', 1)[0] +
+            f'<script type="application/json" id="scene">{safe}</script>\n<script>\n'
+            'var L = window.ExcalidrawLib, s = JSON.parse(document.getElementById("scene").textContent);\n'
+            'var els = L.restoreElements(s.elements, null, {refreshDimensions: true, repairBindings: true});\n'
+            'L.exportToSvg({elements: els, files: s.files || {}, exportPadding: 28, appState: {exportBackground: false, '
+            f'exportWithDarkMode: {"true" if dark else "false"}, viewBackgroundColor: "transparent"}}}})\n'
+            '.then(function (svg) { var p = document.createElement("pre"); p.id = "out"; p.textContent = svg.outerHTML; document.body.appendChild(p); });\n'
+            '</script>')
+    with tempfile.TemporaryDirectory() as tmp:
+        f = os.path.join(tmp, 'exc.html')
+        open(f, 'w').write('<!doctype html><html><body>' + page + '</body></html>')
+        try:
+            dom = subprocess.run([chrome, '--headless=new', '--disable-gpu', '--virtual-time-budget=20000',
+                                  '--dump-dom', 'file://' + f], capture_output=True, text=True, timeout=90).stdout
+        except (OSError, subprocess.TimeoutExpired):
+            return None
+    m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
+    if not m:
+        return None
+    svg = FONT_STYLE.sub('', html.unescape(m.group(1)))
+    svg = re.sub(r'^<svg ([^>]*?) width="[\d.]+" height="[\d.]+"', r'<svg \1', svg, count=1)
+    os.makedirs(EXC_CACHE, exist_ok=True)
+    open(cached, 'w').write(svg)
+    return svg
 
 
 def check_types(figs, types):
     for key, spec in figs.items():
         given = spec.get('type', '')
+        if given.lower() == 'excalidraw':
+            spec['type'] = EXCALIDRAW
+            if not spec.get('src'):
+                sys.exit(f'{key}: an excalidraw figure needs "src", the .excalidraw scene scripts/excalidraw.py wrote')
+            if not spec.get('why'):
+                print(f'warning: {key} has no "why" (the reader question it answers)', file=sys.stderr)
+            continue
         if given.lower() in ('anatomy', ANATOMY.lower()):
             spec['type'] = ANATOMY
             if not spec.get('src'):
@@ -145,13 +255,50 @@ def anatomy_frame(spec, base):
             f'srcdoc="{html.escape(doc, quote=True)}"></iframe>')
 
 
+def excalidraw_frame(key, spec, base):
+    scene = open(os.path.join(base, spec['src'])).read()
+    json.loads(scene)  # fail the build on a broken scene, not the reader's browser
+    safe = scene.replace('</', '<\\/')
+    theme = spec.get('theme', THEME)
+    aria = html.escape(spec.get('aria') or spec.get('caption') or spec['title'], quote=True)
+    svg = prerender_excalidraw(scene, theme == 'dark')
+    if svg:
+        svg = svg.replace('<svg ', f'<svg class="hd" role="img" aria-label="{aria}" ', 1)
+        return (f'<div class="exc" data-static data-key="{html.escape(key)}" data-theme="{theme}">'
+                f'<script type="application/json">{safe}</script>{svg}</div>')
+    print(f'warning: figure {key}: could not draw the Excalidraw scene at build time (no Chrome?); '
+          'it will be drawn in the reader\'s browser, where fonts may not load', file=sys.stderr)
+    return (f'<div class="exc" data-key="{html.escape(key)}" data-theme="{theme}" data-aria="{aria}">'
+            f'<script type="application/json">{safe}</script>'
+            '<p class="exc-wait">Drawing the Excalidraw diagram...</p></div>')
+
+
+def exc_download(key):
+    # A button, not a data: link: the claude.ai viewer only saves files through the `downloads`
+    # capability (publish with capabilities {"downloads": true}). .excalidraw is not on its
+    # extension allowlist, so the file is saved as KEY.excalidraw.json, which excalidraw.com opens.
+    return (f'<button class="fdl" type="button" data-exc-dl="{html.escape(key)}">'
+            'Download for Excalidraw</button>')
+
+
 def figure(key, spec, svg_dir, base='.'):
     title = html.escape(spec['title'])
-    if spec['type'] == ANATOMY:
+    dl = ''
+    if spec['type'] == EXCALIDRAW:
+        svg = excalidraw_frame(key, spec, base)
+        dl = exc_download(key)
+    elif spec['type'] == ANATOMY:
         svg = anatomy_frame(spec, base)
     else:
         svg = open(os.path.join(svg_dir, f'{key}.svg')).read()
         svg = svg.replace(' xmlns="http://www.w3.org/2000/svg"', '', 1)
+        # the kit and modern styles are scoped to svg.hd; without the class every shape renders black
+        root = re.match(r'\s*<svg\b[^>]*>', svg)
+        if root and not re.search(r'\bclass="[^"]*\bhd\b', root.group(0)):
+            tag = root.group(0)
+            fixed = (re.sub(r'class="', 'class="hd ', tag, count=1) if 'class="' in tag
+                     else tag.replace('<svg', '<svg class="hd"', 1))
+            svg = svg.replace(tag, fixed, 1)
         # every figure is interactive: hover focus on its parts, or a step-through for ordered ones
         if not re.search(r'data-(?:node|edge|step)=', svg):
             print(f'warning: figure {key} is not interactive; wrap its parts in <g data-node> and links in '
@@ -170,7 +317,7 @@ def figure(key, spec, svg_dir, base='.'):
     wide = f' {size}' if size else ''
     return (f'<figure class="fig{wide}" data-title="{title}"><div class="figbar">'
             f'<span class="ftype">{html.escape(spec.get("type", ""))}</span>'
-            f'<button class="fzoom" type="button" aria-label="Open {title} full screen">Full screen</button></div>'
+            f'{dl}<button class="fzoom" type="button" aria-label="Open {title} full screen">Full screen</button></div>'
             f'<div class="figscroll">{svg}</div><figcaption>{html.escape(spec.get("caption", ""))}</figcaption>{extra}</figure>')
 
 
@@ -191,7 +338,10 @@ def fill_figs(body, figs, svg_dir, types, base='.'):
         if k not in done:
             done[k] = figure(k, figs[k], svg_dir, base)
         return done[k]
-    return re.sub(r'\{\{fig:([^}]+)\}\}', swap, body)
+    out = re.sub(r'\{\{fig:([^}]+)\}\}', swap, body)
+    if any(s['type'] == EXCALIDRAW for s in figs.values()):
+        out += EXC_LOADER if '<div class="exc" data-key=' in out else EXC_DL_ONLY
+    return out
 
 
 # a whole class token, so kit classes such as d-k or keyframe names never count as highlights
@@ -205,6 +355,12 @@ def lint(body, figs, where, kind=''):
     """Warn about pages that bury the point: nothing highlighted, tables without a key
     column or row, and engineering pages missing the depth a reviewer needs."""
     warn = lambda m: print(f'warning: {where}: {m}', file=sys.stderr)
+    prob = re.search(r'class=(["\'])(?:(?!\1).)*?(?<![\w-])problem(?![\w-])', body)
+    tldr = re.search(r'class=(["\'])(?:(?!\1).)*?(?<![\w-])tldr(?![\w-])', body)
+    if not prob:
+        warn('no problem statement; open with <div class="problem"> (who is hurt, what they see, how much, why) before the .tldr')
+    elif tldr and tldr.start() < prob.start():
+        warn('the .tldr comes before the problem statement; state the problem first, the solution second')
     if not HIGHLIGHT.search(body):
         warn('nothing is highlighted; mark the sentence that matters (<mark>), key terms (<b class="k">), '
              'the deciding table column (<th class="key">) or rows (<tr class="key">) (references/highlighting.md)')
@@ -234,11 +390,115 @@ def lint(body, figs, where, kind=''):
 
 
 DSTYLE = 'modern'  # diagram style for every figure: modern (default) or clean; set by --style
+THEME = 'dark'  # page theme: dark (default) or light; set by --theme
+DARK_BLOCK = re.compile(r'/\* theme-dark:begin \*/.*?/\* theme-dark:end \*/\n?', re.S)
+
+
+def inline_logos(body):
+    """Fill every logo slot (<image data-logo> in figures, <img data-logo> in text and tables) with an inlined
+    data: URI from the local logo library (codebase-explorer/scripts/logos.js), so a published page shows its logos
+    with no network and no key. A brand not in the library gets a monogram and logos.js prints the command that adds
+    it. Without node the slots stay empty and the build says so."""
+    if 'data-logo=' not in body:
+        return body
+    try:
+        r = subprocess.run(['node', LOGOS_JS, '--inline'], input=body, capture_output=True, text=True, timeout=600)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        print(f'warning: logos not inlined ({e.__class__.__name__}); logo slots stay empty', file=sys.stderr)
+        return body
+    if r.stderr:
+        sys.stderr.write(r.stderr)
+    if r.returncode != 0 or not r.stdout:
+        print('warning: logos.js failed; logo slots stay empty', file=sys.stderr)
+        return body
+    return r.stdout
+
+
+# an HTTP request or response written as plain text: <pre class="http" data-title data-logo data-note>
+HTTP_BLOCK = re.compile(r'<pre class="http"([^>]*)>(.*?)</pre>', re.S)
+HTTP_ATTR = re.compile(r'\s(data-[a-z]+)="([^"]*)"')
+HTTP_NOTE = re.compile(r'^(.*?)\s+#!\s*(.+)$')
+JSON_TOKEN = re.compile(r'("(?:[^"\\]|\\.)*")(\s*:)?|(?<![\w.-])(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|true|false|null)(?![\w.-])|([{}\[\],])')
+
+
+def http_value(v):
+    """A header value with <PLACEHOLDER> parts muted."""
+    out, pos = [], 0
+    for m in re.finditer(r'<[A-Za-z0-9_.-]+>', v):
+        out += [html.escape(v[pos:m.start()]), f'<span class="hp">{html.escape(m.group(0))}</span>']
+        pos = m.end()
+    return ''.join(out) + html.escape(v[pos:])
+
+
+def http_json(line):
+    """One body line, JSON-coloured: keys, strings, numbers and literals, punctuation."""
+    out, pos = [], 0
+    for m in JSON_TOKEN.finditer(line):
+        out.append(html.escape(line[pos:m.start()]))
+        s, colon, lit, punct = m.groups()
+        if s is not None:
+            out.append(f'<span class="{"jk" if colon else "js"}">{html.escape(s)}</span>'
+                       + (f'<span class="jp">{colon}</span>' if colon else ''))
+        elif lit is not None:
+            out.append(f'<span class="jn">{lit}</span>')
+        else:
+            out.append(f'<span class="jp">{punct}</span>')
+        pos = m.end()
+    return ''.join(out) + html.escape(line[pos:])
+
+
+def http_row(content, note):
+    tag = f'<span class="hnote">{html.escape(note)}</span>' if note else ''
+    # "hrow", not "hl": hl is the page's highlight class and would mark every line
+    return f'<span class="hrow{" mark" if note else ""}">{content or " "}{tag}</span>'
+
+
+def render_http(body):
+    """Lay out every <pre class="http"> block: the start line, the headers (names and values coloured, one per
+    line), a blank line, then the body (JSON coloured). A line ending in "#! note" is highlighted with that note."""
+    def one(m):
+        attrs = dict(HTTP_ATTR.findall(m.group(1)))
+        lines = textwrap.dedent(html.unescape(m.group(2))).strip('\n').split('\n')
+        start, rest = lines[0].strip(), lines[1:]
+        blank = next((i for i, l in enumerate(rest) if not l.strip()), len(rest))
+        heads, payload = rest[:blank], rest[blank + 1:]
+        kind = 'response' if start.upper().startswith('HTTP/') else 'request'
+        if kind == 'response':
+            first = f'<span class="hs">{html.escape(start)}</span>'
+        else:
+            verb, _, path = start.partition(' ')
+            first = f'<span class="hm">{html.escape(verb)}</span> <span class="hpath">{http_value(path)}</span>'
+        rows = []
+        for line in heads:
+            n = HTTP_NOTE.match(line)
+            text, note = (n.group(1), n.group(2)) if n else (line, '')
+            name, sep, value = text.strip().partition(':')
+            rows.append(http_row(f'<span class="hn">{html.escape(name)}</span><span class="jp">{sep}</span>'
+                                 f'<span class="hv">{http_value(value)}</span>', note))
+        brows = []
+        for line in payload:
+            n = HTTP_NOTE.match(line)
+            text, note = (n.group(1), n.group(2)) if n else (line, '')
+            brows.append(http_row(http_json(text.rstrip()), note))
+        logo = attrs.get('data-logo')
+        head = ((f'<img class="logo" data-logo="{html.escape(logo)}" alt="">' if logo else '')
+                + f'<span>{html.escape(attrs.get("data-title", kind.title()))}</span>'
+                + (f'<span class="http-tag">{html.escape(attrs["data-note"])}</span>' if attrs.get('data-note') else ''))
+        return (f'<div class="http {kind}"><div class="http-title">{head}</div>'
+                f'<div class="http-sec">{kind} line</div><pre class="http-start">{first}</pre>'
+                + (f'<div class="http-sec">headers</div><pre class="http-lines">{"".join(rows)}</pre>' if rows else '')
+                + (f'<div class="http-sec">body</div><pre class="http-lines">{"".join(brows)}</pre>' if brows else '')
+                + '</div>')
+    return HTTP_BLOCK.sub(one, body)
 
 
 def page_html(title, body, nav=''):
-    page = (open(TEMPLATE).read().replace('{{TITLE}}', html.escape(title)).replace('{{NAV}}', nav)
-            .replace('{{DSTYLE}}', DSTYLE).replace('{{BODY}}', body))
+    tpl = open(TEMPLATE).read()
+    if THEME == 'light':
+        tpl = DARK_BLOCK.sub('', tpl)
+    page = (tpl.replace('{{TITLE}}', html.escape(title)).replace('{{NAV}}', nav)
+            .replace('{{DSTYLE}}', DSTYLE).replace('{{THEME}}', THEME)
+            .replace('{{BODY}}', inline_logos(render_http(body))))
     return DASHES.sub('-', page)
 
 
@@ -363,6 +623,8 @@ def build_site(a):
         main = f'<div class="sitepage">{page_toc(secs)}<main class="pagemain">\n{body}\n{prev_next(pages, i)}</main></div>'
         name = f'{p["slug"]}.html'
         page = page_html(f'{p["title"]} | {title}', main, site_nav(title, pages, p['slug']))
+        # Only index.html gets the Artifact host's document skeleton; other pages are served as written.
+        page = '<!doctype html>\n<html lang="en">\n' + page + '\n</html>\n'
         open(os.path.join(a.out, name), 'w').write(page)
         written.append(name)
         total += len(figs)
@@ -413,7 +675,11 @@ def main():
     ap.add_argument('--out', required=True)
     ap.add_argument('--style', choices=['modern', 'clean'], default='modern',
                     help='diagram style: modern (product-architecture look, the default) or clean (FigJam look)')
+    ap.add_argument('--theme', choices=['dark', 'light'], default='dark',
+                    help='page theme: dark (the default) or light')
     a = ap.parse_args()
+    global THEME
+    THEME = a.theme
     build_site(a) if a.site else build_single(a)
 
 
