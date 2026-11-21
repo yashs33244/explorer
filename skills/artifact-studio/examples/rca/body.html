@@ -1,0 +1,153 @@
+<header class="top">
+  <p class="kicker">example · investigation</p>
+  <h1>Missing Receipts</h1>
+  <p class="lede">A paid order is recorded, but the Receipts tab says the customer has none.</p>
+  <p class="note">Status: example page for references/investigation.md. Every id, path and number is illustrative.</p>
+  <nav class="toc" aria-label="Sections"><ol>
+    <li><a href="#report"><span>01</span>What was reported</a></li>
+    <li><a href="#first"><span>02</span>What a receipt is</a></li>
+    <li><a href="#pipes"><span>03</span>The big picture</a></li>
+    <li><a href="#write"><span>04</span>Who writes it</a></li>
+    <li><a href="#options"><span>07</span>Options and choice</a></li>
+    <li><a href="#others"><span>08</span>What others proposed</a></li>
+    <li><a href="#tested"><span>09</span>What we tested</a></li>
+    <li><a href="#code"><span>10</span>Code to read</a></li>
+    <li><a href="#fail"><span>11</span>Failure modes</a></li>
+  </ol></nav>
+</header>
+
+<div class="problem"><p><b>Problem.</b></p><ul>
+  <li>Who: customers paying through the shop app.</li>
+  <li>What they see: Receipts tab empty, "No receipts yet".</li>
+  <li>Seen: 2026-01-12, account <code>acct_9</code> (illustrative).</li>
+  <li>Why: the tab reads events; charges write only the receipts table.</li>
+</ul></div>
+
+<div class="tldr"><ul>
+  <li>A <b class="k">receipt</b> is one row in <code>payments.receipts</code>.</li>
+  <li>The worker writes it after the API queues a job.</li>
+  <li><mark>The Receipts tab never reads that table.</mark></li>
+  <li>Fix: read the receipts table when there are no events.</li>
+</ul></div>
+
+<section id="report">
+  <p class="num">01</p>
+  <h2>What was reported</h2>
+  <div class="callout warn"><p><b>Support ticket, 2026-01-12:</b> "I paid for my order and got the email, but my Receipts page is empty."</p></div>
+  <div class="cards">
+    <div class="card"><h3>Problem in one line</h3><p><mark>The tab only counts events, so paid charges are recorded but never shown.</mark></p></div>
+    <div class="card"><h3>Solution in one line</h3><p>When there are no events, the tab reads the receipts table directly.</p></div>
+    <div class="card"><h3>Not the cause</h3><p>A failed payment. The charge returned <code>201 paid</code> and the row exists.</p></div>
+  </div>
+</section>
+
+<section id="first">
+  <p class="num">02</p>
+  <h2>What a receipt is, from first principles</h2>
+  <ul>
+    <li>A paid charge must be provable later.</li>
+    <li>So each charge needs one durable record: who, how much, when.</li>
+    <li>That record is a <b class="k">receipt</b>.</li>
+  </ul>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Question</th><th class="key">Answer</th><th>Where it is defined</th></tr></thead>
+    <tbody>
+      <tr class="key"><td>Is it a table?</td><td>Yes: <code>payments.receipts</code></td><td><code>migrations/0003_receipts.sql:1</code></td></tr>
+      <tr><td>Which DB?</td><td>Postgres 16, database <code>shop</code></td><td><code>deploy/values.yaml:40</code></td></tr>
+      <tr><td>Who writes it?</td><td>The worker pod, from the receipts queue</td><td><code>src/worker.rs:88</code></td></tr>
+      <tr><td>Who reads it?</td><td>Billing exports only</td><td><code>src/export.rs:12</code></td></tr>
+      <tr><td>Volume</td><td><span class="metric">2k</span> rows a day</td><td>illustrative</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="pipes">
+  <p class="num">03</p>
+  <h2>The big picture</h2>
+  <p>Two stores hold activity. <mark>The tab is wired to only one.</mark></p>
+  {{fig:map}}
+</section>
+
+<section id="write">
+  <p class="num">04</p>
+  <h2>Who writes it</h2>
+  {{fig:write}}
+  <div class="httpgrid">
+<pre class="http" data-title="1. App to API" data-note="illustrative values">POST /v1/charges HTTP/1.1
+Host: api.example.com
+Authorization: Bearer &lt;KEY&gt;   #! decides whose receipt it is
+Idempotency-Key: 7f3a9c
+
+{"amount": 1200, "currency": "usd"}</pre>
+<pre class="http" data-title="3. Worker to Postgres" data-note="illustrative values">INSERT INTO payments.receipts (charge_id, account_id, amount)
+VALUES ($1, $2, $3)
+ON CONFLICT DO NOTHING;   #! charge_id is the key, so retries are safe</pre>
+  </div>
+</section>
+
+<section id="options">
+  <p class="num">07</p>
+  <h2>Options and choice</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Option</th><th>Before</th><th>After</th><th>Pros</th><th>Cons</th><th class="key">Choice</th></tr></thead>
+    <tbody>
+      <tr class="key"><td><b>A. Tab reads receipts table</b></td><td>Events only; empty</td><td>No events: shows receipts</td><td>Data already exists; no client change</td><td>New read to authorize</td><td><span class="pill ok">Do now</span></td></tr>
+      <tr><td>B. Honest empty state</td><td>"No receipts yet"</td><td>"N charges recorded"</td><td>Tiny</td><td>No list</td><td><span class="pill ok">With A</span></td></tr>
+      <tr><td>C. App sends events</td><td>No events</td><td>Full timeline</td><td>Richest data</td><td>Every client must do it</td><td><span class="pill next">Docs</span></td></tr>
+    </tbody>
+  </table></div>
+  <p><mark>Choice: A plus B now, C as docs.</mark></p>
+</section>
+
+<section id="others">
+  <p class="num">08</p>
+  <h2>What others proposed</h2>
+  <div class="callout ok"><p><b>Teammate:</b> "Let anyone who can see the account read its receipts; the tab falls back to them." Caveat raised: support staff would see amounts.</p></div>
+  {{fig:before}}
+  {{fig:after}}
+  <ul>
+    <li><b>Fine if</b> the read returns totals and receipts, never card data.</li>
+    <li><b>Risk:</b> support roles see amounts; limit to account owners and billing.</li>
+    <li><b>Do:</b> a scoped miss is <code>404</code>.</li>
+  </ul>
+</section>
+
+<section id="tested">
+  <p class="num">09</p>
+  <h2>What we tested</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Check</th><th class="key">Result</th><th>How</th></tr></thead>
+    <tbody>
+      <tr class="key"><td>Live charge with a test key</td><td>Row written; events 0</td><td><code>scripts/repro.py</code> (illustrative)</td></tr>
+      <tr><td>Receipts read returns the row</td><td><span class="pill ok">pass</span></td><td>test <code>reads_receipts_without_events</code></td></tr>
+      <tr class="bad"><td>Tab fallback</td><td><span class="pill todo">not built yet</span></td><td>dashboard</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="code">
+  <p class="num">10</p>
+  <h2>Code to read, in order</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>#</th><th class="key">File</th><th>Why</th><th>Runtime</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><code>src/charge.rs</code></td><td>Charge and enqueue</td><td>api pod</td></tr>
+      <tr><td>2</td><td><code>src/worker.rs</code></td><td>Insert the receipt</td><td>worker pod</td></tr>
+      <tr class="key"><td>3</td><td><code>dashboard/src/receipts.ts</code></td><td>What the tab reads; the fix goes here</td><td>browser</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="fail">
+  <p class="num">11</p>
+  <h2>Failure modes</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Failure</th><th>Effect</th><th class="key">Guard</th></tr></thead>
+    <tbody>
+      <tr><td>Worker retries a job</td><td>Duplicate row</td><td><code>ON CONFLICT DO NOTHING</code> on <code>charge_id</code></td></tr>
+      <tr><td>Queue down</td><td>Receipt late</td><td>Job retried until it lands</td></tr>
+      <tr class="key"><td>Fallback leaks amounts</td><td>Privacy</td><td>Owners and billing only</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Not verified:</b> volume figures are illustrative.</p>
+</section>

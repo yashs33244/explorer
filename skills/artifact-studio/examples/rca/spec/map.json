@@ -1,0 +1,24 @@
+{"boxes": [
+  {"x": 40, "y": 300, "w": 300, "h": 120, "color": "blue", "title": "shop app", "lines": ["any HTTP client"]},
+  {"x": 780, "y": 300, "w": 320, "h": 120, "title": "payments API", "lines": ["api pod", "src/charge.rs"]},
+  {"x": 780, "y": 660, "w": 320, "h": 110, "color": "grey", "title": "events ingest", "lines": ["events pod"]},
+  {"x": 1320, "y": 920, "w": 320, "h": 120, "color": "orange", "title": "Receipts tab", "lines": ["dashboard"]}
+ ],
+ "ellipses": [
+  {"x": 1340, "y": 270, "w": 300, "h": 180, "text": "DB (postgres)\npayments.receipts", "color": "green"},
+  {"x": 1340, "y": 650, "w": 280, "h": 130, "text": "ClickHouse\nevents", "color": "violet"}
+ ],
+ "arrows": [
+  {"points": [[340, 350], [780, 350]], "color": "blue"},
+  {"points": [[1100, 350], [1340, 350]], "color": "green", "label": {"x": 1150, "y": 318, "text": "insert row"}},
+  {"points": [[190, 420], [190, 715], [780, 715]], "color": "red", "dashed": true},
+  {"points": [[1100, 715], [1340, 715]], "color": "grey", "label": {"x": 1150, "y": 683, "text": "store"}},
+  {"points": [[1480, 920], [1480, 780]], "color": "violet"},
+  {"points": [[1640, 360], [1800, 360], [1800, 980], [1660, 980]], "color": "red", "dashed": true,
+   "label": {"x": 1815, "y": 600, "text": "never read\nby the tab", "color": "red"}}
+ ],
+ "notes": [
+  {"x": 360, "y": 368, "text": "POST /v1/charges\n  authorization: Bearer <KEY>\n  body { amount, currency }\nres 201 { id, status }"},
+  {"x": 220, "y": 735, "text": "POST /v1/events\n  never sent by this app"},
+  {"x": 1496, "y": 830, "text": "GET /v1/receipts/events\nres { items: [] }"}
+ ]}

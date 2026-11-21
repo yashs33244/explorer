@@ -219,8 +219,10 @@ def check_types(figs, types):
         spec['type'] = name
         if not spec.get('why'):
             print(f'warning: {key} has no "why" (the reader question it answers)', file=sys.stderr)
-    if len(figs) >= 3 and len({s['type'] for s in figs.values()}) == 1:
-        print(f'warning: all {len(figs)} diagrams are "{next(iter(figs.values()))["type"]}"; '
+    # Excalidraw is the medium for every flow (hand-drawn by default), not one diagram type, so it is left out
+    typed = [s for s in figs.values() if s['type'] != EXCALIDRAW]
+    if len(typed) >= 3 and len({s['type'] for s in typed}) == 1:
+        print(f'warning: all {len(typed)} diagrams are "{typed[0]["type"]}"; '
               'pick one type per reader question (references/choosing-diagrams.md)', file=sys.stderr)
 
 
@@ -419,7 +421,7 @@ def lint(body, figs, where, kind=''):
     # look at section headings, as whole words, so "latest" or "failover" in a sentence does not count
     heads = ' '.join(text(h).lower() for h in HEADINGS.findall(body))
     for need, pat in (('failure modes or risks section', r'\b(failures?|failure modes|risks?|what can go wrong)\b'),
-                      ('verification or tests section', r'\b(verification|verify|tests?|testing|checks|how we know)\b')):
+                      ('verification or tests section', r'\b(verification|verify|tests?|tested|testing|checks|how we know)\b')):
         if not re.search(pat, heads):
             warn(f'engineering page has no {need} heading (references/engineering.md)')
     if not re.search(r'<td\b[^>]*>(?:(?!</td>).)*<code\b', body, re.S):

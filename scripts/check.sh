@@ -16,10 +16,16 @@ python3 "$AS/scripts/build.py" --title Basic --body "$AS/examples/basic/body.htm
 grep -v '^logos: ' "$TMP/build.txt" > "$TMP/warn.txt" || true
 if [ -s "$TMP/warn.txt" ]; then cat "$TMP/warn.txt"; echo "the example page must build with no warnings" >&2; exit 1; fi
 
-echo "2b. hand-drawn example"
+echo "2b. hand-drawn examples"
 python3 "$AS/scripts/handdrawn.py" "$AS/examples/handdrawn/spec/flow.json" "$TMP/flow.excalidraw" > /dev/null
 cmp -s "$TMP/flow.excalidraw" "$AS/examples/handdrawn/exc/flow.excalidraw" \
   || { echo "examples/handdrawn/exc/flow.excalidraw is stale: rerun handdrawn.py" >&2; exit 1; }
+for spec in "$AS"/examples/rca/spec/*.json; do
+  k="$(basename "$spec" .json)"
+  python3 "$AS/scripts/handdrawn.py" "$spec" "$TMP/$k.excalidraw" > /dev/null
+  cmp -s "$TMP/$k.excalidraw" "$AS/examples/rca/exc/$k.excalidraw" \
+    || { echo "examples/rca/exc/$k.excalidraw is stale: rerun handdrawn.py" >&2; exit 1; }
+done
 
 echo "3. repo map example is up to date"
 RM="$ROOT/diagram-types/technical/repo-map"
