@@ -1,0 +1,21 @@
+{"boxes": [
+  {"x": 40, "y": 200, "w": 320, "h": 130, "color": "orange", "title": "Receipts tab", "lines": ["dashboard"]},
+  {"x": 640, "y": 200, "w": 360, "h": 130, "color": "violet", "title": "events read", "lines": ["src/receipts.ts"]},
+  {"x": 640, "y": 520, "w": 360, "h": 150, "color": "green", "title": "NEW receipts read", "lines": ["GET /v1/receipts", ["authz: owns the account", "green"]]}
+ ],
+ "ellipses": [
+  {"x": 1260, "y": 190, "w": 320, "h": 150, "text": "ClickHouse\n0 rows", "color": "grey"},
+  {"x": 1260, "y": 520, "w": 320, "h": 150, "text": "DB (postgres)\nreceipts: 3 rows", "color": "green"}
+ ],
+ "arrows": [
+  {"points": [[360, 265], [640, 265]], "color": "violet"},
+  {"points": [[1000, 265], [1260, 265]], "color": "violet", "label": {"x": 1060, "y": 233, "text": "query"}},
+  {"points": [[330, 330], [330, 595], [640, 595]], "color": "green"},
+  {"points": [[1000, 595], [1260, 595]], "color": "green", "label": {"x": 1060, "y": 563, "text": "query"}}
+ ],
+ "notes": [
+  {"x": 380, "y": 120, "text": "GET /v1/receipts/events\nres { items: [] }"},
+  {"x": 350, "y": 615, "text": "GET /v1/receipts?account=acct_9\nres { items: [3 receipts] }"},
+  {"x": 1010, "y": 690, "text": "WHERE account_id = $1", "color": "green"},
+  {"x": 40, "y": 360, "text": "renders:\n3 receipts", "font": "hand", "size": 20, "color": "green"}
+ ]}

@@ -36,7 +36,7 @@ Write the questions the reader brings to this page (two to five for most pages; 
 | Comparison, gap analysis | Who supports what, where are the gaps? | `coverage-matrix` | per-cell evidence |
 | | Where do the options overlap? | `venn-diagram` | |
 | | What to do first? | `quad-chart` | |
-| Investigation, postmortem | What caused it? | `fishbone` | evidence log |
+| Investigation, postmortem | What caused it? | `fishbone` | evidence log; for an RCA page follow `investigation.md` (hand-drawn flows) |
 | | What happened when? | `vertical-timeline` | |
 | | Which exchange or branch failed? | `sequence-diagram`, `flowchart` | |
 | | Why does it keep getting worse? | `causal-loop` | |
