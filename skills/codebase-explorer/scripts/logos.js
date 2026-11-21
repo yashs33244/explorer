@@ -1,67 +1,78 @@
 #!/usr/bin/env node
 /*
- * logos.js - fill <image class="d-logo" data-logo="example.com" .../> slots in diagram SVGs.
+ * logos.js - fill logo slots with inlined logos: <image class="d-logo" data-logo="example.com" .../> in diagram
+ * SVGs, and <img class="logo" data-logo="example.com" alt="Example"> in page text and tables.
  *
- *   node logos.js in.svg out.svg        or   require('./logos.js').inject(svgString)
+ *   node logos.js in.svg out.svg         one SVG file
+ *   node logos.js --inline < in > out    any HTML or SVG on stdin: both kinds of slot (artifact-studio build.py)
+ *   node logos.js --find codex           look a brand up in the logo library by name, alias or domain
+ *   require('./logos.js').inject(svg) / .injectHtml(html)
  *
- * With a logo.dev publishable key (LOGO_DEV_TOKEN in the environment, or in ~/.config/explorer/logo-dev.env)
- * each logo is fetched once into ~/.cache/explorer-logos and inlined as a data: URI, so the page works offline
- * and the key never lands in a committed file. Without a key, or if a fetch fails, the slot becomes a
- * monogram circle drawn with the kit classes. Get a free key at https://logo.dev (use the pk_ one).
+ * Logos come only from the local logo library (artifact-studio/assets/logos, override with EXPLORER_LOGOS), which
+ * artifact-studio/scripts/logo_library.py fills through the Logo.dev API with the secret key. This script never
+ * fetches img.logo.dev: Logo.dev's terms forbid building a stored copy from its CDN or fetching the CDN from a
+ * script. A slot names a domain, or a brand name or alias from the library manifest ("Claude Code"). A brand not in
+ * the library becomes a monogram and the run prints the command that adds it (2 credits). Each logo is inlined as a
+ * data: URI, so a page works offline and carries no key.
  */
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
-const { execFileSync } = require('child_process');
 
-const CACHE = path.join(os.homedir(), '.cache', 'explorer-logos');
+const LIBRARY = process.env.EXPLORER_LOGOS || path.join(__dirname, '..', '..', 'artifact-studio', 'assets', 'logos');
+const ADD = `python3 ${path.join(__dirname, '..', '..', 'artifact-studio', 'scripts', 'logo_library.py')} add`;
 
-function token() {
-  if (process.env.LOGO_DEV_TOKEN) return process.env.LOGO_DEV_TOKEN.trim();
-  const f = path.join(os.homedir(), '.config', 'explorer', 'logo-dev.env');
-  if (!fs.existsSync(f)) return '';
-  const m = fs.readFileSync(f, 'utf8').match(/^LOGO_DEV_TOKEN=(\S+)/m);
-  return m ? m[1] : '';
-}
-
-// size 64 with retina gives a 128px PNG: sharp for a 28px slot on a 2x screen, about a quarter of the bytes of 256px
-function fetchFile(domain, key) {
-  const file = path.join(CACHE, domain.replace(/[^a-z0-9.-]/gi, '_') + '@128.png');
-  if (!fs.existsSync(file)) {
-    if (!key) return null;
-    fs.mkdirSync(CACHE, { recursive: true });
-    const url = `https://img.logo.dev/${encodeURIComponent(domain)}?token=${key}&size=64&format=png&retina=true`;
-    try { execFileSync('curl', ['-fsSL', '--max-time', '15', '-o', file, url], { stdio: 'ignore' }); } catch (e) { try { fs.unlinkSync(file); } catch (_) {} return null; }
+let manifestCache = null;
+function manifest() {
+  if (!manifestCache) {
+    try { manifestCache = JSON.parse(fs.readFileSync(path.join(LIBRARY, 'manifest.json'), 'utf8')).entries || []; }
+    catch (e) { manifestCache = []; }
   }
-  return fs.readFileSync(file);
+  return manifestCache;
 }
 
-// logo.dev answers some product subdomains with the parent's mark. For a vendor (cloud.google.com, azure.microsoft.com)
-// the vendor logo is fine, but a foundation hosts projects with their own brands: every *.apache.org project would
-// get the same Apache feather, so Kafka, Flink and Cassandra would look alike. Those slots fall back to a monogram.
-const FOUNDATIONS = new Set(['apache.org']);
+// a slot may name a domain, a domain the library moved (Logo.dev knew the brand under another one), or a brand name.
+// The slot's own domain always wins; "also" and names only point to entries that hold a logo, because an entry's
+// alternative domains can belong to other brands (a project's github.com page, a parent company).
+function resolve(ref) {
+  const r = String(ref || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/.*$/, '');
+  const entries = manifest();
+  if (entries.some(e => e.domain === r)) return r;
+  const withFile = entries.filter(e => e.file);
+  const hit = withFile.find(e => (e.also || []).includes(r)) ||
+    withFile.find(e => e.name.toLowerCase() === r || (e.aliases || []).some(a => a.toLowerCase() === r));
+  return hit ? hit.domain : r;
+}
+
+const warned = new Set();
 const seen = new Map(); // bytes hash -> first domain, to warn when two domains share one image
-function fetchLogo(domain, key) {
-  const buf = fetchFile(domain, key);
-  if (!buf) return null;
-  const labels = domain.split('.');
-  if (labels.length > 2 && FOUNDATIONS.has(labels.slice(-2).join('.'))) {
-    const parent = fetchFile(labels.slice(-2).join('.'), key);
-    if (parent && parent.equals(buf)) return null;
+function fetchLogo(domain) {
+  const file = path.join(LIBRARY, domain.replace(/[^a-z0-9.-]/gi, '_') + '.png');
+  if (!fs.existsSync(file)) {
+    if (!warned.has(domain)) {
+      warned.add(domain);
+      const e = manifest().find(x => x.domain === domain);
+      const why = !e ? `is not in the logo library; add it with: ${ADD} ${domain} --name NAME`
+        : e.status === 'wrong' ? 'is marked wrong in the logo library (Logo.dev\'s image is not the brand\'s mark)'
+        : e.status === 'parent' ? `is a subdomain Logo.dev answers with its parent's mark (${e.parent || 'the parent'})`
+        : e.status === 'queued' ? `is queued for the next credit cycle; fetch it now with: ${ADD} ${domain} --name "${e.name}"`
+        : `has no logo on Logo.dev (${e.status})`;
+      console.warn(`logos: ${domain} ${why}, so it gets a monogram`);
+    }
+    return null;
   }
+  const buf = fs.readFileSync(file);
   const h = require('crypto').createHash('md5').update(buf).digest('hex');
-  if (seen.has(h) && seen.get(h) !== domain) console.warn(`logos: ${domain} and ${seen.get(h)} return the same image; one of them shows the wrong brand`);
+  if (seen.has(h) && seen.get(h) !== domain) console.warn(`logos: ${domain} and ${seen.get(h)} share one image; one of them shows the wrong brand`);
   else seen.set(h, domain);
   return 'data:image/png;base64,' + buf.toString('base64');
 }
 
 const attr = (tag, name) => { const m = tag.match(new RegExp('\\s' + name + '="([^"]*)"')); return m ? m[1] : ''; };
 
-function inject(svg, opts) {
-  const key = (opts && 'token' in opts) ? opts.token : token();
+function inject(svg) {
   return svg.replace(/<image\b[^>]*\bdata-logo="[^"]*"[^>]*?(?:\/>|>\s*<\/image>)/g, (tag) => {
-    const domain = attr(tag, 'data-logo');
-    const uri = fetchLogo(domain, key);
+    const domain = resolve(attr(tag, 'data-logo'));
+    const uri = fetchLogo(domain);
     const x = +attr(tag, 'x') || 0, y = +attr(tag, 'y') || 0, w = +attr(tag, 'width') || 28, h = +attr(tag, 'height') || 28;
     // a light tile behind every logo keeps dark marks (GitHub, Next.js) visible in the dark theme
     if (uri) return `<rect class="d-logo-plate" x="${x - 3}" y="${y - 3}" width="${w + 6}" height="${h + 6}" rx="7"/>` + tag.replace(/\s(?:xlink:)?href="[^"]*"/g, '').replace(/^<image\b/, `<image href="${uri}"`);
@@ -72,10 +83,39 @@ function inject(svg, opts) {
   });
 }
 
-module.exports = { inject, token };
+// <img class="logo" data-logo="vercel.com" alt="Vercel"> in page text or a table cell: the src is filled the same
+// way; without a logo the tag becomes a small monogram, so the row still reads
+function injectHtml(page) {
+  return page.replace(/<img\b[^>]*\bdata-logo="[^"]*"[^>]*>/g, (tag) => {
+    const ref = attr(tag, 'data-logo');
+    const uri = fetchLogo(resolve(ref));
+    if (uri) return tag.replace(/\ssrc="[^"]*"/g, '').replace(/^<img\b/, `<img src="${uri}"`);
+    const name = attr(tag, 'alt') || ref;
+    const letter = (name.match(/[a-z0-9]/i) || ['?'])[0].toUpperCase();
+    return `<span class="logo logo-mono" aria-hidden="true">${letter}</span>`;
+  });
+}
+
+function find(text) {
+  const q = String(text || '').trim().toLowerCase();
+  const hits = manifest().filter(e => e.name.toLowerCase().includes(q) || e.domain.includes(q) ||
+    [...(e.aliases || []), ...(e.also || [])].some(a => a.toLowerCase().includes(q)));
+  if (!hits.length) console.log(`no brand matches "${text}" in ${LIBRARY}; add one with: ${ADD} DOMAIN --name NAME`);
+  for (const e of hits) console.log(`${e.domain.padEnd(32)} ${e.name}  [${e.category}; ${e.status}${e.same_as ? ', same brand as ' + e.same_as.join(', ') : ''}]`);
+}
+
+module.exports = { inject, injectHtml, resolve };
 
 if (require.main === module) {
   const [, , inp, out] = process.argv;
-  if (!inp || !out) { console.error('usage: logos.js in.svg out.svg'); process.exit(1); }
-  fs.writeFileSync(out, inject(fs.readFileSync(inp, 'utf8')));
+  if (inp === '--inline') {
+    process.stdout.write(injectHtml(inject(fs.readFileSync(0, 'utf8'))));
+  } else if (inp === '--find') {
+    find(process.argv.slice(3).join(' '));
+  } else if (inp && out) {
+    fs.writeFileSync(out, inject(fs.readFileSync(inp, 'utf8')));
+  } else {
+    console.error('usage: logos.js in.svg out.svg | logos.js --inline < in > out | logos.js --find NAME');
+    process.exit(1);
+  }
 }

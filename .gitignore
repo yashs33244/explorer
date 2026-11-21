@@ -13,6 +13,10 @@ studio-out/
 # backups
 *.bak
 
+# local logo library: third-party trademarks fetched from logo.dev under its terms, plus a list of the tools one
+# person uses; never published from this public repo (skills/artifact-studio/scripts/logo_library.py rebuilds it)
+skills/artifact-studio/assets/logos/
+
 # explainer skill: local env, render cache and outputs
 skills/artifact-studio-explainer/manim/cache/
 skills/artifact-studio-explainer/examples/*/studio-out/

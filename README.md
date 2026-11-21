@@ -136,13 +136,18 @@ open site/index.html
 
 ## Logos
 
-Diagrams that name real products use logo slots (`<image class="d-logo" data-logo="postgresql.org">`). To fill them, get a free publishable key at [logo.dev](https://logo.dev) and keep it outside the repo:
+Diagrams that name real products use logo slots (`<image class="d-logo" data-logo="postgresql.org">` in a figure, `<img class="logo" data-logo="postgresql.org" alt="PostgreSQL">` in text). They are filled only from a local logo library, `skills/artifact-studio/assets/logos/`, which is gitignored: Logo.dev grants no licence to the logos, so this repo ships the scripts, not the images.
+
+Build the library through the Logo.dev API with your secret key, the route Logo.dev allows for storing logos (its terms forbid building a copy from the `img.logo.dev` CDN or fetching the CDN from a script). Keep the key outside the repo:
 
 ```bash
-mkdir -p ~/.config/explorer && printf 'LOGO_DEV_TOKEN=%s\n' 'pk_...' > ~/.config/explorer/logo-dev.env
+mkdir -p ~/.config/explorer && printf 'LOGO_DEV_SECRET_KEY=%s\n' 'sk_...' > ~/.config/explorer/logo-dev.env && chmod 600 ~/.config/explorer/logo-dev.env
+python3 skills/artifact-studio/scripts/logo_library.py account                 # credits left (free)
+python3 skills/artifact-studio/scripts/logo_library.py add postgresql.org --name PostgreSQL   # 2 credits
+python3 skills/artifact-studio/scripts/logo_library.py sync brands.json         # many brands, most-used first
 ```
 
-Logos are fetched once, cached in `~/.cache/explorer-logos` and inlined as data URIs, so pages work offline. Without a key each slot becomes a monogram, and so does a project under a foundation domain such as `kafka.apache.org`, because Logo.dev answers those with the foundation's logo. The build warns when two domains return the same image. When the skill needs logos and no key is set, it asks you for one.
+A logo costs 2 credits; the free plan has 500 a month, so `sync` fetches by tier and leaves the rest queued for the next month. Logos are inlined as data URIs, so pages work offline and carry no key. A brand not in the library becomes a monogram and the build prints the `add` command; so does a project under a foundation domain such as `kafka.apache.org`, because Logo.dev answers a subdomain with its parent's logo. Check new logos by eye with `logo_library.py sheets DIR` before trusting them. On the free plan, a commercial project must link "Logos provided by Logo.dev" from a public page.
 
 ## Layout
 
@@ -152,7 +157,7 @@ skills/codebase-explorer/
   scripts/build-page.js    JSON + SVG -> one HTML page (no dependencies)
   scripts/render.sh        render diagrams (modern, clean or hand, png or jpg) and page sections in headless Chrome
   scripts/compare.sh       a reference image and our render side by side
-  scripts/logos.js         fill logo slots from logo.dev, monogram fallback
+  scripts/logos.js         fill logo slots from the local logo library, monogram fallback
   scripts/build-catalog.js regenerate the diagram-type gallery and chooser
   scripts/check-overflow.py list diagram text that runs past its box (Playwright)
   scripts/layout.js        automatic diagram fallback
