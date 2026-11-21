@@ -1,0 +1,5 @@
+{"flow": {"type": "excalidraw", "src": "exc/flow.excalidraw", "size": "bleed",
+  "why": "What crosses each hop, and where is it stored?",
+  "title": "One token request, every field",
+  "aria": "A client posts to the gateway, which reads the users table and forwards the user id to another app.",
+  "caption": "Red text: what goes over the wire. Orange: the line that decides who the call is. Illustrative values."}}

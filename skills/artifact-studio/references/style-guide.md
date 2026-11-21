@@ -6,7 +6,7 @@ The single source of truth is the `:root` block of `assets/page-template.html`. 
 
 | Role | Token | Value | Used for |
 |---|---|---|---|
-| Page | `--bg`, `--paper` | `#ffffff` | Page and card background (light only) |
+| Page | `--bg`, `--paper` | `#ffffff` (light), `#0d1117` / `#151b23` (dark, the default) | Page and card background. Dark values live in the template's `theme-dark` block; `--theme light` removes it |
 | Ink | `--ink` | `#1e1e1e` | Text, outlines |
 | Muted | `--muted` | `#5c5c5c` | Secondary text, sublabels |
 | Rules | `--line`, `--faint` | `#e6e6e6`, `#e2e2e2` | Borders, grid |

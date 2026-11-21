@@ -636,3 +636,11 @@ a { color: var(--violet); }
 /* arrowheads keep their marker shape; the marker box may overflow */
 [data-dstyle="modern"] svg.hd marker { overflow: visible; }
 /* modern-style:end */
+/* Dark theme: keep the logo tile light in the modern style too (the clean and hand styles already do), so dark
+   marks such as OpenAI, GitHub and AWS stay visible. Outside the modern block, so sync-modern.py leaves it here. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"])[data-dstyle="modern"] svg.hd .d-logo-plate,
+  :root:not([data-theme="light"]) [data-dstyle="modern"] svg.hd .d-logo-plate { fill: #e6edf3; }
+}
+:root[data-theme="dark"][data-dstyle="modern"] svg.hd .d-logo-plate,
+:root[data-theme="dark"] [data-dstyle="modern"] svg.hd .d-logo-plate { fill: #e6edf3; }
