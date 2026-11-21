@@ -63,7 +63,7 @@ every file is checked: the target file must exist in the folder and #ids must ex
 The page template (dark theme by default, --theme light for light; clean diagram classes, wide tables, centred diagrams,
 Full screen overlay, site nav) lives in ../assets/page-template.html.
 """
-import argparse, difflib, hashlib, html, json, os, re, subprocess, sys, tempfile, textwrap
+import argparse, base64, difflib, hashlib, html, http.client, json, os, re, subprocess, sys, tempfile, textwrap, urllib.request
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE = os.path.join(HERE, '..', 'assets', 'page-template.html')
@@ -154,7 +154,7 @@ def find_chrome():
 def prerender_excalidraw(scene, dark):
     """Draw a scene to SVG at build time with Excalidraw's own exporter in headless Chrome, so the
     reader's browser loads no React, no CDN and no fonts. Cached by scene and theme. None on failure."""
-    key = hashlib.sha256(f'{EXC_VER}|{dark}|{scene}'.encode()).hexdigest()[:24]
+    key = hashlib.sha256(f'{EXC_VER}|r2|{dark}|{scene}'.encode()).hexdigest()[:24]
     cached = os.path.join(EXC_CACHE, key + '.svg')
     if os.path.exists(cached):
         return open(cached).read()
@@ -165,10 +165,12 @@ def prerender_excalidraw(scene, dark):
     page = (EXC_LOADER.split('<script>\n(function', 1)[0] +
             f'<script type="application/json" id="scene">{safe}</script>\n<script>\n'
             'var L = window.ExcalidrawLib, s = JSON.parse(document.getElementById("scene").textContent);\n'
-            'var els = L.restoreElements(s.elements, null, {refreshDimensions: true, repairBindings: true});\n'
-            'L.exportToSvg({elements: els, files: s.files || {}, exportPadding: 28, appState: {exportBackground: false, '
-            f'exportWithDarkMode: {"true" if dark else "false"}, viewBackgroundColor: "transparent"}}}})\n'
-            '.then(function (svg) { var p = document.createElement("pre"); p.id = "out"; p.textContent = svg.outerHTML; document.body.appendChild(p); });\n'
+            f'Promise.all([["Virgil", "{EXC_CDN}excalidraw-assets/Virgil.woff2"], ["Cascadia", "{EXC_CDN}excalidraw-assets/Cascadia.woff2"]]'
+            '.map(function (f) { var ff = new FontFace(f[0], "url(" + f[1] + ")"); document.fonts.add(ff); return ff.load().catch(function () {}); }))\n'
+            '.then(function () { var els = L.restoreElements(s.elements, null, {refreshDimensions: true, repairBindings: true});\n'
+            'return L.exportToSvg({elements: els, files: s.files || {}, exportPadding: 28, appState: {exportBackground: false, '
+            f'exportWithDarkMode: {"true" if dark else "false"}, viewBackgroundColor: "transparent"}}}}); }})\n'
+            '.then(function (svg) { var p = document.createElement("pre"); p.id = "out"; p.dataset.fonts = document.fonts.check("16px Virgil") && document.fonts.check("16px Cascadia") ? "1" : "0"; p.textContent = svg.outerHTML; document.body.appendChild(p); });\n'
             '</script>')
     with tempfile.TemporaryDirectory() as tmp:
         f = os.path.join(tmp, 'exc.html')
@@ -178,13 +180,17 @@ def prerender_excalidraw(scene, dark):
                                   '--dump-dom', 'file://' + f], capture_output=True, text=True, timeout=90).stdout
         except (OSError, subprocess.TimeoutExpired):
             return None
-    m = re.search(r'<pre id="out">(.*?)</pre>', dom, re.S)
+    m = re.search(r'<pre id="out" data-fonts="([01])">(.*?)</pre>', dom, re.S)
     if not m:
         return None
-    svg = FONT_STYLE.sub('', html.unescape(m.group(1)))
+    svg = FONT_STYLE.sub('', html.unescape(m.group(2)))
+    fonts_ok = m.group(1) == '1'
     svg = re.sub(r'^<svg ([^>]*?) width="[\d.]+" height="[\d.]+"', r'<svg \1', svg, count=1)
-    os.makedirs(EXC_CACHE, exist_ok=True)
-    open(cached, 'w').write(svg)
+    if fonts_ok:  # a drawing measured with a fallback face would overflow its boxes for good
+        os.makedirs(EXC_CACHE, exist_ok=True)
+        open(cached, 'w').write(svg)
+    else:
+        print('warning: the Excalidraw fonts did not load at build time; this drawing is not cached', file=sys.stderr)
     return svg
 
 
@@ -253,6 +259,40 @@ def anatomy_frame(spec, base):
     h = int(spec.get('height', 620))
     return (f'<iframe class="anat" title="{html.escape(spec["title"])}" loading="lazy" style="height:{h}px" '
             f'srcdoc="{html.escape(doc, quote=True)}"></iframe>')
+
+
+EXC_FONT_CACHE = os.path.join(os.path.expanduser('~'), '.cache', 'artifact-studio', 'fonts')
+
+
+def exc_font_faces(out):
+    """@font-face rules, as data URIs, for the Excalidraw fonts the pre-drawn scenes use: Virgil
+    (hand-drawn, fontFamily 1) and Cascadia (mono, fontFamily 3). The exported SVG names them but
+    carries no font, so without these the reader sees a fallback face and text overflows its boxes.
+    Fetched once from the same unpkg release the renderer uses, then cached."""
+    rules = []
+    for name in ('Virgil', 'Cascadia'):
+        if f'font-family="{name}' not in out:
+            continue
+        path = os.path.join(EXC_FONT_CACHE, f'{EXC_VER}-{name}.woff2')
+        if not os.path.exists(path):
+            try:
+                os.makedirs(EXC_FONT_CACHE, exist_ok=True)
+                data = urllib.request.urlopen(f'{EXC_CDN}excalidraw-assets/{name}.woff2', timeout=30).read()
+                if data[:4] not in (b'wOF2', b'wOFF'):  # Excalidraw ships Cascadia as WOFF 1 under a .woff2 name
+                    raise OSError('not a woff or woff2 file')
+                with open(path + '.tmp', 'wb') as f:
+                    f.write(data)
+                os.replace(path + '.tmp', path)
+            except (OSError, http.client.HTTPException) as err:
+                print(f'warning: could not fetch the {name} font ({err}); scenes fall back to a system face',
+                      file=sys.stderr)
+                continue
+        data = open(path, 'rb').read()
+        fmt = 'woff2' if data[:4] == b'wOF2' else 'woff'
+        b64 = base64.b64encode(data).decode()
+        rules.append(f'@font-face{{font-family:{name};src:url(data:font/{fmt};base64,{b64}) format("{fmt}");'
+                     'font-display:block}')
+    return f'<style class="exc-fonts">{"".join(rules)}</style>\n' if rules else ''
 
 
 def excalidraw_frame(key, spec, base):
@@ -339,6 +379,7 @@ def fill_figs(body, figs, svg_dir, types, base='.'):
             done[k] = figure(k, figs[k], svg_dir, base)
         return done[k]
     out = re.sub(r'\{\{fig:([^}]+)\}\}', swap, body)
+    out += exc_font_faces(out)
     if any(s['type'] == EXCALIDRAW for s in figs.values()):
         out += EXC_LOADER if '<div class="exc" data-key=' in out else EXC_DL_ONLY
     return out

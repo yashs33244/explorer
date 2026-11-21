@@ -77,7 +77,7 @@ All of this is already in `assets/page-template.html`.
 8. **Run the checklist** (`references/checklist.md`) and **look once** at the whole page (headless Chrome screenshot, or the Artifact preview) and fix what is visibly broken. For a site, look at `index.html` and at least one page: `../codebase-explorer/scripts/render.sh --page site/index.html /tmp/index.png`.
 9. **Publish.** `page.html` (or the site folder) is self-contained: open it locally or host it anywhere. If your agent has an Artifact tool, publish with it: `<title>` is a 2 to 4 word name, `description` one sentence, `icon` one generic word. Republish the same file path to keep the URL, and remind the user the page is private until shared.
 
-`examples/basic/` is a minimal working body, figs.json and diagram.
+`examples/basic/` is a minimal working body, figs.json and diagram. `examples/handdrawn/` is the hand-drawn mode below.
 
 ## Excalidraw diagrams
 
@@ -91,6 +91,16 @@ Every engineering diagram goes through these steps. Skipping the look-and-fix lo
 6. **Build.** `build.py` draws the scene to SVG at build time in headless Chrome and inlines it, so the reader loads no React, CDN or font (in-browser drawing failed in claude.ai: the font did not load and text overflowed). It needs Chrome locally; without it the build warns and falls back to drawing in the browser.
 7. **Look, fix, repeat.** Screenshot the section with headless Chrome, read the PNG, and check: text inside every shape and centred, no label touching an arrowhead or box, no arrow crossing a box, text readable at page width. Two or three rounds is normal. A diagram cannot be judged from its JSON.
 8. **For a before/after**, draw two scenes with the same grid and box positions, so only the changed parts move, and say in the caption what the colours mean.
+
+## Hand-drawn diagrams (request-level detail)
+
+Use this when the reader wants every header and field on the drawing itself, the way an engineer sketches a request on a whiteboard: "show the headers and JSON in the diagram", "draw it like Excalidraw", "what goes where and where it is stored".
+
+1. **Write the spec** (`spec/KEY.json`, format in the docstring of `scripts/handdrawn.py`): dashed `zones` for processes or pods, numbered `boxes` whose `title` is handwritten and whose `lines` are a left-aligned mono field list (a line can be `["text", "orange"]`), `ellipses` for stores (`DB (postgres)\ntable users`), `arrows` with absolute points and a short handwritten `label`, and red mono `notes` beside the arrows for the request line, headers and collapsed bodies.
+2. **Colours carry meaning:** red for what crosses the wire and for failures, orange for the line that decides the outcome (the auth header, the key that picks the owner), green for stores and new parts, grey for unchanged context. Say which in the caption.
+3. **Generate** with `python3 scripts/handdrawn.py spec/KEY.json exc/KEY.excalidraw` (it warns when a box is too short for its lines) and describe it in figs.json as an `excalidraw` figure, usually `"size": "bleed"`.
+4. **Build as usual.** `build.py` loads the Virgil (hand-drawn) and Cascadia (mono) faces before drawing the scene at build time and embeds both in the page as data URIs, so the reader loads no font CDN and text stays inside its boxes.
+5. **Look and fix:** request text must sit in a clear lane beside its arrow, never across a box; leave 140 or more units between boxes joined by a labelled arrow. Two rounds is normal.
 
 ## Work boundary
 

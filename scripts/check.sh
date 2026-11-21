@@ -16,6 +16,11 @@ python3 "$AS/scripts/build.py" --title Basic --body "$AS/examples/basic/body.htm
 grep -v '^logos: ' "$TMP/build.txt" > "$TMP/warn.txt" || true
 if [ -s "$TMP/warn.txt" ]; then cat "$TMP/warn.txt"; echo "the example page must build with no warnings" >&2; exit 1; fi
 
+echo "2b. hand-drawn example"
+python3 "$AS/scripts/handdrawn.py" "$AS/examples/handdrawn/spec/flow.json" "$TMP/flow.excalidraw" > /dev/null
+cmp -s "$TMP/flow.excalidraw" "$AS/examples/handdrawn/exc/flow.excalidraw" \
+  || { echo "examples/handdrawn/exc/flow.excalidraw is stale: rerun handdrawn.py" >&2; exit 1; }
+
 echo "3. repo map example is up to date"
 RM="$ROOT/diagram-types/technical/repo-map"
 python3 "$AS/scripts/repo_map.py" "$RM/spec.json" > "$TMP/rm.svg" 2>/dev/null
@@ -23,7 +28,7 @@ cmp -s "$TMP/rm.svg" "$RM/example.svg" || { echo "example.svg is stale: rerun re
 
 echo "4. python and shell syntax"
 EX="$ROOT/skills/artifact-studio-explainer"
-PYTHONPYCACHEPREFIX="$TMP/pycache" python3 -m py_compile "$AS/scripts/build.py" "$AS/scripts/repo_map.py" "$AS/scripts/excalidraw.py" "$AS/scripts/er_diagram.py" "$AS/scripts/logo_library.py" "$EX"/manim/*.py "$EX"/scripts/*.py \
+PYTHONPYCACHEPREFIX="$TMP/pycache" python3 -m py_compile "$AS/scripts/build.py" "$AS/scripts/repo_map.py" "$AS/scripts/handdrawn.py" "$AS/scripts/excalidraw.py" "$AS/scripts/er_diagram.py" "$AS/scripts/logo_library.py" "$EX"/manim/*.py "$EX"/scripts/*.py \
   "$ROOT/scripts/sync-modern.py" "$ROOT/skills/codebase-explorer/scripts/check-overflow.py"
 for f in "$EX"/manim/*.sh "$EX"/scripts/*.sh; do bash -n "$f"; done
 

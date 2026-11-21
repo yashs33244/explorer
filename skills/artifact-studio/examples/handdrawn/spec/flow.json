@@ -1,0 +1,141 @@
+{
+ "zones": [
+  {
+   "x": 860,
+   "y": 110,
+   "w": 500,
+   "h": 360,
+   "label": "gateway pod",
+   "color": "grey"
+  }
+ ],
+ "boxes": [
+  {
+   "x": 40,
+   "y": 140,
+   "w": 400,
+   "h": 130,
+   "color": "blue",
+   "title": "client / user",
+   "lines": [
+    "browser or SDK"
+   ]
+  },
+  {
+   "x": 880,
+   "y": 140,
+   "w": 460,
+   "h": 300,
+   "color": "ink",
+   "title": "1  gateway checks the token",
+   "lines": [
+    "read authorization header",
+    [
+     "  missing or expired -> 401",
+     "red"
+    ],
+    "look up the user",
+    "  SELECT id, plan FROM users",
+    "  WHERE token_hash = $1",
+    "issue a short-lived token",
+    "  ttl 15 min",
+    "",
+    [
+     "the token decides who the call is",
+     "orange"
+    ]
+   ]
+  },
+  {
+   "x": 1620,
+   "y": 330,
+   "w": 340,
+   "h": 130,
+   "color": "ink",
+   "title": "some other app",
+   "lines": [
+    "receives x-user-id"
+   ]
+  }
+ ],
+ "ellipses": [
+  {
+   "x": 1640,
+   "y": 60,
+   "w": 300,
+   "h": 140,
+   "text": "DB (postgres)\ntable users",
+   "color": "green"
+  }
+ ],
+ "arrows": [
+  {
+   "points": [
+    [
+     440,
+     205
+    ],
+    [
+     880,
+     205
+    ]
+   ],
+   "color": "blue",
+   "label": {
+    "x": 470,
+    "y": 172,
+    "text": "POST"
+   }
+  },
+  {
+   "points": [
+    [
+     1340,
+     180
+    ],
+    [
+     1640,
+     130
+    ]
+   ],
+   "color": "green",
+   "label": {
+    "x": 1400,
+    "y": 110,
+    "text": "get user"
+   }
+  },
+  {
+   "points": [
+    [
+     1340,
+     395
+    ],
+    [
+     1620,
+     395
+    ]
+   ],
+   "color": "ink",
+   "label": {
+    "x": 1420,
+    "y": 363,
+    "text": "forward"
+   }
+  }
+ ],
+ "notes": [
+  {
+   "x": 460,
+   "y": 240,
+   "text": "POST /api/v1/tokens\n  headers\n    authorization: Bearer <TOKEN>\n    content-type: application/json\n  req body\n    { \"scope\": \"read\" }\n  res body\n    { \"token\": \"<JWT>\", \"ttl\": 900 }",
+   "color": "red"
+  },
+  {
+   "x": 1380,
+   "y": 420,
+   "text": "x-user-id: user_123\nx-request-id: 4bf9..",
+   "color": "red"
+  }
+ ]
+}
